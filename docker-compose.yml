@@ -1,0 +1,75 @@
+version: '3'
+services:
+  db:
+    image: mariadb
+    environment:
+      - MYSQL_ROOT_PASSWORD=85TKjy8ZnYGpThBTfYAv
+      - MYSQL_DATABASE=abter
+      - MYSQL_USER=abter
+      - MYSQL_PASSWORD=28T3pqyvKG3tEgsjE8Rj
+      - MYSQL_PORT=3306
+    volumes:
+      - ./docker/mysql/dumps:/docker-entrypoint-initdb.d:ro
+    ports:
+      - "3366:3306"
+
+  db_test:
+    image: mariadb
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=abter_test
+      - MYSQL_USER=abter_test
+      - MYSQL_PASSWORD=abter_test
+      - MYSQL_PORT=3306
+    volumes:
+      - ./docker/mysql/dumps:/docker-entrypoint-initdb.d:ro
+    ports:
+      - "3367:3306"
+
+  memcached:
+    image: memcached:alpine
+    ports:
+      - "11271:11211"
+
+  redis:
+    image: redis:alpine
+    ports:
+      - "6439:6379"
+
+  php:
+    image: abtercms/php:72
+    environment:
+      - DB_HOST=db
+      - DB_USER=abter
+      - DB_NAME=abter
+      - DB_PASSWORD=28T3pqyvKG3tEgsjE8Rj
+      - DB_PORT=3306
+      - MEMCACHED_HOST=memcached
+      - MEMCACHED_PORT=11211
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - DEFAULT_LANGUAGE=hu
+      - ENCRYPTION_KEY=b8fbb40c129ad0e426e19b7d28f42e517ce639282e55ba7a98bd2b698fda7daa
+      - CRYPTO_FRONTEND_SALT=R6n9gNH9ND6USc6D
+      - CRYPTO_ENCRYPTION_PEPPER=h9fyyWr36vBnky9G
+    links:
+      - db
+      - db_test
+      - memcached
+      - redis
+    volumes:
+      - .:/website
+      - ./docker/php/config/zzz.ini:/usr/local/etc/php/conf.d/zzz.ini:ro
+    working_dir: /website
+
+  nginx:
+    image: nginx
+    links:
+      - php
+    ports:
+      - "443:443"
+      - "80:80"
+    volumes:
+      - .:/website
+      - ./docker/nginx/conf.d:/etc/nginx/conf.d:ro
+    working_dir: /website

@@ -1,0 +1,105 @@
+<?php
+
+declare(strict_types=1);
+
+namespace AbterPhp\Website\Form\Factory;
+
+use AbterPhp\Website\Domain\Entities\BlockLayout;
+use AbterPhp\Framework\I18n\ITranslator;
+use AbterPhp\Website\Domain\Entities\Block as Entity;
+use AbterPhp\Website\Orm\BlockLayoutRepo;
+use Opulence\Http\Requests\RequestMethods;
+use Opulence\Sessions\ISession;
+use Opulence\Sessions\Session;
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
+
+class BlockTest extends TestCase
+{
+    /** @var ISession|MockObject */
+    protected $sessionMock;
+
+    /** @var ITranslator|MockObject */
+    protected $translatorMock;
+
+    /** @var BlockLayoutRepo|MockObject */
+    protected $layoutRepoMock;
+
+    /** @var Block */
+    protected $sut;
+
+    public function setUp()
+    {
+        $this->sessionMock = $this->getMockBuilder(Session::class)
+            ->setMethods(['get'])
+            ->getMock();
+        $this->sessionMock->expects($this->any())->method('get')->willReturnArgument(0);
+
+        $this->translatorMock = $this->getMockBuilder(ITranslator::class)
+            ->setMethods(['translate', 'canTranslate'])
+            ->getMock();
+        $this->translatorMock->expects($this->any())->method('translate')->willReturnArgument(0);
+
+        $this->layoutRepoMock = $this->getMockBuilder(BlockLayoutRepo::class)
+            ->disableOriginalConstructor()
+            ->setMethods(['getAll'])
+            ->getMock();
+
+        $this->sut = new Block($this->sessionMock, $this->translatorMock, $this->layoutRepoMock);
+    }
+
+    public function testCreate()
+    {
+        $action     = 'foo';
+        $method     = RequestMethods::POST;
+        $showUrl    = 'bar';
+        $entityId   = 36;
+        $identifier = 'blah';
+        $title      = 'Blah!';
+        $body       = "Blah!\n\n...and more blah...";
+        $layoutId   = 0;
+        $layout     = 'abc {{ var/body }} cba';
+
+        $layouts = [
+            new BlockLayout(126, 'bl-126', 'BL 126'),
+            new BlockLayout(129, 'bl-129', 'BL 129'),
+        ];
+
+        $this->layoutRepoMock->expects($this->any())->method('getAll')->willReturn($layouts);
+
+        $entityMock = $this->createMockEntity();
+
+        $entityMock->expects($this->any())->method('getId')->willReturn($entityId);
+        $entityMock->expects($this->any())->method('getIdentifier')->willReturn($identifier);
+        $entityMock->expects($this->any())->method('getTitle')->willReturn($title);
+        $entityMock->expects($this->any())->method('getBody')->willReturn($body);
+        $entityMock->expects($this->any())->method('getLayoutId')->willReturn($layoutId);
+        $entityMock->expects($this->any())->method('getLayout')->willReturn($layout);
+
+        $form = (string)$this->sut->create($action, $method, $showUrl, $entityMock);
+
+        $this->assertContains($action, $form);
+        $this->assertContains($showUrl, $form);
+        $this->assertContains('POST', $form);
+        $this->assertContains('CSRF', $form);
+        $this->assertContains('identifier', $form);
+        $this->assertContains('title', $form);
+        $this->assertContains('body', $form);
+        $this->assertContains('layout_id', $form);
+        $this->assertContains('layout', $form);
+        $this->assertContains('button', $form);
+    }
+
+    /**
+     * @return MockObject|Entity
+     */
+    protected function createMockEntity()
+    {
+        $entityMock = $this->getMockBuilder(Entity::class)
+            ->disableOriginalConstructor()
+            ->setMethods(['getId', 'getIdentifier', 'getTitle', 'getBody', 'getLayoutId', 'getLayout'])
+            ->getMock();
+
+        return $entityMock;
+    }
+}

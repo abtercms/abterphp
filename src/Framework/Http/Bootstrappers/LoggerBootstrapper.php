@@ -1,0 +1,33 @@
+<?php
+
+declare(strict_types=1);
+
+namespace AbterPhp\Framework\Http\Bootstrappers;
+
+use Monolog\Logger;
+use Opulence\Ioc\Bootstrappers\Bootstrapper;
+use Opulence\Ioc\Bootstrappers\ILazyBootstrapper;
+use Opulence\Ioc\IContainer;
+
+class LoggerBootstrapper extends Bootstrapper implements ILazyBootstrapper
+{
+    /**
+     * @inheritdoc
+     */
+    public function getBindings(): array
+    {
+        return [Logger::class];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function registerBindings(IContainer $container)
+    {
+        $logger = new Logger('application');
+        $filePath = getenv(\AbterPhp\Framework\Constant\Env::DIR_LOGS);
+        $logger->pushHandler(new \Monolog\Handler\StreamHandler($filePath . '/application.log', Logger::INFO));
+
+        $container->bindInstance(Logger::class, $logger);
+    }
+}

@@ -1,0 +1,76 @@
+{
+  "name": "abtercms/abterphp",
+  "description": "PHP implementation of AbterCMS based on the Opulence framework",
+  "authors": [
+    {
+      "name": "Peter Aba",
+      "email": "peter@peteraba.com",
+      "role": "Engineer"
+    }
+  ],
+  "type": "project",
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "AbterPhp\\": [
+        "src",
+        "tests/unit"
+      ],
+      "Integration\\": [
+        "tests/integration"
+      ]
+    }
+  },
+  "require": {
+    "php": "^7.1",
+    "ext-iconv": "*",
+    "ext-pdo": "*",
+    "ext-json": "*",
+    "monolog/monolog": "1.22.0",
+    "opulence/opulence": "1.1.*",
+    "filp/whoops": "^2.1",
+    "league/flysystem": "^1.0",
+    "cocur/slugify": "^3.1",
+    "casbin/casbin": "^0.1.6",
+    "casbin/database-adapter": "^0.2.0",
+    "matthiasmullie/minify": "^1.3",
+    "swiftmailer/swiftmailer": "^6.1"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^6.1",
+    "squizlabs/php_codesniffer": "^3.4",
+    "phpmd/phpmd": "^2.6",
+    "friendsofphp/php-cs-fixer": "^2.14"
+  },
+  "suggest": {
+    "ext-redis": "Allows better caching"
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "scripts": {
+    "post-root-package-install": [
+      "php -r \"file_exists('config/environment/.env.app.php') || copy('config/environment/.env.example.php', 'config/environment/.env.app.php');\""
+    ],
+    "post-create-project-cmd": [
+      "php apex encryption:generatekey",
+      "php -r \"echo 'Important: make ' . __DIR__ . '/tmp writable\n';\"",
+      "php -r \"echo 'Important: make ' . __DIR__ . '/public/tmp writable\n';\""
+    ],
+    "post-install-cmd": [
+      "php -r \"shell_exec((file_exists(getcwd() . '/composer.phar') ? PHP_BINARY . ' composer.phar' : 'composer') . ' dump-autoload -o');\"",
+      "php -r \"file_exists('config/environment/.env.app.php') || copy('config/environment/.env.example.php', 'config/environment/.env.app.php');\"",
+      "php apex abtercms:flushall"
+    ],
+    "post-update-cmd": [
+      "php -r \"shell_exec((file_exists(getcwd() . '/composer.phar') ? PHP_BINARY . ' composer.phar' : 'composer') . ' dump-autoload -o');\"",
+      "php -r \"file_exists('config/environment/.env.app.php') || copy('config/environment/.env.example.php', 'config/environment/.env.app.php');\"",
+      "php apex abtercms:flushall"
+    ]
+  },
+  "config": {
+    "prefer-install": "dist"
+  }
+}

@@ -1,0 +1,39 @@
+<?php
+
+declare(strict_types=1);
+
+namespace AbterPhp\Website\Grid\Factory\Table\Header;
+
+use AbterPhp\Framework\Grid\Factory\Table\Header;
+
+class Page extends Header
+{
+    const GROUP_ID         = 'page-id';
+    const GROUP_IDENTIFIER = 'page-identifier';
+    const GROUP_TITLE      = 'page-title';
+
+    const HEADER_ID         = 'pages:pageId';
+    const HEADER_IDENTIFIER = 'pages:pageIdentifier';
+    const HEADER_TITLE      = 'pages:pageTitle';
+
+    /** @var array */
+    protected $headers = [
+        self::GROUP_ID         => self::HEADER_ID,
+        self::GROUP_IDENTIFIER => self::HEADER_IDENTIFIER,
+        self::GROUP_TITLE      => self::HEADER_TITLE,
+    ];
+
+    /** @var array */
+    protected $inputNames = [
+        self::GROUP_ID         => 'id',
+        self::GROUP_IDENTIFIER => 'identifier',
+        self::GROUP_TITLE      => 'title',
+    ];
+
+    /** @var array */
+    protected $fieldNames = [
+        self::GROUP_ID         => 'pages.id',
+        self::GROUP_IDENTIFIER => 'pages.identifier',
+        self::GROUP_TITLE      => 'pages.title',
+    ];
+}
