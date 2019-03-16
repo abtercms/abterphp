@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace AbterPhp\Framework\Module;
 
 use AbterPhp\Framework\Constant\Module;
@@ -9,8 +11,6 @@ use Opulence\Ioc\Bootstrappers\Bootstrapper;
 
 class Manager
 {
-    const MODULE_FILE_NAME = 'abter.php';
-
     const CACHE_KEY_HTTP_BOOTSTRAPPERS = 'AbterPhp:HttpBootstrappers';
     const CACHE_KEY_CLI_BOOTSTRAPPERS  = 'AbterPhp:CliBootstrappers';
     const CACHE_KEY_COMMANDS           = 'AbterPhp:Commands';
@@ -19,8 +19,8 @@ class Manager
     const CACHE_KEY_MIDDLEWARE         = 'AbterPhp:Middleware';
     const CACHE_KEY_MIGRATION_PATHS    = 'AbterPhp:MigrationPaths';
 
-    /** @var string[] */
-    protected $sourceRoots;
+    /** @var Loader */
+    protected $loader;
 
     /** @var ICacheBridge|null */
     protected $cacheBridge;
@@ -31,12 +31,12 @@ class Manager
     /**
      * Manager constructor.
      *
-     * @param array             $sourceRoots
+     * @param Loader            $sourceRoots
      * @param ICacheBridge|null $cacheBridge
      */
-    public function __construct(array $sourceRoots, ?ICacheBridge $cacheBridge = null)
+    public function __construct(Loader $loader, ?ICacheBridge $cacheBridge = null)
     {
-        $this->sourceRoots = $sourceRoots;
+        $this->loader      = $loader;
         $this->cacheBridge = $cacheBridge;
     }
 
@@ -321,96 +321,8 @@ class Manager
             return $this;
         }
 
-        $this->modules = $this->loadModules();
+        $this->modules = $this->loader->loadModules();
 
         return $this;
-    }
-
-    /**
-     * @return array
-     */
-    public function loadModules(): array
-    {
-        $rawModules = [];
-        foreach ($this->findModules() as $path) {
-            $rawModules[] = include $path;
-        }
-
-        if (count($rawModules) === 0) {
-            return [];
-        }
-
-        return $this->sortModules($rawModules);
-    }
-
-    /**
-     * @return array
-     */
-    public function sortModules(array $rawModules, array $sortedIds = []): array
-    {
-        $sortedCount    = count($sortedIds);
-        $modules        = [];
-        $skippedModules = [];
-        foreach ($rawModules as $rawModule) {
-            foreach ($rawModule[Module::DEPENDENCIES] as $dep) {
-                if (!isset($sortedIds[$dep])) {
-                    $skippedModules[] = $rawModule;
-                    continue 2;
-                }
-            }
-            $sortedIds[$rawModule[Module::IDENTIFIER]] = $rawModule[Module::IDENTIFIER];
-
-            $modules[] = $rawModule;
-        }
-
-        if ($sortedCount === count($sortedIds)) {
-            throw new \LogicException('Not able to determine module order. Likely circular dependency found.');
-        }
-
-        if ($skippedModules) {
-            $modules = array_merge($modules, $this->sortModules($skippedModules, $sortedIds));
-        }
-
-        return $modules;
-    }
-
-    /**
-     * @return array
-     */
-    public function findModules(): array
-    {
-        $paths = [];
-
-        foreach ($this->sourceRoots as $root) {
-            $paths = array_merge($paths, $this->scanDirectories(new \DirectoryIterator($root)));
-        }
-
-        return $paths;
-    }
-
-    /**
-     * @return array
-     */
-    public function scanDirectories(\DirectoryIterator $directoryIterator): array
-    {
-        $paths = [];
-        foreach ($directoryIterator as $fileInfo) {
-            if ($fileInfo->isDot() || !$fileInfo->isFile()) {
-                continue;
-            }
-            if ($fileInfo->getFilename() === static::MODULE_FILE_NAME) {
-                return [$fileInfo->getRealPath()];
-            }
-        }
-
-        foreach ($directoryIterator as $fileInfo) {
-            if ($fileInfo->isDot() || !$fileInfo->isDir()) {
-                continue;
-            }
-
-            $paths = array_merge($paths, $this->scanDirectories(new \DirectoryIterator($fileInfo->getRealPath())));
-        }
-
-        return $paths;
     }
 }

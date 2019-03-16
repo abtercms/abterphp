@@ -65,10 +65,12 @@ if (Environment::getVar('ENV_NAME') === Environment::PRODUCTION) {
     );
 }
 $abterModuleManager = new \AbterPhp\Framework\Module\Manager(
-    [
-        Config::get('paths', 'src'),
-        Config::get('paths', 'vendor'),
-    ],
+    new \AbterPhp\Framework\Module\Loader(
+        [
+            Config::get('paths', 'src'),
+            Config::get('paths', 'vendor'),
+        ]
+    ),
     $abterBootstrapperCache
 );
 $abterBootstrappers = $abterModuleManager->getHttpBootstrappers();

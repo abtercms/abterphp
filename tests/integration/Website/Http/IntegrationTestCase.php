@@ -57,10 +57,12 @@ class IntegrationTestCase extends BaseIntegrationTestCase
         Config::setCategory('sessions', require Config::get('paths', 'config.http') . '/sessions.php');
 
         $abterModuleManager = new \AbterPhp\Framework\Module\Manager(
-            [
-                Config::get('paths', 'src'),
-                Config::get('paths', 'vendor'),
-            ]
+            new \AbterPhp\Framework\Module\Loader(
+                [
+                    Config::get('paths', 'src'),
+                    Config::get('paths', 'vendor'),
+                ]
+            )
         );
         $abterBootstrappers = $abterModuleManager->getHttpBootstrappers();
 

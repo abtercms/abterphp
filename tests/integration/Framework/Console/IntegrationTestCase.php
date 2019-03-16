@@ -73,10 +73,12 @@ class IntegrationTestCase extends BaseIntegrationTestCase
             max(filemtime($globalBootstrapperPath), filemtime($consoleBootstrapperPath))
         );
         $abterModuleManager      = new \AbterPhp\Framework\Module\Manager(
-            [
-                Config::get('paths', 'src'),
-                Config::get('paths', 'vendor'),
-            ]
+            new \AbterPhp\Framework\Module\Loader(
+                [
+                    Config::get('paths', 'src'),
+                    Config::get('paths', 'vendor'),
+                ]
+            )
         );
         $abterBootstrappers      = $abterModuleManager->getCliBootstrappers();
         $container->bindInstance(ICache::class, $bootstrapperCache);
