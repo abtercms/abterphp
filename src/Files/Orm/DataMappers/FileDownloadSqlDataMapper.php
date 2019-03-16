@@ -186,17 +186,15 @@ class FileDownloadSqlDataMapper extends SqlDataMapper implements IFileDownloadDa
     protected function loadEntity(array $hash)
     {
         $file         = new File((int)$hash['file_id'], $hash['filesystem_name'], $hash['public_name'], '');
-        $userGroup    = new UserGroup(0, '', '');
         $userLanguage = new UserLanguage(0, '', '');
         $user         = new User(
             (int)$hash['user_id'],
             $hash['username'],
             '',
             '',
-            $userGroup,
-            $userLanguage,
             true,
-            true
+            true,
+            $userLanguage
         );
 
         return new Entity(

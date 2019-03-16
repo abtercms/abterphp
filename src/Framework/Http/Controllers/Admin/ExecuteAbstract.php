@@ -137,7 +137,7 @@ abstract class ExecuteAbstract extends AdminAbstract
 
         if ($errors) {
             $this->logger->info(sprintf(static::LOG_MSG_UPDATE_FAILURE, static::ENTITY_SINGULAR, $entityId), $errors);
-            $this->flashService->mergeErrorMessages($errors, static::ERROR_TRANSLATION_PREFIX);
+            $this->flashService->mergeErrorMessages($errors);
 
             return $this->redirectToList($entityId);
         }

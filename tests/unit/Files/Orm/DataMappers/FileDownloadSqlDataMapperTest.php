@@ -224,9 +224,8 @@ class FileDownloadSqlDataMapperTest extends SqlDataMapperTest
     protected function createEntity(int $id, int $fileId, int $userId, \DateTime $downloadedAt)
     {
         $file         = new File($fileId, '', '', '');
-        $userGroup    = new UserGroup(0, '', '');
         $userLanguage = new UserLanguage(0, '', '');
-        $user         = new User($userId, '', '', '', $userGroup, $userLanguage, true, true);
+        $user         = new User($userId, '', '', '', true, true, $userLanguage);
 
         return new FileDownload($id, $file, $user, $downloadedAt);
     }

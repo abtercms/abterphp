@@ -14,7 +14,6 @@ use AbterPhp\Framework\Form\Element\Input;
 use AbterPhp\Framework\Form\Element\Select;
 use AbterPhp\Framework\Form\Factory\Base;
 use AbterPhp\Framework\Form\Factory\IFormFactory;
-use AbterPhp\Framework\Form\Form;
 use AbterPhp\Framework\Form\IForm;
 use AbterPhp\Framework\Form\Label\Label;
 use AbterPhp\Framework\Form\Label\ToggleLabel;
@@ -282,12 +281,16 @@ class User extends Base
     protected function addUserGroups(Entity $entity): User
     {
         $allUserGroups = $this->getAllUserGroups();
-        $userGroupId   = (int)$entity->getUserGroup()->getId();
 
-        $options = $this->createUserGroupOptions($allUserGroups, $userGroupId);
+        $userGroupIds = [];
+        foreach ($entity->getUserGroups() as $userGroup) {
+            $userGroupIds[] = (int)$userGroup->getId();
+        }
+
+        $options = $this->createUserGroupOptions($allUserGroups, $userGroupIds);
 
         $this->form[] = new FormGroup(
-            $this->createUserGroupSelect($entity, $options),
+            $this->createUserGroupSelect($options),
             $this->createUserGroupLabel()
         );
 
@@ -304,16 +307,16 @@ class User extends Base
 
     /**
      * @param UserGroup[] $allUserGroups
-     * @param int         $userGroupId
+     * @param UserGroup[] $userGroupIds
      *
      * @return array
      */
-    protected function createUserGroupOptions(array $allUserGroups, int $userGroupId): array
+    protected function createUserGroupOptions(array $allUserGroups, array $userGroupIds): array
     {
         $options = [];
         foreach ($allUserGroups as $userGroup) {
             $attributes = [Option::ATTRIBUTE_VALUE => (string)$userGroup->getId()];
-            if ($userGroupId === (int)$userGroup->getId()) {
+            if (in_array((int)$userGroup->getId(), $userGroupIds, true)) {
                 $attributes[Option::ATTRIBUTE_SELECTED] = null;
             }
             $options[] = new Option($userGroup->getName(), null, $attributes);
@@ -323,12 +326,11 @@ class User extends Base
     }
 
     /**
-     * @param Entity   $entity
      * @param Option[] $options
      *
      * @return Select
      */
-    protected function createUserGroupSelect(Entity $entity, array $options): Select
+    protected function createUserGroupSelect(array $options): Select
     {
         $attributes = [
             Select::ATTRIBUTE_SIZE => $this->getMultiSelectSize(
@@ -338,9 +340,7 @@ class User extends Base
             ),
         ];
 
-        $userGroupId = (string)$entity->getUserGroup()->getId();
-
-        $select = new Select('user_group_id', 'user_group_id', $userGroupId, true, null, $attributes);
+        $select = new Select('user_group_ids', 'user_group_ids[]', '', true, null, $attributes);
 
         foreach ($options as $option) {
             $select[] = $option;
@@ -354,7 +354,7 @@ class User extends Base
      */
     protected function createUserGroupLabel(): Label
     {
-        return new Label('user_group_id', 'admin:userGroups', null, [], $this->translator);
+        return new Label('user_group_ids', 'admin:userGroups', null, [], $this->translator);
     }
 
     /**
@@ -370,7 +370,7 @@ class User extends Base
         $options = $this->createUserLanguageOptions($allUserGroups, $userGroupId);
 
         $this->form[] = new FormGroup(
-            $this->createUserLanguageSelect($entity, $options),
+            $this->createUserLanguageSelect($options),
             $this->createUserLanguageLabel()
         );
 
@@ -406,12 +406,11 @@ class User extends Base
     }
 
     /**
-     * @param Entity   $entity
      * @param Option[] $options
      *
      * @return Select
      */
-    protected function createUserLanguageSelect(Entity $entity, array $options): Select
+    protected function createUserLanguageSelect(array $options): Select
     {
         $attributes = [
             Select::ATTRIBUTE_SIZE => $this->getMultiSelectSize(
@@ -421,9 +420,7 @@ class User extends Base
             ),
         ];
 
-        $userGroupId = (string)$entity->getUserGroup()->getId();
-
-        $select = new Select('user_language_id', 'user_language_id', $userGroupId, true, null, $attributes);
+        $select = new Select('user_language_id', 'user_language_id', '', true, null, $attributes);
 
         foreach ($options as $option) {
             $select[] = $option;

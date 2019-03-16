@@ -96,11 +96,6 @@ class User extends FormAbstract
      */
     public function createEntity(int $entityId = null): IStringerEntity
     {
-        $userGroup    = new UserGroup(
-            0,
-            '',
-            ''
-        );
         $userLanguage = new UserLanguage(
             0,
             '',
@@ -111,10 +106,9 @@ class User extends FormAbstract
             '',
             '',
             '',
-            $userGroup,
-            $userLanguage,
             true,
-            true
+            true,
+            $userLanguage
         );
 
         return $entity;

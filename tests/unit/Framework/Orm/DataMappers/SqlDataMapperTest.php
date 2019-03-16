@@ -132,6 +132,23 @@ abstract class SqlDataMapperTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
+     * @param int   $atBindValues
+     * @param int   $atExecute
+     *
+     * @return IStatement|MockObject
+     */
+    protected function createWriteStatementWithAny(
+        int $atBindValues = self::EXPECTATION_ONCE,
+        int $atExecute = self::EXPECTATION_ONCE
+    ) {
+        $statement = $this->createStatement();
+        $statement->expects($this->getExpectation($atBindValues))->method('bindValues')->withAnyParameters();
+        $statement->expects($this->getExpectation($atExecute))->method('execute');
+
+        return $statement;
+    }
+
+    /**
      * @return IStatement|MockObject
      */
     protected function createStatement()

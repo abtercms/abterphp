@@ -17,7 +17,9 @@ class LoggerBootstrapper extends Bootstrapper implements ILazyBootstrapper
      */
     public function getBindings(): array
     {
-        return [LoggerInterface::class];
+        return [
+            LoggerInterface::class
+        ];
     }
 
     /**
@@ -29,6 +31,6 @@ class LoggerBootstrapper extends Bootstrapper implements ILazyBootstrapper
         $filePath = getenv(\AbterPhp\Framework\Constant\Env::DIR_LOGS);
         $logger->pushHandler(new \Monolog\Handler\StreamHandler($filePath . '/application.log', Logger::INFO));
 
-        $container->bindInstance(Logger::class, $logger);
+        $container->bindInstance(LoggerInterface::class, $logger);
     }
 }

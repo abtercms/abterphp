@@ -108,7 +108,6 @@ CREATE TABLE `users` (
   `email` varchar(127) NOT NULL,
   `username` varchar(64) NOT NULL DEFAULT '',
   `password` text NOT NULL,
-  `user_group_id` int(10) unsigned NOT NULL DEFAULT 0,
   `user_language_id` int(10) unsigned NOT NULL,
   `can_login` tinyint(1) unsigned NOT NULL DEFAULT 1,
   `is_gravatar_allowed` tinyint(1) unsigned NOT NULL DEFAULT 1,
@@ -118,11 +117,28 @@ CREATE TABLE `users` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `uniq_username` (`username`),
   UNIQUE KEY `uniq_email` (`email`),
-  KEY `user_group_id` (`user_group_id`),
   KEY `users_deleted_index` (`deleted`),
   KEY `user_language_id` (`user_language_id`),
-  CONSTRAINT `user_group_id` FOREIGN KEY (`user_group_id`) REFERENCES `user_groups` (`id`) ON DELETE NO ACTION,
   CONSTRAINT `user_language_id` FOREIGN KEY (`user_language_id`) REFERENCES `user_languages` (`id`) ON DELETE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Table structure and data for table `users`
+--
+
+CREATE TABLE `users_user_groups` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(10) unsigned NOT NULL DEFAULT 0,
+  `user_group_id` int(10) unsigned NOT NULL DEFAULT 0,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `deleted` tinyint(1) unsigned NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`),
+  KEY `user_group_id` (`user_group_id`),
+  KEY `user_group_deleted_index` (`deleted`),
+  CONSTRAINT `user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION,
+  CONSTRAINT `user_group_id` FOREIGN KEY (`user_group_id`) REFERENCES `user_groups` (`id`) ON DELETE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Provide admins access to all admin resources

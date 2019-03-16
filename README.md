@@ -169,7 +169,7 @@ before the first stable version.
    - Read / write roles separated for files
    - Read / write roles implemented for pages
    - Advanced settings access for pages
-   - Multiple user group for one user
+   - ~~Multiple user group for one user~~
    - New user roles: file uploader, designer
 5. Improve security implementing related headers as recommended:
    - https://medium.freecodecamp.org/secure-your-web-application-with-these-http-headers-fd66e0367628

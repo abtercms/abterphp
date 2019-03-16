@@ -36,9 +36,9 @@ class UserGroupSqlDataMapperTest extends SqlDataMapperTest
         $values = [[$identifier, \PDO::PARAM_STR], [$name, \PDO::PARAM_STR]];
         $this->prepare($sql, $this->createWriteStatement($values));
 
-        $entity = new UserGroup(0, $identifier, $name);
         $this->lastInsertId($nextId);
 
+        $entity = new UserGroup(0, $identifier, $name);
         $this->sut->add($entity);
 
         $this->assertSame($nextId, $entity->getId());
@@ -55,7 +55,6 @@ class UserGroupSqlDataMapperTest extends SqlDataMapperTest
         $values0 = [[$identifier, \PDO::PARAM_STR], [$name, \PDO::PARAM_STR]];
         $this->prepare($sql0, $this->createWriteStatement($values0), 0);
 
-        $entity = new UserGroup(0, $identifier, $name, $adminResources);
         $this->lastInsertId($nextId, 1);
 
         $sql1    = 'INSERT INTO user_groups_admin_resources (user_group_id, admin_resource_id) VALUES (?, ?)'; // phpcs:ignore
@@ -66,6 +65,7 @@ class UserGroupSqlDataMapperTest extends SqlDataMapperTest
         $values2 = [[$nextId, \PDO::PARAM_INT], [$adminResources[1]->getId(), \PDO::PARAM_INT]];
         $this->prepare($sql2, $this->createWriteStatement($values2), 3);
 
+        $entity = new UserGroup(0, $identifier, $name, $adminResources);
         $this->sut->add($entity);
 
         $this->assertSame($nextId, $entity->getId());
@@ -81,12 +81,11 @@ class UserGroupSqlDataMapperTest extends SqlDataMapperTest
         $values0 = [[$id, \PDO::PARAM_INT]];
         $this->prepare($sql0, $this->createWriteStatement($values0), 0);
 
-        $sql2    = 'UPDATE user_groups AS user_groups SET deleted = ? WHERE (id = ?)'; // phpcs:ignore
-        $values2 = [[1, \PDO::PARAM_INT], [$id, \PDO::PARAM_INT]];
-        $this->prepare($sql2, $this->createWriteStatement($values2), 1);
+        $sql1    = 'UPDATE user_groups AS user_groups SET deleted = ? WHERE (id = ?)'; // phpcs:ignore
+        $values1 = [[1, \PDO::PARAM_INT], [$id, \PDO::PARAM_INT]];
+        $this->prepare($sql1, $this->createWriteStatement($values1), 1);
 
         $entity = new UserGroup($id, $identifier, $name);
-
         $this->sut->delete($entity);
     }
 
@@ -147,8 +146,6 @@ class UserGroupSqlDataMapperTest extends SqlDataMapperTest
         $identifier = 'foo';
         $name       = 'bar';
 
-        $entity = new UserGroup($id, $identifier, $name);
-
         $sql0    = 'UPDATE user_groups AS user_groups SET identifier = ?, name = ? WHERE (id = ?) AND (deleted = 0)'; // phpcs:ignore
         $values0 = [[$identifier, \PDO::PARAM_STR], [$name, \PDO::PARAM_STR], [$id, \PDO::PARAM_INT]];
         $this->prepare($sql0, $this->createWriteStatement($values0), 0);
@@ -157,6 +154,7 @@ class UserGroupSqlDataMapperTest extends SqlDataMapperTest
         $values1 = [[$id, \PDO::PARAM_INT]];
         $this->prepare($sql1, $this->createWriteStatement($values1), 1);
 
+        $entity = new UserGroup($id, $identifier, $name);
         $this->sut->update($entity);
     }
 
@@ -166,8 +164,6 @@ class UserGroupSqlDataMapperTest extends SqlDataMapperTest
         $identifier     = 'foo';
         $name           = 'bar';
         $adminResources = [new AdminResource(38, ''), new AdminResource(84, '')];
-
-        $entity = new UserGroup($id, $identifier, $name, $adminResources);
 
         $sql0    = 'UPDATE user_groups AS user_groups SET identifier = ?, name = ? WHERE (id = ?) AND (deleted = 0)'; // phpcs:ignore
         $values0 = [[$identifier, \PDO::PARAM_STR], [$name, \PDO::PARAM_STR], [$id, \PDO::PARAM_INT]];
@@ -185,6 +181,7 @@ class UserGroupSqlDataMapperTest extends SqlDataMapperTest
         $values3 = [[$id, \PDO::PARAM_INT], [$adminResources[1]->getId(), \PDO::PARAM_INT]];
         $this->prepare($sql3, $this->createWriteStatement($values3), 3);
 
+        $entity = new UserGroup($id, $identifier, $name, $adminResources);
         $this->sut->update($entity);
     }
 

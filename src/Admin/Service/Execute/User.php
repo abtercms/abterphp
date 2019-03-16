@@ -53,11 +53,6 @@ class User extends RepoServiceAbstract
      */
     public function createEntity(int $entityId = null): IStringerEntity
     {
-        $userGroup    = new UserGroup(
-            0,
-            '',
-            ''
-        );
         $userLanguage = new UserLanguage(
             0,
             '',
@@ -68,7 +63,8 @@ class User extends RepoServiceAbstract
             '',
             '',
             '',
-            $userGroup,
+            false,
+            false,
             $userLanguage
         );
 
@@ -92,23 +88,26 @@ class User extends RepoServiceAbstract
         $password          = (string)$data['password'];
         $isGravatarAllowed = isset($data['is_gravatar_allowed']) ? (bool)$data['is_gravatar_allowed'] : false;
         $canLogin          = isset($data['can_login']) ? (bool)$data['can_login'] : false;
-        $userGroup         = new UserGroup(
-            (int)$data['user_group_id'],
-            '',
-            ''
-        );
         $userLanguage      = new UserLanguage(
             (int)$data['user_language_id'],
             '',
             ''
         );
+        $userGroups = [];
+        foreach ($data['user_group_ids'] as $userGroupId) {
+            $userGroups[] = new UserGroup(
+                (int)$userGroupId,
+                '',
+                ''
+            );
+        }
 
         $entity->setUsername($username)
             ->setEmail($email)
-            ->setUserGroup($userGroup)
-            ->setUserLanguage($userLanguage)
             ->setIsGravatarAllowed($isGravatarAllowed)
-            ->setCanLogin($canLogin);
+            ->setCanLogin($canLogin)
+            ->setUserLanguage($userLanguage)
+            ->setUserGroups($userGroups);
 
         if ($password) {
             $entity->setPassword($this->crypto->hashCrypt($password));

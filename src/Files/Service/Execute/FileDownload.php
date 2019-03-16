@@ -51,9 +51,8 @@ class FileDownload extends RepoServiceAbstract
     public function createEntity(int $entityId = null): IStringerEntity
     {
         $file         = new File(0, '', '', '');
-        $userGroup    = new UserGroup(0, '', '', []);
         $userLanguage = new UserLanguage(0, '', '');
-        $user         = new User(0, '', '', '', $userGroup, $userLanguage);
+        $user         = new User(0, '', '', '', false, false, $userLanguage);
 
         return new Entity(0, $file, $user, new \DateTime());
     }

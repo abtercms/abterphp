@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace AbterPhp\Admin\Console\Commands\User;
 
-use AbterPhp\Framework\Authorization\CacheManager;
-use AbterPhp\Framework\Crypto\Crypto;
 use AbterPhp\Admin\Domain\Entities\User;
 use AbterPhp\Admin\Orm\UserGroupRepo;
 use AbterPhp\Admin\Orm\UserLanguageRepo;
 use AbterPhp\Admin\Orm\UserRepo;
+use AbterPhp\Framework\Authorization\CacheManager;
+use AbterPhp\Framework\Crypto\Crypto;
 use Opulence\Console\Commands\Command;
 use Opulence\Console\Requests\Argument;
 use Opulence\Console\Requests\ArgumentTypes;
@@ -28,11 +28,11 @@ class Create extends Command
     const COMMAND_SUCCESS         = '<success>New user is created.</success>';
     const COMMAND_DRY_RUN_MESSAGE = '<info>Dry run prevented creating new user.</info>';
 
-    const ARGUMENT_USERNAME   = 'username';
-    const ARGUMENT_EMAIL      = 'email';
-    const ARGUMENT_PASSWORD   = 'password';
-    const ARGUMENT_USER_GROUP = 'user-group';
-    const ARGUMENT_USER_LANG  = 'lang';
+    const ARGUMENT_USERNAME    = 'username';
+    const ARGUMENT_EMAIL       = 'email';
+    const ARGUMENT_PASSWORD    = 'password';
+    const ARGUMENT_USER_GROUPS = 'usergroups';
+    const ARGUMENT_USER_LANG   = 'lang';
 
     const OPTION_CAN_LOGIN       = 'can-login';
     const SHORTENED_CAN_LOGIN    = 'l';
@@ -97,30 +97,41 @@ class Create extends Command
             ->addArgument(new Argument(static::ARGUMENT_USERNAME, ArgumentTypes::REQUIRED, 'Username'))
             ->addArgument(new Argument(static::ARGUMENT_EMAIL, ArgumentTypes::REQUIRED, 'Email'))
             ->addArgument(new Argument(static::ARGUMENT_PASSWORD, ArgumentTypes::REQUIRED, 'Password'))
-            ->addArgument(new Argument(static::ARGUMENT_USER_GROUP, ArgumentTypes::REQUIRED, 'User Group'))
+            ->addArgument(
+                new Argument(
+                    static::ARGUMENT_USER_GROUPS,
+                    ArgumentTypes::REQUIRED,
+                    'User Groups (comma separated list)'
+                )
+            )
             ->addArgument(new Argument(static::ARGUMENT_USER_LANG, ArgumentTypes::OPTIONAL, 'Language', 'en'))
-            ->addOption(new Option(
-                static::OPTION_CAN_LOGIN,
-                static::SHORTENED_CAN_LOGIN,
-                OptionTypes::OPTIONAL_VALUE,
-                'Can user log in',
-                '1'
-            ))
-            ->addOption(new Option(
-                static::OPTION_HAS_GRAVATAR,
-                static::SHORTENED_HAS_GRAVATAR,
-                OptionTypes::OPTIONAL_VALUE,
-                'Does user have gravatar (https://en.gravatar.com/)',
-                '1'
-            ))
-            ->addOption(new Option(
-                static::OPTION_DRY_RUN,
-                static::SHORTENED_DRY_RUN,
-                OptionTypes::OPTIONAL_VALUE,
-                'Dry run (default: 0)',
-                '0'
-            ))
-        ;
+            ->addOption(
+                new Option(
+                    static::OPTION_CAN_LOGIN,
+                    static::SHORTENED_CAN_LOGIN,
+                    OptionTypes::OPTIONAL_VALUE,
+                    'Can user log in',
+                    '1'
+                )
+            )
+            ->addOption(
+                new Option(
+                    static::OPTION_HAS_GRAVATAR,
+                    static::SHORTENED_HAS_GRAVATAR,
+                    OptionTypes::OPTIONAL_VALUE,
+                    'Does user have gravatar (https://en.gravatar.com/)',
+                    '1'
+                )
+            )
+            ->addOption(
+                new Option(
+                    static::OPTION_DRY_RUN,
+                    static::SHORTENED_DRY_RUN,
+                    OptionTypes::OPTIONAL_VALUE,
+                    'Dry run (default: 0)',
+                    '0'
+                )
+            );
     }
 
     /**
@@ -172,14 +183,17 @@ class Create extends Command
      */
     protected function getEntity(): User
     {
-        $username     = $this->getArgumentValue(static::ARGUMENT_USERNAME);
-        $email        = $this->getArgumentValue(static::ARGUMENT_EMAIL);
-        $ugIdentifier = $this->getArgumentValue(static::ARGUMENT_USER_GROUP);
-        $ulIdentifier = $this->getArgumentValue(static::ARGUMENT_USER_LANG);
-        $canLogin     = (bool)$this->getArgumentValue(static::ARGUMENT_USER_LANG);
-        $hasGravatar  = (bool)$this->getArgumentValue(static::ARGUMENT_USER_LANG);
+        $username      = $this->getArgumentValue(static::ARGUMENT_USERNAME);
+        $email         = $this->getArgumentValue(static::ARGUMENT_EMAIL);
+        $ugIdentifiers = $this->getArgumentValue(static::ARGUMENT_USER_GROUPS);
+        $ulIdentifier  = $this->getArgumentValue(static::ARGUMENT_USER_LANG);
+        $canLogin      = (bool)$this->getArgumentValue(static::ARGUMENT_USER_LANG);
+        $hasGravatar   = (bool)$this->getArgumentValue(static::ARGUMENT_USER_LANG);
 
-        $userGroup    = $this->userGroupRepo->getByIdentifier($ugIdentifier);
+        $userGroups = [];
+        foreach (explode(',', $ugIdentifiers) as $ugIdentifier) {
+            $userGroups[] = $this->userGroupRepo->getByIdentifier($ugIdentifier);
+        }
         $userLanguage = $this->userLanguageRepo->getByIdentifier($ulIdentifier);
 
         return new User(
@@ -187,10 +201,10 @@ class Create extends Command
             $username,
             $email,
             '',
-            $userGroup,
-            $userLanguage,
             $canLogin,
-            $hasGravatar
+            $hasGravatar,
+            $userLanguage,
+            $userGroups
         );
     }
 }

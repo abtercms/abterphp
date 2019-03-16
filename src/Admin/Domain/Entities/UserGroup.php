@@ -40,7 +40,8 @@ class UserGroup implements IStringerEntity
         $this->id             = $id;
         $this->identifier     = $identifier;
         $this->name           = $name;
-        $this->adminResources = $adminResources;
+
+        $this->setAdminResources($adminResources);
     }
 
     /**
@@ -114,6 +115,12 @@ class UserGroup implements IStringerEntity
      */
     public function setAdminResources(array $adminResources): UserGroup
     {
+        foreach ($adminResources as $adminResource) {
+            if (!($adminResource instanceof AdminResource)) {
+                throw new \InvalidArgumentException();
+            }
+        }
+
         $this->adminResources = $adminResources;
 
         return $this;

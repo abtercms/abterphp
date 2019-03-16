@@ -32,7 +32,6 @@ class UserSqlDataMapper extends SqlDataMapper implements IUserDataMapper
                     'username'            => [$entity->getUsername(), \PDO::PARAM_STR],
                     'email'               => [$entity->getEmail(), \PDO::PARAM_STR],
                     'password'            => [$entity->getPassword(), \PDO::PARAM_STR],
-                    'user_group_id'       => [$entity->getUserGroup()->getId(), \PDO::PARAM_INT],
                     'user_language_id'    => [$entity->getUserLanguage()->getId(), \PDO::PARAM_INT],
                     'can_login'           => [$entity->canLogin(), \PDO::PARAM_INT],
                     'is_gravatar_allowed' => [$entity->isGravatarAllowed(), \PDO::PARAM_INT],
@@ -44,6 +43,8 @@ class UserSqlDataMapper extends SqlDataMapper implements IUserDataMapper
         $statement->execute();
 
         $entity->setId($this->writeConnection->lastInsertId());
+
+        $this->addUserGroups($entity);
     }
 
     /**
@@ -55,8 +56,22 @@ class UserSqlDataMapper extends SqlDataMapper implements IUserDataMapper
             throw new \InvalidArgumentException(__CLASS__ . ':' . __FUNCTION__ . ' expects a User entity.');
         }
 
+        $rand     = rand(0, PHP_INT_MAX);
+        $username = sprintf('deleted-%d', $rand);
+
+        $this->deleteUserGroups($entity);
+
         $query = (new QueryBuilder())
-            ->update('users', 'users', ['deleted' => [1, \PDO::PARAM_INT]])
+            ->update(
+                'users',
+                'users',
+                [
+                    'deleted'  => [1, \PDO::PARAM_INT],
+                    'email'    => [sprintf('%s@example.com', $username), \PDO::PARAM_STR],
+                    'username' => [$username, \PDO::PARAM_STR],
+                    'password' => ['', \PDO::PARAM_STR],
+                ]
+            )
             ->where('id = ?')
             ->addUnnamedPlaceholderValue($entity->getId(), \PDO::PARAM_INT);
 
@@ -181,7 +196,6 @@ class UserSqlDataMapper extends SqlDataMapper implements IUserDataMapper
                     'username'            => [$entity->getUsername(), \PDO::PARAM_STR],
                     'email'               => [$entity->getEmail(), \PDO::PARAM_STR],
                     'password'            => [$entity->getPassword(), \PDO::PARAM_STR],
-                    'user_group_id'       => [$entity->getUserGroup()->getId(), \PDO::PARAM_INT],
                     'user_language_id'    => [$entity->getUserLanguage()->getId(), \PDO::PARAM_INT],
                     'can_login'           => [$entity->canLogin(), \PDO::PARAM_INT],
                     'is_gravatar_allowed' => [$entity->isGravatarAllowed(), \PDO::PARAM_INT],
@@ -193,6 +207,9 @@ class UserSqlDataMapper extends SqlDataMapper implements IUserDataMapper
         $statement = $this->writeConnection->prepare($query->getSql());
         $statement->bindValues($query->getParameters());
         $statement->execute();
+
+        $this->deleteUserGroups($entity);
+        $this->addUserGroups($entity);
     }
 
     /**
@@ -202,28 +219,54 @@ class UserSqlDataMapper extends SqlDataMapper implements IUserDataMapper
      */
     protected function loadEntity(array $data): Entity
     {
-        $userGroup = new UserGroup(
-            (int)$data['user_group_id'],
-            $data['user_group_identifier'],
-            $data['user_group_name']
-        );
+        if (empty($data['id'])) {
+            throw new \RuntimeException();
+        }
 
         $userLanguage = new UserLanguage(
             (int)$data['user_language_id'],
             $data['user_language_identifier'],
             ''
         );
+        $userGroups   = $this->loadUserGroups($data);
 
         return new Entity(
             (int)$data['id'],
             $data['username'],
             $data['email'],
             $data['password'],
-            $userGroup,
-            $userLanguage,
             (bool)$data['can_login'],
-            (bool)$data['is_gravatar_allowed']
+            (bool)$data['is_gravatar_allowed'],
+            $userLanguage,
+            $userGroups
         );
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return UserGroup[]
+     */
+    protected function loadUserGroups(array $data): array
+    {
+        if (empty($data['user_group_ids'])) {
+            return [];
+        }
+
+        $ids         = explode(',', $data['user_group_ids']);
+        $identifiers = explode(',', $data['user_group_identifiers']);
+        $names       = explode(',', $data['user_group_names']);
+
+        if (count($ids) !== count($identifiers) || count($ids) !== count($names)) {
+            throw new \LogicException();
+        }
+
+        $userGroups = [];
+        foreach ($ids as $idx => $userGroupId) {
+            $userGroups[] = new UserGroup((int)$userGroupId, $identifiers[$idx], $names[$idx]);
+        }
+
+        return $userGroups;
     }
 
     /**
@@ -238,27 +281,60 @@ class UserSqlDataMapper extends SqlDataMapper implements IUserDataMapper
                 'users.username',
                 'users.email',
                 'users.password',
-                'users.user_group_id',
-                'user_groups.identifier AS user_group_identifier',
-                'user_groups.name AS user_group_name',
                 'users.user_language_id',
-                'user_languages.identifier AS user_language_identifier',
+                'ul.identifier AS user_language_identifier',
                 'users.can_login',
-                'users.is_gravatar_allowed'
+                'users.is_gravatar_allowed',
+                'GROUP_CONCAT(ug.id) AS user_group_ids',
+                'GROUP_CONCAT(ug.identifier) AS user_group_identifiers',
+                'GROUP_CONCAT(ug.name) AS user_group_names'
             )
             ->from('users')
             ->innerJoin(
-                'user_groups',
-                'user_groups',
-                'user_groups.id = users.user_group_id AND user_groups.deleted = 0'
-            )
-            ->innerJoin(
                 'user_languages',
-                'user_languages',
-                'user_languages.id = users.user_language_id AND user_languages.deleted = 0'
+                'ul',
+                'ul.id = users.user_language_id AND ul.deleted = 0'
             )
+            ->leftJoin('users_user_groups', 'uug', 'uug.user_id = users.id AND uug.deleted = 0')
+            ->leftJoin('user_groups', 'ug', 'ug.id = uug.user_group_id AND ug.deleted = 0')
             ->where('users.deleted = 0');
 
         return $query;
+    }
+
+    /**
+     * @param Entity $entity
+     */
+    protected function deleteUserGroups(Entity $entity)
+    {
+        $query = (new QueryBuilder())
+            ->delete('users_user_groups')
+            ->where('user_id = ?')
+            ->addUnnamedPlaceholderValue($entity->getId(), \PDO::PARAM_INT);
+
+        $statement = $this->writeConnection->prepare($query->getSql());
+        $statement->bindValues($query->getParameters());
+        $statement->execute();
+    }
+
+    /**
+     * @param Entity $entity
+     */
+    protected function addUserGroups(Entity $entity)
+    {
+        foreach ($entity->getUserGroups() as $userGroup) {
+            $query = (new QueryBuilder())
+                ->insert(
+                    'users_user_groups',
+                    [
+                        'user_id'       => [$entity->getId(), \PDO::PARAM_INT],
+                        'user_group_id' => [$userGroup->getId(), \PDO::PARAM_INT],
+                    ]
+                );
+
+            $statement = $this->writeConnection->prepare($query->getSql());
+            $statement->bindValues($query->getParameters());
+            $statement->execute();
+        }
     }
 }

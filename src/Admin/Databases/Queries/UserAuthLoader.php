@@ -30,7 +30,8 @@ class UserAuthLoader implements AuthLoader
         $query = (new QueryBuilder())
             ->select('u.username AS v0', 'ug.identifier AS v1')
             ->from('users', 'u')
-            ->innerJoin('user_groups', 'ug', 'u.user_group_id = ug.id AND ug.deleted = 0')
+            ->innerJoin('users_user_groups', 'uug', 'uug.user_id = u.id AND uug.deleted = 0')
+            ->innerJoin('user_groups', 'ug', 'uug.user_group_id = ug.id AND ug.deleted = 0')
             ->where('u.deleted = 0')
         ;
 

@@ -109,12 +109,8 @@ class IntegrationTestCase extends BaseIntegrationTestCase
     {
         global $abterModuleManager;
 
-        $allMiddleware = require Config::get('paths', 'config.http') . '/middleware.php';
+        $globalMiddleware = require Config::get('paths', 'config.http') . '/middleware.php';
 
-        foreach ($abterModuleManager->getMiddleware() as $middleware) {
-            $allMiddleware = array_merge($middleware, $allMiddleware);
-        }
-
-        return $allMiddleware;
+        return array_merge($globalMiddleware, $abterModuleManager->getMiddleware());
     }
 }

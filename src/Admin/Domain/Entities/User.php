@@ -23,17 +23,17 @@ class User implements IStringerEntity
     /** @var string */
     protected $password;
 
-    /** @var UserGroup */
-    protected $userGroup;
-
-    /** @var UserLanguage */
-    protected $userLanguage;
-
     /** @var bool */
     protected $canLogin;
 
     /** @var bool */
     protected $isGravatarAllowed;
+
+    /** @var UserLanguage */
+    protected $userLanguage;
+
+    /** @var UserGroup[] */
+    protected $userGroups;
 
     /**
      * User constructor.
@@ -42,29 +42,30 @@ class User implements IStringerEntity
      * @param string       $username
      * @param string       $email
      * @param string       $password
-     * @param UserGroup    $userGroup
-     * @param UserLanguage $userLanguage
      * @param bool         $canLogin
      * @param bool         $isGravatarAllowed
+     * @param UserLanguage $userLanguage
+     * @param array        $userGroups
      */
     public function __construct(
         int $id,
         string $username,
         string $email,
         string $password,
-        UserGroup $userGroup,
+        bool $canLogin,
+        bool $isGravatarAllowed,
         UserLanguage $userLanguage,
-        bool $canLogin = true,
-        bool $isGravatarAllowed = true
+        array $userGroups = []
     ) {
         $this->id                = $id;
         $this->username          = $username;
         $this->email             = $email;
         $this->password          = $password;
-        $this->userGroup         = $userGroup;
-        $this->userLanguage      = $userLanguage;
         $this->canLogin          = $canLogin;
         $this->isGravatarAllowed = $isGravatarAllowed;
+        $this->userLanguage      = $userLanguage;
+
+        $this->setUserGroups($userGroups);
     }
 
     /**
@@ -144,46 +145,6 @@ class User implements IStringerEntity
     }
 
     /**
-     * @return UserGroup
-     */
-    public function getUserGroup(): UserGroup
-    {
-        return $this->userGroup;
-    }
-
-    /**
-     * @param UserGroup $userGroup
-     *
-     * @return $this
-     */
-    public function setUserGroup(UserGroup $userGroup): User
-    {
-        $this->userGroup = $userGroup;
-
-        return $this;
-    }
-
-    /**
-     * @return UserLanguage
-     */
-    public function getUserLanguage(): UserLanguage
-    {
-        return $this->userLanguage;
-    }
-
-    /**
-     * @param UserLanguage $userLanguage
-     *
-     * @return $this
-     */
-    public function setUserLanguage(UserLanguage $userLanguage): User
-    {
-        $this->userLanguage = $userLanguage;
-
-        return $this;
-    }
-
-    /**
      * @return bool
      */
     public function canLogin(): bool
@@ -219,6 +180,52 @@ class User implements IStringerEntity
     public function setIsGravatarAllowed(bool $isGravatarAllowed): User
     {
         $this->isGravatarAllowed = $isGravatarAllowed;
+
+        return $this;
+    }
+
+    /**
+     * @return UserLanguage
+     */
+    public function getUserLanguage(): UserLanguage
+    {
+        return $this->userLanguage;
+    }
+
+    /**
+     * @param UserLanguage $userLanguage
+     *
+     * @return $this
+     */
+    public function setUserLanguage(UserLanguage $userLanguage): User
+    {
+        $this->userLanguage = $userLanguage;
+
+        return $this;
+    }
+
+    /**
+     * @return UserGroup[]
+     */
+    public function getUserGroups(): array
+    {
+        return $this->userGroups;
+    }
+
+    /**
+     * @param UserGroup[] $userGroups
+     *
+     * @return $this
+     */
+    public function setUserGroups(array $userGroups): User
+    {
+        foreach ($userGroups as $userGroup) {
+            if (!($userGroup instanceof UserGroup)) {
+                throw new \InvalidArgumentException();
+            }
+        }
+
+        $this->userGroups = $userGroups;
 
         return $this;
     }
