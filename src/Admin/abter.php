@@ -26,6 +26,7 @@ return [
         Console\Commands\User\Create::class,
         Console\Commands\User\Delete::class,
         Console\Commands\User\UpdatePassword::class,
+        Console\Commands\UserGroup\Display::class,
     ],
     Module::ROUTE_PATHS        => [
         1000 => __DIR__ . '/routes.php',
