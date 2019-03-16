@@ -72,4 +72,5 @@ services:
     volumes:
       - .:/website
       - ./docker/nginx/conf.d:/etc/nginx/conf.d:ro
+      - ./docker/nginx/certs:/etc/nginx/certs:ro
     working_dir: /website
