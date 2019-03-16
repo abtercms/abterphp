@@ -50,30 +50,28 @@ class Loader
      */
     protected function sortModules(array $rawModules, array $sortedIds = []): array
     {
-        $sortedCount    = count($sortedIds);
-        $modules        = [];
-        $skippedModules = [];
-        foreach ($rawModules as $rawModule) {
-            foreach ($rawModule[Module::DEPENDENCIES] as $dep) {
-                if (!isset($sortedIds[$dep])) {
-                    $skippedModules[] = $rawModule;
-                    continue 2;
+        $sortedModules = [];
+        while (!empty($rawModules)) {
+            $sortedCount = count($sortedIds);
+
+            foreach ($rawModules as $idx => $rawModule) {
+                foreach ($rawModule[Module::DEPENDENCIES] as $dep) {
+                    if (!isset($sortedIds[$dep])) {
+                        continue 2;
+                    }
                 }
+
+                $sortedIds[$rawModule[Module::IDENTIFIER]] = $rawModule[Module::IDENTIFIER];
+                $sortedModules[] = $rawModule;
+                unset($rawModules[$idx]);
             }
-            $sortedIds[$rawModule[Module::IDENTIFIER]] = $rawModule[Module::IDENTIFIER];
 
-            $modules[] = $rawModule;
+            if ($sortedCount === count($sortedIds)) {
+                throw new \LogicException(static::ERROR_MSG_UNRESOLVABLE_DEPENDENCIES);
+            }
         }
 
-        if ($sortedCount === count($sortedIds)) {
-            throw new \LogicException(static::ERROR_MSG_UNRESOLVABLE_DEPENDENCIES);
-        }
-
-        if ($skippedModules) {
-            $modules = array_merge($modules, $this->sortModules($skippedModules, $sortedIds));
-        }
-
-        return $modules;
+        return $sortedModules;
     }
 
     /**

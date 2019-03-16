@@ -11,9 +11,6 @@ return [
     Module::HTTP_BOOTSTRAPPERS => [
         Bootstrappers\Http\Controllers\Website\ContactBootstrapper::class,
     ],
-    Module::ROUTE_PATHS        => [
-        2000 => __DIR__ . '/routes.php',
-    ],
     Module::EVENTS             => [
         Event::TEMPLATE_ENGINE_READY => [
             /** @see \AbterPhp\Contact\Events\Listeners\TemplateRegistrar::register */
@@ -22,6 +19,11 @@ return [
         Event::DASHBOARD_READY       => [
             /** @see \AbterPhp\Contact\Events\Listeners\DashboardRegistrar::handle() */
             sprintf('%s@handle', Events\Listeners\DashboardRegistrar::class),
+        ],
+    ],
+    Module::ROUTE_PATHS        => [
+        2000 => [
+            __DIR__ . '/routes.php',
         ],
     ],
     Module::MIGRATION_PATHS    => [

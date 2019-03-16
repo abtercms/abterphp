@@ -43,32 +43,22 @@ class Manager
     /**
      * @return Bootstrapper[]
      */
-    public function getHttpBootstrappers(): array
+    public function cacheWrapper(string $cacheKey, callable $callback): array
     {
         try {
-            if ($this->cacheBridge && $this->cacheBridge->has(static::CACHE_KEY_HTTP_BOOTSTRAPPERS)) {
-                return $this->cacheBridge->get(static::CACHE_KEY_HTTP_BOOTSTRAPPERS);
+            if ($this->cacheBridge && $this->cacheBridge->has($cacheKey)) {
+                return $this->cacheBridge->get($cacheKey);
             }
         } catch (\Exception $e) {
         }
 
-        if (null === $this->modules) {
-            $this->init();
-        }
+        $this->init();
 
-        $bootstrappers = [];
-        foreach ($this->modules as $module) {
-            if (isset($module[Module::BOOTSTRAPPERS])) {
-                $bootstrappers = array_merge($bootstrappers, $module[Module::BOOTSTRAPPERS]);
-            }
-            if (isset($module[Module::HTTP_BOOTSTRAPPERS])) {
-                $bootstrappers = array_merge($bootstrappers, $module[Module::HTTP_BOOTSTRAPPERS]);
-            }
-        }
+        $bootstrappers = call_user_func($callback, $this->modules);
 
         try {
             if ($this->cacheBridge) {
-                $this->cacheBridge->set(static::CACHE_KEY_HTTP_BOOTSTRAPPERS, $bootstrappers, PHP_INT_MAX);
+                $this->cacheBridge->set($cacheKey, $bootstrappers, PHP_INT_MAX);
             }
         } catch (\Exception $e) {
         }
@@ -79,37 +69,45 @@ class Manager
     /**
      * @return Bootstrapper[]
      */
+    public function getHttpBootstrappers(): array
+    {
+        $callback = function (array $modules) {
+            $bootstrappers = [];
+            foreach ($modules as $module) {
+                if (isset($module[Module::BOOTSTRAPPERS])) {
+                    $bootstrappers = array_merge($bootstrappers, $module[Module::BOOTSTRAPPERS]);
+                }
+                if (isset($module[Module::HTTP_BOOTSTRAPPERS])) {
+                    $bootstrappers = array_merge($bootstrappers, $module[Module::HTTP_BOOTSTRAPPERS]);
+                }
+            }
+
+            return $bootstrappers;
+        };
+
+        return $this->cacheWrapper(static::CACHE_KEY_HTTP_BOOTSTRAPPERS, $callback);
+    }
+
+    /**
+     * @return Bootstrapper[]
+     */
     public function getCliBootstrappers(): array
     {
-        try {
-            if ($this->cacheBridge && $this->cacheBridge->has(static::CACHE_KEY_CLI_BOOTSTRAPPERS)) {
-                return $this->cacheBridge->get(static::CACHE_KEY_CLI_BOOTSTRAPPERS);
+        $callback = function (array $modules) {
+            $bootstrappers = [];
+            foreach ($modules as $module) {
+                if (isset($module[Module::BOOTSTRAPPERS])) {
+                    $bootstrappers = array_merge($bootstrappers, $module[Module::BOOTSTRAPPERS]);
+                }
+                if (isset($module[Module::CLI_BOOTSTRAPPERS])) {
+                    $bootstrappers = array_merge($bootstrappers, $module[Module::CLI_BOOTSTRAPPERS]);
+                }
             }
-        } catch (\Exception $e) {
-        }
 
-        if (null === $this->modules) {
-            $this->init();
-        }
+            return $bootstrappers;
+        };
 
-        $bootstrappers = [];
-        foreach ($this->modules as $module) {
-            if (isset($module[Module::BOOTSTRAPPERS])) {
-                $bootstrappers = array_merge($bootstrappers, $module[Module::BOOTSTRAPPERS]);
-            }
-            if (isset($module[Module::CLI_BOOTSTRAPPERS])) {
-                $bootstrappers = array_merge($bootstrappers, $module[Module::CLI_BOOTSTRAPPERS]);
-            }
-        }
-
-        try {
-            if ($this->cacheBridge) {
-                $this->cacheBridge->set(static::CACHE_KEY_CLI_BOOTSTRAPPERS, $bootstrappers, PHP_INT_MAX);
-            }
-        } catch (\Exception $e) {
-        }
-
-        return $bootstrappers;
+        return $this->cacheWrapper(static::CACHE_KEY_CLI_BOOTSTRAPPERS, $callback);
     }
 
     /**
@@ -117,71 +115,26 @@ class Manager
      */
     public function getCommands(): array
     {
-        try {
-            if ($this->cacheBridge && $this->cacheBridge->has(static::CACHE_KEY_COMMANDS)) {
-                return $this->cacheBridge->get(static::CACHE_KEY_COMMANDS);
+        $callback = function (array $modules) {
+            $commands = [];
+            foreach ($modules as $module) {
+                if (isset($module[Module::COMMANDS])) {
+                    $commands = array_merge($commands, $module[Module::COMMANDS]);
+                }
             }
-        } catch (\Exception $e) {
-        }
 
-        if (null === $this->modules) {
-            $this->init();
-        }
+            return $commands;
+        };
 
-        $commands = [];
-        foreach ($this->modules as $module) {
-            if (isset($module[Module::COMMANDS])) {
-                $commands = array_merge($commands, $module[Module::COMMANDS]);
-            }
-        }
-
-        try {
-            if ($this->cacheBridge) {
-                $this->cacheBridge->set(static::CACHE_KEY_COMMANDS, $commands, PHP_INT_MAX);
-            }
-        } catch (\Exception $e) {
-        }
-
-        return $commands;
+        return $this->cacheWrapper(static::CACHE_KEY_COMMANDS, $callback);
     }
 
     /**
-     * @return Command[]
+     * @return string[][]
      */
     public function getEvents(): array
     {
-        try {
-            if ($this->cacheBridge && $this->cacheBridge->has(static::CACHE_KEY_EVENTS)) {
-                return $this->cacheBridge->get(static::CACHE_KEY_EVENTS);
-            }
-        } catch (\Exception $e) {
-        }
-
-        if (null === $this->modules) {
-            $this->init();
-        }
-
-        $allEvents = [];
-        foreach ($this->modules as $module) {
-            if (!isset($module[Module::EVENTS])) {
-                continue;
-            }
-            foreach ($module[Module::EVENTS] as $eventType => $events) {
-                if (!isset($allEvents[$eventType])) {
-                    $allEvents[$eventType] = [];
-                }
-                $allEvents[$eventType] = array_merge($allEvents[$eventType], $events);
-            }
-        }
-
-        try {
-            if ($this->cacheBridge) {
-                $this->cacheBridge->set(static::CACHE_KEY_EVENTS, $allEvents, PHP_INT_MAX);
-            }
-        } catch (\Exception $e) {
-        }
-
-        return $allEvents;
+        return $this->cacheWrapper(static::CACHE_KEY_EVENTS, $this->namedOptionsCallback(Module::EVENTS));
     }
 
     /**
@@ -189,127 +142,103 @@ class Manager
      */
     public function getMiddleware(): array
     {
-        try {
-            if ($this->cacheBridge && $this->cacheBridge->has(static::CACHE_KEY_MIDDLEWARE)) {
-                return $this->cacheBridge->get(static::CACHE_KEY_MIDDLEWARE);
-            }
-        } catch (\Exception $e) {
-        }
-
-        if (null === $this->modules) {
-            $this->init();
-        }
-
-        $middleware = [];
-        foreach ($this->modules as $module) {
-            if (!isset($module[Module::MIDDLEWARE])) {
-                continue;
-            }
-            foreach ($module[Module::MIDDLEWARE] as $priority => $prioMiddleware) {
-                if (!isset($middleware[$priority])) {
-                    $middleware[$priority] = [];
-                }
-                $middleware[$priority] = array_merge($middleware[$priority], $prioMiddleware);
-            }
-        }
-
-        try {
-            if ($this->cacheBridge) {
-                $this->cacheBridge->set(static::CACHE_KEY_MIDDLEWARE, $middleware, PHP_INT_MAX);
-            }
-        } catch (\Exception $e) {
-        }
-
-        return $middleware;
+        return $this->cacheWrapper(
+            static::CACHE_KEY_MIDDLEWARE,
+            $this->prioritizedOptionsCallback(Module::MIDDLEWARE)
+        );
     }
 
     /**
-     * @return string[]
+     * @return string[][]
      */
     public function getRoutePaths(): array
     {
-        try {
-            if ($this->cacheBridge && $this->cacheBridge->has(static::CACHE_KEY_ROUTE_PATHS)) {
-                return $this->cacheBridge->get(static::CACHE_KEY_ROUTE_PATHS);
-            }
-        } catch (\Exception $e) {
-        }
-
-        if (null === $this->modules) {
-            $this->init();
-        }
-
-        $paths = [];
-        foreach ($this->modules as $module) {
-            if (!isset($module[Module::ROUTE_PATHS])) {
-                continue;
-            }
-            foreach ($module[Module::ROUTE_PATHS] as $priority => $path) {
-                $paths[$priority][] = $path;
-            }
-        }
-
-        ksort($paths);
-
-        $flatPaths = [];
-        foreach ($paths as $priorityPaths) {
-            $flatPaths = array_merge($flatPaths, $priorityPaths);
-        }
-
-        try {
-            if ($this->cacheBridge) {
-                $this->cacheBridge->set(static::CACHE_KEY_ROUTE_PATHS, $flatPaths, PHP_INT_MAX);
-            }
-        } catch (\Exception $e) {
-        }
-
-        return $flatPaths;
+        return $this->cacheWrapper(
+            static::CACHE_KEY_ROUTE_PATHS,
+            $this->prioritizedOptionsCallback(Module::ROUTE_PATHS)
+        );
     }
 
     /**
-     * @return string[]
+     * @return string[][]
      */
     public function getMigrationPaths(): array
     {
-        try {
-            if ($this->cacheBridge && $this->cacheBridge->has(static::CACHE_KEY_MIGRATION_PATHS)) {
-                return $this->cacheBridge->get(static::CACHE_KEY_MIGRATION_PATHS);
-            }
-        } catch (\Exception $e) {
-        }
+        return $this->cacheWrapper(
+            static::CACHE_KEY_MIGRATION_PATHS,
+            $this->prioritizedOptionsCallback(Module::MIGRATION_PATHS)
+        );
+    }
 
-        if (null === $this->modules) {
-            $this->init();
-        }
-
-        $paths = [];
-        foreach ($this->modules as $module) {
-            if (!isset($module[Module::MIGRATION_PATHS])) {
-                continue;
-            }
-            foreach ($module[Module::MIGRATION_PATHS] as $priority => $priorityPaths) {
-                if (!isset($paths[$priority])) {
-                    $paths[$priority] = [];
+    /**
+     * Creates a callback that will simply merge a 2-dimensions array
+     *
+     * Examples
+     * Module A: ['A' => ['a', 'b', 'c'], 'B' => ['d', 'b']]
+     * Module B: ['A' => ['a', 'b'], 'C' => ['a']]
+     * Result:   ['A' => ['a', 'b', 'c', 'a', 'b'], 'B' => ['d', 'b'], 'C' => ['a']]
+     *
+     * @param string $option
+     *
+     * @return callable
+     */
+    protected function namedOptionsCallback(string $option): callable
+    {
+        return function ($modules) use ($option) {
+            $merged = [];
+            foreach ($modules as $module) {
+                if (!isset($module[$option])) {
+                    continue;
                 }
-                $paths[$priority] = array_merge($paths[$priority], $priorityPaths);
+                foreach ($module[$option] as $eventType => $events) {
+                    if (!isset($merged[$eventType])) {
+                        $merged[$eventType] = [];
+                    }
+                    $merged[$eventType] = array_merge($merged[$eventType], $events);
+                }
             }
-        }
 
-        ksort($paths);
+            return $merged;
+        };
+    }
 
-        $flatPaths = [];
-        foreach ($paths as $priorityPaths) {
-            $flatPaths = array_merge($flatPaths, $priorityPaths);
-        }
-
-        try {
-            if ($this->cacheBridge) {
-                $this->cacheBridge->set(static::CACHE_KEY_ROUTE_PATHS, $flatPaths, PHP_INT_MAX);
+    /**
+     * Creates a callback that will try to keep the prioritization of the options in place
+     *
+     * Examples
+     * Module A: [3 => ['a', 'b', 'c'], 10 => ['d', 'b'], 12 => ['a']]
+     * Module B: [10 => ['a', 'b'], 14 => ['a']]
+     * Result:   [3 => ['a', 'b', 'c'], 10 => ['d', 'b', 'a', 'b'], 12 => ['a'], 14 => ['a']]
+     *
+     * @param string $option
+     *
+     * @return callable
+     */
+    protected function prioritizedOptionsCallback(string $option): callable
+    {
+        return function ($modules) use ($option) {
+            $merged = [];
+            foreach ($modules as $module) {
+                if (!isset($module[$option])) {
+                    continue;
+                }
+                foreach ($module[$option] as $priority => $priorityPaths) {
+                    if (!isset($merged[$priority])) {
+                        $merged[$priority] = [];
+                    }
+                    $merged[$priority] = array_merge($merged[$priority], $priorityPaths);
+                }
             }
-        } catch (\Exception $e) {
-        }
 
-        return $flatPaths;
+            ksort($merged);
+
+            $flattened = [];
+            foreach ($merged as $priorityPaths) {
+                $flattened = array_merge($flattened, $priorityPaths);
+            }
+
+            return $flattened;
+        };
     }
 
     /**

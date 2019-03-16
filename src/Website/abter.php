@@ -16,9 +16,6 @@ return [
         Bootstrappers\Http\Controllers\Website\IndexBootstrapper::class,
         Bootstrappers\Http\Views\BuildersBootstrapper::class,
     ],
-    Module::ROUTE_PATHS        => [
-        50000 => __DIR__ . '/routes.php',
-    ],
     Module::EVENTS             => [
         Event::TEMPLATE_ENGINE_READY => [
             /** @see \AbterPhp\Website\Events\Listeners\TemplateRegistrar::register */
@@ -35,6 +32,11 @@ return [
         Event::DASHBOARD_READY       => [
             /** @see \AbterPhp\Website\Events\Listeners\DashboardRegistrar::handle() */
             sprintf('%s@handle', Events\Listeners\DashboardRegistrar::class),
+        ],
+    ],
+    Module::ROUTE_PATHS        => [
+        50000 => [
+            __DIR__ . '/routes.php',
         ],
     ],
     Module::MIGRATION_PATHS    => [

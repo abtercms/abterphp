@@ -28,9 +28,6 @@ return [
         Console\Commands\User\UpdatePassword::class,
         Console\Commands\UserGroup\Display::class,
     ],
-    Module::ROUTE_PATHS        => [
-        1000 => __DIR__ . '/routes.php',
-    ],
     Module::EVENTS             => [
         Event::AUTH_READY         => [
             /** @see Events\Listeners\AuthRegistrar::register */
@@ -53,6 +50,11 @@ return [
         1000 => [
             Http\Middleware\CheckCsrfToken::class,
             Http\Middleware\Security::class,
+        ],
+    ],
+    Module::ROUTE_PATHS        => [
+        1000 => [
+            __DIR__ . '/routes.php',
         ],
     ],
     Module::MIGRATION_PATHS    => [

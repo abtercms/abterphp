@@ -15,8 +15,10 @@ return [
     Module::COMMANDS      => [
         Console\Commands\File\Cleanup::class,
     ],
-    Module::ROUTE_PATHS   => [
-        800 => __DIR__ . '/routes.php',
+    Module::ROUTE_PATHS        => [
+        800 => [
+            __DIR__ . '/routes.php',
+        ],
     ],
     Module::EVENTS        => [
         Event::AUTH_READY            => [

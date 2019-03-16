@@ -151,6 +151,7 @@ AbterPHP is based on [Opulence](https://www.opulencephp.com/), but uses a few mo
  
 If you want to contribute code you'll also need to get familiar with these tools:
  - [PhpUnit](https://phpunit.de/) for unit tests
+ - [vfsStream](https://github.com/mikey179/vfsStream) for mocking the filesystem
  - [PHP_CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer) for code formatting
  - [PHPMD - PHP Mess Detector](https://phpmd.org/) for code quality
  
