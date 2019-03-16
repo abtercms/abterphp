@@ -30,6 +30,110 @@ acceptable and there's hardly any documentation for it. Therefore the current st
 Expect this to change rapidly though as there's a lot of ground work already done for good code coverage and proper API 
 to be implemented.
 
+## Installation
+
+### Development
+
+#### Pre-requisite: Grab the source code
+
+This should be fairly obvious if you're reading it, but feel free to download the code from Github or clone the repository.
+Just use the "Clone or download" button to get you started.
+
+#### Pre-requisite: Install [docker](https://docker.com/)
+
+The recommended way of getting started with the AbterPHP is via docker. While it is not necessarily mandatory, some of the
+documentation might assume that all developers use `docker` for development. If you want to run the code, you'll have to
+ensure that you have the right version of PHP, with the neccessary modules and that you have at least a supported version
+of MySQL (or later PostgreSQL). While having Redis or Memcached is great, those are not mandatory.
+
+#### Pre-requisite: Install [mkcert](https://mkcert.com/)
+
+Since security is a top priority, pure http is not supported out of the box, therefore you'll need to install a certificate. 
+The recommended way is using `mkcert`. While it is not necessarily mandatory, some of the
+documentation might assume that all developers use `mkcert` for development. 
+
+#### Pre-requisite: Open the project in a console
+
+The rest of the installation documentation will assume that `.` is the root directory of the project.
+
+#### Pre-requisite: Add abtercms.test as localhost in `/etc/hosts` on Linux and OSX or `???` on Windows.
+
+```bash
+# /etc/hosts
+# [...]
+127.0.0.1	abtercms.test
+```
+
+#### Create certificate
+
+Since security is a top priority, you'll need to create a certificate and move it into
+
+```bash
+mkcert abtercms.test "*.abtercms.test"
+mv abtercms.test+1* ./docker/nginx/certs/
+```
+
+#### Set some permissions
+
+```bash
+chmod -R 0777 ./tmp ./public/tmp
+chmod +x apex
+
+```
+
+#### Spin up the containers
+
+```
+docker-compose pull
+docker-compose up -d
+```
+
+#### Install the dependencies
+
+You first need to install composer.phar locally and than use that to install dependencies.
+
+You need to log into the PHP container to do this:
+
+```bash
+docker-compose exec php sh
+> php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+> php -r "if (hash_file('sha384', 'composer-setup.php') === '48e3236262b34d30969dca3c37281b3b4bbe3221bda826ac6a9a62d6444cdb0dcd0615698a5cbe587c3f0fe57a54d8f5') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
+> php composer-setup.php
+> php -r "unlink('composer-setup.php');"
+> php composer.phar install
+> exit
+```
+
+#### Ensure your settings are sane
+
+Although we try to provide a reasonable set of settings for getting started quickly, at this point you may want to edit
+`config/environment/.env.app.php` to make your settings sane for your needs. Please note however that these values can
+be and in some cases will be overwritten by your environment variables. This means that if you are running the system
+with `docker-compose` than you might need to edit some of these values in `docker-compose.yml`.
+
+If you do not have the file `config/environment/.env.app.php` then something must have gone wrong in the previous step,
+because it should be created during `php composer.phar install`.
+
+More documentation on the settings will be written later.
+
+#### Install the db schema and create a new admin user
+
+You need to log into the PHP container (again) to do this:
+
+```
+docker-compose exec php sh
+> ./apex migrations:up
+> ./apex user:create {username} {email} {strongPassword} admin en
+> exit
+```
+
+If everything went well, you should be able to log in with your new user at `https://abtercms.test/login-iddqd`, given
+that you haven't yet changed your `ADMIN_LOGIN_PATH` environment variable in `config/environment/.env.app.php`.
+
+### Production
+
+Since AbterPHP is in **Early Preview** state, you probably shouldn't deploy it to production at the moment.
+
 ## Stack
 
 AbterPHP is based on [Opulence](https://www.opulencephp.com/), but uses a few more projects alongside Opulence:
@@ -40,6 +144,10 @@ AbterPHP is based on [Opulence](https://www.opulencephp.com/), but uses a few mo
  - [Minify](https://www.minifier.org/) for minifying assets (Website module)
  - [Swiftmailer](https://swiftmailer.symfony.com/) for sending emails (Contact module)
  - [Slugify](https://github.com/cocur/slugify) for creating web-safe identifiers (Admin module)
+ - [jQuery](https://jquery.com/) for most of the JavaScript in place (Admin module)
+ - [js-sha3](https://github.com/emn178/js-sha3) for browser-side encryption (Admin module)
+ - [Trumbowyg](https://alex-d.github.io/Trumbowyg/documentation/) as a wysiwyg solution (Admin module)
+ - [zxcvbn](https://github.com/dropbox/zxcvbn) from Dropbox for password strength estimations (Admin module)
  
 If you want to contribute code you'll also need to get familiar with these tools:
  - [PhpUnit](https://phpunit.de/) for unit tests
@@ -73,6 +181,8 @@ before the first stable version.
 9. Modular asset management
 10. Complete test automation and automatic reviews set up
 11. Refactor module manager
+12. Test AbterPHP on OSX and Windows 10.
+13. Ensure that user creation enforces good passwords in CLI.
 
 ### First beta musts:
 
