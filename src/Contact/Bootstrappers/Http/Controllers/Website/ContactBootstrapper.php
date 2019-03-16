@@ -10,12 +10,12 @@ use AbterPhp\Contact\Service\Execute\Contact as ContactService;
 use AbterPhp\Contact\Validation\Factory\Contact as ValidatorFactory;
 use AbterPhp\Framework\Email\Service;
 use AbterPhp\Framework\Exception\Config;
-use Monolog\Logger;
 use Opulence\Ioc\Bootstrappers\Bootstrapper;
 use Opulence\Ioc\Bootstrappers\ILazyBootstrapper;
 use Opulence\Ioc\IContainer;
 use Opulence\Routing\Urls\UrlException;
 use Opulence\Routing\Urls\UrlGenerator;
+use Psr\Log\LoggerInterface;
 
 class ContactBootstrapper extends Bootstrapper implements ILazyBootstrapper
 {
@@ -90,8 +90,8 @@ class ContactBootstrapper extends Bootstrapper implements ILazyBootstrapper
      */
     public function createController(IContainer $container, ContactService $service): ContactController
     {
-        /** @var Logger $logger */
-        $logger = $container->resolve(Logger::class);
+        /** @var LoggerInterface $logger */
+        $logger = $container->resolve(LoggerInterface::class);
 
         $successPage = getenv(Env::DEFAULT_SUCCESS_PAGE);
         $errorPage   = getenv(Env::DEFAULT_ERROR_PAGE);

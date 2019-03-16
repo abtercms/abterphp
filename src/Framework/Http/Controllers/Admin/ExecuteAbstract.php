@@ -8,13 +8,13 @@ use AbterPhp\Framework\I18n\ITranslator;
 use AbterPhp\Framework\Service\Execute\IRepoService;
 use AbterPhp\Framework\Session\FlashService;
 use Casbin\Exceptions\CasbinException;
-use Monolog\Logger;
 use Opulence\Http\Responses\RedirectResponse;
 use Opulence\Http\Responses\Response;
 use Opulence\Orm\OrmException;
 use Opulence\Routing\Urls\URLException;
 use Opulence\Routing\Urls\UrlGenerator;
 use Opulence\Sessions\ISession;
+use Psr\Log\LoggerInterface;
 
 /**
  * @SuppressWarnings(PHPMD.ShortVariable)
@@ -54,18 +54,18 @@ abstract class ExecuteAbstract extends AdminAbstract
     /** @var ISession */
     protected $session;
 
-    /** @var Logger */
+    /** @var LoggerInterface */
     protected $logger;
 
     /**
      * ExecuteAbstract constructor.
      *
-     * @param FlashService $flashService
-     * @param ITranslator  $translator
-     * @param UrlGenerator $urlGenerator
-     * @param IRepoService $repoService
-     * @param ISession     $session
-     * @param Logger       $logger
+     * @param FlashService    $flashService
+     * @param ITranslator     $translator
+     * @param UrlGenerator    $urlGenerator
+     * @param IRepoService    $repoService
+     * @param ISession        $session
+     * @param LoggerInterface $logger
      */
     public function __construct(
         FlashService $flashService,
@@ -73,7 +73,7 @@ abstract class ExecuteAbstract extends AdminAbstract
         UrlGenerator $urlGenerator,
         IRepoService $repoService,
         ISession $session,
-        Logger $logger
+        LoggerInterface $logger
     ) {
         parent::__construct($flashService, $translator, $urlGenerator);
 

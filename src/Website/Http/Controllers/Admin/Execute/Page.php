@@ -8,9 +8,9 @@ use AbterPhp\Framework\Http\Controllers\Admin\ExecuteAbstract;
 use AbterPhp\Framework\I18n\ITranslator;
 use AbterPhp\Framework\Session\FlashService;
 use AbterPhp\Website\Service\Execute\Page as RepoService;
-use Monolog\Logger;
 use Opulence\Routing\Urls\UrlGenerator;
 use Opulence\Sessions\ISession;
+use Psr\Log\LoggerInterface;
 
 class Page extends ExecuteAbstract
 {
@@ -23,12 +23,12 @@ class Page extends ExecuteAbstract
     /**
      * Page constructor.
      *
-     * @param FlashService $flashService
-     * @param ITranslator  $translator
-     * @param UrlGenerator $urlGenerator
-     * @param RepoService  $repoService
-     * @param ISession     $session
-     * @param Logger       $logger
+     * @param FlashService    $flashService
+     * @param ITranslator     $translator
+     * @param UrlGenerator    $urlGenerator
+     * @param RepoService     $repoService
+     * @param ISession        $session
+     * @param LoggerInterface $logger
      */
     public function __construct(
         FlashService $flashService,
@@ -36,7 +36,7 @@ class Page extends ExecuteAbstract
         UrlGenerator $urlGenerator,
         RepoService $repoService,
         ISession $session,
-        Logger $logger
+        LoggerInterface $logger
     ) {
         parent::__construct(
             $flashService,

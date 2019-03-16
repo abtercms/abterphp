@@ -2,8 +2,8 @@
 
 namespace AbterPhp\Framework\Debug\Exceptions\Handlers\Whoops;
 
-use Monolog\Logger;
 use Opulence\Debug\Exceptions\Handlers\IExceptionHandler;
+use Psr\Log\LoggerInterface;
 use Throwable;
 
 /**
@@ -11,18 +11,18 @@ use Throwable;
  */
 class ExceptionHandler implements IExceptionHandler
 {
-    /** @var Logger */
+    /** @var LoggerInterface */
     protected $logger;
 
     /** @var ExceptionRenderer */
     protected $whoopsRenderer;
 
     /**
-     * @param Logger            $logger
+     * @param LoggerInterface   $logger
      * @param ExceptionRenderer $whoopsRenderer
      * @param array             $exceptionsSkipped
      */
-    public function __construct(Logger $logger, ExceptionRenderer $whoopsRenderer, array $exceptionsSkipped)
+    public function __construct(LoggerInterface $logger, ExceptionRenderer $whoopsRenderer, array $exceptionsSkipped)
     {
         $this->logger         = $logger;
         $this->whoopsRenderer = $whoopsRenderer;

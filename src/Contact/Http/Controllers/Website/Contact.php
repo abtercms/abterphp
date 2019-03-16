@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace AbterPhp\Contact\Http\Controllers\Website;
 
 use AbterPhp\Contact\Service\Execute\Contact as ContactService;
-use Monolog\Logger;
 use Opulence\Http\Responses\RedirectResponse;
 use Opulence\Http\Responses\Response;
 use Opulence\Routing\Controller;
+use Psr\Log\LoggerInterface;
 
 class Contact extends Controller
 {
@@ -18,7 +18,7 @@ class Contact extends Controller
     /** @var ContactService */
     protected $contactService;
 
-    /** @var Logger */
+    /** @var LoggerInterface */
     protected $logger;
 
     /** @var string */
@@ -32,7 +32,7 @@ class Contact extends Controller
      *
      * @param ContactService $service
      */
-    public function __construct(ContactService $service, Logger $logger, string $successUrl, string $errorUrl)
+    public function __construct(ContactService $service, LoggerInterface $logger, string $successUrl, string $errorUrl)
     {
         $this->contactService = $service;
         $this->logger         = $logger;

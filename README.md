@@ -163,7 +163,7 @@ before the first stable version.
 
 1. Make the frontend framework decoupled from the backend system
 2. Pick new frontend framework for backend system and implement it
-3. Use ILogger instead of Logger
+3. ~~Use ILogger instead of Logger~~
 4. More fine grained authorization
    - Read / write roles separated for files
    - Read / write roles implemented for pages

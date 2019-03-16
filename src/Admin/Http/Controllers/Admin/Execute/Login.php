@@ -5,16 +5,16 @@ declare(strict_types=1);
 namespace AbterPhp\Admin\Http\Controllers\Admin\Execute;
 
 use AbterPhp\Admin\Constant\Routes;
+use AbterPhp\Admin\Service\Login as LoginService;
+use AbterPhp\Admin\Service\SessionInitializer;
 use AbterPhp\Framework\Http\Controllers\ControllerAbstract;
 use AbterPhp\Framework\I18n\ITranslator;
 use AbterPhp\Framework\Session\FlashService;
-use AbterPhp\Admin\Service\Login as LoginService;
-use AbterPhp\Admin\Service\SessionInitializer;
-use Monolog\Logger;
 use Opulence\Http\Responses\RedirectResponse;
 use Opulence\Http\Responses\Response;
 use Opulence\Orm\OrmException;
 use Opulence\QueryBuilders\InvalidQueryException;
+use Psr\Log\LoggerInterface;
 
 class Login extends ControllerAbstract
 {
@@ -42,7 +42,7 @@ class Login extends ControllerAbstract
     /** @var LoginService */
     protected $loginService;
 
-    /** @var Logger */
+    /** @var LoggerInterface */
     protected $logger;
 
     /**
@@ -52,14 +52,14 @@ class Login extends ControllerAbstract
      * @param SessionInitializer $sessionInitializer
      * @param ITranslator        $translator
      * @param LoginService       $loginService
-     * @param Logger             $logger
+     * @param LoggerInterface    $logger
      */
     public function __construct(
         FlashService $flashService,
         SessionInitializer $sessionInitializer,
         ITranslator $translator,
         LoginService $loginService,
-        Logger $logger
+        LoggerInterface $logger
     ) {
         parent::__construct($flashService);
 
