@@ -59,7 +59,7 @@ class LoaderTest extends \PHPUnit\Framework\TestCase
      */
     public function testComplexCircularDependencyFound()
     {
-        $loader = new Loader([__DIR__ . '/fixtures/circular-depency'], static::MODULE_FILE_NAME);
+        $loader = new Loader([__DIR__ . '/fixtures/circular-dependency'], static::MODULE_FILE_NAME);
 
         $loader->loadModules();
     }
