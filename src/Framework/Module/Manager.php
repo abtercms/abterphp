@@ -43,7 +43,7 @@ class Manager
     /**
      * @return Bootstrapper[]
      */
-    public function cacheWrapper(string $cacheKey, callable $callback): array
+    protected function cacheWrapper(string $cacheKey, callable $callback): array
     {
         try {
             if ($this->cacheBridge && $this->cacheBridge->has($cacheKey)) {
