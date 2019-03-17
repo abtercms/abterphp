@@ -187,9 +187,6 @@ before the first stable version.
 15. Remove $value in Select constructor
 16. Switch `$attribute` and `$tag` order
 17. AbterPhp\Framework\Form\Factory\Base::getMultiSelectSize -> move to helper or Select
-18. Ensure user group identifier does not contain a comma (explode issue)
-19. Fix empty exceptions (\LogicException, \RuntimeException, \InvalidArgumentException)
-20. Test loading entities that don't exist or faulty
 
 ### First beta musts:
 
@@ -203,6 +200,9 @@ before the first stable version.
 8. Review and refactor global `$abterModuleManager` usage
 9. Must-accept-cookie module
 10. More useful dashboard (community input?)
+11. Test loading entities that don't exist or faulty
+12. Fix empty exceptions (\LogicException, \RuntimeException, \InvalidArgumentException)
+13. Ensure identifiers do not contain a comma (explode issue)
 
 ### 1.0 musts:
 
