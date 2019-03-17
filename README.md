@@ -183,6 +183,13 @@ before the first stable version.
 11. Refactor module manager
 12. Test AbterPHP on OSX and Windows 10.
 13. Ensure that user creation enforces good passwords in CLI.
+14. Ulid IDS
+15. Remove $value in Select constructor
+16. Switch `$attribute` and `$tag` order
+17. AbterPhp\Framework\Form\Factory\Base::getMultiSelectSize -> move to helper or Select
+18. Ensure user group identifier does not contain a comma (explode issue)
+19. Fix empty exceptions (\LogicException, \RuntimeException, \InvalidArgumentException)
+20. Test loading entities that don't exist or faulty
 
 ### First beta musts:
 
