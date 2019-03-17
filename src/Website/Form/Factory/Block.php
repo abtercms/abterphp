@@ -4,21 +4,23 @@ declare(strict_types=1);
 
 namespace AbterPhp\Website\Form\Factory;
 
+use AbterPhp\Framework\Constant\Session;
 use AbterPhp\Framework\Form\Container\FormGroup;
 use AbterPhp\Framework\Form\Element\Input;
 use AbterPhp\Framework\Form\Element\Select;
 use AbterPhp\Framework\Form\Element\Textarea;
 use AbterPhp\Framework\Form\Factory\Base;
 use AbterPhp\Framework\Form\Factory\IFormFactory;
-use AbterPhp\Framework\Form\Form;
 use AbterPhp\Framework\Form\IForm;
 use AbterPhp\Framework\Form\Label\Countable;
 use AbterPhp\Framework\Form\Label\Label;
 use AbterPhp\Framework\Html\Component\Option;
 use AbterPhp\Framework\I18n\ITranslator;
+use AbterPhp\Website\Constant\Authorization;
 use AbterPhp\Website\Domain\Entities\Block as Entity;
 use AbterPhp\Website\Domain\Entities\BlockLayout;
 use AbterPhp\Website\Orm\BlockLayoutRepo;
+use Casbin\Enforcer;
 use Opulence\Orm\IEntity;
 use Opulence\Sessions\ISession;
 
@@ -30,18 +32,27 @@ class Block extends Base
     /** @var BlockLayoutRepo */
     protected $layoutRepo;
 
+    /** @var Enforcer */
+    protected $enforcer;
+
     /**
      * Block constructor.
      *
      * @param ISession        $session
      * @param ITranslator     $translator
      * @param BlockLayoutRepo $layoutRepo
+     * @param Enforcer        $enforcer
      */
-    public function __construct(ISession $session, ITranslator $translator, BlockLayoutRepo $layoutRepo)
-    {
+    public function __construct(
+        ISession $session,
+        ITranslator $translator,
+        BlockLayoutRepo $layoutRepo,
+        Enforcer $enforcer
+    ) {
         parent::__construct($session, $translator);
 
         $this->layoutRepo = $layoutRepo;
+        $this->enforcer   = $enforcer;
     }
 
     /**
@@ -58,13 +69,20 @@ class Block extends Base
             throw new \InvalidArgumentException(IFormFactory::ERR_MSG_ENTITY_MISSING);
         }
 
+        $username        = $this->session->get(Session::USERNAME);
+        $advancedAllowed = $this->enforcer->enforce(
+            $username,
+            Authorization::RESOURCE_PAGES,
+            Authorization::ROLE_PAGES_ADVANCED_WRITE
+        );
+
         $this->createForm($action, $method)
             ->addDefaultElements()
             ->addIdentifier($entity)
             ->addTitle($entity)
             ->addBody($entity)
             ->addLayoutId($entity)
-            ->addLayout($entity)
+            ->addLayout($entity, $advancedAllowed)
             ->addDefaultButtons($showUrl);
 
         $form = $this->form;
@@ -169,7 +187,7 @@ class Block extends Base
      */
     protected function createLayoutIdOptions(array $allLayouts, ?int $layoutId): array
     {
-        $options = [];
+        $options   = [];
         $options[] = new Option('form:none', null, [Option::ATTRIBUTE_VALUE => ''], $this->translator);
         foreach ($allLayouts as $layout) {
             $attributes = [Option::ATTRIBUTE_VALUE => (string)$layout->getId()];
@@ -211,15 +229,48 @@ class Block extends Base
 
     /**
      * @param Entity $entity
+     * @param bool   $advancedAllowed
+     *
+     * @return Page
+     */
+    protected function addLayout(Entity $entity, bool $advancedAllowed): Block
+    {
+        if (!$advancedAllowed) {
+            return $this->addLayoutHidden($entity);
+        }
+
+        return $this->addLayoutTextarea($entity);
+    }
+
+    /**
+     * @param Entity $entity
      *
      * @return $this
      */
-    protected function addLayout(Entity $entity): Block
+    protected function addLayoutHidden(Entity $entity): Block
+    {
+        $this->form[] = new Input(
+            'layout',
+            'layout',
+            htmlspecialchars($entity->getLayout()),
+            null,
+            [Input::ATTRIBUTE_TYPE => Input::TYPE_HIDDEN]
+        );
+
+        return $this;
+    }
+
+    /**
+     * @param Entity $entity
+     *
+     * @return $this
+     */
+    protected function addLayoutTextarea(Entity $entity): Block
     {
         $input = new Textarea(
             'layout',
             'layout',
-            $entity->getLayout(),
+            htmlspecialchars($entity->getLayout()),
             null,
             [Textarea::ATTRIBUTE_ROWS => '15']
         );

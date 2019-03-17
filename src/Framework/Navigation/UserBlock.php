@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace AbterPhp\Framework\Navigation;
 
 use AbterPhp\Admin\Constant\Routes;
+use AbterPhp\Framework\Constant\Session;
 use AbterPhp\Framework\I18n\ITranslator;
 use Opulence\Routing\Urls\UrlGenerator;
 use Opulence\Sessions\ISession;
@@ -59,7 +60,7 @@ class UserBlock extends Item
         return sprintf(
             $str,
             $this->getUserImage(),
-            (string)$this->session->get(SESSION_USERNAME)
+            (string)$this->session->get(Session::USERNAME)
         );
     }
 
@@ -68,12 +69,12 @@ class UserBlock extends Item
      */
     protected function getUserImage(): string
     {
-        if (!$this->session || !$this->session->has(SESSION_USERNAME)) {
+        if (!$this->session || !$this->session->has(Session::USERNAME)) {
             return sprintf(static::DEFAULT_USER_IMAGE, '');
         }
 
-        if (!$this->session->has(SESSION_EMAIL) || !$this->session->get(SESSION_IS_GRAVATAR_ALLOWED)) {
-            return sprintf(static::DEFAULT_USER_IMAGE, $this->session->get(SESSION_USERNAME));
+        if (!$this->session->has(Session::EMAIL) || !$this->session->get(Session::IS_GRAVATAR_ALLOWED)) {
+            return sprintf(static::DEFAULT_USER_IMAGE, $this->session->get(Session::USERNAME));
         }
 
         $str = '
@@ -84,8 +85,8 @@ class UserBlock extends Item
 
         return sprintf(
             $str,
-            md5((string)$this->session->get(SESSION_EMAIL)),
-            (string)$this->session->get(SESSION_USERNAME)
+            md5((string)$this->session->get(Session::EMAIL)),
+            (string)$this->session->get(Session::USERNAME)
         );
     }
 
@@ -95,7 +96,7 @@ class UserBlock extends Item
      */
     protected function getDropdown(): string
     {
-        if (!$this->session || !$this->session->has(SESSION_USERNAME)) {
+        if (!$this->session || !$this->session->has(Session::USERNAME)) {
             return '';
         }
 

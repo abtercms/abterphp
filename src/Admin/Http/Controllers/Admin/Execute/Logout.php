@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace AbterPhp\Admin\Http\Controllers\Admin\Execute;
 
+use AbterPhp\Framework\Constant\Session;
 use AbterPhp\Framework\Http\Controllers\Admin\AdminAbstract;
 use AbterPhp\Framework\I18n\ITranslator;
 use AbterPhp\Framework\Session\FlashService;
@@ -51,7 +52,7 @@ class Logout extends AdminAbstract
      */
     public function execute(): Response
     {
-        $username = $this->session->get(SESSION_USERNAME);
+        $username = $this->session->get(Session::USERNAME);
 
         $this->session->flush();
 

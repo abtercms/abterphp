@@ -2,7 +2,19 @@
 -- Table data for table `admin_resources`
 --
 
-INSERT INTO `admin_resources` (`identifier`) VALUES ('files'), ('filecategories'), ('filedownloads'), ('usergroups_filecategories');
+INSERT INTO `admin_resources` (`identifier`) VALUES ('files'),('filecategories'),('filedownloads'),('usergroups_filecategories');
+
+--
+-- Table data for table `casbin_rule`
+--
+
+INSERT INTO `casbin_rule` (`ptype`,`v0`,`v1`,`v2`) VALUES ('p','file-uploader','files','upload');
+
+--
+-- Table data for table `user_groups`
+--
+
+INSERT INTO `user_groups` (`identifier`, `name`) VALUES ('file-uploader','File Uploader');
 
 --
 -- Table structure and data for table `file_categories`
@@ -81,14 +93,20 @@ CREATE TABLE `user_groups_file_categories` (
   CONSTRAINT `ugfc_ibfk_2` FOREIGN KEY (`user_group_id`) REFERENCES `user_groups` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Provide admins access to all file categories
+-- Provide admins and file uploaders access to all file categories
 INSERT INTO `user_groups_file_categories` (`user_group_id`, `file_category_id`)
 SELECT `user_groups`.`id` AS `user_group_id`, `file_categories`.`id` AS `file_category_id`
-FROM `user_groups` INNER JOIN `file_categories`
-WHERE `user_groups`.`identifier` = 'admin';
+FROM `user_groups` INNER JOIN `file_categories` ON 1
+WHERE `user_groups`.`identifier` IN ('admin', 'file-uploader');
+
+-- Provide access to relevant pages for file uploaders
+INSERT IGNORE INTO `user_groups_admin_resources` (`user_group_id`, `admin_resource_id`)
+SELECT user_groups.id AS user_group_id, admin_resources.id AS admin_resource_id
+FROM user_groups INNER JOIN admin_resources ON admin_resources.identifier IN ('files','filecategories','filedownloads','usergroups_filecategories')
+WHERE user_groups.identifier = 'file-uploader';
 
 -- Provide admins access to all admin resources
 INSERT IGNORE INTO `user_groups_admin_resources` (`user_group_id`, `admin_resource_id`)
 SELECT user_groups.id AS user_group_id, admin_resources.id AS admin_resource_id
-FROM user_groups INNER JOIN admin_resources
+FROM user_groups INNER JOIN admin_resources ON 1
 WHERE user_groups.identifier = 'admin';

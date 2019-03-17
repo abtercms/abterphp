@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace AbterPhp\Admin\Http\Middleware;
 
+use AbterPhp\Framework\Constant\Session;
 use AbterPhp\Framework\Helper\ArrayHelper;
 use Closure;
 use Opulence\Http\Requests\Request;
@@ -37,7 +38,7 @@ class LastGridPage implements IMiddleware
         /** @var Response $response */
         $response = $next($request);
 
-        if ($response->getStatusCode() >= 400 || !$this->session->has(SESSION_USER_ID)) {
+        if ($response->getStatusCode() >= 400 || !$this->session->has(Session::USER_ID)) {
             return $response;
         }
 
@@ -47,7 +48,7 @@ class LastGridPage implements IMiddleware
             ArrayHelper::toQuery($request->getQuery()->getAll())
         );
 
-        $this->session->set(SESSION_LAST_GRID_URL, $path);
+        $this->session->set(Session::LAST_GRID_URL, $path);
 
         return $response;
     }

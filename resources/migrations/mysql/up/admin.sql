@@ -144,5 +144,6 @@ CREATE TABLE `users_user_groups` (
 -- Provide admins access to all admin resources
 INSERT IGNORE INTO `user_groups_admin_resources` (`user_group_id`, `admin_resource_id`)
 SELECT user_groups.id AS user_group_id, admin_resources.id AS admin_resource_id
-FROM user_groups INNER JOIN admin_resources
+FROM user_groups
+INNER JOIN admin_resources ON 1
 WHERE user_groups.identifier = 'admin';

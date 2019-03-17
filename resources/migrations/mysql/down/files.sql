@@ -1,5 +1,6 @@
 SET FOREIGN_KEY_CHECKS = false;
 DELETE FROM `admin_resources` WHERE `identifier` IN ('files', 'filecategories', 'filedownloads', 'usergroups_filecategories');
+DELETE FROM `casbin_rule` WHERE `v1` = 'files' AND `v2` = 'upload';
 DROP TABLE IF EXISTS `file_categories`;
 DROP TABLE IF EXISTS `file_downloads`;
 DROP TABLE IF EXISTS `files`;

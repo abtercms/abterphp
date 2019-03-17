@@ -165,12 +165,11 @@ before the first stable version.
 1. Make the frontend framework decoupled from the backend system
 2. Pick new frontend framework for backend system and implement it
 3. ~~Use ILogger instead of Logger~~
-4. More fine grained authorization
-   - Read / write roles separated for files
-   - Read / write roles implemented for pages
-   - Advanced settings access for pages
+4. More fine grained authorization]
+   - ACL implemented for pages
+   - ~~Advanced settings access role for pages~~
    - ~~Multiple user group for one user~~
-   - New user roles: file uploader, designer
+   - ~~New user roles: file uploader, layout designer, page writer~~
 5. Improve security implementing related headers as recommended:
    - https://medium.freecodecamp.org/secure-your-web-application-with-these-http-headers-fd66e0367628
    - https://medium.freecodecamp.org/web-security-hardening-http-cookies-be8d8d8016e1
@@ -195,6 +194,8 @@ before the first stable version.
 6. 12-factor compliance reviewed and improvements planned
 7. Existing phpmd ignore cases reviewed
 8. Review and refactor global `$abterModuleManager` usage
+9. Must-accept-cookie module
+10. More useful dashboard (community input?)
 
 ### 1.0 musts:
 
@@ -223,6 +224,8 @@ before the first stable version.
    - https://medium.com/@richb_/easy-two-factor-authentication-2fa-with-google-authenticator-php-108388a1ea23
  - Serverless support
    - S3 usage as filesystem?
+ - Contact form table holding contact details
+ - Simple blog module
 
 ### Ideas for 1.1:
  - WYSIWYG file selector

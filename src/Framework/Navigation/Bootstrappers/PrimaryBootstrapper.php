@@ -6,6 +6,7 @@ namespace AbterPhp\Framework\Navigation\Bootstrappers;
 
 use AbterPhp\Framework\Constant\Dependencies;
 use AbterPhp\Framework\Constant\Event;
+use AbterPhp\Framework\Constant\Session;
 use AbterPhp\Framework\Events\NavigationReady;
 use AbterPhp\Framework\I18n\ITranslator;
 use AbterPhp\Framework\Navigation\Navigation;
@@ -57,7 +58,7 @@ class PrimaryBootstrapper extends Bootstrapper implements ILazyBootstrapper
     {
         $session = $container->resolve(ISession::class);
 
-        $username = $session->has(SESSION_USERNAME) ? $session->get(SESSION_USERNAME) : '';
+        $username = $session->has(Session::USERNAME) ? $session->get(Session::USERNAME) : '';
 
         $urlGenerator = $container->resolve(UrlGenerator::class);
         $translator   = $container->resolve(ITranslator::class);

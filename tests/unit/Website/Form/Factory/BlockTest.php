@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace AbterPhp\Website\Form\Factory;
 
-use AbterPhp\Website\Domain\Entities\BlockLayout;
 use AbterPhp\Framework\I18n\ITranslator;
 use AbterPhp\Website\Domain\Entities\Block as Entity;
+use AbterPhp\Website\Domain\Entities\BlockLayout;
 use AbterPhp\Website\Orm\BlockLayoutRepo;
+use Casbin\Enforcer;
 use Opulence\Http\Requests\RequestMethods;
 use Opulence\Sessions\ISession;
 use Opulence\Sessions\Session;
@@ -16,6 +17,9 @@ use PHPUnit\Framework\TestCase;
 
 class BlockTest extends TestCase
 {
+    /** @var Block */
+    protected $sut;
+
     /** @var ISession|MockObject */
     protected $sessionMock;
 
@@ -25,8 +29,8 @@ class BlockTest extends TestCase
     /** @var BlockLayoutRepo|MockObject */
     protected $layoutRepoMock;
 
-    /** @var Block */
-    protected $sut;
+    /** @var Enforcer|MockObject */
+    protected $enforcerMock;
 
     public function setUp()
     {
@@ -45,10 +49,56 @@ class BlockTest extends TestCase
             ->setMethods(['getAll'])
             ->getMock();
 
-        $this->sut = new Block($this->sessionMock, $this->translatorMock, $this->layoutRepoMock);
+        $this->enforcerMock = $this->getMockBuilder(Enforcer::class)
+            ->disableOriginalConstructor()
+            ->setMethods(['enforce'])
+            ->getMock();
+
+        $this->sut = new Block($this->sessionMock, $this->translatorMock, $this->layoutRepoMock, $this->enforcerMock);
     }
 
-    public function testCreate()
+    /**
+     * @return array
+     */
+    public function createProvider(): array
+    {
+        return [
+            [
+                false,
+                [
+                    'POST',
+                    'CSRF',
+                    'identifier',
+                    'title',
+                    'body',
+                    'layout_id',
+                    'layout',
+                    'button',
+                ],
+            ],
+            [
+                true,
+                [
+                    'POST',
+                    'CSRF',
+                    'identifier',
+                    'title',
+                    'body',
+                    'layout_id',
+                    'layout',
+                    'button',
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider createProvider
+     *
+     * @param bool  $advancedAllowed
+     * @param array $contains
+     */
+    public function testCreate(bool $advancedAllowed, array $contains)
     {
         $action     = 'foo';
         $method     = RequestMethods::POST;
@@ -65,6 +115,7 @@ class BlockTest extends TestCase
             new BlockLayout(129, 'bl-129', 'BL 129'),
         ];
 
+        $this->enforcerMock->expects($this->at(0))->method('enforce')->willReturn($advancedAllowed);
         $this->layoutRepoMock->expects($this->any())->method('getAll')->willReturn($layouts);
 
         $entityMock = $this->createMockEntity();
@@ -80,14 +131,9 @@ class BlockTest extends TestCase
 
         $this->assertContains($action, $form);
         $this->assertContains($showUrl, $form);
-        $this->assertContains('POST', $form);
-        $this->assertContains('CSRF', $form);
-        $this->assertContains('identifier', $form);
-        $this->assertContains('title', $form);
-        $this->assertContains('body', $form);
-        $this->assertContains('layout_id', $form);
-        $this->assertContains('layout', $form);
-        $this->assertContains('button', $form);
+        foreach ($contains as $needle) {
+            $this->assertContains($needle, $form);
+        }
     }
 
     /**

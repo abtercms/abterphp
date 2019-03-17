@@ -9,6 +9,7 @@ use AbterPhp\Framework\Authorization\CombinedAdapter;
 use AbterPhp\Framework\Authorization\Constant\Role;
 use AbterPhp\Framework\Constant\Env;
 use AbterPhp\Framework\Constant\Event;
+use AbterPhp\Framework\Constant\Session;
 use AbterPhp\Framework\Events\AuthReady;
 use Casbin\Enforcer;
 use Casbin\Persist\Adapter as AdapterContract;
@@ -147,7 +148,7 @@ class EnforcerBootstrapper extends Bootstrapper implements ILazyBootstrapper
 
         /** @var ISession $session */
         $session  = $container->resolve(ISession::class);
-        $username = $session->get(SESSION_USERNAME);
+        $username = $session->get(Session::USERNAME);
 
         /** @var ITranspiler $transpiler */
         $transpiler = $container->resolve(ITranspiler::class);

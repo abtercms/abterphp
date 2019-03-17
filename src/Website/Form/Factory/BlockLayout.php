@@ -86,7 +86,7 @@ class BlockLayout extends Base
         $input = new Textarea(
             'body',
             'body',
-            $entity->getBody(),
+            htmlspecialchars($entity->getBody()),
             null,
             [Textarea::ATTRIBUTE_ROWS => '15']
         );

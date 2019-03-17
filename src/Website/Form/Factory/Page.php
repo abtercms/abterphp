@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace AbterPhp\Website\Form\Factory;
 
+use AbterPhp\Framework\Constant\Session;
 use AbterPhp\Framework\Form\Container\FormGroup;
 use AbterPhp\Framework\Form\Container\Hideable;
 use AbterPhp\Framework\Form\Element\Input;
@@ -17,11 +18,13 @@ use AbterPhp\Framework\Form\Label\Countable;
 use AbterPhp\Framework\Form\Label\Label;
 use AbterPhp\Framework\Html\Component\Option;
 use AbterPhp\Framework\I18n\ITranslator;
+use AbterPhp\Website\Constant\Authorization;
 use AbterPhp\Website\Domain\Entities\Page as Entity;
 use AbterPhp\Website\Domain\Entities\PageLayout;
 use AbterPhp\Website\Form\Factory\Page\Assets as AssetsFactory;
 use AbterPhp\Website\Form\Factory\Page\Meta as MetaFactory;
 use AbterPhp\Website\Orm\PageLayoutRepo;
+use Casbin\Enforcer;
 use Opulence\Orm\IEntity;
 use Opulence\Sessions\ISession;
 
@@ -39,6 +42,9 @@ class Page extends Base
     /** @var AssetsFactory */
     protected $assetsFactory;
 
+    /** @var Enforcer */
+    protected $enforcer;
+
     /**
      * Page constructor.
      *
@@ -47,20 +53,22 @@ class Page extends Base
      * @param PageLayoutRepo $layoutRepo
      * @param MetaFactory    $metaFactory
      * @param AssetsFactory  $assetsFactory
+     * @param Enforcer       $enforcer
      */
     public function __construct(
         ISession $session,
         ITranslator $translator,
         PageLayoutRepo $layoutRepo,
         MetaFactory $metaFactory,
-        AssetsFactory $assetsFactory
+        AssetsFactory $assetsFactory,
+        Enforcer $enforcer
     ) {
         parent::__construct($session, $translator);
 
-        $this->layoutRepo = $layoutRepo;
-
+        $this->layoutRepo    = $layoutRepo;
         $this->metaFactory   = $metaFactory;
         $this->assetsFactory = $assetsFactory;
+        $this->enforcer      = $enforcer;
     }
 
     /**
@@ -77,6 +85,13 @@ class Page extends Base
             throw new \InvalidArgumentException(IFormFactory::ERR_MSG_ENTITY_MISSING);
         }
 
+        $username        = $this->session->get(Session::USERNAME);
+        $advancedAllowed = $this->enforcer->enforce(
+            $username,
+            Authorization::RESOURCE_PAGES,
+            Authorization::ROLE_PAGES_ADVANCED_WRITE
+        );
+
         $this->createForm($action, $method)
             ->addDefaultElements()
             ->addIdentifier($entity)
@@ -85,8 +100,8 @@ class Page extends Base
             ->addMeta($entity)
             ->addBody($entity)
             ->addLayoutId($entity)
-            ->addLayout($entity)
-            ->addAssets($entity)
+            ->addLayout($entity, $advancedAllowed)
+            ->addAssets($entity, $advancedAllowed)
             ->addDefaultButtons($showUrl);
 
         $form = $this->form;
@@ -283,15 +298,48 @@ class Page extends Base
 
     /**
      * @param Entity $entity
+     * @param bool   $advancedAllowed
+     *
+     * @return Page
+     */
+    protected function addLayout(Entity $entity, bool $advancedAllowed): Page
+    {
+        if (!$advancedAllowed) {
+            return $this->addLayoutHidden($entity);
+        }
+
+        return $this->addLayoutTextarea($entity);
+    }
+
+    /**
+     * @param Entity $entity
      *
      * @return $this
      */
-    protected function addLayout(Entity $entity): Page
+    protected function addLayoutHidden(Entity $entity): Page
+    {
+        $this->form[] = new Input(
+            'layout',
+            'layout',
+            htmlspecialchars($entity->getLayout()),
+            null,
+            [Input::ATTRIBUTE_TYPE => Input::TYPE_HIDDEN]
+        );
+
+        return $this;
+    }
+
+    /**
+     * @param Entity $entity
+     *
+     * @return $this
+     */
+    protected function addLayoutTextarea(Entity $entity): Page
     {
         $input = new Textarea(
             'layout',
             'layout',
-            $entity->getLayout(),
+            htmlspecialchars($entity->getLayout()),
             null,
             [Textarea::ATTRIBUTE_ROWS => '15']
         );
@@ -304,11 +352,16 @@ class Page extends Base
 
     /**
      * @param Entity $entity
+     * @param bool   $advancedAllowed
      *
      * @return $this
      */
-    protected function addAssets(Entity $entity): Page
+    protected function addAssets(Entity $entity, bool $advancedAllowed): Page
     {
+        if (!$advancedAllowed) {
+            return $this;
+        }
+
         $hideable = new Hideable($this->translator->translate('pages:pageAssetsBtn'));
         foreach ($this->assetsFactory->create($entity) as $component) {
             $hideable[] = $component;

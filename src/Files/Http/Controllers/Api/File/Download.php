@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace AbterPhp\Files\Http\Controllers\Api\File;
 
 use AbterPhp\Files\Service\File\Downloader as DownloadService;
+use AbterPhp\Framework\Constant\Session;
 use Casbin\Enforcer;
 use Casbin\Exceptions\CasbinException;
 use AbterPhp\Admin\Domain\Entities\User;
@@ -85,8 +86,8 @@ class Download extends Controller
      */
     protected function getUser(): ?User
     {
-        if ($this->session->has(SESSION_USERNAME)) {
-            $username = (string)$this->session->get(SESSION_USERNAME);
+        if ($this->session->has(Session::USERNAME)) {
+            $username = (string)$this->session->get(Session::USERNAME);
 
             return $this->userRepo->getByUsername($username);
         }

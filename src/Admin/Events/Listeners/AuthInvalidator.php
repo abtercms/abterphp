@@ -8,6 +8,7 @@ use AbterPhp\Admin\Domain\Entities\AdminResource;
 use AbterPhp\Admin\Domain\Entities\User;
 use AbterPhp\Admin\Domain\Entities\UserGroup;
 use AbterPhp\Framework\Authorization\CacheManager;
+use AbterPhp\Framework\Constant\Session;
 use AbterPhp\Framework\Events\EntityChange;
 use Opulence\Sessions\ISession;
 
@@ -45,7 +46,7 @@ class AuthInvalidator
                 break;
         }
 
-        if ($event->getEntityName() == User::class && $event->getEntityId() == $this->session->get(SESSION_USER_ID)) {
+        if ($event->getEntityName() == User::class && $event->getEntityId() == $this->session->get(Session::USER_ID)) {
             $this->session->flush();
         }
     }

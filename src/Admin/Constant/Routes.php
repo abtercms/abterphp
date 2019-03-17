@@ -6,13 +6,16 @@ namespace AbterPhp\Admin\Constant;
 
 class Routes
 {
-    const ROUTE_LOGIN       = 'login';
-    const ROUTE_LOGIN_POST  = 'login-post';
-    const ROUTE_LOGOUT      = 'logout';
-    const ROUTE_DASHBOARD   = 'dashboard';
+    const ROUTE_403 = '403';
+    const PATH_403  = '/nope';
 
-    const PATH_LOGOUT       = '/logout';
-    const PATH_DASHBOARD    = '/dashboard';
+    const ROUTE_LOGIN      = 'login';
+    const ROUTE_LOGIN_POST = 'login-post';
+    const ROUTE_LOGOUT     = 'logout';
+    const ROUTE_DASHBOARD  = 'dashboard';
+
+    const PATH_LOGOUT    = '/logout';
+    const PATH_DASHBOARD = '/dashboard';
 
     const ROUTE_USERS        = 'users';
     const ROUTE_USERS_NEW    = 'users-new';

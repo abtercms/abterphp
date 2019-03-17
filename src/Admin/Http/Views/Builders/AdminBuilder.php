@@ -6,6 +6,7 @@ namespace AbterPhp\Admin\Http\Views\Builders;
 
 use AbterPhp\Framework\Assets\AssetManager;
 use AbterPhp\Framework\Constant\Env;
+use AbterPhp\Framework\Constant\Session;
 use AbterPhp\Framework\Navigation\Navigation;
 use Opulence\Sessions\ISession;
 use Opulence\Views\Factories\IViewBuilder;
@@ -57,7 +58,7 @@ class AdminBuilder implements IViewBuilder
 
         $view->setVar('env', getenv(Env::ENV_NAME));
         $view->setVar('title', 'Admin');
-        $view->setVar('username', $this->session->get(SESSION_USERNAME));
+        $view->setVar('username', $this->session->get(Session::USERNAME));
         $view->setVar('navigation', $this->navigation);
 
         return $view;

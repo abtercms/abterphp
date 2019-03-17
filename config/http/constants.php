@@ -17,12 +17,3 @@ if (!defined('PATH_API')) {
 const OPTION_NAME       = 'name';
 const OPTION_VARS       = 'vars';
 const OPTION_MIDDLEWARE = 'middleware';
-
-const SESSION_USERNAME            = 'username';
-const SESSION_EMAIL               = 'email';
-const SESSION_USER_ID             = 'user_id';
-const SESSION_IS_GRAVATAR_ALLOWED = 'is_gravatar_allowed';
-const SESSION_LANGUAGE_IDENTIFIER = 'language_identifier';
-const SESSION_IS_LOGGED_IN        = 'is_user';
-const SESSION_CATEGORIES          = 'categories';
-const SESSION_LAST_GRID_URL       = 'last_grid_url';

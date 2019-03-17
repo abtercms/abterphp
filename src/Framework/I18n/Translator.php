@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace AbterPhp\Framework\I18n;
 
+use AbterPhp\Framework\Constant\Session;
 use Opulence\Sessions\ISession;
 
 class Translator implements ITranslator
@@ -51,8 +52,8 @@ class Translator implements ITranslator
 
         $this->lang = $this->defaultLang;
 
-        if ($this->session->has(SESSION_LANGUAGE_IDENTIFIER)) {
-            $this->lang = (string)$this->session->get(SESSION_LANGUAGE_IDENTIFIER);
+        if ($this->session->has(Session::LANGUAGE_IDENTIFIER)) {
+            $this->lang = (string)$this->session->get(Session::LANGUAGE_IDENTIFIER);
         }
 
         return $this->lang;

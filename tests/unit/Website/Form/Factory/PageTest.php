@@ -8,6 +8,7 @@ use AbterPhp\Framework\I18n\ITranslator;
 use AbterPhp\Website\Domain\Entities\Page as Entity;
 use AbterPhp\Website\Domain\Entities\PageLayout;
 use AbterPhp\Website\Orm\PageLayoutRepo;
+use Casbin\Enforcer;
 use Opulence\Http\Requests\RequestMethods;
 use Opulence\Sessions\ISession;
 use Opulence\Sessions\Session;
@@ -18,6 +19,9 @@ use AbterPhp\Website\Form\Factory\Page\Assets as AssetsFactory;
 
 class PageTest extends TestCase
 {
+    /** @var Page */
+    protected $sut;
+
     /** @var ISession|MockObject */
     protected $sessionMock;
 
@@ -33,8 +37,8 @@ class PageTest extends TestCase
     /** @var AssetsFactory|MockObject */
     protected $assetsFactoryMock;
 
-    /** @var Page */
-    protected $sut;
+    /** @var Enforcer|MockObject */
+    protected $enforcerMock;
 
     public function setUp()
     {
@@ -65,16 +69,63 @@ class PageTest extends TestCase
             ->getMock();
         $this->assetsFactoryMock->expects($this->any())->method('create')->willReturn([]);
 
+        $this->enforcerMock = $this->getMockBuilder(Enforcer::class)
+            ->disableOriginalConstructor()
+            ->setMethods(['enforce'])
+            ->getMock();
+
         $this->sut = new Page(
             $this->sessionMock,
             $this->translatorMock,
             $this->layoutRepoMock,
             $this->metaFactoryMock,
-            $this->assetsFactoryMock
+            $this->assetsFactoryMock,
+            $this->enforcerMock
         );
     }
 
-    public function testCreate()
+    /**
+     * @return array
+     */
+    public function createProvider(): array
+    {
+        return [
+            [
+                false,
+                [
+                    'POST',
+                    'CSRF',
+                    'identifier',
+                    'title',
+                    'body',
+                    'layout_id',
+                    'layout',
+                    'button',
+                ],
+            ],
+            [
+                true,
+                [
+                    'POST',
+                    'CSRF',
+                    'identifier',
+                    'title',
+                    'body',
+                    'layout_id',
+                    'layout',
+                    'button',
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider createProvider
+     *
+     * @param bool  $advancedAllowed
+     * @param array $contains
+     */
+    public function testCreate(bool $advancedAllowed, array $contains)
     {
         $action      = 'foo';
         $method      = RequestMethods::POST;
@@ -93,6 +144,7 @@ class PageTest extends TestCase
             new PageLayout(129, 'bl-129', 'BL 129', null),
         ];
 
+        $this->enforcerMock->expects($this->at(0))->method('enforce')->willReturn($advancedAllowed);
         $this->layoutRepoMock->expects($this->any())->method('getAll')->willReturn($layouts);
 
         $this->assetsFactoryMock->expects($this->any())->method('create')->willReturn([]);
@@ -112,15 +164,9 @@ class PageTest extends TestCase
 
         $this->assertContains($action, $form);
         $this->assertContains($showUrl, $form);
-        $this->assertContains('POST', $form);
-        $this->assertContains('CSRF', $form);
-        $this->assertContains('identifier', $form);
-        $this->assertContains('title', $form);
-        $this->assertContains('description', $form);
-        $this->assertContains('body', $form);
-        $this->assertContains('layout_id', $form);
-        $this->assertContains('layout', $form);
-        $this->assertContains('button', $form);
+        foreach ($contains as $needle) {
+            $this->assertContains($needle, $form);
+        }
     }
 
     /**

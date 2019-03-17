@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace AbterPhp\Admin\Http\Middleware;
 
+use AbterPhp\Admin\Constant\Routes;
+use AbterPhp\Framework\Constant\Session;
 use Casbin\Enforcer;
 use Casbin\Exceptions\CasbinException;
 use Closure;
@@ -48,7 +50,7 @@ class Authorization extends ParameterizedMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $username = $this->session->get(SESSION_USERNAME);
+        $username = $this->session->get(Session::USERNAME);
         $resource = static::RESOURCE_PREFIX . $this->getParameter(static::RESOURCE);
         $role     = $this->getParameter(static::ROLE);
 
@@ -57,11 +59,11 @@ class Authorization extends ParameterizedMiddleware
                 return $next($request);
             }
         } catch (CasbinException $e) {
-            return new RedirectResponse(PATH_403, ResponseHeaders::HTTP_TEMPORARY_REDIRECT);
+            return new RedirectResponse(Routes::PATH_403, ResponseHeaders::HTTP_TEMPORARY_REDIRECT);
         } catch (\Exception $e) {
             throw $e;
         }
 
-        return new RedirectResponse(PATH_403, ResponseHeaders::HTTP_TEMPORARY_REDIRECT);
+        return new RedirectResponse(Routes::PATH_403, ResponseHeaders::HTTP_TEMPORARY_REDIRECT);
     }
 }
