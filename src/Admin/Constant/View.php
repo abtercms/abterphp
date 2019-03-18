@@ -17,4 +17,5 @@ class View
     const ASSET_DEFAULT = 'admin-layout';
     const ASSET_HEADER  = 'admin-layout-header';
     const ASSET_FOOTER  = 'admin-layout-footer';
+    const ASSET_LOGIN   = 'admin-login';
 }

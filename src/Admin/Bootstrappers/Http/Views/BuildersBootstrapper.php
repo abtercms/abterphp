@@ -53,8 +53,11 @@ class BuildersBootstrapper extends Bootstrapper
                 /** @var AssetManager $assets */
                 $assets = $container->resolve(AssetManager::class);
 
+                /** @var IEventDispatcher $eventDispatcher */
+                $eventDispatcher = $container->resolve(IEventDispatcher::class);
+
                 /** @see AdminBuilder::build() */
-                return (new LoginBuilder($assets))->build($view);
+                return (new LoginBuilder($assets, $eventDispatcher))->build($view);
             }
         );
         $viewFactory->registerBuilder(

@@ -6,6 +6,7 @@ namespace AbterPhp\Propeller\Bootstrappers\Events;
 
 use AbterPhp\Framework\Assets\AssetManager;
 use AbterPhp\Propeller\Events\Listeners\AdminDecorator;
+use AbterPhp\Propeller\Events\Listeners\LoginDecorator;
 use Opulence\Framework\Configuration\Config;
 use Opulence\Ioc\Bootstrappers\Bootstrapper;
 use Opulence\Ioc\IContainer;
@@ -26,7 +27,9 @@ class Listeners extends Bootstrapper
         $assetManager = $container->resolve(AssetManager::class);
 
         $adminDecorator = new AdminDecorator($assetManager, $header, $footer);
+        $loginDecorator = new LoginDecorator($assetManager, $header, $footer);
 
         $container->bindInstance(AdminDecorator::class, $adminDecorator);
+        $container->bindInstance(LoginDecorator::class, $loginDecorator);
     }
 }

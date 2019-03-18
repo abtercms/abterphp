@@ -4,8 +4,12 @@ declare(strict_types=1);
 
 namespace AbterPhp\Admin\Http\Views\Builders;
 
+use AbterPhp\Admin\Constant\Event;
+use AbterPhp\Admin\Constant\View;
+use AbterPhp\Admin\Events\AdminReady;
 use AbterPhp\Framework\Assets\AssetManager;
 use AbterPhp\Framework\Constant\Env;
+use Opulence\Events\Dispatchers\IEventDispatcher;
 use Opulence\Views\Factories\IViewBuilder;
 use Opulence\Views\IView;
 
@@ -17,14 +21,19 @@ class LoginBuilder implements IViewBuilder
     /** @var AssetManager */
     protected $assets;
 
+    /** @var IEventDispatcher */
+    protected $eventDispatcher;
+
     /**
      * AdminBuilder constructor.
      *
-     * @param AssetManager $assets
+     * @param AssetManager     $assets
+     * @param IEventDispatcher $eventDispatcher
      */
-    public function __construct(AssetManager $assets)
+    public function __construct(AssetManager $assets, IEventDispatcher $eventDispatcher)
     {
-        $this->assets = $assets;
+        $this->assets          = $assets;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**
@@ -32,25 +41,27 @@ class LoginBuilder implements IViewBuilder
      */
     public function build(IView $view): IView
     {
-        $this->assets->addCss('admin-layout', '/admin-assets/vendor/bootstrap/bootstrap.min.css');
-        $this->assets->addCss('admin-layout', '/admin-assets/vendor/propeller/css/propeller.min.css');
-        $this->assets->addCss('admin-layout', '/admin-assets/themes/css/propeller-theme.css');
-        $this->assets->addCss('admin-layout', '/admin-assets/themes/css/propeller-admin.css');
-        $this->assets->addCss('admin-layout', '/admin-assets/css/style.css');
-
-        $this->assets->addJs('admin-layout-header', '/admin-assets/vendor/jquery/jquery.min.js');
-        $this->assets->addJs('admin-layout-footer', '/admin-assets/vendor/bootstrap/bootstrap.min.js');
-        $this->assets->addJs('admin-layout-footer', '/admin-assets/vendor/propeller/js/propeller.min.js');
-        $this->assets->addJs('admin-layout-footer', '/admin-assets/js/alerts.js');
-
-        $this->assets->addJs('admin-login', '/admin-assets/vendor/sha3/sha3.min.js');
-        $this->assets->addJs('admin-login', '/admin-assets/js/login.js');
+        $this->assets->addJs(View::ASSET_HEADER, '/admin-assets/vendor/jquery/jquery.min.js');
 
         $view->setVar('env', getenv(Env::ENV_NAME));
         $view->setVar('title', 'Login');
         $view->setVar('page', '');
         $view->setVar('pageHeader', '');
         $view->setVar('pageFooter', '');
+
+        $view->setVar('preHeader', '');
+        $view->setVar('header', '');
+        $view->setVar('postHeader', '');
+
+        $view->setVar('preFooter', '');
+        $view->setVar('footer', '');
+        $view->setVar('postFooter', '');
+
+        $this->eventDispatcher->dispatch(Event::LOGIN_READY, new AdminReady($view));
+
+        $this->assets->addJs(View::ASSET_FOOTER, '/admin-assets/js/alerts.js');
+        $this->assets->addJs(View::ASSET_LOGIN, '/admin-assets/vendor/sha3/sha3.min.js');
+        $this->assets->addJs(View::ASSET_LOGIN, '/admin-assets/js/login.js');
 
         return $view;
     }

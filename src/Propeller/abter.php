@@ -25,5 +25,9 @@ return [
             /** @see \AbterPhp\Propeller\Events\Listeners\AdminDecorator::handle() */
             sprintf('%s@handle', Events\Listeners\AdminDecorator::class),
         ],
+        AdminEvent::LOGIN_READY  => [
+            /** @see \AbterPhp\Propeller\Events\Listeners\LoginDecorator::handle() */
+            sprintf('%s@handle', Events\Listeners\LoginDecorator::class),
+        ],
     ],
 ];
