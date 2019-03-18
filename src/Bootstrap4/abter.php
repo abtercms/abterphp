@@ -9,7 +9,7 @@ return [
     Module::IDENTIFIER   => 'AbterPhp\Bootstrap4',
     Module::DEPENDENCIES => ['AbterPhp\Website'],
     Module::HTTP_BOOTSTRAPPERS => [
-        Events\Bootstrappers\Listeners::class,
+        Bootstrappers\Events\Listeners::class,
     ],
     Module::EVENTS             => [
         WebsiteEvents::WEBSITE_READY  => [

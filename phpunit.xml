@@ -20,7 +20,9 @@
             <directory suffix=".php">./src</directory>
             <exclude>
                 <directory suffix=".php">./src/Admin/Bootstrappers</directory>
+                <directory suffix=".php">./src/Bootstrap4/Bootstrappers</directory>
                 <directory suffix=".php">./src/Contact/Bootstrappers</directory>
+                <directory suffix=".php">./src/Framework/Bootstrappers</directory>
                 <directory suffix=".php">./src/Files/Bootstrappers</directory>
                 <directory suffix=".php">./src/Website/Bootstrappers</directory>
                 <file>src/Admin/routes.php</file>
