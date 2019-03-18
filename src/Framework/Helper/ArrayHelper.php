@@ -42,11 +42,12 @@ class ArrayHelper
     }
 
     /**
-     * @param array $attributes
+     * @param array  $attributes
+     * @param string $prepend string to prepend if the result is not empty
      *
      * @return string
      */
-    public static function toAttributes(array $attributes): string
+    public static function toAttributes(array $attributes, string $prepend = ' '): string
     {
         $tmp = [];
         foreach ($attributes as $k => $v) {
@@ -60,7 +61,30 @@ class ArrayHelper
             $tmp[] = sprintf('%s="%s"', $k, $v);
         }
 
-        return implode(' ', $tmp);
+        if (empty($tmp)) {
+            return '';
+        }
+
+        return $prepend . implode(' ', $tmp);
+    }
+
+    /**
+     * @param array $existingAttributes
+     * @param array $newAttributes
+     *
+     * @return array
+     */
+    public static function mergeAttributes(array $existingAttributes, array $newAttributes): array
+    {
+        foreach ($newAttributes as $key => $value) {
+            if (array_key_exists($key, $existingAttributes)) {
+                $existingAttributes[$key] = array_merge((array)$existingAttributes[$key], (array)$value);
+            } else {
+                $existingAttributes[$key] = $value;
+            }
+        }
+
+        return $existingAttributes;
     }
 
     /**

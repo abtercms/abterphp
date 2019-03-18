@@ -4,14 +4,15 @@ declare(strict_types=1);
 
 namespace AbterPhp\Framework\Grid\Pagination;
 
-use AbterPhp\Framework\Html\Component\Select;
-use AbterPhp\Framework\Html\Component\Component;
+use AbterPhp\Framework\Form\Component\Option;
+use AbterPhp\Framework\Form\Element\Select;
+use AbterPhp\Framework\Html\Component\Tag;
 use AbterPhp\Framework\I18n\ITranslator;
 
 /**
  * @SuppressWarnings(PHPMD.ShortVariable)
  */
-class Pagination extends Component implements IPagination
+class Pagination extends Tag implements IPagination
 {
     const PARAM_KEY_PAGE = 'page';
     const PARAM_KEY_SIZE = 'page-size';
@@ -63,6 +64,7 @@ class Pagination extends Component implements IPagination
      * @param array       $pageSizes
      * @param array       $attributes
      * @param ITranslator $translator
+     * @param string|null $tag
      */
     public function __construct(
         array $params,
@@ -71,7 +73,8 @@ class Pagination extends Component implements IPagination
         int $pageSize,
         array $pageSizes,
         array $attributes,
-        ITranslator $translator
+        ITranslator $translator,
+        ?string $tag = null
     ) {
         $this->params      = $params;
         $this->pageSize    = $pageSize;
@@ -84,9 +87,9 @@ class Pagination extends Component implements IPagination
 
         $this->buildComponents($baseUrl, $pageSizes);
 
-        parent::__construct('', 'div', $attributes, $translator);
+        parent::__construct('', $attributes, $translator, $tag);
 
-        $this->appendToAttribute(Component::ATTRIBUTE_CLASS, 'grid-pagination row');
+        $this->appendToAttribute(Tag::ATTRIBUTE_CLASS, 'grid-pagination row');
     }
 
     /**
@@ -126,7 +129,6 @@ class Pagination extends Component implements IPagination
     protected function buildComponents(string $baseUrl, array $pageSizes)
     {
         $baseUrl    = $this->getPageSizeUrl($baseUrl);
-        $pageSizes  = array_combine($pageSizes, $pageSizes);
         $attributes = [
             Select::ATTRIBUTE_CLASS => 'pagination-sizes',
         ];
@@ -134,11 +136,14 @@ class Pagination extends Component implements IPagination
         $this->numbers     = new Numbers($baseUrl);
         $this->sizeOptions = new Select(
             'pagination-sizes',
-            $pageSizes,
-            (string)$this->pageSize,
-            Select::TAG_SELECT,
+            'pagination-sizes',
+            false,
             $attributes
         );
+
+        foreach ($pageSizes as $pageSize) {
+            $this->sizeOptions[] = new Option((string)$pageSize, (string)$pageSize);
+        }
     }
 
     /**

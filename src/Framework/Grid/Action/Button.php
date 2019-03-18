@@ -19,21 +19,21 @@ class Button extends HtmlButton implements IAction
 
     /**
      * @param IComponent|string $content
-     * @param string            $tag
      * @param array             $attributes
      * @param array             $attributeCallbacks
      * @param ITranslator|null  $translator
+     * @param string|null       $tag
      */
     public function __construct(
         $content,
-        string $tag = self::TAG_A,
         array $attributes = [],
         array $attributeCallbacks = [],
-        ITranslator $translator = null
+        ITranslator $translator = null,
+        ?string $tag = null
     ) {
         $this->attributeCallbacks = $attributeCallbacks;
 
-        parent::__construct($content, $tag, $attributes, $translator);
+        parent::__construct($content, $attributes, $translator, $tag);
     }
 
     /**
@@ -71,6 +71,6 @@ class Button extends HtmlButton implements IAction
      */
     public function duplicate(): IAction
     {
-        return new Button($this->content, $this->tag, $this->attributes, $this->attributeCallbacks, $this->translator);
+        return new Button($this->content, $this->attributes, $this->attributeCallbacks, $this->translator, $this->tag);
     }
 }

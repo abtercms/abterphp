@@ -57,14 +57,14 @@ class FileCategoryTest extends TestCase
         $name          = 'Blah!';
         $identifier    = 'blah';
         $allUserGroups = [
-            new UserGroup(22, 'ug-22', 'UG 22', [], []),
-            new UserGroup(73, 'ug-73', 'UG 73', [], []),
-            new UserGroup(112, 'ug-112', 'UG 112', [], []),
-            new UserGroup(432, 'ug-432', 'UG 432', [], []),
+            new UserGroup(22, 'ug-22', 'UG 22', []),
+            new UserGroup(73, 'ug-73', 'UG 73', []),
+            new UserGroup(112, 'ug-112', 'UG 112', []),
+            new UserGroup(432, 'ug-432', 'UG 432', []),
         ];
         $userGroups    = [
-            new UserGroup(73, 'ug-73', 'UG 73', [], []),
-            new UserGroup(112, 'ug-112', 'UG 112', [], []),
+            new UserGroup(73, 'ug-73', 'UG 73', []),
+            new UserGroup(112, 'ug-112', 'UG 112', []),
         ];
 
         $this->userGroupRepoMock->expects($this->any())->method('getAll')->willReturn($allUserGroups);

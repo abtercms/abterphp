@@ -36,17 +36,17 @@ class DefaultButtons extends Collection
      * DefaultButtons constructor.
      *
      * @param string           $showUrl
-     * @param string|null      $tag
-     * @param array            $attributes
      * @param ITranslator|null $translator
+     * @param array            $attributes
+     * @param string|null      $tag
      */
     public function __construct(
         string $showUrl,
-        ?string $tag = null,
+        ITranslator $translator,
         array $attributes = [],
-        ?ITranslator $translator = null
+        ?string $tag = null
     ) {
-        parent::__construct($tag, $attributes, $translator);
+        parent::__construct($attributes, $translator, $tag);
 
         $this->addSave();
         $this->addSaveAndEdit();
@@ -61,7 +61,7 @@ class DefaultButtons extends Collection
 
         $content = $this->translator->translate('framework:save');
 
-        $this->components[] = new Button($content, Button::TAG_BUTTON, $attributes);
+        $this->components[] = new Button($content, $attributes);
     }
 
     protected function addSaveAndEdit()
@@ -73,7 +73,7 @@ class DefaultButtons extends Collection
 
         $content = $this->translator->translate('framework:saveAndEdit');
 
-        $this->components[] = new Button($content, Button::TAG_BUTTON, $attributes);
+        $this->components[] = new Button($content, $attributes);
     }
 
     /**
@@ -88,6 +88,6 @@ class DefaultButtons extends Collection
 
         $content = $this->translator->translate('framework:backToGrid');
 
-        $this->components[] = new Button($content, Button::TAG_A, $attributes);
+        $this->components[] = new Button($content, $attributes, null, Button::TAG_A);
     }
 }

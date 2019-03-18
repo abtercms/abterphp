@@ -4,13 +4,11 @@ declare(strict_types=1);
 
 namespace AbterPhp\Framework\Grid\Action;
 
-use AbterPhp\Framework\I18n\ITranslatorMockTrait;
+use AbterPhp\Framework\I18n\MockTranslatorFactory;
 use PHPUnit\Framework\TestCase;
 
 class ButtonTest extends TestCase
 {
-    use ITranslatorMockTrait;
-
     /** @var Button */
     protected $sut;
 
@@ -31,29 +29,29 @@ class ButtonTest extends TestCase
 
     public function testGetDefaultCallback()
     {
-        $sut = $this->createElement('', '', [], [], null);
+        $sut = $this->createElement('', [], [], null, null);
 
         $this->markTestIncomplete();
     }
 
     /**
-     * @param string     $content
-     * @param string     $tag
-     * @param array      $attributes
-     * @param array      $attributeCallbacks
-     * @param array|null $translations
+     * @param string      $content
+     * @param array       $attributes
+     * @param array       $attributeCallbacks
+     * @param array|null  $translations
+     * @param string|null $tag
      *
      * @return Button
      */
     private function createElement(
         string $content,
-        string $tag,
         array $attributes,
         array $attributeCallbacks,
-        ?array $translations
+        ?array $translations,
+        ?string $tag
     ): Button {
-        $translatorMock = $this->getTranslatorMock($translations);
+        $translatorMock = MockTranslatorFactory::createSimpleTranslator($this, $translations);
 
-        return new Button($content, $tag, $attributes, $attributeCallbacks, $translatorMock);
+        return new Button($content, $attributes, $attributeCallbacks, $translatorMock, $tag);
     }
 }

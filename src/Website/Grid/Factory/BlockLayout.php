@@ -83,17 +83,17 @@ class BlockLayout extends Base
         $cellActions   = new Actions();
         $cellActions[] = new Button(
             static::LABEL_EDIT,
-            Button::TAG_A,
             $editAttributes,
             $attributeCallbacks,
-            $this->translator
+            $this->translator,
+            Button::TAG_A
         );
         $cellActions[] = new Button(
             static::LABEL_DELETE,
-            Button::TAG_A,
             $deleteAttributes,
             $attributeCallbacks,
-            $this->translator
+            $this->translator,
+            Button::TAG_A
         );
 
         return $cellActions;

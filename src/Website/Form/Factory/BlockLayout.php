@@ -69,9 +69,9 @@ class BlockLayout extends Base
             'identifier',
             $entity->getIdentifier()
         );
-        $label = new Label('identifier', 'pages:blockLayoutIdentifier', null, [], $this->translator);
+        $label = new Label('identifier', 'pages:blockLayoutIdentifier', [], $this->translator);
 
-        $this->form[] = new FormGroup($input, $label, null);
+        $this->form[] = new FormGroup($input, $label);
 
         return $this;
     }
@@ -87,12 +87,11 @@ class BlockLayout extends Base
             'body',
             'body',
             htmlspecialchars($entity->getBody()),
-            null,
             [Textarea::ATTRIBUTE_ROWS => '15']
         );
-        $label = new Label('body', 'pages:blockLayoutBody', null, [], $this->translator);
+        $label = new Label('body', 'pages:blockLayoutBody', [], $this->translator);
 
-        $this->form[] = new FormGroup($input, $label, null);
+        $this->form[] = new FormGroup($input, $label);
 
         return $this;
     }

@@ -6,9 +6,9 @@ namespace AbterPhp\Framework\Html\Component;
 
 use AbterPhp\Framework\I18n\ITranslator;
 
-class Button extends Component
+class Button extends Tag
 {
-    const DEFAULT_TAG = 'button';
+    const DEFAULT_TAG = self::TAG_BUTTON;
 
     const TAG_A      = 'a';
     const TAG_BUTTON = 'button';
@@ -35,18 +35,19 @@ class Button extends Component
     const TYPE_SUBMIT = 'submit';
 
     /**
+     * Button constructor.
+     *
      * @param IComponent|string $content
-     * @param string            $tag
-     * @param array             $attributes
-     * @param array             $attributeCallbacks
-     * @param ITranslator|null  $translator
+     * @param array            $attributes
+     * @param ITranslator|null $translator
+     * @param string|null      $tag
      */
     public function __construct(
         $content,
-        string $tag = self::TAG_A,
         array $attributes = [],
-        ITranslator $translator = null
+        ITranslator $translator = null,
+        ?string $tag = null
     ) {
-        parent::__construct($content, $tag, $attributes, $translator);
+        parent::__construct($content, $attributes, $translator, $tag);
     }
 }

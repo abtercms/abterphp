@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace AbterPhp\Framework\Form\Element;
 
-use AbterPhp\Framework\Html\Collection\Options;
+use AbterPhp\Framework\Form\Component\Option;
+use AbterPhp\Framework\Html\Collection\Collection;
 use AbterPhp\Framework\I18n\ITranslator;
 
-class Select extends Options implements IElement
+class Select extends Collection implements IElement
 {
     const DEFAULT_TAG = 'select';
 
@@ -16,8 +17,11 @@ class Select extends Options implements IElement
     const ATTRIBUTE_MULTIPLE = 'multiple';
     const ATTRIBUTE_SIZE     = 'size';
 
-    /** @var Options */
-    protected $components;
+    /** @var Option[] */
+    protected $components = [];
+
+    /** @var string */
+    protected $componentClass = Option::class;
 
     /** @var array */
     protected $attributes = [
@@ -32,20 +36,18 @@ class Select extends Options implements IElement
      *
      * @param string           $inputId
      * @param string           $name
-     * @param string           $value
      * @param bool             $multiple
-     * @param string|null      $tag
      * @param array            $attributes
      * @param ITranslator|null $translator
+     * @param string|null      $tag
      */
     public function __construct(
         string $inputId,
         string $name,
-        string $value = '',
         bool $multiple = false,
-        ?string $tag = null,
         array $attributes = [],
-        ?ITranslator $translator = null
+        ?ITranslator $translator = null,
+        ?string $tag = null
     ) {
         if ($inputId) {
             $attributes[static::ATTRIBUTE_ID] = $inputId;
@@ -60,7 +62,7 @@ class Select extends Options implements IElement
             $attributes[static::ATTRIBUTE_MULTIPLE] = null;
         }
 
-        parent::__construct($tag, $attributes, $translator);
+        parent::__construct($attributes, $translator, $tag);
     }
 
     /**

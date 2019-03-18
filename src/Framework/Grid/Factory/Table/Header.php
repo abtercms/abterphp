@@ -58,7 +58,7 @@ class Header
         }
 
         if ($hasActions) {
-            $cells[] = new Cell(static::ACTIONS_CONTENT, static::ACTIONS_GROUP, [], Cell::HEAD, $this->translator);
+            $cells[] = new Cell(static::ACTIONS_CONTENT, static::ACTIONS_GROUP, [], $this->translator, Cell::HEAD);
         }
 
         $header[] = new Row($cells);
@@ -77,7 +77,7 @@ class Header
     protected function createCell(string $content, string $group): Cell
     {
         if (!array_key_exists($group, $this->inputNames)) {
-            return new Cell($content, $group, [], Cell::HEAD, $this->translator);
+            return new Cell($content, $group, [], $this->translator, Cell::HEAD);
         }
 
         $inputName = $this->inputNames[$group];

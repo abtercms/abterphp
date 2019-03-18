@@ -25,20 +25,20 @@ class Form extends Collection implements IForm
      *
      * @param string           $action
      * @param string           $method
-     * @param string|null      $tag
      * @param array            $attributes
      * @param ITranslator|null $translator
+     * @param string|null      $tag
      */
     public function __construct(
         string $action,
         string $method = RequestMethods::POST,
-        ?string $tag = null,
         array $attributes = [],
-        ?ITranslator $translator = null
+        ?ITranslator $translator = null,
+        ?string $tag = null
     ) {
         $attributes[static::ATTRIBUTE_ACTION] = $action;
         $attributes[static::ATTRIBUTE_METHOD] = $method;
 
-        parent::__construct($tag, $attributes, $translator);
+        parent::__construct($attributes, $translator, $tag);
     }
 }

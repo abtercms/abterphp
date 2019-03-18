@@ -17,31 +17,30 @@ class UserBlock extends Item
     /** @var ISession */
     protected $session;
 
-    /** @var ITranslator */
-    protected $translator;
-
     /** @var UrlGenerator */
     protected $urlGenerator;
 
     /**
-     * NavigationRegistrar constructor.
+     * UserBlock constructor.
      *
      * @param ISession     $session
      * @param ITranslator  $translator
      * @param UrlGenerator $urlGenerator
+     *
+     * @throws \Opulence\Routing\Urls\URLException
      */
     public function __construct(ISession $session, ITranslator $translator, UrlGenerator $urlGenerator)
     {
         $this->session      = $session;
-        $this->translator   = $translator;
         $this->urlGenerator = $urlGenerator;
+        $this->translator   = $translator;
 
         $content   = sprintf('%1$s%2$s', $this->getUserBlock(), $this->getDropdown());
         $attr = [
             Item::ATTRIBUTE_CLASS => 'dropdown pmd-dropdown pmd-user-info visible-xs visible-md visible-sm visible-lg',
         ];
 
-        parent::__construct($content, static::TAG_LI, $attr);
+        parent::__construct($content, $attr, $translator, static::TAG_LI);
     }
 
     /**

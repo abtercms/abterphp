@@ -5,14 +5,17 @@ declare(strict_types=1);
 namespace AbterPhp\Admin\Events\Listeners;
 
 use AbterPhp\Framework\Events\DashboardReady;
+use AbterPhp\Framework\Html\Component\Tag;
 
 class DashboardRegistrar
 {
+    const CONTENT = 'Insert dashboard component for Admin module.';
+
     /**
      * @param DashboardReady $event
      */
     public function handle(DashboardReady $event)
     {
-        $event->getDashboard()[] = '<p>Insert dashboard component for Admin module.</p>';
+        $event->getDashboard()[] = new Tag(static::CONTENT, [], null, Tag::TAG_P);
     }
 }

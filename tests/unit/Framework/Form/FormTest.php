@@ -4,56 +4,62 @@ declare(strict_types=1);
 
 namespace AbterPhp\Framework\Form;
 
-use AbterPhp\Framework\I18n\ITranslatorMockTrait;
+use AbterPhp\Framework\I18n\MockTranslatorFactory;
 
 class FormTest extends \PHPUnit\Framework\TestCase
 {
-    use ITranslatorMockTrait;
-
     /**
      * @return array
      */
     public function renderProvider()
     {
         return [
-            ['', '', '', [], []],
+            'simple'     => ['bar', 'baz', [], [], null, '<form action="bar" method="baz"></form>'],
+            'custom-tag' => ['bar', 'baz', [], [], 'foo', '<foo action="bar" method="baz"></foo>'],
         ];
     }
 
     /**
      * @dataProvider renderProvider
      *
-     * @param string     $action
-     * @param string     $method
-     * @param string     $tag
-     * @param array      $attributes
-     * @param array|null $translations
+     * @param string      $action
+     * @param string      $method
+     * @param array       $attributes
+     * @param array|null  $translations
+     * @param string|null $tag
+     * @param string      $expectedResult
      */
-    public function testRender(string $action, string $method, string $tag, array $attributes, ?array $translations)
-    {
-        $sut = $this->createElement($action, $method, $tag, $attributes, $translations);
+    public function testRender(
+        string $action,
+        string $method,
+        array $attributes,
+        ?array $translations,
+        ?string $tag,
+        string $expectedResult
+    ) {
+        $sut = $this->createElement($action, $method, $attributes, $translations, $tag);
 
-        $this->markTestIncomplete();
+        $this->assertSame($expectedResult, (string)$sut);
     }
 
     /**
-     * @param string     $action
-     * @param string     $method
-     * @param string     $tag
-     * @param array      $attributes
-     * @param array|null $translations
+     * @param string      $action
+     * @param string      $method
+     * @param array       $attributes
+     * @param array|null  $translations
+     * @param string|null $tag
      *
      * @return Form
      */
     private function createElement(
         string $action,
         string $method,
-        string $tag,
         array $attributes,
-        ?array $translations
+        ?array $translations,
+        ?string $tag
     ): Form {
-        $translatorMock = $this->getTranslatorMock($translations);
+        $translatorMock = MockTranslatorFactory::createSimpleTranslator($this, $translations);
 
-        return new Form($action, $method, $tag, $attributes, $translatorMock);
+        return new Form($action, $method, $attributes, $translatorMock, $tag);
     }
 }

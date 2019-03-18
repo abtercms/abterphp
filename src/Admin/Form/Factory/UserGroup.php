@@ -7,6 +7,7 @@ namespace AbterPhp\Admin\Form\Factory;
 use AbterPhp\Admin\Domain\Entities\AdminResource;
 use AbterPhp\Admin\Domain\Entities\UserGroup as Entity;
 use AbterPhp\Admin\Orm\AdminResourceRepo;
+use AbterPhp\Framework\Form\Component\Option;
 use AbterPhp\Framework\Form\Container\FormGroup;
 use AbterPhp\Framework\Form\Element\Input;
 use AbterPhp\Framework\Form\Element\Select;
@@ -14,7 +15,6 @@ use AbterPhp\Framework\Form\Factory\Base;
 use AbterPhp\Framework\Form\Factory\IFormFactory;
 use AbterPhp\Framework\Form\IForm;
 use AbterPhp\Framework\Form\Label\Label;
-use AbterPhp\Framework\Html\Component\Option;
 use AbterPhp\Framework\I18n\ITranslator;
 use Opulence\Orm\IEntity;
 use Opulence\Sessions\ISession;
@@ -81,9 +81,9 @@ class UserGroup extends Base
             'identifier',
             $entity->getIdentifier()
         );
-        $label = new Label('body', 'admin:userGroupIdentifier', null, [], $this->translator);
+        $label = new Label('body', 'admin:userGroupIdentifier', [], $this->translator);
 
-        $this->form[] = new FormGroup($input, $label, null);
+        $this->form[] = new FormGroup($input, $label);
 
         return $this;
     }
@@ -100,9 +100,9 @@ class UserGroup extends Base
             'name',
             $entity->getName()
         );
-        $label = new Label('body', 'admin:userGroupName', null, [], $this->translator);
+        $label = new Label('body', 'admin:userGroupName', [], $this->translator);
 
-        $this->form[] = new FormGroup($input, $label, null);
+        $this->form[] = new FormGroup($input, $label);
 
         return $this;
     }
@@ -120,7 +120,7 @@ class UserGroup extends Base
         $options = $this->createAdminResourceOptions($allAdminResources, $adminResourceIds);
 
         $this->form[] = new FormGroup(
-            $this->createAdminResourceSelect($entity, $options),
+            $this->createAdminResourceSelect($options),
             $this->createAdminResourceLabel()
         );
 
@@ -160,23 +160,22 @@ class UserGroup extends Base
     {
         $options = [];
         foreach ($allAdminResources as $adminResource) {
-            $attributes = [Option::ATTRIBUTE_VALUE => (string)$adminResource->getId()];
-            if (in_array($adminResource->getId(), $adminResourceIds, true)) {
-                $attributes[Option::ATTRIBUTE_SELECTED] = null;
-            }
-            $options[] = new Option($adminResource->getIdentifier(), null, $attributes);
+            $options[] = new Option(
+                (string)$adminResource->getId(),
+                $adminResource->getIdentifier(),
+                in_array($adminResource->getId(), $adminResourceIds, true)
+            );
         }
 
         return $options;
     }
 
     /**
-     * @param Entity   $entity
      * @param Option[] $options
      *
      * @return Select
      */
-    protected function createAdminResourceSelect(Entity $entity, array $options): Select
+    protected function createAdminResourceSelect(array $options): Select
     {
         $attributes = [
             Select::ATTRIBUTE_SIZE => $this->getMultiSelectSize(
@@ -189,9 +188,7 @@ class UserGroup extends Base
         $select = new Select(
             'admin_resource_ids',
             'admin_resource_ids[]',
-            $entity->getName(),
             true,
-            null,
             $attributes
         );
 
@@ -207,7 +204,7 @@ class UserGroup extends Base
      */
     protected function createAdminResourceLabel(): Label
     {
-        return new Label('admin_resource_ids', 'admin:adminResources', null, [], $this->translator);
+        return new Label('admin_resource_ids', 'admin:adminResources', [], $this->translator);
     }
 
     /**

@@ -14,6 +14,8 @@ use Opulence\Routing\Urls\UrlGenerator;
 
 class Navigation extends Collection
 {
+    const DEFAULT_TAG = self::TAG_UL;
+
     const TAG_NAV   = 'nav';
     const TAG_ASIDE = 'aside';
     const TAG_UL    = 'ul';
@@ -25,9 +27,6 @@ class Navigation extends Collection
 
     /** @var UrlGenerator */
     protected $urlGenerator;
-
-    /** @var ITranslator */
-    protected $translator;
 
     /** @var string */
     protected $username;
@@ -48,26 +47,25 @@ class Navigation extends Collection
      * @param UrlGenerator  $urlGenerator
      * @param ITranslator   $translator
      * @param string        $username
-     * @param string        $tag
      * @param array         $attributes
      * @param Enforcer|null $enforcer
+     * @param string|null        $tag
      */
     public function __construct(
         string $name,
         UrlGenerator $urlGenerator,
         ITranslator $translator,
         string $username = '',
-        string $tag = self::TAG_UL,
         array $attributes = [],
-        Enforcer $enforcer = null
+        ?Enforcer $enforcer = null,
+        ?string $tag = null
     ) {
         $this->name         = $name;
         $this->urlGenerator = $urlGenerator;
-        $this->translator   = $translator;
         $this->username     = $username;
         $this->enforcer     = $enforcer;
 
-        parent::__construct($tag, $attributes);
+        parent::__construct($attributes, $translator, $tag);
     }
 
     /**
@@ -156,8 +154,8 @@ class Navigation extends Collection
         $component = null;
         switch ($this->tag) {
             case static::TAG_UL:
-                $link      = new Button($content, Button::TAG_A, $linkAttr);
-                $component = new Item($link, Item::TAG_LI, $attr, $this->translator);
+                $link      = new Button($content, $linkAttr, null, Button::TAG_A);
+                $component = new Item($link, $attr, $this->translator);
                 break;
         }
 

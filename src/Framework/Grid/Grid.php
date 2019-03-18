@@ -8,11 +8,11 @@ use AbterPhp\Framework\Grid\Collection\Actions;
 use AbterPhp\Framework\Grid\Collection\Filters;
 use AbterPhp\Framework\Grid\Pagination\IPagination;
 use AbterPhp\Framework\Grid\Table\ITable;
-use AbterPhp\Framework\Html\Component\Component;
+use AbterPhp\Framework\Html\Component\Tag;
 use AbterPhp\Framework\I18n\ITranslator;
 use AbterPhp\Framework\Domain\Entities\IStringerEntity;
 
-class Grid extends Component implements IGrid
+class Grid extends Tag implements IGrid
 {
     /**
      *   %1$s - filter
@@ -63,18 +63,18 @@ class Grid extends Component implements IGrid
         $this->table      = $table;
         $this->pagination = $pagination;
 
-        parent::__construct('', static::TAG_GRID, $attributes, $translator);
+        parent::__construct('', $attributes, $translator, static::TAG_GRID);
 
-        $this->appendToAttribute(Component::ATTRIBUTE_CLASS, static::ATTRIBUTE_GRID_CLASS);
+        $this->appendToAttribute(Tag::ATTRIBUTE_CLASS, static::ATTRIBUTE_GRID_CLASS);
 
         if ($actions) {
             $this->actions = $actions;
-            $this->actions->appendToAttribute(Component::ATTRIBUTE_CLASS, static::ATTRIBUTE_ACTIONS_CLASS);
+            $this->actions->appendToAttribute(Tag::ATTRIBUTE_CLASS, static::ATTRIBUTE_ACTIONS_CLASS);
         }
 
         if ($filters) {
             $this->filters = $filters;
-            $this->filters->appendToAttribute(Component::ATTRIBUTE_CLASS, static::ATTRIBUTE_FILTER_CLASS);
+            $this->filters->appendToAttribute(Tag::ATTRIBUTE_CLASS, static::ATTRIBUTE_FILTER_CLASS);
         }
     }
 

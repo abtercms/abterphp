@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace AbterPhp\Framework\Html\Collection;
 
-use AbterPhp\Framework\Html\Component\Component;
+use AbterPhp\Framework\Html\Component\Tag;
 use AbterPhp\Framework\Html\Component\IComponent;
 use AbterPhp\Framework\Html\Helper\StringHelper;
 use AbterPhp\Framework\I18n\ITranslator;
@@ -14,7 +14,7 @@ use LogicException;
 /**
  * @SuppressWarnings(PHPMD.TooManyPublicMethods)
  */
-class Collection extends Component implements ICollection
+class Collection extends Tag implements ICollection
 {
     const ERROR_INVALID_TYPE_ARG     = 'Provided value must be an object instance of "%s", type "%s" is found';
     const ERROR_INVALID_INSTANCE_ARG = 'Provided value must be an instance of "%s", not an instance of "%s"';
@@ -27,20 +27,20 @@ class Collection extends Component implements ICollection
     protected $components = [];
 
     /** @var string */
-    protected $indentation = '';
+    protected $componentClass = IComponent::class;
 
     /**
      * Collection constructor.
      *
-     * @param string|null      $tag
      * @param array            $attributes
      * @param ITranslator|null $translator
+     * @param string|null      $tag
      */
-    public function __construct(?string $tag = null, $attributes = [], ITranslator $translator = null)
+    public function __construct($attributes = [], ITranslator $translator = null, ?string $tag = null)
     {
         $this->position = 0;
 
-        parent::__construct('', $tag, $attributes, $translator);
+        parent::__construct('', $attributes, $translator, $tag);
     }
 
     public function rewind()
@@ -85,6 +85,8 @@ class Collection extends Component implements ICollection
      */
     public function offsetSet($offset, $value)
     {
+        $this->verifyArgument($value);
+
         if (is_null($offset)) {
             $this->components[] = $value;
         } else {
@@ -138,7 +140,11 @@ class Collection extends Component implements ICollection
             $list[] = (string)$stringer;
         }
 
-        $content = implode("\n" . $this->indentation, $list);
+        $content = implode("\n", $list);
+
+        if (empty($this->tag)) {
+            return $content;
+        }
 
         $result = StringHelper::wrapInTag($content, $this->tag, $this->attributes);
 
@@ -146,40 +152,24 @@ class Collection extends Component implements ICollection
     }
 
     /**
-     * @param object $object
-     * @param string $className
+     * @param object $arg
      *
      * @throws InvalidArgumentException
      */
-    protected function verifyArgument($object, $className)
+    protected function verifyArgument($arg)
     {
-        if ($object instanceof $className) {
+        if ($arg instanceof $this->componentClass) {
             return;
         }
 
-        $type = gettype($object);
-        if (gettype($object) !== 'object') {
-            throw new InvalidArgumentException(sprintf(static::ERROR_INVALID_TYPE_ARG, $className, $type));
+        $type = gettype($arg);
+        if ($type !== 'object') {
+            throw new InvalidArgumentException(sprintf(static::ERROR_INVALID_TYPE_ARG, $this->componentClass, $type));
         }
 
 
         throw new InvalidArgumentException(
-            sprintf(static::ERROR_INVALID_INSTANCE_ARG, $className, get_class($object))
+            sprintf(static::ERROR_INVALID_INSTANCE_ARG, $this->componentClass, $type)
         );
-    }
-
-    /**
-     * @param object $object
-     * @param string $className
-     *
-     * @throws LogicException
-     */
-    protected function verifyReturn($object, $className)
-    {
-        if ($object instanceof $className) {
-            return;
-        }
-
-        throw new LogicException(sprintf(static::ERROR_INVALID_TYPE_RETURN, $className));
     }
 }

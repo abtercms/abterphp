@@ -55,11 +55,10 @@ class Assets
         $label = new Label(
             'header',
             'pages:pageHeader',
-            null,
             [],
             $this->translator
         );
-        $help  = new Help('pages:pageHeaderHelp', null, [], $this->translator);
+        $help  = new Help('pages:pageHeaderHelp', [], $this->translator);
 
         return new FormGroup($input, $label, $help);
     }
@@ -77,11 +76,10 @@ class Assets
         $label = new Label(
             'footer',
             'pages:pageFooter',
-            null,
             [],
             $this->translator
         );
-        $help  = new Help('pages:pageHeaderHelp', null, [], $this->translator);
+        $help  = new Help('pages:pageHeaderHelp', [], $this->translator);
 
         return new FormGroup($input, $label, $help);
     }
@@ -99,11 +97,10 @@ class Assets
         $label = new Label(
             'css-files',
             'pages:pageCssFiles',
-            null,
             [],
             $this->translator
         );
-        $help  = new Help('pages:pageCssFilesHelp', null, [], $this->translator);
+        $help  = new Help('pages:pageCssFilesHelp', [], $this->translator);
 
         return new FormGroup($input, $label, $help);
     }
@@ -121,11 +118,10 @@ class Assets
         $label = new Label(
             'js-files',
             'pages:pageJsFiles',
-            null,
             [],
             $this->translator
         );
-        $help  = new Help('pages:pageJsFilesHelp', null, [], $this->translator);
+        $help  = new Help('pages:pageJsFilesHelp', [], $this->translator);
 
         return new FormGroup($input, $label, $help);
     }

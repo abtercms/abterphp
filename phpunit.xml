@@ -18,6 +18,16 @@
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
             <directory suffix=".php">./src</directory>
+            <exclude>
+                <directory suffix=".php">./src/Admin/Bootstrappers</directory>
+                <directory suffix=".php">./src/Contact/Bootstrappers</directory>
+                <directory suffix=".php">./src/Files/Bootstrappers</directory>
+                <directory suffix=".php">./src/Website/Bootstrappers</directory>
+                <file>src/Admin/routes.php</file>
+                <file>src/Contact/routes.php</file>
+                <file>src/Files/routes.php</file>
+                <file>src/Website/routes.php</file>
+            </exclude>
         </whitelist>
     </filter>
     <logging>

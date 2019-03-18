@@ -6,11 +6,11 @@ namespace AbterPhp\Framework\Form\Container;
 
 use AbterPhp\Framework\Form\Element\IElement;
 use AbterPhp\Framework\Form\Label\Label;
-use AbterPhp\Framework\Html\Component\Component;
+use AbterPhp\Framework\Html\Component\Tag;
 use AbterPhp\Framework\Html\Component\IComponent;
 use AbterPhp\Framework\I18n\ITranslator;
 
-class FormGroup extends Component implements IContainer
+class FormGroup extends Tag implements IContainer
 {
     const DEFAULT_TEMPLATE = '%1$s%2$s%3$s';
 
@@ -34,24 +34,24 @@ class FormGroup extends Component implements IContainer
     protected $template = self::DEFAULT_TEMPLATE;
 
     /**
-     * DefaultElement constructor.
+     * FormGroup constructor.
      *
      * @param IElement|null    $input
      * @param Label|null       $label
      * @param IComponent|null  $help
-     * @param string|null      $tag
      * @param array            $attributes
      * @param ITranslator|null $translator
+     * @param string|null      $tag
      */
     public function __construct(
         ?IElement $input,
         ?Label $label = null,
         ?IComponent $help = null,
-        ?string $tag = null,
         array $attributes = [],
-        ?ITranslator $translator = null
+        ?ITranslator $translator = null,
+        ?string $tag = null
     ) {
-        parent::__construct('', $tag, $attributes, $translator);
+        parent::__construct('', $attributes, $translator, $tag);
 
         $this->label = $label;
         $this->input = $input;

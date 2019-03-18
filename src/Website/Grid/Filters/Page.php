@@ -13,11 +13,11 @@ class Page extends Filters
     /**
      * Page constructor.
      *
-     * @param string|null      $tag
      * @param array            $attributes
      * @param ITranslator|null $translator
+     * @param string|null      $tag
      */
-    public function __construct(?string $tag = null, array $attributes = [], ITranslator $translator = null)
+    public function __construct(array $attributes = [], ITranslator $translator = null, ?string $tag = null)
     {
         $this->components[] = new Input(
             'identifier',
@@ -36,6 +36,6 @@ class Page extends Filters
             $translator
         );
 
-        parent::__construct($tag, $attributes, $translator);
+        parent::__construct($attributes, $translator, $tag);
     }
 }

@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace AbterPhp\Files\Form\Factory;
 
+use AbterPhp\Files\Domain\Entities\File as Entity;
+use AbterPhp\Files\Domain\Entities\FileCategory;
+use AbterPhp\Files\Orm\FileCategoryRepo;
+use AbterPhp\Framework\Form\Component\Option;
 use AbterPhp\Framework\Form\Container\FormGroup;
 use AbterPhp\Framework\Form\Element\Input;
 use AbterPhp\Framework\Form\Element\Select;
@@ -11,14 +15,9 @@ use AbterPhp\Framework\Form\Element\Textarea;
 use AbterPhp\Framework\Form\Extra\Help;
 use AbterPhp\Framework\Form\Factory\Base;
 use AbterPhp\Framework\Form\Factory\IFormFactory;
-use AbterPhp\Framework\Form\Form;
 use AbterPhp\Framework\Form\IForm;
 use AbterPhp\Framework\Form\Label\Label;
-use AbterPhp\Framework\Html\Component\Option;
 use AbterPhp\Framework\I18n\ITranslator;
-use AbterPhp\Files\Domain\Entities\File as Entity;
-use AbterPhp\Files\Domain\Entities\FileCategory;
-use AbterPhp\Files\Orm\FileCategoryRepo;
 use Opulence\Orm\IEntity;
 use Opulence\Sessions\ISession;
 
@@ -77,10 +76,10 @@ class File extends Base
      */
     protected function addFile(): File
     {
-        $input = new Input('file', 'file', '', null, [Input::ATTRIBUTE_TYPE => Input::TYPE_FILE]);
-        $label = new Label('file', 'files:file', null, [], $this->translator);
+        $input = new Input('file', 'file', '', [Input::ATTRIBUTE_TYPE => Input::TYPE_FILE]);
+        $label = new Label('file', 'files:file', [], $this->translator);
 
-        $this->form[] = new FormGroup($input, $label, null);
+        $this->form[] = new FormGroup($input, $label);
 
         return $this;
     }
@@ -95,9 +94,9 @@ class File extends Base
             'description',
             $entity->getDescription()
         );
-        $label = new Label('description', 'files:fileDescription', null, [], $this->translator);
+        $label = new Label('description', 'files:fileDescription', [], $this->translator);
 
-        $this->form[] = new FormGroup($input, $label, null);
+        $this->form[] = new FormGroup($input, $label);
 
         return $this;
     }
@@ -115,7 +114,7 @@ class File extends Base
         $options = $this->createFileCategoryOptions($allFileCategories, $fileCategoryId);
 
         $this->form[] = new FormGroup(
-            $this->createFileCategorySelect($entity, $options),
+            $this->createFileCategorySelect($options),
             $this->createFileCategoryLabel(),
             $this->createFileCategoryHelp($allFileCategories)
         );
@@ -141,23 +140,19 @@ class File extends Base
     {
         $options = [];
         foreach ($allFileCategories as $fileCategory) {
-            $attributes = [Option::ATTRIBUTE_VALUE => (string)$fileCategory->getId()];
-            if ($fileCategory->getId() === $fileCategoryId) {
-                $attributes[Option::ATTRIBUTE_SELECTED] = null;
-            }
-            $options[] = new Option($fileCategory->getName(), null, $attributes);
+            $isSelected = $fileCategory->getId() === $fileCategoryId;
+            $options[] = new Option((string)$fileCategory->getId(), $fileCategory->getName(), $isSelected);
         }
 
         return $options;
     }
 
     /**
-     * @param Entity   $entity
      * @param Option[] $options
      *
      * @return Select
      */
-    protected function createFileCategorySelect(Entity $entity, array $options): Select
+    protected function createFileCategorySelect(array $options): Select
     {
         $attributes = [
             Select::ATTRIBUTE_SIZE => $this->getMultiSelectSize(
@@ -167,9 +162,7 @@ class File extends Base
             ),
         ];
 
-        $value = (string)$entity->getCategory()->getId();
-
-        $select = new Select('category_id', 'category_id', $value, false, null, $attributes);
+        $select = new Select('category_id', 'category_id', false, $attributes);
 
         foreach ($options as $option) {
             $select[] = $option;
@@ -183,7 +176,7 @@ class File extends Base
      */
     protected function createFileCategoryLabel(): Label
     {
-        return new Label('file_category_id', 'files:fileCategory', null, [], $this->translator);
+        return new Label('file_category_id', 'files:fileCategory', [], $this->translator);
     }
 
     /**

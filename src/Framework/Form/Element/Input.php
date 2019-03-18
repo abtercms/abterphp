@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace AbterPhp\Framework\Form\Element;
 
-use AbterPhp\Framework\Html\Component\Component;
+use AbterPhp\Framework\Html\Component\Tag;
 use AbterPhp\Framework\Html\Helper\StringHelper;
 use AbterPhp\Framework\I18n\ITranslator;
 
-class Input extends Component implements IElement
+class Input extends Tag implements IElement
 {
     const DEFAULT_TAG = self::TAG_INPUT;
 
@@ -60,17 +60,17 @@ class Input extends Component implements IElement
      * @param string           $inputId
      * @param string           $name
      * @param string           $value
-     * @param string|null      $tag
      * @param array            $attributes
      * @param ITranslator|null $translator
+     * @param string|null      $tag
      */
     public function __construct(
         string $inputId,
         string $name,
         string $value = '',
-        ?string $tag = null,
         array $attributes = [],
-        ?ITranslator $translator = null
+        ?ITranslator $translator = null,
+        ?string $tag = null
     ) {
         if ($inputId) {
             $attributes[static::ATTRIBUTE_ID] = $inputId;
@@ -82,7 +82,7 @@ class Input extends Component implements IElement
         $attributes[static::ATTRIBUTE_NAME]  = $name;
         $attributes[static::ATTRIBUTE_VALUE] = $value;
 
-        parent::__construct('', $tag, $attributes, $translator);
+        parent::__construct('', $attributes, $translator, $tag);
     }
 
     /**

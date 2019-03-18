@@ -55,11 +55,10 @@ class Assets
         $label = new Label(
             'header',
             'pages:pageLayoutHeader',
-            null,
             [],
             $this->translator
         );
-        $help  = new Help('pages:pageLayoutHeaderHelp', null, [], $this->translator);
+        $help  = new Help('pages:pageLayoutHeaderHelp', [], $this->translator);
 
         return new FormGroup($input, $label, $help);
     }
@@ -77,11 +76,10 @@ class Assets
         $label = new Label(
             'footer',
             'pages:pageLayoutFooter',
-            null,
             [],
             $this->translator
         );
-        $help  = new Help('pages:pageLayoutHeaderHelp', null, [], $this->translator);
+        $help  = new Help('pages:pageLayoutHeaderHelp', [], $this->translator);
 
         return new FormGroup($input, $label, $help);
     }
@@ -99,11 +97,10 @@ class Assets
         $label = new Label(
             'css-files',
             'pages:pageLayoutCssFiles',
-            null,
             [],
             $this->translator
         );
-        $help  = new Help('pages:pageLayoutCssFilesHelp', null, [], $this->translator);
+        $help  = new Help('pages:pageLayoutCssFilesHelp', [], $this->translator);
 
         return new FormGroup($input, $label, $help);
     }
@@ -121,11 +118,10 @@ class Assets
         $label = new Label(
             'js-files',
             'pages:pageLayoutJsFiles',
-            null,
             [],
             $this->translator
         );
-        $help  = new Help('pages:pageLayoutJsFilesHelp', null, [], $this->translator);
+        $help  = new Help('pages:pageLayoutJsFilesHelp', [], $this->translator);
 
         return new FormGroup($input, $label, $help);
     }

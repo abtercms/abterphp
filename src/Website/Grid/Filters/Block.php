@@ -34,6 +34,6 @@ class Block extends Filters
             $translator
         );
 
-        parent::__construct(null, [], $translator);
+        parent::__construct([], $translator);
     }
 }

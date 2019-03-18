@@ -143,7 +143,7 @@ class Contact extends Base
 
         $content = $this->translator->translate('contact:submit');
 
-        $this->form[] = new Button($content, Button::TAG_BUTTON, $attributes);
+        $this->form[] = new Button($content, $attributes);
 
         return $this;
     }

@@ -47,7 +47,7 @@ class Sortable extends Cell implements ICell
         array $attributes = [],
         ?ITranslator $translator = null
     ) {
-        parent::__construct($content, $group, $attributes, self::HEAD, $translator);
+        parent::__construct($content, $group, $attributes, $translator, self::HEAD);
 
         $this->fieldName = $fieldName;
         $this->inputName = static::NAME_PREFIX . $inputName;

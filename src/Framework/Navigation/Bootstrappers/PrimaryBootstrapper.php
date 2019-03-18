@@ -69,7 +69,6 @@ class PrimaryBootstrapper extends Bootstrapper implements ILazyBootstrapper
             $urlGenerator,
             $translator,
             $username,
-            Navigation::TAG_UL,
             [],
             $enforcer
         );

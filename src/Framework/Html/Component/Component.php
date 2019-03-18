@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace AbterPhp\Framework\Html\Component;
 
-use AbterPhp\Framework\Html\Helper\StringHelper;
 use AbterPhp\Framework\I18n\ITranslator;
 
 /**
@@ -12,25 +11,8 @@ use AbterPhp\Framework\I18n\ITranslator;
  */
 class Component implements IComponent
 {
-    const DEFAULT_TAG = self::TAG_DIV;
-
-    const TAG_DIV = 'div';
-    const TAG_P   = 'p';
-
-    const ATTRIBUTE_CLASS = 'class';
-    const ATTRIBUTE_ID    = 'id';
-    const ATTRIBUTE_HREF  = 'href';
-
-    const ERROR_MSG_INVALID_CONTENT = 'content must be a string or IComponent instance';
-
     /** @var string|IComponent */
     protected $content;
-
-    /** @var string|null */
-    protected $tag;
-
-    /** @var string[] */
-    protected $attributes = [];
 
     /** @var ITranslator */
     protected $translator;
@@ -38,32 +20,13 @@ class Component implements IComponent
     /**
      * Component constructor.
      *
-     * @param string|IComponent $content
-     * @param string|null       $tag
-     * @param string[]          $attributes
-     * @param ITranslator|null  $translator
+     * @param string           $content
+     * @param ITranslator|null $translator
      */
-    public function __construct(
-        $content = '',
-        ?string $tag = null,
-        array $attributes = [],
-        ITranslator $translator = null
-    ) {
-        if (!is_string($content) && !($content instanceof IComponent)) {
-            throw new \InvalidArgumentException(static::ERROR_MSG_INVALID_CONTENT);
-        }
-
-        $this->content    = $content;
-        $this->tag        = $tag ?: static::DEFAULT_TAG;
-        $this->translator = $translator;
-
-        foreach ($attributes as $key => $value) {
-            if (array_key_exists($key, $this->attributes)) {
-                $this->attributes[$key] = array_merge((array)$this->attributes[$key], (array)$value);
-            } else {
-                $this->attributes[$key] = $value;
-            }
-        }
+    public function __construct(string $content = '', ?ITranslator $translator = null)
+    {
+        $this->setContent($content);
+        $this->setTranslator($translator);
     }
 
     /**
@@ -71,10 +34,6 @@ class Component implements IComponent
      */
     public function getId(): string
     {
-        if (array_key_exists(static::ATTRIBUTE_ID, $this->attributes)) {
-            return (string)$this->attributes[static::ATTRIBUTE_ID];
-        }
-
         return '';
     }
 
@@ -85,17 +44,7 @@ class Component implements IComponent
      */
     public function setTag(string $tag): IComponent
     {
-        $this->tag = $tag;
-
         return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getContent(): string
-    {
-        return (string)$this->content;
     }
 
     /**
@@ -103,7 +52,7 @@ class Component implements IComponent
      */
     public function getAttributes(): array
     {
-        return $this->attributes;
+        return [];
     }
 
     /**
@@ -113,25 +62,39 @@ class Component implements IComponent
      */
     public function setAttributes(array $attributes = []): IComponent
     {
-        return $this->attributes;
+        return $this;
     }
 
     /**
-     * @param string $attribute
-     * @param string $valueToAppend
+     * @return string|IComponent
      */
-    public function appendToAttribute(string $attribute, string $valueToAppend)
+    public function getContent()
     {
-        $currentValue = isset($this->attributes[$attribute]) ? $this->attributes[$attribute] : '';
+        return $this->content;
+    }
 
-        $pieces = explode(' ', $currentValue);
+    /**
+     * @param string|IComponent
+     *
+     * @return $this
+     */
+    public function setContent($content): IComponent
+    {
+        $this->content = $content;
 
-        $pieces[] = $valueToAppend;
+        return $this;
+    }
 
-        $pieces = array_unique($pieces);
-        $pieces = array_filter($pieces);
+    /**
+     * @param ITranslator|null $translator
+     *
+     * @return $this
+     */
+    public function setTranslator(?ITranslator $translator = null): IComponent
+    {
+        $this->translator = $translator;
 
-        $this->attributes[$attribute] = implode(' ', $pieces);
+        return $this;
     }
 
     /**
@@ -149,6 +112,6 @@ class Component implements IComponent
             }
         }
 
-        return StringHelper::wrapInTag($content, $this->tag, $this->attributes);
+        return (string)$content;
     }
 }

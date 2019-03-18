@@ -16,19 +16,19 @@ class Countable extends Label
      * @param string           $inputId
      * @param string           $content
      * @param int              $size
-     * @param string|null      $tag
      * @param array            $attributes
      * @param ITranslator|null $translator
+     * @param string|null      $tag
      */
     public function __construct(
         string $inputId,
         $content,
         int $size = 160,
-        ?string $tag = null,
         array $attributes = [],
-        ?ITranslator $translator = null
+        ?ITranslator $translator = null,
+        ?string $tag = null
     ) {
-        parent::__construct($inputId, $content, $tag, $attributes, $translator);
+        parent::__construct($inputId, $content, $attributes, $translator, $tag);
 
         $this->content .= sprintf('<span data-count="%d" class="count"></span>', $size);
     }

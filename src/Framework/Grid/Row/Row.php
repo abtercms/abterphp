@@ -7,11 +7,13 @@ namespace AbterPhp\Framework\Grid\Row;
 use AbterPhp\Framework\Grid\Cell\Cell;
 use AbterPhp\Framework\Grid\Collection\Actions;
 use AbterPhp\Framework\Grid\Collection\Cells;
-use AbterPhp\Framework\Html\Component\Component;
+use AbterPhp\Framework\Html\Component\Tag;
 use Opulence\Orm\IEntity;
 
-class Row extends Component implements IRow
+class Row extends Tag implements IRow
 {
+    const DEFAULT_TAG = self::TAG;
+
     const TAG = 'tr';
 
     /** @var Cells */
@@ -29,16 +31,14 @@ class Row extends Component implements IRow
      * @param Cells        $cells
      * @param Actions|null $actions
      * @param array        $attributes
-     * @param string       $tag
+     * @param string|null  $tag
      */
-    public function __construct(Cells $cells, Actions $actions = null, array $attributes = [], string $tag = self::TAG)
+    public function __construct(Cells $cells, Actions $actions = null, array $attributes = [], ?string $tag = null)
     {
         $this->cells   = $cells;
         $this->actions = $actions;
 
-        parent::__construct('', $tag, $attributes);
-
-        $this->appendToAttribute(Component::ATTRIBUTE_CLASS, $tag);
+        parent::__construct('', $attributes, null, $tag);
     }
 
     /**

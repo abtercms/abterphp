@@ -7,36 +7,77 @@ namespace AbterPhp\Framework\Form\Container;
 use AbterPhp\Framework\Form\Element\Input;
 use AbterPhp\Framework\Form\Extra\Help;
 use AbterPhp\Framework\Form\Label\ToggleLabel;
-use AbterPhp\Framework\I18n\ITranslatorMockTrait;
+use AbterPhp\Framework\Helper\ArrayHelper;
+use AbterPhp\Framework\Html\Component\StubAttributeFactory;
+use AbterPhp\Framework\I18n\MockTranslatorFactory;
 use PHPUnit\Framework\MockObject\MockObject;
 
 class ToggleTest extends \PHPUnit\Framework\TestCase
 {
-    use ITranslatorMockTrait;
-
-    public function testRender()
+    /**
+     * @return array
+     */
+    public function renderProvider()
     {
-        $sut = $this->createElement();
-
-        $this->markTestIncomplete();
+        return [
+            'simple' => [
+                '<foo>',
+                '<bar>',
+                '<baz>',
+                [],
+                null,
+                null,
+                '<div class="checkbox pmd-default-theme"><label class="pmd-checkbox pmd-checkbox-ripple-effect"><bar><foo></label><baz></div>', // nolint
+            ],
+        ];
     }
 
     /**
-     * @param string $inputOutput
-     * @param string $labelOutput
-     * @param string $helpOutput
-     * @param string $tag
-     * @param array  $attributes
+     * @dataProvider renderProvider
+     *
+     * @param string      $inputOutput
+     * @param string      $labelOutput
+     * @param string      $helpOutput
+     * @param array       $attributes
+     * @param array|null  $translations
+     * @param string|null $tag
+     * @param string      $expectedResult
+     */
+    public function testRender(
+        string $inputOutput,
+        string $labelOutput,
+        string $helpOutput,
+        array $attributes,
+        ?array $translations,
+        ?string $tag,
+        string $expectedResult
+    ) {
+        $sut = $this->createElement($inputOutput, $labelOutput, $helpOutput, $attributes, $translations, $tag);
+
+        $actualResult   = (string)$sut;
+        $repeatedResult = (string)$sut;
+
+        $this->assertSame($actualResult, $repeatedResult);
+        $this->assertSame($expectedResult, $actualResult);
+    }
+
+    /**
+     * @param string      $inputOutput
+     * @param string      $labelOutput
+     * @param string      $helpOutput
+     * @param array       $attributes
+     * @param array|null  $translations
+     * @param string|null $tag
      *
      * @return Toggle
      */
     protected function createElement(
-        string $inputOutput = '',
-        string $labelOutput = '',
-        string $helpOutput = '',
-        string $tag = '',
-        array $attributes = [],
-        ?array $translations = null
+        string $inputOutput,
+        string $labelOutput,
+        string $helpOutput,
+        array $attributes,
+        ?array $translations,
+        ?string $tag
     ) {
         /** @var Input|MockObject $inputMock */
         $inputMock = $this->getMockBuilder(Input::class)
@@ -59,8 +100,8 @@ class ToggleTest extends \PHPUnit\Framework\TestCase
         $labelMock->expects($this->any())->method('__toString')->willReturn($labelOutput);
         $helpMock->expects($this->any())->method('__toString')->willReturn($helpOutput);
 
-        $translatorMock = $this->getTranslatorMock($translations);
+        $translatorMock = MockTranslatorFactory::createSimpleTranslator($this, $translations);
 
-        return new Toggle($inputMock, $labelMock, $helpMock, $tag, $attributes, $translatorMock);
+        return new Toggle($inputMock, $labelMock, $helpMock, $attributes, $translatorMock, $tag);
     }
 }

@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace AbterPhp\Framework\Form\Extra;
 
-use AbterPhp\Framework\Html\Component\Component;
+use AbterPhp\Framework\Html\Component\Tag;
 
-class Help extends Component
+class Help extends Tag
 {
     const DEFAULT_TAG = 'div';
 

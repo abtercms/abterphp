@@ -17,7 +17,7 @@ class Header extends Rows
      */
     public function __construct(array $attributes = [])
     {
-        parent::__construct(static::THEAD, $attributes);
+        parent::__construct($attributes, static::THEAD);
     }
 
     /**

@@ -39,7 +39,7 @@ class Body extends Rows
         ?Actions $actions,
         ITranslator $translator
     ) {
-        parent::__construct(static::TBODY, []);
+        parent::__construct([], static::TBODY);
 
         $this->getters      = $getters;
         $this->rowArguments = $rowArguments;
@@ -80,7 +80,7 @@ class Body extends Rows
         foreach ($this->getters as $group => $getter) {
             $content = is_callable($getter) ? $getter($entity) : (string)$entity->$getter();
 
-            $cells[] = new Cell($content, $group, $this->attributes, Cell::BODY, $this->translator);
+            $cells[] = new Cell($content, $group, $this->attributes, $this->translator, Cell::BODY);
         }
 
         return $cells;

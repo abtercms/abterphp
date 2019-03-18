@@ -8,18 +8,56 @@ use AbterPhp\Framework\Form\Element\Input;
 use AbterPhp\Framework\Form\Extra\Help;
 use AbterPhp\Framework\Form\Element\IElement;
 use AbterPhp\Framework\Form\Label\Label;
-use AbterPhp\Framework\I18n\ITranslatorMockTrait;
+use AbterPhp\Framework\I18n\MockTranslatorFactory;
 use PHPUnit\Framework\MockObject\MockObject;
 
 class FormGroupTest extends \PHPUnit\Framework\TestCase
 {
-    use ITranslatorMockTrait;
-
-    public function testRender()
+    /**
+     * @return array
+     */
+    public function renderProvider()
     {
-        $sut = $this->createElement();
+        return [
+            'simple' => [
+                '<foo>',
+                '<bar>',
+                '<baz>',
+                [],
+                null,
+                null,
+                '<div class="form-group"><bar><foo><baz></div>',
+            ],
+        ];
+    }
 
-        $this->markTestIncomplete();
+    /**
+     * @dataProvider renderProvider
+     *
+     * @param string      $inputOutput
+     * @param string      $labelOutput
+     * @param string      $helpOutput
+     * @param array       $attributes
+     * @param array|null  $translations
+     * @param string|null $tag
+     * @param string      $expectedResult
+     */
+    public function testRender(
+        string $inputOutput,
+        string $labelOutput,
+        string $helpOutput,
+        array $attributes,
+        ?array $translations,
+        ?string $tag,
+        string $expectedResult
+    ) {
+        $sut = $this->createElement($inputOutput, $labelOutput, $helpOutput, $attributes, $translations, $tag);
+
+        $actualResult   = (string)$sut;
+        $repeatedResult = (string)$sut;
+
+        $this->assertSame($actualResult, $repeatedResult);
+        $this->assertSame($expectedResult, $actualResult);
     }
 
     /**
@@ -33,12 +71,12 @@ class FormGroupTest extends \PHPUnit\Framework\TestCase
      * @return FormGroup
      */
     private function createElement(
-        string $inputOutput = '',
-        string $labelOutput = '',
-        string $helpOutput = '',
-        string $tag = '',
-        array $attributes = [],
-        ?array $translations = null
+        string $inputOutput,
+        string $labelOutput,
+        string $helpOutput,
+        array $attributes,
+        ?array $translations,
+        ?string $tag
     ) {
         /** @var IElement|MockObject $inputMock */
         $inputMock = $this->getMockBuilder(Input::class)
@@ -61,8 +99,8 @@ class FormGroupTest extends \PHPUnit\Framework\TestCase
         $labelMock->expects($this->any())->method('__toString')->willReturn($labelOutput);
         $helpMock->expects($this->any())->method('__toString')->willReturn($helpOutput);
 
-        $translatorMock = $this->getTranslatorMock($translations);
+        $translatorMock = MockTranslatorFactory::createSimpleTranslator($this, $translations);
 
-        return new FormGroup($inputMock, $labelMock, $helpMock, $tag, $attributes, $translatorMock);
+        return new FormGroup($inputMock, $labelMock, $helpMock, $attributes, $translatorMock, $tag);
     }
 }

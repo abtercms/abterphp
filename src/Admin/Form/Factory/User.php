@@ -8,6 +8,7 @@ use AbterPhp\Admin\Domain\Entities\User as Entity;
 use AbterPhp\Admin\Domain\Entities\UserLanguage;
 use AbterPhp\Admin\Orm\UserGroupRepo;
 use AbterPhp\Admin\Orm\UserLanguageRepo;
+use AbterPhp\Framework\Form\Component\Option;
 use AbterPhp\Framework\Form\Container\FormGroup;
 use AbterPhp\Framework\Form\Container\Toggle;
 use AbterPhp\Framework\Form\Element\Input;
@@ -17,8 +18,7 @@ use AbterPhp\Framework\Form\Factory\IFormFactory;
 use AbterPhp\Framework\Form\IForm;
 use AbterPhp\Framework\Form\Label\Label;
 use AbterPhp\Framework\Form\Label\ToggleLabel;
-use AbterPhp\Framework\Html\Component\Component;
-use AbterPhp\Framework\Html\Component\Option;
+use AbterPhp\Framework\Html\Component\Tag;
 use AbterPhp\Framework\I18n\ITranslator;
 use Opulence\Orm\IEntity;
 use Opulence\Sessions\ISession;
@@ -98,9 +98,9 @@ class User extends Base
             '<i class="material-icons">warning</i>&nbsp;%s',
             $this->translator->translate('admin:jsOnly')
         );
-        $attributes = [Component::ATTRIBUTE_CLASS => 'only-js-form-warning'];
+        $attributes = [Tag::ATTRIBUTE_CLASS => 'only-js-form-warning'];
 
-        $this->form[] = new Component($content, Component::TAG_P, $attributes);
+        $this->form[] = new Tag($content, $attributes, null, Tag::TAG_P);
 
         return $this;
     }
@@ -116,12 +116,11 @@ class User extends Base
             'username',
             'username',
             $entity->getUsername(),
-            null,
             [Input::ATTRIBUTE_NAME => Input::AUTOCOMPLETE_OFF]
         );
-        $label = new Label('body', 'admin:userUsername', null, [], $this->translator);
+        $label = new Label('body', 'admin:userUsername', [], $this->translator);
 
-        $this->form[] = new FormGroup($input, $label, null);
+        $this->form[] = new FormGroup($input, $label);
 
         return $this;
     }
@@ -137,12 +136,11 @@ class User extends Base
             'email',
             'email',
             $entity->getEmail(),
-            null,
             [Input::ATTRIBUTE_NAME => Input::AUTOCOMPLETE_OFF]
         );
-        $label = new Label('email', 'admin:userEmail', null, [], $this->translator);
+        $label = new Label('email', 'admin:userEmail', [], $this->translator);
 
-        $this->form[] = new FormGroup($input, $label, null);
+        $this->form[] = new FormGroup($input, $label);
 
         return $this;
     }
@@ -156,7 +154,6 @@ class User extends Base
             'password',
             'password',
             '',
-            null,
             [Input::ATTRIBUTE_TYPE => Input::TYPE_HIDDEN]
         );
 
@@ -172,7 +169,6 @@ class User extends Base
             'password_confirmed',
             'password_confirmed',
             '',
-            null,
             [Input::ATTRIBUTE_TYPE => Input::TYPE_HIDDEN]
         );
 
@@ -188,12 +184,11 @@ class User extends Base
             'raw_password',
             'raw_password',
             '',
-            null,
             [Input::ATTRIBUTE_NAME => Input::AUTOCOMPLETE_OFF]
         );
-        $label = new Label('raw_password', 'admin:userPassword', null, [], $this->translator);
+        $label = new Label('raw_password', 'admin:userPassword', [], $this->translator);
 
-        $this->form[] = new FormGroup($input, $label, null);
+        $this->form[] = new FormGroup($input, $label);
 
         return $this;
     }
@@ -207,12 +202,11 @@ class User extends Base
             'raw_password_confirmed',
             'raw_password_confirmed',
             '',
-            null,
             [Input::ATTRIBUTE_NAME => Input::AUTOCOMPLETE_OFF]
         );
-        $label = new Label('raw_password_confirmed', 'admin:userConfirmPassword', null, [], $this->translator);
+        $label = new Label('raw_password_confirmed', 'admin:userConfirmPassword', [], $this->translator);
 
-        $this->form[] = new FormGroup($input, $label, null);
+        $this->form[] = new FormGroup($input, $label);
 
         return $this;
     }
@@ -232,12 +226,11 @@ class User extends Base
             'can_login',
             'can_login',
             '1',
-            null,
             $attributes
         );
-        $label = new ToggleLabel('can_login', 'admin:userCanLogin', null, [], $this->translator);
+        $label = new ToggleLabel('can_login', 'admin:userCanLogin', [], $this->translator);
 
-        $this->form[] = new Toggle($input, $label, null);
+        $this->form[] = new Toggle($input, $label);
 
         return $this;
     }
@@ -257,18 +250,16 @@ class User extends Base
             'is_gravatar_allowed',
             'is_gravatar_allowed',
             '1',
-            null,
             $attributes
         );
         $label = new ToggleLabel(
             'is_gravatar_allowed',
             'admin:userIsGravatarAllowed',
-            null,
             [],
             $this->translator
         );
 
-        $this->form[] = new Toggle($input, $label, null);
+        $this->form[] = new Toggle($input, $label);
 
         return $this;
     }
@@ -315,11 +306,8 @@ class User extends Base
     {
         $options = [];
         foreach ($allUserGroups as $userGroup) {
-            $attributes = [Option::ATTRIBUTE_VALUE => (string)$userGroup->getId()];
-            if (in_array((int)$userGroup->getId(), $userGroupIds, true)) {
-                $attributes[Option::ATTRIBUTE_SELECTED] = null;
-            }
-            $options[] = new Option($userGroup->getName(), null, $attributes);
+            $isSelected = in_array((int)$userGroup->getId(), $userGroupIds, true);
+            $options[]  = new Option((string)$userGroup->getId(), $userGroup->getName(), $isSelected);
         }
 
         return $options;
@@ -340,7 +328,7 @@ class User extends Base
             ),
         ];
 
-        $select = new Select('user_group_ids', 'user_group_ids[]', '', true, null, $attributes);
+        $select = new Select('user_group_ids', 'user_group_ids[]', true, $attributes);
 
         foreach ($options as $option) {
             $select[] = $option;
@@ -354,7 +342,7 @@ class User extends Base
      */
     protected function createUserGroupLabel(): Label
     {
-        return new Label('user_group_ids', 'admin:userGroups', null, [], $this->translator);
+        return new Label('user_group_ids', 'admin:userGroups', [], $this->translator);
     }
 
     /**
@@ -395,11 +383,8 @@ class User extends Base
     {
         $options = [];
         foreach ($allUserLanguages as $userLanguage) {
-            $attributes = [Option::ATTRIBUTE_VALUE => (string)$userLanguage->getId()];
-            if ($userLanguageId === (int)$userLanguage->getId()) {
-                $attributes[Option::ATTRIBUTE_SELECTED] = null;
-            }
-            $options[] = new Option($userLanguage->getName(), null, $attributes);
+            $isSelected = $userLanguageId === (int)$userLanguage->getId();
+            $options[]  = new Option((string)$userLanguage->getId(), $userLanguage->getName(), $isSelected);
         }
 
         return $options;
@@ -420,7 +405,7 @@ class User extends Base
             ),
         ];
 
-        $select = new Select('user_language_id', 'user_language_id', '', true, null, $attributes);
+        $select = new Select('user_language_id', 'user_language_id', true, $attributes);
 
         foreach ($options as $option) {
             $select[] = $option;
@@ -434,6 +419,6 @@ class User extends Base
      */
     protected function createUserLanguageLabel(): Label
     {
-        return new Label('user_language_id', 'admin:userLanguages', null, [], $this->translator);
+        return new Label('user_language_id', 'admin:userLanguages', [], $this->translator);
     }
 }

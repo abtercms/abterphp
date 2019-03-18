@@ -55,8 +55,8 @@ class Meta
     protected function addOGTitle(Entity $entity): IContainer
     {
         $input = new Input('og-title', 'og-title', $entity->getMeta()->getOGTitle());
-        $label = new Label('og-title', 'pages:pageOGTitle', null, [], $this->translator);
-        $help  = new Help('pages:pageOGTitleHelp', null, [], $this->translator);
+        $label = new Label('og-title', 'pages:pageOGTitle', [], $this->translator);
+        $help  = new Help('pages:pageOGTitleHelp', [], $this->translator);
 
         return new FormGroup($input, $label, $help);
     }
@@ -69,8 +69,8 @@ class Meta
     protected function addOGImage(Entity $entity): IContainer
     {
         $input = new Input('og-image', 'og-image', $entity->getMeta()->getOGImage());
-        $label = new Label('og-image', 'pages:pageOGImage', null, [], $this->translator);
-        $help  = new Help('pages:pageOGImageHelp', null, [], $this->translator);
+        $label = new Label('og-image', 'pages:pageOGImage', [], $this->translator);
+        $help  = new Help('pages:pageOGImageHelp', [], $this->translator);
 
         return new FormGroup($input, $label, $help);
     }
@@ -91,7 +91,7 @@ class Meta
             [],
             $this->translator
         );
-        $help  = new Help('pages:pageOGDescriptionHelp', null, [], $this->translator);
+        $help  = new Help('pages:pageOGDescriptionHelp', [], $this->translator);
 
         return new FormGroup($input, $label, $help);
     }
@@ -104,8 +104,8 @@ class Meta
     protected function addAuthor(Entity $entity): IContainer
     {
         $input = new Input('author', 'author', $entity->getMeta()->getAuthor());
-        $label = new Label('author', 'pages:pageAuthor', null, [], $this->translator);
-        $help  = new Help('pages:pageAuthor', null, [], $this->translator);
+        $label = new Label('author', 'pages:pageAuthor', [], $this->translator);
+        $help  = new Help('pages:pageAuthor', [], $this->translator);
 
         return new FormGroup($input, $label, $help);
     }
@@ -118,8 +118,8 @@ class Meta
     protected function addCopyright(Entity $entity): IContainer
     {
         $input = new Input('copyright', 'copyright', $entity->getMeta()->getAuthor());
-        $label = new Label('copyright', 'pages:pageCopyright', null, [], $this->translator);
-        $help  = new Help('pages:pageCopyrightHelp', null, [], $this->translator);
+        $label = new Label('copyright', 'pages:pageCopyright', [], $this->translator);
+        $help  = new Help('pages:pageCopyrightHelp', [], $this->translator);
 
         return new FormGroup($input, $label, $help);
     }
@@ -132,8 +132,8 @@ class Meta
     protected function addKeywords(Entity $entity): IContainer
     {
         $input = new Input('keywords', 'keywords', $entity->getMeta()->getKeywords());
-        $label = new Label('keywords', 'pages:pageKeywords', null, [], $this->translator);
-        $help  = new Help('pages:pageKeywordsHelp', null, [], $this->translator);
+        $label = new Label('keywords', 'pages:pageKeywords', [], $this->translator);
+        $help  = new Help('pages:pageKeywordsHelp', [], $this->translator);
 
         return new FormGroup($input, $label, $help);
     }
@@ -146,8 +146,8 @@ class Meta
     protected function addRobots(Entity $entity): IContainer
     {
         $input = new Input('robots', 'robots', $entity->getMeta()->getRobots());
-        $label = new Label('robots', 'pages:pageRobots', null, [], $this->translator);
-        $help  = new Help('pages:pageRobotsHelp', null, [], $this->translator);
+        $label = new Label('robots', 'pages:pageRobots', [], $this->translator);
+        $help  = new Help('pages:pageRobotsHelp', [], $this->translator);
 
         return new FormGroup($input, $label, $help);
     }

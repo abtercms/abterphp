@@ -54,7 +54,7 @@ abstract class Base implements IFormFactory
 
         $formMethod = $method == RequestMethods::GET ? $method : RequestMethods::POST;
 
-        $this->form = new Form($action, $formMethod, null, $attributes);
+        $this->form = new Form($action, $formMethod, $attributes);
 
         $this->addHttpMethod($method);
 
@@ -70,7 +70,6 @@ abstract class Base implements IFormFactory
             '',
             Input::NAME_HTTP_METHOD,
             $method,
-            null,
             [Input::ATTRIBUTE_TYPE => Input::TYPE_HIDDEN]
         );
     }
@@ -85,7 +84,7 @@ abstract class Base implements IFormFactory
 
         $attributes[Input::ATTRIBUTE_TYPE] = Input::TYPE_HIDDEN;
 
-        $this->form[] = new Input($name, $name, $value, null, $attributes, $this->translator);
+        $this->form[] = new Input($name, $name, $value, $attributes, $this->translator);
 
         return $this;
     }
@@ -97,7 +96,7 @@ abstract class Base implements IFormFactory
      */
     protected function addDefaultButtons(string $showUrl): Base
     {
-        $this->form[] = new DefaultButtons($showUrl, null, [], $this->translator);
+        $this->form[] = new DefaultButtons($showUrl, $this->translator);
 
         return $this;
     }

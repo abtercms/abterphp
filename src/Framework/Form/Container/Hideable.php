@@ -32,17 +32,17 @@ class Hideable extends Collection implements IContainer
      * Hideable constructor.
      *
      * @param string           $moreBtnLabel
-     * @param string|null      $tag
      * @param array            $attributes
      * @param ITranslator|null $translator
+     * @param string|null      $tag
      */
     public function __construct(
         string $moreBtnLabel,
-        ?string $tag = null,
         array $attributes = [],
-        ?ITranslator $translator = null
+        ?ITranslator $translator = null,
+        ?string $tag = null
     ) {
-        parent::__construct($tag, $attributes, $translator);
+        parent::__construct($attributes, $translator, $tag);
 
         $this->moreBtnLabel = $moreBtnLabel;
     }

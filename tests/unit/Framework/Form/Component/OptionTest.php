@@ -2,56 +2,51 @@
 
 declare(strict_types=1);
 
-namespace AbterPhp\Framework\Grid\Cell;
+namespace AbterPhp\Framework\Form\Component;
 
 use AbterPhp\Framework\Helper\ArrayHelper;
-use AbterPhp\Framework\Html\Component\ComponentTest;
 use AbterPhp\Framework\Html\Component\StubAttributeFactory;
 use AbterPhp\Framework\I18n\MockTranslatorFactory;
 
-class CellTest extends ComponentTest
+class OptionTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @return array
      */
     public function renderProvider()
     {
-        $defaultAttributes = [Cell::ATTRIBUTE_CLASS => 'td-a'];
-
-        $extraAttributes = StubAttributeFactory::createAttributes();
-
-        $combinedAttributes = ArrayHelper::mergeAttributes($extraAttributes, $defaultAttributes);
-
-        $str = ArrayHelper::toAttributes($combinedAttributes);
+        $attribs = StubAttributeFactory::createAttributes();
+        $str     = ArrayHelper::toAttributes($attribs);
 
         return [
-            'simple'               => ['ABC', 'a', [], null, null, "<td class=\"td-a\">ABC</td>"],
-            'with attributes'      => ['ABC', 'a', $extraAttributes, null, null, "<td$str>ABC</td>"],
-            'missing translations' => ['ABC', 'a', [], [], null, "<td class=\"td-a\">ABC</td>"],
-            'custom tag'           => ['ABC', 'a', [], null, 'mytd', "<mytd class=\"mytd-a\">ABC</mytd>"],
-            'with translations'    => ['ABC', 'a', [], ['ABC' => 'CBA'], null, "<td class=\"td-a\">CBA</td>"],
+            'simple'           => ['abc', 'ABC', false, [], null, null, "<option value=\"abc\">ABC</option>"],
+            'attributes'       => ['abc', 'ABC', false, $attribs, null, null, "<option value=\"abc\"$str>ABC</option>"],
+            'w/o translations' => ['abc', 'ABC', false, [], [], null, "<option value=\"abc\">ABC</option>"],
+            'custom tag'       => ['abc', 'ABC', false, [], null, 'foo', "<foo value=\"abc\">ABC</foo>"],
+            'w translations'   => ['abc', 'ABC', false, [], ['ABC' => '+'], null, "<option value=\"abc\">+</option>"],
         ];
     }
 
     /**
      * @dataProvider renderProvider
      *
+     * @param string      $value
      * @param string      $content
-     * @param string      $group
      * @param array       $attributes
      * @param array|null  $translations
      * @param string|null $tag
      * @param string      $expectedResult
      */
     public function testRender(
+        string $value,
         string $content,
-        string $group,
+        bool $isSelected,
         array $attributes,
         ?array $translations,
         ?string $tag,
         string $expectedResult
     ) {
-        $sut = $this->createElement($content, $group, $attributes, $translations, $tag);
+        $sut = $this->createElement($value, $content, $isSelected, $attributes, $translations, $tag);
 
         $actualResult1 = (string)$sut;
         $actualResult2 = (string)$sut;
@@ -61,23 +56,25 @@ class CellTest extends ComponentTest
     }
 
     /**
+     * @param string      $value
      * @param string      $content
-     * @param string      $group
+     * @param bool        $isSelected
      * @param array       $attributes
      * @param array|null  $translations
      * @param string|null $tag
      *
-     * @return Cell
+     * @return Option
      */
     protected function createElement(
+        string $value,
         string $content,
-        string $group,
+        bool $isSelected,
         array $attributes,
         ?array $translations,
         ?string $tag
-    ): Cell {
+    ): Option {
         $translatorMock = MockTranslatorFactory::createSimpleTranslator($this, $translations);
 
-        return new Cell($content, $group, $attributes, $translatorMock, $tag);
+        return new Option($value, $content, $isSelected, $attributes, $translatorMock, $tag);
     }
 }

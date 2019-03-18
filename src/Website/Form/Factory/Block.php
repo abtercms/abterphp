@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace AbterPhp\Website\Form\Factory;
 
 use AbterPhp\Framework\Constant\Session;
+use AbterPhp\Framework\Form\Component\Option;
 use AbterPhp\Framework\Form\Container\FormGroup;
 use AbterPhp\Framework\Form\Element\Input;
 use AbterPhp\Framework\Form\Element\Select;
@@ -14,7 +15,6 @@ use AbterPhp\Framework\Form\Factory\IFormFactory;
 use AbterPhp\Framework\Form\IForm;
 use AbterPhp\Framework\Form\Label\Countable;
 use AbterPhp\Framework\Form\Label\Label;
-use AbterPhp\Framework\Html\Component\Option;
 use AbterPhp\Framework\I18n\ITranslator;
 use AbterPhp\Website\Constant\Authorization;
 use AbterPhp\Website\Domain\Entities\Block as Entity;
@@ -104,9 +104,9 @@ class Block extends Base
             'identifier',
             $entity->getIdentifier()
         );
-        $label = new Label('title', 'pages:blockIdentifier', null, [], $this->translator);
+        $label = new Label('title', 'pages:blockIdentifier', [], $this->translator);
 
-        $this->form[] = new FormGroup($input, $label, null);
+        $this->form[] = new FormGroup($input, $label);
 
         return $this;
     }
@@ -123,9 +123,9 @@ class Block extends Base
             'title',
             $entity->getTitle()
         );
-        $label = new Label('title', 'pages:blockTitle', null, [], $this->translator);
+        $label = new Label('title', 'pages:blockTitle', [], $this->translator);
 
-        $this->form[] = new FormGroup($input, $label, null);
+        $this->form[] = new FormGroup($input, $label);
 
         return $this;
     }
@@ -141,12 +141,11 @@ class Block extends Base
             'body',
             'body',
             $entity->getBody(),
-            null,
             [Textarea::ATTRIBUTE_CLASS => [Textarea::CLASS_WYSIWYG], Textarea::ATTRIBUTE_ROWS => '15']
         );
-        $label = new Label('body', 'pages:blockBody', null, [], $this->translator);
+        $label = new Label('body', 'pages:blockBody', [], $this->translator);
 
-        $this->form[] = new FormGroup($input, $label, null);
+        $this->form[] = new FormGroup($input, $label);
 
         return $this;
     }
@@ -164,7 +163,7 @@ class Block extends Base
         $options = $this->createLayoutIdOptions($allLayouts, $layoutId);
 
         $this->form[] = new FormGroup(
-            $this->createLayoutIdSelect($entity, $options),
+            $this->createLayoutIdSelect($options),
             $this->createLayoutIdLabel()
         );
 
@@ -188,29 +187,23 @@ class Block extends Base
     protected function createLayoutIdOptions(array $allLayouts, ?int $layoutId): array
     {
         $options   = [];
-        $options[] = new Option('form:none', null, [Option::ATTRIBUTE_VALUE => ''], $this->translator);
+        $options[] = new Option('', 'form:none', false, [], $this->translator);
         foreach ($allLayouts as $layout) {
-            $attributes = [Option::ATTRIBUTE_VALUE => (string)$layout->getId()];
-            if ((int)$layout->getId() === $layoutId) {
-                $attributes[Option::ATTRIBUTE_SELECTED] = null;
-            }
-            $options[] = new Option($layout->getIdentifier(), null, $attributes);
+            $isSelected = (int)$layout->getId() === $layoutId;
+            $options[] = new Option((string)$layout->getId(), $layout->getIdentifier(), $isSelected);
         }
 
         return $options;
     }
 
     /**
-     * @param Entity   $entity
      * @param Option[] $options
      *
      * @return Select
      */
-    protected function createLayoutIdSelect(Entity $entity, array $options): Select
+    protected function createLayoutIdSelect(array $options): Select
     {
-        $value = $entity->getLayoutId() === null ? '' : (string)$entity->getLayoutId();
-
-        $select = new Select('layout_id', 'layout_id', $value);
+        $select = new Select('layout_id', 'layout_id');
 
         foreach ($options as $option) {
             $select[] = $option;
@@ -224,7 +217,7 @@ class Block extends Base
      */
     protected function createLayoutIdLabel(): Label
     {
-        return new Label('layout_id', 'pages:blockLayoutIdLabel', null, [], $this->translator);
+        return new Label('layout_id', 'pages:blockLayoutIdLabel', [], $this->translator);
     }
 
     /**
@@ -253,7 +246,6 @@ class Block extends Base
             'layout',
             'layout',
             htmlspecialchars($entity->getLayout()),
-            null,
             [Input::ATTRIBUTE_TYPE => Input::TYPE_HIDDEN]
         );
 
@@ -271,14 +263,12 @@ class Block extends Base
             'layout',
             'layout',
             htmlspecialchars($entity->getLayout()),
-            null,
             [Textarea::ATTRIBUTE_ROWS => '15']
         );
         $label = new Countable(
             'description',
             'pages:blockLayoutLabel',
             Countable::DEFAULT_SIZE,
-            null,
             [],
             $this->translator
         );
@@ -286,7 +276,6 @@ class Block extends Base
         $this->form[] = new FormGroup(
             $input,
             $label,
-            null,
             null,
             [
                 FormGroup::ATTRIBUTE_ID    => 'layout-div',

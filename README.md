@@ -176,17 +176,18 @@ before the first stable version.
 6. Improve validation
    - Review validation factories
    - Create new validation rules where needed
-7. 70%+ of source code unit tested, except for bootstrappers
+7. 70%+ of PHP source code unit tested, except for bootstrappers
 8. Verify that localhost_router.php works as expected or remove it if too hard to fix
 9. Modular asset management
 10. Complete test automation and automatic reviews set up
-11. Refactor module manager
+11. ~~Refactor module manager~~
 12. Test AbterPHP on OSX and Windows 10.
 13. Ensure that user creation enforces good passwords in CLI.
 14. Ulid IDS
-15. Remove $value in Select constructor
+15. ~~Remove $value in Select constructor~~
 16. Switch `$attribute` and `$tag` order
 17. AbterPhp\Framework\Form\Factory\Base::getMultiSelectSize -> move to helper or Select
+18. Combine Html Components and Collections
 
 ### First beta musts:
 
@@ -203,6 +204,7 @@ before the first stable version.
 11. Test loading entities that don't exist or faulty
 12. Fix empty exceptions (\LogicException, \RuntimeException, \InvalidArgumentException)
 13. Ensure identifiers do not contain a comma (explode issue)
+14. 70%+ of JS source code unit tested
 
 ### 1.0 musts:
 

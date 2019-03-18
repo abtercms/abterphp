@@ -98,11 +98,11 @@ class Numbers extends Actions
     {
         foreach ($numbers as $number) {
             if ($currentPage == $number) {
-                $this->components[] = new Button("$number", Button::TAG_BUTTON, $this->fakeBtnAttr);
+                $this->components[] = new Button("$number", $this->fakeBtnAttr);
             } else {
                 $this->realBtnAttr[Button::ATTRIBUTE_HREF] = sprintf('%spage=%d', $this->baseUrl, $number);
 
-                $this->components[] = new Button("$number", Button::TAG_A, $this->realBtnAttr);
+                $this->components[] = new Button("$number", $this->realBtnAttr, [], null, Button::TAG_A);
             }
         }
     }
@@ -116,19 +116,19 @@ class Numbers extends Actions
     protected function attachRight(bool $isLast, bool $isLastVisible, int $currentPage, int $lastPage)
     {
         if (!$isLastVisible) {
-            $this->components[] = new Button('...', Button::TAG_BUTTON, $this->fakeBtnAttr);
+            $this->components[] = new Button('...', $this->fakeBtnAttr);
         }
 
         if (!$isLast) {
             $this->realBtnAttr[Button::ATTRIBUTE_HREF] = sprintf('%spage=%d', $this->baseUrl, $currentPage + 1);
 
-            $this->components[] = new Button('>', Button::TAG_A, $this->realBtnAttr);
+            $this->components[] = new Button('>', $this->realBtnAttr, [], null, Button::TAG_A);
         }
 
         if (!$isLastVisible) {
             $this->realBtnAttr[Button::ATTRIBUTE_HREF] = sprintf('%spage=%d', $this->baseUrl, $lastPage);
 
-            $this->components[] = new Button('>>', Button::TAG_A, $this->realBtnAttr);
+            $this->components[] = new Button('>>', $this->realBtnAttr, [], null, Button::TAG_A);
         }
     }
 }

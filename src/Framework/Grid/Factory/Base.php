@@ -69,7 +69,7 @@ abstract class Base implements IBase
         $this->tableFactory      = $tableFactory;
         $this->gridFactory       = $gridFactory;
         $this->translator        = $translator;
-        $this->filters           = $filters ?: new Filters(null, [], $translator);
+        $this->filters           = $filters ?: new Filters([], $translator);
     }
 
     /**

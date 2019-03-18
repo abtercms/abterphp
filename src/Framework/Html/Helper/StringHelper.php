@@ -24,7 +24,6 @@ class StringHelper
         }
 
         $attributeHtml = ArrayHelper::toAttributes($attributes);
-        $attributeHtml = $attributeHtml ? ' ' . $attributeHtml : '';
 
         if ($whitespace) {
             return sprintf(
@@ -48,14 +47,7 @@ class StringHelper
      */
     public static function createTag(string $tag, array $attributes = [])
     {
-        $attributeHtml = '';
-
-        foreach ($attributes as $key => $value) {
-            if (is_array($value)) {
-                $value = implode(' ', $value);
-            }
-            $attributeHtml .= sprintf(' %s="%s"', $key, $value);
-        }
+        $attributeHtml = ArrayHelper::toAttributes($attributes);
 
         return sprintf('<%1$s%2$s>', $tag, $attributeHtml);
     }

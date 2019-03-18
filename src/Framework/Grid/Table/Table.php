@@ -8,16 +8,18 @@ use AbterPhp\Framework\Domain\Entities\IStringerEntity;
 use AbterPhp\Framework\Grid\Collection\Body;
 use AbterPhp\Framework\Grid\Collection\Header;
 use AbterPhp\Framework\Grid\Collection\Rows;
-use AbterPhp\Framework\Html\Component\Component;
+use AbterPhp\Framework\Html\Component\Tag;
 use AbterPhp\Framework\I18n\ITranslator;
 
-class Table extends Component implements ITable
+class Table extends Tag implements ITable
 {
     /**
      *   %1$s - thead - rows
      *   %2$s - tbody - headers
      */
     const TEMPLATE_CONTENT = '%1$s%2$s';
+
+    const DEFAULT_TAG = self::TAG_TABLE;
 
     const TAG_TABLE = 'table';
 
@@ -28,6 +30,8 @@ class Table extends Component implements ITable
     protected $body;
 
     /**
+     * Table constructor.
+     *
      * @param Rows             $body
      * @param Rows             $header
      * @param array            $attributes
@@ -38,7 +42,7 @@ class Table extends Component implements ITable
         $this->body   = $body;
         $this->header = $header;
 
-        parent::__construct('', static::TAG_TABLE, $attributes, $translator);
+        parent::__construct('', $attributes, $translator);
     }
 
     /**

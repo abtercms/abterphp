@@ -1,48 +1,46 @@
 <?php
 
-declare(strict_types=1);
-
 namespace AbterPhp\Framework\I18n;
 
+use PHPUnit\Framework\MockObject\MockBuilder;
 use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
 
-trait ITranslatorMockTrait
+class MockTranslatorFactory
 {
     /**
+     * @param TestCase   $testCase
      * @param array|null $translations
      *
      * @return ITranslator|MockObject|null
      */
-    protected function getTranslatorMock(array $translations = null): ?ITranslator
+    public static function createSimpleTranslator(TestCase $testCase, ?array $translations): ?ITranslator
     {
-        if ($translations) {
+        if (null === $translations) {
             return null;
         }
 
-        if (!($this instanceof \PHPUnit\Framework\TestCase)) {
-            return null;
-        }
-
-        /** @var ITranslator|MockObject $translatorMock */
-        $translatorMock = $this->getMockBuilder(ITranslator::class)
+        /** @var ITranslator|MockObject $mockTranslator */
+        $translatorMock = (new MockBuilder($testCase, ITranslator::class))
+            ->disableOriginalConstructor()
             ->setMethods(['translate', 'canTranslate'])
             ->getMock();
 
         $translatorMock
-            ->expects($this->any())
+            ->expects($testCase->any())
             ->method('translate')
             ->willReturnCallback(
                 function ($key) use ($translations) {
-                    if ($translations && array_key_exists($key, $translations)) {
+                    if (array_key_exists($key, $translations)) {
                         return $translations[$key];
                     }
 
-                    return 'not found';
+                    return "{{translation missing: $key}}";
                 }
             );
 
         $translatorMock
-            ->expects($this->any())
+            ->expects($testCase->any())
             ->method('canTranslate')
             ->willReturnCallback(
                 function ($key) use ($translations) {

@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace AbterPhp\Framework\Form\Label;
 
-use AbterPhp\Framework\Html\Component\Component;
+use AbterPhp\Framework\Html\Component\Tag;
 use AbterPhp\Framework\I18n\ITranslator;
 
-class Label extends Component
+class Label extends Tag
 {
     const DEFAULT_TAG = 'label';
 
@@ -19,6 +19,7 @@ class Label extends Component
     /** @var array */
     protected $attributes = [
         self::ATTRIBUTE_CLASS => 'control-label',
+        self::ATTRIBUTE_FOR   => '',
     ];
 
     /**
@@ -26,23 +27,23 @@ class Label extends Component
      *
      * @param string           $inputId
      * @param string           $content
-     * @param string|null      $tag
      * @param array            $attributes
      * @param ITranslator|null $translator
+     * @param string|null      $tag
      */
     public function __construct(
         string $inputId,
         $content,
-        ?string $tag = null,
         array $attributes = [],
-        ?ITranslator $translator = null
+        ?ITranslator $translator = null,
+        ?string $tag = null
     ) {
-        $attributes[static::ATTRIBUTE_FOR] = $inputId;
+        $this->attributes[static::ATTRIBUTE_FOR] = $inputId;
 
         if ($translator && $translator->canTranslate($content)) {
             $content = $translator->translate($content);
         }
 
-        parent::__construct($content, $tag, $attributes, $translator);
+        parent::__construct($content, $attributes, $translator, $tag);
     }
 }

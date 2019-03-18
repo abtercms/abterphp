@@ -4,19 +4,18 @@ declare(strict_types=1);
 
 namespace AbterPhp\Files\Form\Factory;
 
+use AbterPhp\Admin\Domain\Entities\UserGroup;
+use AbterPhp\Admin\Orm\UserGroupRepo;
+use AbterPhp\Files\Domain\Entities\FileCategory as Entity;
+use AbterPhp\Framework\Form\Component\Option;
 use AbterPhp\Framework\Form\Container\FormGroup;
 use AbterPhp\Framework\Form\Element\Input;
 use AbterPhp\Framework\Form\Element\Select;
 use AbterPhp\Framework\Form\Factory\Base;
 use AbterPhp\Framework\Form\Factory\IFormFactory;
-use AbterPhp\Framework\Form\Form;
 use AbterPhp\Framework\Form\IForm;
 use AbterPhp\Framework\Form\Label\Label;
-use AbterPhp\Framework\Html\Component\Option;
 use AbterPhp\Framework\I18n\ITranslator;
-use AbterPhp\Files\Domain\Entities\FileCategory as Entity;
-use AbterPhp\Admin\Domain\Entities\UserGroup;
-use AbterPhp\Admin\Orm\UserGroupRepo;
 use Opulence\Orm\IEntity;
 use Opulence\Sessions\ISession;
 
@@ -81,7 +80,6 @@ class FileCategory extends Base
             'identifier',
             'identifier',
             $entity->getIdentifier(),
-            null,
             [Input::ATTRIBUTE_TYPE => Input::TYPE_HIDDEN]
         );
 
@@ -100,9 +98,9 @@ class FileCategory extends Base
             'name',
             $entity->getName()
         );
-        $label = new Label('name', 'files:fileCategoryName', null, [], $this->translator);
+        $label = new Label('name', 'files:fileCategoryName', [], $this->translator);
 
-        $this->form[] = new FormGroup($input, $label, null);
+        $this->form[] = new FormGroup($input, $label);
 
         return $this;
     }
@@ -120,7 +118,7 @@ class FileCategory extends Base
         $options = $this->createUserGroupOptions($allUserGroups, $userGroupIds);
 
         $this->form[] = new FormGroup(
-            $this->createUserGroupSelect($entity, $options),
+            $this->createUserGroupSelect($options),
             $this->createUserGroupLabel()
         );
 
@@ -160,23 +158,19 @@ class FileCategory extends Base
     {
         $options = [];
         foreach ($allUserGroups as $userGroup) {
-            $attributes = [Option::ATTRIBUTE_VALUE => (string)$userGroup->getId()];
-            if (in_array($userGroup->getId(), $userGroupIds, true)) {
-                $attributes[Option::ATTRIBUTE_SELECTED] = null;
-            }
-            $options[] = new Option($userGroup->getName(), null, $attributes);
+            $isSelected = in_array($userGroup->getId(), $userGroupIds, true);
+            $options[]  = new Option((string)$userGroup->getId(), $userGroup->getName(), $isSelected);
         }
 
         return $options;
     }
 
     /**
-     * @param Entity   $entity
      * @param Option[] $options
      *
      * @return Select
      */
-    protected function createUserGroupSelect(Entity $entity, array $options): Select
+    protected function createUserGroupSelect(array $options): Select
     {
         $attributes = [
             Select::ATTRIBUTE_SIZE => $this->getMultiSelectSize(
@@ -186,7 +180,7 @@ class FileCategory extends Base
             ),
         ];
 
-        $select = new Select('user_group_ids', 'user_group_ids[]', $entity->getName(), true, null, $attributes);
+        $select = new Select('user_group_ids', 'user_group_ids[]', true, $attributes);
 
         foreach ($options as $option) {
             $select[] = $option;
@@ -200,7 +194,7 @@ class FileCategory extends Base
      */
     protected function createUserGroupLabel(): Label
     {
-        return new Label('user_group_ids', 'files:fileCategoryUserGroups', null, [], $this->translator);
+        return new Label('user_group_ids', 'files:fileCategoryUserGroups', [], $this->translator);
     }
 
     /**

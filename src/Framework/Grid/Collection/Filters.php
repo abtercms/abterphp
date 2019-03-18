@@ -43,76 +43,34 @@ EOT;
     /** @var IFilter[] */
     protected $components = [];
 
+    /** @var string */
+    protected $componentClass = IFilter::class;
+
     /** @var ITranslator */
     protected $translator;
 
     /**
-     * Block constructor.
+     * Filters constructor.
      *
-     * @param string|null      $tag
      * @param array            $attributes
      * @param ITranslator|null $translator
+     * @param string|null      $tag
      */
-    public function __construct(?string $tag = null, array $attributes = [], ITranslator $translator = null)
+    public function __construct(array $attributes = [], ?ITranslator $translator = null, ?string $tag = null)
     {
-        parent::__construct($tag, $attributes);
+        parent::__construct($attributes, $translator, $tag);
 
         $this->translator = $translator;
 
         $this->components[] = new Button(
             $this->translator->translate('framework:filter'),
-            Button::TAG_BUTTON,
             static::ATTRIBUTES_SEARCH
         );
 
         $this->components[] = new Button(
             $this->translator->translate('framework:reset'),
-            Button::TAG_BUTTON,
             static::ATTRIBUTES_RESET
         );
-    }
-
-    /**
-     * @return IFilter
-     * @throws LogicException
-     */
-    public function current()
-    {
-        /** @var IFilter $object */
-        $object = parent::current();
-
-        $object = $this->verifyReturn($object, IFilter::class);
-
-        return $object;
-    }
-
-    /**
-     * @param int|null $offset
-     * @param IFilter  $value
-     *
-     * @throws InvalidArgumentException
-     */
-    public function offsetSet($offset, $value)
-    {
-        $this->verifyArgument($value, IFilter::class);
-
-        parent::offsetSet($offset, $value);
-    }
-
-    /**
-     * @param int $offset
-     *
-     * @return IFilter|null
-     * @throws LogicException
-     */
-    public function offsetGet($offset)
-    {
-        /** @var IFilter $object */
-        $object = parent::offsetGet($offset);
-
-        $this->verifyReturn($object, IFilter::class);
-
-        return $object;
     }
 
     /**

@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace AbterPhp\Framework\Grid\Filter;
 
-use AbterPhp\Framework\Html\Component\Component;
+use AbterPhp\Framework\Html\Component\Tag;
 use AbterPhp\Framework\Html\Helper\StringHelper;
 use AbterPhp\Framework\I18n\ITranslator;
 
-class Input extends Component implements IFilter
+class Input extends Tag implements IFilter
 {
+    const DEFAULT_TAG = self::TAG_INPUT;
+
     const TAG_DIV   = 'div';
     const TAG_LABEL = 'label';
     const TAG_INPUT = 'input';
@@ -69,8 +71,10 @@ EOT;
      * @param string           $inputName
      * @param string           $fieldName
      * @param string           $content
+     * @param string           $filterType
      * @param array            $attributes
      * @param ITranslator|null $translator
+     * @param string|null      $tag
      */
     public function __construct(
         string $inputName = '',
@@ -78,7 +82,8 @@ EOT;
         string $content = '',
         string $filterType = self::FILTER_EXACT,
         $attributes = [],
-        ?ITranslator $translator = null
+        ?ITranslator $translator = null,
+        ?string $tag = null
     ) {
         if (!in_array($filterType, $this->filterTypes)) {
             throw new \InvalidArgumentException('Invalid filter type.');
@@ -96,7 +101,7 @@ EOT;
         $attributes[static::ATTRIBUTE_TITLE]          = '';
         $attributes[static::ATTRIBUTE_VALUE]          = '';
 
-        parent::__construct($content, self::TAG_INPUT, $attributes, $translator);
+        parent::__construct($content, $attributes, $translator, $tag);
     }
 
     /**

@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace AbterPhp\Framework\Grid\Cell;
 
-use AbterPhp\Framework\Html\Component\Component;
+use AbterPhp\Framework\Html\Component\Tag;
 use AbterPhp\Framework\I18n\ITranslator;
 
-class Cell extends Component implements ICell
+class Cell extends Tag implements ICell
 {
+    const DEFAULT_TAG = self::BODY;
+
     const HEAD = 'th';
     const BODY = 'td';
 
@@ -16,24 +18,26 @@ class Cell extends Component implements ICell
     protected $group = '';
 
     /**
-     * @param string $content
-     * @param string $group
-     * @param array $attributes
-     * @param string $tag
+     * Cell constructor.
+     *
+     * @param string           $content
+     * @param string           $group
+     * @param array            $attributes
      * @param ITranslator|null $translator
+     * @param string|null      $tag
      */
     public function __construct(
         string $content,
         string $group,
         array $attributes = [],
-        string $tag = self::BODY,
-        ITranslator $translator = null
+        ?ITranslator $translator = null,
+        ?string $tag = null
     ) {
         $this->group = $group;
 
-        parent::__construct($content, $tag, $attributes, $translator);
+        parent::__construct($content, $attributes, $translator, $tag);
 
-        $this->appendToAttribute(Component::ATTRIBUTE_CLASS, $tag . '-' . $group);
+        $this->appendToAttribute(Tag::ATTRIBUTE_CLASS, $this->tag . '-' . $group);
     }
 
     /**

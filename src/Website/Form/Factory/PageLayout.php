@@ -20,7 +20,6 @@ use Opulence\Sessions\ISession;
 
 class PageLayout extends Base
 {
-
     /** @var AssetsFactory */
     protected $assetsFactory;
 
@@ -78,7 +77,7 @@ class PageLayout extends Base
             'identifier',
             $entity->getIdentifier()
         );
-        $label = new Label('identifier', 'pages:pageLayoutIdentifier', null, [], $this->translator);
+        $label = new Label('identifier', 'pages:pageLayoutIdentifier', [], $this->translator);
 
         $this->form[] = new FormGroup($input, $label, null);
 
@@ -96,12 +95,11 @@ class PageLayout extends Base
             'body',
             'body',
             htmlspecialchars($entity->getBody()),
-            null,
             [Textarea::ATTRIBUTE_ROWS => '15']
         );
-        $label = new Label('body', 'pages:pageLayoutBody', null, [], $this->translator);
+        $label = new Label('body', 'pages:pageLayoutBody', [], $this->translator);
 
-        $this->form[] = new FormGroup($input, $label, null);
+        $this->form[] = new FormGroup($input, $label);
 
         return $this;
     }

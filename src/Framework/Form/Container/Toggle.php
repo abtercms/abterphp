@@ -24,19 +24,19 @@ class Toggle extends FormGroup
      * @param Input            $input
      * @param ToggleLabel      $label
      * @param IComponent|null  $help
-     * @param string|null      $tag
      * @param array            $attributes
      * @param ITranslator|null $translator
+     * @param string|null      $tag
      */
     public function __construct(
         Input $input,
         ToggleLabel $label,
         ?IComponent $help = null,
-        ?string $tag = null,
         array $attributes = [],
-        ?ITranslator $translator = null
+        ?ITranslator $translator = null,
+        ?string $tag = null
     ) {
-        parent::__construct($input, $label, $help, $tag, $attributes, $translator);
+        parent::__construct($input, $label, $help, $attributes, $translator, $tag);
 
         $this->template = static::DEFAULT_TEMPLATE;
     }

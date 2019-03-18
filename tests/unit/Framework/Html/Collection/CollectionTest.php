@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace AbterPhp\Framework\Html\Collection;
 
+use AbterPhp\Framework\Html\Component\Component;
+use AbterPhp\Framework\Html\Component\Tag;
+use AbterPhp\Framework\Html\Helper\StringHelper;
 use PHPUnit\Framework\TestCase;
 
 class CollectionTest extends TestCase
@@ -12,75 +15,86 @@ class CollectionTest extends TestCase
     {
         $sut = new Collection();
 
-        $sut[] = 'A';
-        $sut[] = 'B';
+        $sut[] = new Component('A');
+        $sut[] = new Component('B');
 
         $this->assertContains('A', (string)$sut);
         $this->assertContains('B', (string)$sut);
     }
 
+    public function testToStringHandlesMixedComponents()
+    {
+        $sut = new Collection();
+
+        $sut[] = new Component('A');
+        $sut[] = new Tag('B');
+
+        $this->assertContains('A', (string)$sut);
+        $this->assertContains('B', (string)$sut);
+    }
+
+    /**
+     * @return array
+     */
+    public function addingInvalidItemProvider()
+    {
+        return [
+            [1],
+            [false],
+            ['aloha'],
+            [[]],
+            [new StringHelper()]
+        ];
+    }
+
+    /**
+     * @dataProvider addingInvalidItemProvider
+     *
+     * @expectedException \InvalidArgumentException
+     *
+     * @param mixed $item
+     */
+    public function testAddingInvalidItemFails($item)
+    {
+        $sut = new Collection(['foo' => 'baz'], null, 'A');
+
+        $sut[] = $item;
+    }
+
     public function testToStringCanWrapList()
     {
-        $sut = new Collection('A', ['foo' => 'baz']);
+        $sut = new Collection(['foo' => 'baz'], null, 'A');
 
-        $sut[] = 'B';
-        $sut[] = 'C';
+        $sut[] = new Component('B');
+        $sut[] = new Component('C');
 
         $this->assertSame("<A foo=\"baz\">B\nC</A>", (string)$sut);
     }
 
-    public function testNext()
+    public function testCollectionIterable()
     {
-        $this->markTestIncomplete();
-    }
+        $items = [];
+        $items[] = new Component('B');
+        $items[] = new Component('C');
 
-    public function testOffsetSet()
-    {
-        $this->markTestIncomplete();
+        $sut = new Collection(['foo' => 'baz'], null, 'A');
+
+        $sut[] = $items[0];
+        $sut[] = $items[1];
+
+        foreach ($sut as $key => $component) {
+            $this->assertArrayHasKey($key, $items);
+            $this->assertSame($items[$key], $component);
+        }
     }
 
     public function testCount()
     {
-        $this->markTestIncomplete();
-    }
+        $sut = new Collection(['foo' => 'baz'], null, 'A');
 
-    public function testKey()
-    {
-        $this->markTestIncomplete();
-    }
+        $sut[] = new Component('B');
+        $sut[] = new Component('C');
 
-    public function testRewind()
-    {
-        $this->markTestIncomplete();
-    }
-
-    public function testCurrent()
-    {
-        $this->markTestIncomplete();
-    }
-
-    public function testOffsetExists()
-    {
-        $this->markTestIncomplete();
-    }
-
-    public function testOffsetGet()
-    {
-        $this->markTestIncomplete();
-    }
-
-    public function testOffsetUnset()
-    {
-        $this->markTestIncomplete();
-    }
-
-    public function testRender()
-    {
-        $this->markTestIncomplete();
-    }
-
-    public function testValid()
-    {
-        $this->markTestIncomplete();
+        $this->assertSame(2, count($sut));
     }
 }
