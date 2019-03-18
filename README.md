@@ -165,7 +165,7 @@ before the first stable version.
 1. Make the frontend framework decoupled from the backend system
 2. Pick new frontend framework for backend system and implement it
 3. ~~Use ILogger instead of Logger~~
-4. More fine grained authorization]
+4. More fine grained authorization
    - ACL implemented for pages
    - ~~Advanced settings access role for pages~~
    - ~~Multiple user group for one user~~
@@ -185,9 +185,7 @@ before the first stable version.
 13. Ensure that user creation enforces good passwords in CLI.
 14. Ulid IDS
 15. ~~Remove $value in Select constructor~~
-16. Switch `$attribute` and `$tag` order
-17. AbterPhp\Framework\Form\Factory\Base::getMultiSelectSize -> move to helper or Select
-18. Combine Html Components and Collections
+16. ~~Switch `$attribute` and `$tag` order~~
 
 ### First beta musts:
 
@@ -213,11 +211,12 @@ before the first stable version.
 3. Displaying and saving of all forms and proper returns covered with acceptance tests
 4. API test complete
 5. Refactor helpers
-6. Refactor configs
-7. Refactor bootstrappers (again)
-8. Review all constants
-9. Documentation complete
-10. 12-factor compliance clearly stated
+6. AbterPhp\Framework\Form\Factory\Base::getMultiSelectSize -> move to helper or Select
+7. Refactor configs
+8. Refactor bootstrappers (again)
+9. Review all constants
+10. Documentation complete
+11. 12-factor compliance clearly stated
 
 ## Ideas
 
