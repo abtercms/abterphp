@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace AbterPhp\Website\Http\Views\Builders;
 
-use AbterPhp\Website\Constant\Events;
+use AbterPhp\Admin\Constant\View;
+use AbterPhp\Website\Constant\Event;
 use AbterPhp\Website\Events\WebsiteReady;
 use Opulence\Events\Dispatchers\IEventDispatcher;
 use Opulence\Views\Factories\IViewBuilder;
@@ -47,14 +48,16 @@ class WebsiteBuilder implements IViewBuilder
         $view->setVar('pageUrl', '');
         $view->setVar('layout', '');
         $view->setVar('page', '');
-        $view->setVar('preHeader', '');
-        $view->setVar('header', '');
-        $view->setVar('postHeader', '');
-        $view->setVar('preFooter', '');
-        $view->setVar('footer', '');
-        $view->setVar('postFooter', '');
 
-        $this->eventDispatcher->dispatch(Events::WEBSITE_READY, new WebsiteReady($view));
+        $view->setVar(View::PRE_HEADER, '');
+        $view->setVar(View::HEADER, '');
+        $view->setVar(View::POST_HEADER, '');
+
+        $view->setVar(View::PRE_FOOTER, '');
+        $view->setVar(View::FOOTER, '');
+        $view->setVar(View::POST_FOOTER, '');
+
+        $this->eventDispatcher->dispatch(Event::WEBSITE_READY, new WebsiteReady($view));
 
         return $view;
     }

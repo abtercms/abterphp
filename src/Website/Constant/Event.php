@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace AbterPhp\Website\Constant;
 
-class Events
+class Event
 {
     const WEBSITE_READY = 'website.ready';
 }

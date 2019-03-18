@@ -3,7 +3,7 @@
 namespace AbterPhp\Bootstrap4;
 
 use AbterPhp\Framework\Constant\Module;
-use AbterPhp\Website\Constant\Events as WebsiteEvents;
+use AbterPhp\Website\Constant\Event as WebsiteEvent;
 
 return [
     Module::IDENTIFIER   => 'AbterPhp\Bootstrap4',
@@ -12,7 +12,7 @@ return [
         Bootstrappers\Events\Listeners::class,
     ],
     Module::EVENTS             => [
-        WebsiteEvents::WEBSITE_READY  => [
+        WebsiteEvent::WEBSITE_READY  => [
             /** @see \AbterPhp\Bootstrap4\Events\Listeners\WebsiteDecorator::handle() */
             sprintf('%s@handle', Events\Listeners\WebsiteDecorator::class),
         ],

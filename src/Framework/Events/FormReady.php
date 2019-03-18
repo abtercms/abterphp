@@ -12,7 +12,7 @@ class FormReady
     private $form;
 
     /**
-     * TemplateEngineReady constructor.
+     * FormReady constructor.
      *
      * @param Form $form
      */

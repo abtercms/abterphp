@@ -11,8 +11,6 @@
 
     <link rel="shortcut icon" type="image/png" href="/favicon.png">
 
-    {{! css("https://fonts.googleapis.com/css?family=Material+Icons") !}}
-
     {{! assetCss('admin-layout') !}}
     <% if ($page) %>
     {{! assetCss($page) !}}
@@ -25,14 +23,13 @@
 </head>
 
 <body class="body-custom">
+    <% show("content") %>
 
-<% show("content") %>
-
-<!-- Scripts Starts -->
-{{! assetJs('admin-layout-footer') !}}
-<% if ($pageFooter) %>
-{{! assetJs($pageFooter) !}}
-<% endif %>
-<!-- Scripts Ends -->
+    <!-- Scripts Starts -->
+    {{! assetJs('admin-layout-footer') !}}
+    <% if ($pageFooter) %>
+    {{! assetJs($pageFooter) !}}
+    <% endif %>
+    <!-- Scripts Ends -->
 </body>
 </html>

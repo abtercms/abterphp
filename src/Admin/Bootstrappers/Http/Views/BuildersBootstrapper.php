@@ -8,6 +8,7 @@ use AbterPhp\Admin\Http\Views\Builders\LoginBuilder;
 use AbterPhp\Framework\Assets\AssetManager;
 use AbterPhp\Framework\Constant\Dependencies;
 use AbterPhp\Framework\Navigation\Navigation;
+use Opulence\Events\Dispatchers\IEventDispatcher;
 use Opulence\Ioc\Bootstrappers\Bootstrapper;
 use Opulence\Ioc\IContainer;
 use Opulence\Sessions\ISession;
@@ -36,11 +37,14 @@ class BuildersBootstrapper extends Bootstrapper
                 /** @var AssetManager $assets */
                 $assets = $container->resolve(AssetManager::class);
 
+                /** @var IEventDispatcher $eventDispatcher */
+                $eventDispatcher = $container->resolve(IEventDispatcher::class);
+
                 /** @var Navigation $primaryNavigation */
                 $primaryNavigation = $container->resolve(Dependencies::NAVIGATION_PRIMARY);
 
                 /** @see AdminBuilder::build() */
-                return (new AdminBuilder($session, $assets, $primaryNavigation))->build($view);
+                return (new AdminBuilder($session, $assets, $eventDispatcher, $primaryNavigation))->build($view);
             }
         );
         $viewFactory->registerBuilder(
@@ -62,8 +66,11 @@ class BuildersBootstrapper extends Bootstrapper
                 /** @var AssetManager $assets */
                 $assets = $container->resolve(AssetManager::class);
 
+                /** @var IEventDispatcher $eventDispatcher */
+                $eventDispatcher = $container->resolve(IEventDispatcher::class);
+
                 /** @see AdminBuilder::build() */
-                return (new AdminBuilder($session, $assets, null))->build($view);
+                return (new AdminBuilder($session, $assets, $eventDispatcher, null))->build($view);
             }
         );
         $viewFactory->registerBuilder(

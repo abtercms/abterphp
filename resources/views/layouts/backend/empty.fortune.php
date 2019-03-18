@@ -25,7 +25,6 @@
 </head>
 
 <body class="body-custom">
-
     <% show("content") %>
 
     <!-- Scripts Starts -->
