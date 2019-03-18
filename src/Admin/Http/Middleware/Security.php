@@ -37,12 +37,14 @@ class Security implements IMiddleware
             return $next($request);
         }
 
+        // phpcs:disable Generic.CodeAnalysis.EmptyStatement
         try {
             if ($this->cacheBridge->get(static::KEY)) {
                 return $next($request);
             }
         } catch (\Exception $e) {
         }
+        // phpcs:enable Generic.CodeAnalysis.EmptyStatement
 
         $this->checkRoutes();
 
@@ -53,15 +55,15 @@ class Security implements IMiddleware
 
     private function checkRoutes()
     {
-        if (getenv(Env::ADMIN_LOGIN_PATH) === '/admin-iddqd') {
+        if (getenv(ADMIN_LOGIN_PATH) === '/admin-iddqd') {
             throw new SecurityException('Invalid ADMIN_LOGIN_PATH environment variable.');
         }
 
-        if (getenv(Env::ADMIN_BASE_PATH) === '/login-iddqd') {
+        if (getenv(ADMIN_BASE_PATH) === '/login-iddqd') {
             throw new SecurityException('Invalid ADMIN_BASE_PATH environment variable.');
         }
 
-        if (getenv(Env::API_BASE_PATH) === '/api-iddqd') {
+        if (getenv(API_BASE_PATH) === '/api-iddqd') {
             throw new SecurityException('Invalid ADMIN_BASE_PATH environment variable.');
         }
     }

@@ -7,8 +7,6 @@ namespace AbterPhp\Framework\Form\Container;
 use AbterPhp\Framework\Form\Element\Input;
 use AbterPhp\Framework\Form\Extra\Help;
 use AbterPhp\Framework\Form\Label\ToggleLabel;
-use AbterPhp\Framework\Helper\ArrayHelper;
-use AbterPhp\Framework\Html\Component\StubAttributeFactory;
 use AbterPhp\Framework\I18n\MockTranslatorFactory;
 use PHPUnit\Framework\MockObject\MockObject;
 

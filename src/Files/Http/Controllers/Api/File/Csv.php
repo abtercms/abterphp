@@ -40,11 +40,7 @@ class Csv extends Controller
      */
     public function csv(): Response
     {
-        $files = [];
-        try {
-            $files = $this->repo->getAll();
-        } catch (\Exception $e) {
-        }
+        $files = $this->repo->getAll();
 
         $content = $this->csvCreator->csv($files);
         $content = $this->convertContent($content);

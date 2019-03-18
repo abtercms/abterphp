@@ -121,10 +121,12 @@ class Uploader
             return false;
         }
 
+        // phpcs:disable Generic.CodeAnalysis.EmptyStatement
         try {
             return $this->storedFileManager->delete($path);
         } catch (FileNotFoundException $e) {
         }
+        // phpcs:enable Generic.CodeAnalysis.EmptyStatement
 
         return false;
     }
@@ -140,10 +142,12 @@ class Uploader
             return null;
         }
 
+        // phpcs:disable Generic.CodeAnalysis.EmptyStatement
         try {
             return $this->storedFileManager->read($path);
         } catch (FileNotFoundException $e) {
         }
+        // phpcs:enable Generic.CodeAnalysis.EmptyStatement
 
         return null;
     }
@@ -159,10 +163,12 @@ class Uploader
             return false;
         }
 
+        // phpcs:disable Generic.CodeAnalysis.EmptyStatement
         try {
             return $this->storedFileManager->readStream($path);
         } catch (FileNotFoundException $e) {
         }
+        // phpcs:enable Generic.CodeAnalysis.EmptyStatement
 
         return false;
     }
@@ -178,6 +184,7 @@ class Uploader
             return null;
         }
 
+        // phpcs:disable Generic.CodeAnalysis.EmptyStatement
         try {
             $size = $this->storedFileManager->getSize($path);
             if (is_numeric($size)) {
@@ -185,6 +192,7 @@ class Uploader
             }
         } catch (FileNotFoundException $e) {
         }
+        // phpcs:enable Generic.CodeAnalysis.EmptyStatement
 
         return null;
     }

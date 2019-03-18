@@ -203,6 +203,7 @@ before the first stable version.
 12. Fix empty exceptions (\LogicException, \RuntimeException, \InvalidArgumentException)
 13. Ensure identifiers do not contain a comma (explode issue)
 14. 70%+ of JS source code unit tested
+15. Enable `Generic.Commenting.DocComment` phpcs rules
 
 ### 1.0 musts:
 

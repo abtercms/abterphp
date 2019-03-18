@@ -37,12 +37,14 @@ class Security implements IMiddleware
             return $next($request);
         }
 
+        // phpcs:disable Generic.CodeAnalysis.EmptyStatement
         try {
             if ($this->cacheBridge->get(static::KEY)) {
                 return $next($request);
             }
         } catch (\Exception $e) {
         }
+        // phpcs:enable Generic.CodeAnalysis.EmptyStatement
 
         $this->checkSecrets();
         $this->checkPhpSettings();

@@ -37,7 +37,7 @@ class LabelTest extends \PHPUnit\Framework\TestCase
                 ['ABC' => 'CBA'],
                 null,
                 '<label class="control-label" for="a">CBA</label>',
-            ], // nolint
+            ],
             'custom tag'        => [
                 'a',
                 'ABC',

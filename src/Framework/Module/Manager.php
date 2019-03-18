@@ -45,23 +45,27 @@ class Manager
      */
     protected function cacheWrapper(string $cacheKey, callable $callback): array
     {
+        // phpcs:disable Generic.CodeAnalysis.EmptyStatement
         try {
             if ($this->cacheBridge && $this->cacheBridge->has($cacheKey)) {
                 return $this->cacheBridge->get($cacheKey);
             }
         } catch (\Exception $e) {
         }
+        // phpcs:enable Generic.CodeAnalysis.EmptyStatement
 
         $this->init();
 
         $bootstrappers = call_user_func($callback, $this->modules);
 
+        // phpcs:disable Generic.CodeAnalysis.EmptyStatement
         try {
             if ($this->cacheBridge) {
                 $this->cacheBridge->set($cacheKey, $bootstrappers, PHP_INT_MAX);
             }
         } catch (\Exception $e) {
         }
+        // phpcs:enable Generic.CodeAnalysis.EmptyStatement
 
         return $bootstrappers;
     }

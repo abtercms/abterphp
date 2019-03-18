@@ -46,7 +46,7 @@ class ExceptionHandler implements IExceptionHandler
         $whoops = $this->whoopsRenderer->getRun();
 
         $whoops->pushHandler(new \Whoops\Handler\PlainTextHandler($this->logger));
-        if (php_sapi_name() !== 'cli') {
+        if (PHP_SAPI !== 'cli') {
             $whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler());
         }
 
