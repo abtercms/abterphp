@@ -11,7 +11,7 @@ use Opulence\Framework\Configuration\Config;
 use Opulence\Ioc\Bootstrappers\Bootstrapper;
 use Opulence\Ioc\IContainer;
 
-class Listeners extends Bootstrapper
+class ListenersBootstrapper extends Bootstrapper
 {
     /**
      * @inheritdoc

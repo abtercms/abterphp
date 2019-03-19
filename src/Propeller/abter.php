@@ -10,7 +10,8 @@ return [
     Module::IDENTIFIER   => 'AbterPhp\Propeller',
     Module::DEPENDENCIES => ['AbterPhp\Admin'],
     Module::HTTP_BOOTSTRAPPERS => [
-        Bootstrappers\Events\Listeners::class,
+        Bootstrappers\Events\ListenersBootstrapper::class,
+        Bootstrappers\Html\ButtonFactoryBootstrapper::class,
     ],
     Module::EVENTS             => [
         Event::FORM_READY => [

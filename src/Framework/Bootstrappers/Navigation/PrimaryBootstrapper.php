@@ -60,13 +60,11 @@ class PrimaryBootstrapper extends Bootstrapper implements ILazyBootstrapper
 
         $username = $session->has(Session::USERNAME) ? $session->get(Session::USERNAME) : '';
 
-        $urlGenerator = $container->resolve(UrlGenerator::class);
         $translator   = $container->resolve(ITranslator::class);
         $enforcer     = $container->resolve(Enforcer::class);
 
         $navigation = new Navigation(
             $navigationName,
-            $urlGenerator,
             $translator,
             $username,
             [],

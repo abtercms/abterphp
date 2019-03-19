@@ -7,28 +7,31 @@ namespace AbterPhp\Admin\Events\Listeners;
 use AbterPhp\Admin\Constant\Routes;
 use AbterPhp\Framework\Constant\Navigation as NavConstant;
 use AbterPhp\Framework\Events\NavigationReady;
-use AbterPhp\Framework\Html\Component\IComponent;
+use AbterPhp\Framework\Html\ButtonFactory;
 use AbterPhp\Framework\I18n\ITranslator;
+use AbterPhp\Framework\Navigation\Item;
 use AbterPhp\Framework\Navigation\Navigation;
 
 class NavigationRegistrar
 {
     const BASE_WEIGHT = 1000;
 
-    const CONTENT_TEMPLATE = '<i class="material-icons media-left media-middle">%s</i> 
-        <span class="media-body">%s</span>';
-
     /** @var ITranslator */
     protected $translator;
+
+    /** @var ButtonFactory */
+    protected $buttonFactory;
 
     /**
      * NavigationRegistrar constructor.
      *
-     * @param ITranslator $translator
+     * @param ITranslator   $translator
+     * @param ButtonFactory $buttonFactory
      */
-    public function __construct(ITranslator $translator)
+    public function __construct(ITranslator $translator, ButtonFactory $buttonFactory)
     {
-        $this->translator = $translator;
+        $this->translator    = $translator;
+        $this->buttonFactory = $buttonFactory;
     }
 
     /**
@@ -52,54 +55,43 @@ class NavigationRegistrar
     /**
      * @param Navigation $navigation
      *
-     * @return IComponent|null
      * @throws \Opulence\Routing\Urls\URLException
      */
-    protected function addUser(Navigation $navigation): ?IComponent
+    protected function addUser(Navigation $navigation)
     {
-        $resource  = $this->getAdminResource(Routes::ROUTE_USERS);
-        $component = sprintf(
-            static::CONTENT_TEMPLATE,
-            'person',
-            $this->translator->translate('admin:users')
-        );
+        $text     = $this->translator->translate('admin:users');
+        $button   = $this->buttonFactory->createFromName($text, Routes::ROUTE_USERS, [], 'person');
+        $resource = $this->getAdminResource(Routes::ROUTE_USERS);
 
-        return $navigation->createFromName($component, Routes::ROUTE_USERS, [], static::BASE_WEIGHT, $resource);
+        $navigation->addItem(new Item($button), static::BASE_WEIGHT, $resource);
     }
 
     /**
      * @param Navigation $navigation
      *
-     * @return IComponent|null
      * @throws \Opulence\Routing\Urls\URLException
      */
-    protected function addUserGroup(Navigation $navigation): ?IComponent
+    protected function addUserGroup(Navigation $navigation)
     {
-        $resource  = $this->getAdminResource(Routes::ROUTE_USER_GROUPS);
-        $component = sprintf(
-            static::CONTENT_TEMPLATE,
-            'group',
-            $this->translator->translate('admin:userGroups')
-        );
+        $text     = $this->translator->translate('admin:userGroups');
+        $button   = $this->buttonFactory->createFromName($text, Routes::ROUTE_USER_GROUPS, [], 'group');
+        $resource = $this->getAdminResource(Routes::ROUTE_USER_GROUPS);
 
-        return $navigation->createFromName($component, Routes::ROUTE_USER_GROUPS, [], static::BASE_WEIGHT, $resource);
+        $navigation->addItem(new Item($button), static::BASE_WEIGHT, $resource);
     }
 
     /**
      * @param Navigation $navigation
      *
-     * @return IComponent|null
      * @throws \Opulence\Routing\Urls\URLException
      */
-    protected function addLogout(Navigation $navigation): ?IComponent
+    protected function addLogout(Navigation $navigation)
     {
-        $component = sprintf(
-            static::CONTENT_TEMPLATE,
-            'settings_power',
-            $this->translator->translate('admin:logout')
-        );
+        $text     = $this->translator->translate('admin:logout');
+        $button   = $this->buttonFactory->createFromName($text, Routes::ROUTE_LOGOUT, [], 'settings_power');
+        $resource = $this->getAdminResource(Routes::ROUTE_LOGOUT);
 
-        return $navigation->createFromName($component, Routes::ROUTE_LOGOUT, [], PHP_INT_MAX);
+        $navigation->addItem(new Item($button), PHP_INT_MAX, $resource);
     }
 
     /**

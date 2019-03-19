@@ -13,7 +13,8 @@ use AbterPhp\Framework\Navigation\UserBlock;
 class NavigationRegistrar
 {
     const SIDEBAR_PREFIX_CLASS = 'pmd-sidebar-overlay';
-    const SIDEBAR_CLASS        = 'pmd-sidebar sidebar-default pmd-sidebar-slide-push pmd-sidebar-left pmd-sidebar-open bg-fill-darkblue sidebar-with-icons'; // nolint
+    const SIDEBAR_CLASS        = 'pmd-sidebar sidebar-default pmd-sidebar-slide-push pmd-sidebar-left pmd-sidebar-open bg-fill-darkblue sidebar-with-icons nav pmd-sidebar-nav'; // nolint
+    const UL_CLASS             = 'nav pmd-sidebar-nav';
     const USER_BLOCK_CLASS     = 'dropdown pmd-dropdown pmd-user-info visible-xs visible-md visible-sm visible-lg';
 
     /**
@@ -39,6 +40,9 @@ class NavigationRegistrar
     {
         // Add overlay as a prefix
         $navigation->setPrefix(new Tag('', [Navigation::ATTRIBUTE_CLASS => static::SIDEBAR_PREFIX_CLASS]));
+
+        // Add navigation classes
+        $navigation->appendToAttribute(Navigation::ATTRIBUTE_CLASS, static::UL_CLASS);
 
         // Setup sidebar properly
         $wrapperAttribs = [

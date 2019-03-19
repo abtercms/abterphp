@@ -6,8 +6,9 @@ namespace AbterPhp\Website\Events\Listeners;
 
 use AbterPhp\Framework\Constant\Navigation as NavConstant;
 use AbterPhp\Framework\Events\NavigationReady;
-use AbterPhp\Framework\Html\Component\IComponent;
+use AbterPhp\Framework\Html\ButtonFactory;
 use AbterPhp\Framework\I18n\ITranslator;
+use AbterPhp\Framework\Navigation\Item;
 use AbterPhp\Framework\Navigation\Navigation;
 use AbterPhp\Website\Constant\Routes;
 
@@ -21,20 +22,23 @@ class NavigationRegistrar
     /** @var ITranslator */
     protected $translator;
 
+    /** @var ButtonFactory */
+    protected $buttonFactory;
+
     /**
      * NavigationRegistrar constructor.
      *
-     * @param ITranslator $translator
+     * @param ITranslator   $translator
+     * @param ButtonFactory $buttonFactory
      */
-    public function __construct(ITranslator $translator)
+    public function __construct(ITranslator $translator, ButtonFactory $buttonFactory)
     {
-        $this->translator = $translator;
+        $this->translator    = $translator;
+        $this->buttonFactory = $buttonFactory;
     }
 
     /**
      * @param NavigationReady $event
-     *
-     * @throws \Opulence\Routing\Urls\URLException
      */
     public function register(NavigationReady $event)
     {
@@ -44,8 +48,6 @@ class NavigationRegistrar
 
         $navigation = $event->getNavigation();
 
-        $navigation->appendToAttribute(Navigation::ATTRIBUTE_CLASS, 'nav pmd-sidebar-nav');
-
         $this->addPage($navigation);
         $this->addPageLayout($navigation);
         $this->addBlock($navigation);
@@ -54,74 +56,50 @@ class NavigationRegistrar
 
     /**
      * @param Navigation $navigation
-     *
-     * @return IComponent|null
-     * @throws \Opulence\Routing\Urls\URLException
      */
-    protected function addPage(Navigation $navigation): ?IComponent
+    protected function addPage(Navigation $navigation)
     {
-        $resource  = $this->getAdminResource(Routes::ROUTE_PAGES);
-        $component = sprintf(
-            static::CONTENT_TEMPLATE,
-            'text_format',
-            $this->translator->translate('pages:pages')
-        );
+        $text     = $this->translator->translate('pages:pages');
+        $button   = $this->buttonFactory->createFromName($text, Routes::ROUTE_PAGES, [], 'text_format');
+        $resource = $this->getAdminResource(Routes::ROUTE_PAGES);
 
-        return $navigation->createFromName($component, Routes::ROUTE_PAGES, [], static::BASE_WEIGHT, $resource);
+        $navigation->addItem(new Item($button), static::BASE_WEIGHT, $resource);
     }
 
     /**
      * @param Navigation $navigation
-     *
-     * @return IComponent|null
-     * @throws \Opulence\Routing\Urls\URLException
      */
-    protected function addPageLayout(Navigation $navigation): ?IComponent
+    protected function addPageLayout(Navigation $navigation)
     {
-        $resource  = $this->getAdminResource(Routes::ROUTE_PAGE_LAYOUTS);
-        $component = sprintf(
-            static::CONTENT_TEMPLATE,
-            'view_quilt',
-            $this->translator->translate('pages:pageLayouts')
-        );
+        $text     = $this->translator->translate('pages:pageLayouts');
+        $button   = $this->buttonFactory->createFromName($text, Routes::ROUTE_PAGE_LAYOUTS, [], 'view_quilt');
+        $resource = $this->getAdminResource(Routes::ROUTE_PAGE_LAYOUTS);
 
-        return $navigation->createFromName($component, Routes::ROUTE_PAGE_LAYOUTS, [], static::BASE_WEIGHT, $resource);
+        $navigation->addItem(new Item($button), static::BASE_WEIGHT, $resource);
     }
 
     /**
      * @param Navigation $navigation
-     *
-     * @return IComponent|null
-     * @throws \Opulence\Routing\Urls\URLException
      */
-    protected function addBlock(Navigation $navigation): ?IComponent
+    protected function addBlock(Navigation $navigation)
     {
-        $resource  = $this->getAdminResource(Routes::ROUTE_BLOCKS);
-        $component = sprintf(
-            static::CONTENT_TEMPLATE,
-            'view_module',
-            $this->translator->translate('pages:blocks')
-        );
+        $text     = $this->translator->translate('pages:blocks');
+        $button   = $this->buttonFactory->createFromName($text, Routes::ROUTE_BLOCKS, [], 'view_module');
+        $resource = $this->getAdminResource(Routes::ROUTE_BLOCKS);
 
-        return $navigation->createFromName($component, Routes::ROUTE_BLOCKS, [], static::BASE_WEIGHT, $resource);
+        $navigation->addItem(new Item($button), static::BASE_WEIGHT, $resource);
     }
 
     /**
      * @param Navigation $navigation
-     *
-     * @return IComponent|null
-     * @throws \Opulence\Routing\Urls\URLException
      */
-    protected function addBlockLayout(Navigation $navigation): ?IComponent
+    protected function addBlockLayout(Navigation $navigation)
     {
-        $resource  = $this->getAdminResource(Routes::ROUTE_BLOCK_LAYOUTS);
-        $component = sprintf(
-            static::CONTENT_TEMPLATE,
-            'view_quilt',
-            $this->translator->translate('pages:blockLayouts')
-        );
+        $text     = $this->translator->translate('pages:blockLayouts');
+        $button   = $this->buttonFactory->createFromName($text, Routes::ROUTE_BLOCK_LAYOUTS, [], 'view_quilt');
+        $resource = $this->getAdminResource(Routes::ROUTE_BLOCK_LAYOUTS);
 
-        return $navigation->createFromName($component, Routes::ROUTE_BLOCK_LAYOUTS, [], static::BASE_WEIGHT, $resource);
+        $navigation->addItem(new Item($button), static::BASE_WEIGHT, $resource);
     }
 
     /**

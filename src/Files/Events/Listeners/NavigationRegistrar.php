@@ -7,8 +7,9 @@ namespace AbterPhp\Files\Events\Listeners;
 use AbterPhp\Files\Constant\Routes;
 use AbterPhp\Framework\Constant\Navigation as NavConstant;
 use AbterPhp\Framework\Events\NavigationReady;
-use AbterPhp\Framework\Html\Component\IComponent;
+use AbterPhp\Framework\Html\ButtonFactory;
 use AbterPhp\Framework\I18n\ITranslator;
+use AbterPhp\Framework\Navigation\Item;
 use AbterPhp\Framework\Navigation\Navigation;
 
 class NavigationRegistrar
@@ -21,20 +22,23 @@ class NavigationRegistrar
     /** @var ITranslator */
     protected $translator;
 
+    /** @var ButtonFactory */
+    protected $buttonFactory;
+
     /**
      * NavigationRegistrar constructor.
      *
-     * @param ITranslator $translator
+     * @param ITranslator   $translator
+     * @param ButtonFactory $buttonFactory
      */
-    public function __construct(ITranslator $translator)
+    public function __construct(ITranslator $translator, ButtonFactory $buttonFactory)
     {
-        $this->translator = $translator;
+        $this->translator    = $translator;
+        $this->buttonFactory = $buttonFactory;
     }
 
     /**
      * @param NavigationReady $event
-     *
-     * @throws \Opulence\Routing\Urls\URLException
      */
     public function handle(NavigationReady $event)
     {
@@ -44,8 +48,6 @@ class NavigationRegistrar
 
         $navigation = $event->getNavigation();
 
-        $navigation->appendToAttribute(Navigation::ATTRIBUTE_CLASS, 'nav pmd-sidebar-nav');
-
         $this->addFileCategories($navigation);
         $this->addFiles($navigation);
         $this->addFileDownloads($navigation);
@@ -53,68 +55,38 @@ class NavigationRegistrar
 
     /**
      * @param Navigation $navigation
-     *
-     * @return IComponent|null
-     * @throws \Opulence\Routing\Urls\URLException
      */
-    protected function addFileCategories(Navigation $navigation): ?IComponent
+    protected function addFileCategories(Navigation $navigation)
     {
-        $resource  = $this->getAdminResource(Routes::ROUTE_FILE_CATEGORIES);
-        $component = sprintf(
-            static::CONTENT_TEMPLATE,
-            'folder',
-            $this->translator->translate('files:fileCategories')
-        );
+        $text     = $this->translator->translate('files:fileCategories');
+        $button   = $this->buttonFactory->createFromName($text, Routes::ROUTE_FILE_CATEGORIES, [], 'folder');
+        $resource = $this->getAdminResource(Routes::ROUTE_FILE_CATEGORIES);
 
-        return $navigation->createFromName(
-            $component,
-            Routes::ROUTE_FILE_CATEGORIES,
-            [],
-            static::BASE_WEIGHT,
-            $resource
-        );
+        $navigation->addItem(new Item($button), static::BASE_WEIGHT, $resource);
     }
 
     /**
      * @param Navigation $navigation
-     *
-     * @return IComponent|null
-     * @throws \Opulence\Routing\Urls\URLException
      */
-    protected function addFiles(Navigation $navigation): ?IComponent
+    protected function addFiles(Navigation $navigation)
     {
-        $resource  = $this->getAdminResource(Routes::ROUTE_FILES);
-        $component = sprintf(
-            static::CONTENT_TEMPLATE,
-            'attachment',
-            $this->translator->translate('files:files')
-        );
+        $text     = $this->translator->translate('files:files');
+        $button   = $this->buttonFactory->createFromName($text, Routes::ROUTE_FILES, [], 'attachment');
+        $resource = $this->getAdminResource(Routes::ROUTE_FILES);
 
-        return $navigation->createFromName($component, Routes::ROUTE_FILES, [], static::BASE_WEIGHT, $resource);
+        $navigation->addItem(new Item($button), static::BASE_WEIGHT, $resource);
     }
 
     /**
      * @param Navigation $navigation
-     *
-     * @return IComponent|null
-     * @throws \Opulence\Routing\Urls\URLException
      */
-    protected function addFileDownloads(Navigation $navigation): ?IComponent
+    protected function addFileDownloads(Navigation $navigation)
     {
-        $resource  = $this->getAdminResource(Routes::ROUTE_FILE_DOWNLOADS);
-        $component = sprintf(
-            static::CONTENT_TEMPLATE,
-            'file_download',
-            $this->translator->translate('files:fileDownloads')
-        );
+        $text     = $this->translator->translate('files:fileDownloads');
+        $button   = $this->buttonFactory->createFromName($text, Routes::ROUTE_FILE_DOWNLOADS, [], 'file_download');
+        $resource = $this->getAdminResource(Routes::ROUTE_FILE_DOWNLOADS);
 
-        return $navigation->createFromName(
-            $component,
-            Routes::ROUTE_FILE_DOWNLOADS,
-            [],
-            static::BASE_WEIGHT,
-            $resource
-        );
+        $navigation->addItem(new Item($button), static::BASE_WEIGHT, $resource);
     }
 
     /**
