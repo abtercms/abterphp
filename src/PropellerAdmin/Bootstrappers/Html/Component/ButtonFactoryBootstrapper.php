@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AbterPhp\Propeller\Bootstrappers\Html\Component;
+namespace AbterPhp\PropellerAdmin\Bootstrappers\Html\Component;
 
 use AbterPhp\Framework\Html\Component\Button;
 use AbterPhp\Framework\Html\Component\ButtonFactory;

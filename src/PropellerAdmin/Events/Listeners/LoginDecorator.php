@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AbterPhp\Propeller\Events\Listeners;
+namespace AbterPhp\PropellerAdmin\Events\Listeners;
 
 use AbterPhp\Admin\Constant\View;
 use AbterPhp\Admin\Events\AdminReady;

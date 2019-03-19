@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AbterPhp\Bootstrap4\Events\Listeners;
+namespace AbterPhp\Bootstrap4Website\Events\Listeners;
 
 use AbterPhp\Website\Events\WebsiteReady;
 

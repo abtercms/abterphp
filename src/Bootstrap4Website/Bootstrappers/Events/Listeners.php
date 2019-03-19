@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace AbterPhp\Bootstrap4\Bootstrappers\Events;
+namespace AbterPhp\Bootstrap4Website\Bootstrappers\Events;
 
-use AbterPhp\Bootstrap4\Events\Listeners\WebsiteDecorator;
+use AbterPhp\Bootstrap4Website\Events\Listeners\WebsiteDecorator;
 use Opulence\Framework\Configuration\Config;
 use Opulence\Ioc\Bootstrappers\Bootstrapper;
 use Opulence\Ioc\IContainer;

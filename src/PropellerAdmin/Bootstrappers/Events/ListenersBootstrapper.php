@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace AbterPhp\Propeller\Bootstrappers\Events;
+namespace AbterPhp\PropellerAdmin\Bootstrappers\Events;
 
 use AbterPhp\Framework\Assets\AssetManager;
-use AbterPhp\Propeller\Events\Listeners\AdminDecorator;
-use AbterPhp\Propeller\Events\Listeners\LoginDecorator;
+use AbterPhp\PropellerAdmin\Events\Listeners\AdminDecorator;
+use AbterPhp\PropellerAdmin\Events\Listeners\LoginDecorator;
 use Opulence\Framework\Configuration\Config;
 use Opulence\Ioc\Bootstrappers\Bootstrapper;
 use Opulence\Ioc\IContainer;
