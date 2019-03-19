@@ -36,7 +36,7 @@ return [
         Bootstrappers\Grid\GridBootstrapper::class,
         Bootstrappers\Http\SessionBootstrapper::class,
         Bootstrappers\I18n\I18nBootstrapper::class,
-        Bootstrappers\Navigation\PrimaryBootstrapper::class,
+        Bootstrappers\Navigation\NavigationBootstrapper::class,
         Bootstrappers\Views\ViewFunctionsBootstrapper::class,
     ],
     Module::COMMANDS           => [

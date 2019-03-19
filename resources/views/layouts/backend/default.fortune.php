@@ -27,22 +27,9 @@
 </head>
 
 <body>
-    <!-- Header Starts -->
-    <!--Start Nav bar -->
-    <nav class="navbar navbar-inverse navbar-fixed-top pmd-navbar pmd-z-depth">
-        <div class="container-fluid">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <a href="javascript:void(0);"
-                   class="btn btn-sm pmd-btn-fab pmd-btn-flat pmd-ripple-effect pull-left margin-r8 pmd-sidebar-toggle"><i
-                            class="material-icons">menu</i></a>
-                <a href="{{! route('dashboard') !}}" class="navbar-brand"></a>
-            </div>
-        </div>
-    </nav><!--End Nav bar -->
-    <!-- Header Ends -->
+    {{! $navbar !}}
 
-    {{! $navigation !}}
+    {{! $primaryNav !}}
 
     <!--content area start-->
     <div id="content" class="pmd-content inner-page">

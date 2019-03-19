@@ -27,11 +27,14 @@ class AdminBuilder implements IViewBuilder
     /** @var AssetManager */
     protected $assets;
 
-    /** @var Navigation|null */
-    protected $navigation;
-
     /** @var IEventDispatcher */
     protected $eventDispatcher;
+
+    /** @var Navigation|null */
+    protected $primaryNav;
+
+    /** @var Navigation|null */
+    protected $navbar;
 
     /**
      * AdminBuilder constructor.
@@ -39,18 +42,21 @@ class AdminBuilder implements IViewBuilder
      * @param ISession         $session
      * @param AssetManager     $assets
      * @param IEventDispatcher $eventDispatcher
-     * @param Navigation|null  $navigation
+     * @param Navigation|null  $primaryNav
+     * @param Navigation|null  $navbar
      */
     public function __construct(
         ISession $session,
         AssetManager $assets,
         IEventDispatcher $eventDispatcher,
-        ?Navigation $navigation
+        ?Navigation $primaryNav,
+        ?Navigation $navbar
     ) {
         $this->session         = $session;
         $this->assets          = $assets;
         $this->eventDispatcher = $eventDispatcher;
-        $this->navigation      = $navigation;
+        $this->primaryNav      = $primaryNav;
+        $this->navbar          = $navbar;
     }
 
     /**
@@ -63,7 +69,8 @@ class AdminBuilder implements IViewBuilder
         $view->setVar('env', getenv(Env::ENV_NAME));
         $view->setVar('title', 'Admin');
         $view->setVar('username', $this->session->get(Session::USERNAME));
-        $view->setVar('navigation', $this->navigation);
+        $view->setVar('primaryNav', $this->primaryNav);
+        $view->setVar('navbar', $this->navbar);
 
         $view->setVar('preHeader', '');
         $view->setVar('header', '');

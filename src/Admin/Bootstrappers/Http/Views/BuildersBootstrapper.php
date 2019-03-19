@@ -40,11 +40,14 @@ class BuildersBootstrapper extends Bootstrapper
                 /** @var IEventDispatcher $eventDispatcher */
                 $eventDispatcher = $container->resolve(IEventDispatcher::class);
 
-                /** @var Navigation $primaryNavigation */
-                $primaryNavigation = $container->resolve(NavConstant::PRIMARY);
+                /** @var Navigation $primaryNav */
+                $primaryNav = $container->resolve(NavConstant::PRIMARY);
+
+                /** @var Navigation $navbar */
+                $navbar = $container->resolve(NavConstant::NAVBAR);
 
                 /** @see AdminBuilder::build() */
-                return (new AdminBuilder($session, $assets, $eventDispatcher, $primaryNavigation))->build($view);
+                return (new AdminBuilder($session, $assets, $eventDispatcher, $primaryNav, $navbar))->build($view);
             }
         );
         $viewFactory->registerBuilder(
@@ -73,7 +76,7 @@ class BuildersBootstrapper extends Bootstrapper
                 $eventDispatcher = $container->resolve(IEventDispatcher::class);
 
                 /** @see AdminBuilder::build() */
-                return (new AdminBuilder($session, $assets, $eventDispatcher, null))->build($view);
+                return (new AdminBuilder($session, $assets, $eventDispatcher, null, null))->build($view);
             }
         );
         $viewFactory->registerBuilder(

@@ -18,19 +18,20 @@ use Opulence\Ioc\IContainer;
 use Opulence\Routing\Urls\UrlGenerator;
 use Opulence\Sessions\ISession;
 
-class PrimaryBootstrapper extends Bootstrapper implements ILazyBootstrapper
+class NavigationBootstrapper extends Bootstrapper implements ILazyBootstrapper
 {
-    /** @var string */
-    protected $name = NavConstant::PRIMARY;
+    /** @var array */
+    protected $bindings = [
+        NavConstant::NAVBAR,
+        NavConstant::PRIMARY
+    ];
 
     /**
      * @return array
      */
     public function getBindings(): array
     {
-        return [
-            $this->name,
-        ];
+        return $this->bindings;
     }
 
     /**
@@ -40,11 +41,13 @@ class PrimaryBootstrapper extends Bootstrapper implements ILazyBootstrapper
      */
     public function registerBindings(IContainer $container)
     {
-        $navigation = $this->createNavigation($container, $this->name);
+        foreach ($this->bindings as $name) {
+            $navigation = $this->createNavigation($container, $name);
 
-        $container->bindInstance($this->name, $navigation);
+            $container->bindInstance($name, $navigation);
 
-        $this->prepareNavigation($container, $navigation);
+            $this->prepareNavigation($container, $navigation);
+        }
     }
 
     /**
