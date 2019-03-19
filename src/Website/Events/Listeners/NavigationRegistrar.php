@@ -6,7 +6,7 @@ namespace AbterPhp\Website\Events\Listeners;
 
 use AbterPhp\Framework\Constant\Navigation as NavConstant;
 use AbterPhp\Framework\Events\NavigationReady;
-use AbterPhp\Framework\Html\ButtonFactory;
+use AbterPhp\Framework\Html\Component\ButtonFactory;
 use AbterPhp\Framework\I18n\ITranslator;
 use AbterPhp\Framework\Navigation\Item;
 use AbterPhp\Framework\Navigation\Navigation;

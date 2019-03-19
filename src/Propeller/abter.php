@@ -2,16 +2,16 @@
 
 namespace AbterPhp\Propeller;
 
+use AbterPhp\Admin\Constant\Event as AdminEvent;
 use AbterPhp\Framework\Constant\Event;
 use AbterPhp\Framework\Constant\Module;
-use AbterPhp\Admin\Constant\Event as AdminEvent;
 
 return [
     Module::IDENTIFIER   => 'AbterPhp\Propeller',
     Module::DEPENDENCIES => ['AbterPhp\Admin'],
     Module::HTTP_BOOTSTRAPPERS => [
         Bootstrappers\Events\ListenersBootstrapper::class,
-        Bootstrappers\Html\ButtonFactoryBootstrapper::class,
+        Bootstrappers\Html\Component\ButtonFactoryBootstrapper::class,
     ],
     Module::EVENTS             => [
         Event::FORM_READY => [

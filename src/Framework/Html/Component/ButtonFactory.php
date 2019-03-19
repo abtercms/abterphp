@@ -2,12 +2,9 @@
 
 declare(strict_types=1);
 
-namespace AbterPhp\Framework\Html;
+namespace AbterPhp\Framework\Html\Component;
 
 use AbterPhp\Framework\Helper\ArrayHelper;
-use AbterPhp\Framework\Html\Component\Button;
-use AbterPhp\Framework\Html\Component\ButtonWithIcon;
-use AbterPhp\Framework\Html\Component\Tag;
 use AbterPhp\Framework\I18n\ITranslator;
 use Opulence\Routing\Urls\UrlException;
 use Opulence\Routing\Urls\UrlGenerator;

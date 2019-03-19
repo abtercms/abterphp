@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace AbterPhp\Propeller\Bootstrappers\Html;
+namespace AbterPhp\Propeller\Bootstrappers\Html\Component;
 
-use AbterPhp\Framework\Html\ButtonFactory;
 use AbterPhp\Framework\Html\Component\Button;
+use AbterPhp\Framework\Html\Component\ButtonFactory;
 use Opulence\Ioc\Bootstrappers\Bootstrapper;
 use Opulence\Ioc\Bootstrappers\ILazyBootstrapper;
 use Opulence\Ioc\IContainer;
