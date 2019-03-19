@@ -36,11 +36,8 @@ class UserBlock extends Item
         $this->translator   = $translator;
 
         $content   = sprintf('%1$s%2$s', $this->getUserBlock(), $this->getDropdown());
-        $attr = [
-            Item::ATTRIBUTE_CLASS => 'dropdown pmd-dropdown pmd-user-info visible-xs visible-md visible-sm visible-lg',
-        ];
 
-        parent::__construct($content, $attr, $translator, static::TAG_LI);
+        parent::__construct($content, [], $translator, static::TAG_LI);
     }
 
     /**

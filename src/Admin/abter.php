@@ -34,8 +34,8 @@ return [
             sprintf('%s@register', Events\Listeners\AuthRegistrar::class),
         ],
         Event::NAVIGATION_READY   => [
-            /** @see Events\Listeners\NavigationRegistrar::register */
-            sprintf('%s@register', Events\Listeners\NavigationRegistrar::class),
+            /** @see Events\Listeners\NavigationRegistrar::handle */
+            sprintf('%s@handle', Events\Listeners\NavigationRegistrar::class),
         ],
         Event::ENTITY_POST_CHANGE => [
             /** @see Events\Listeners\AuthInvalidator::handle() */

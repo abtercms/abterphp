@@ -8,6 +8,7 @@ use AbterPhp\Framework\Authorization\Constant\Role;
 use AbterPhp\Framework\Html\Collection\Collection;
 use AbterPhp\Framework\Html\Component\Button;
 use AbterPhp\Framework\Html\Component\IComponent;
+use AbterPhp\Framework\Html\Component\Tag;
 use AbterPhp\Framework\I18n\ITranslator;
 use Casbin\Enforcer;
 use Opulence\Routing\Urls\UrlGenerator;
@@ -31,6 +32,15 @@ class Navigation extends Collection
     /** @var string */
     protected $username;
 
+    /** @var IComponent|null lazy creation on getPrefix */
+    protected $prefix;
+
+    /** @var IComponent|null lazy creation on getPostfix */
+    protected $postfix;
+
+    /** @var Tag|null */
+    protected $wrapper;
+
     /** @var Enforcer|null */
     protected $enforcer;
 
@@ -49,7 +59,7 @@ class Navigation extends Collection
      * @param string        $username
      * @param array         $attributes
      * @param Enforcer|null $enforcer
-     * @param string|null        $tag
+     * @param string|null   $tag
      */
     public function __construct(
         string $name,
@@ -214,5 +224,88 @@ class Navigation extends Collection
         $this->componentsByWeight[PHP_INT_MAX][] = $value;
 
         parent::offsetSet($offset, $value);
+    }
+
+    /**
+     * @return IComponent
+     */
+    public function getPrefix(): IComponent
+    {
+        if (null === $this->prefix) {
+            $this->prefix = new Collection();
+        }
+
+        return $this->prefix;
+    }
+
+    /**
+     * @param IComponent $prefix
+     *
+     * @return $this
+     */
+    public function setPrefix(IComponent $prefix): Navigation
+    {
+        $this->prefix = $prefix;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getPostfix(): Collection
+    {
+        if (null === $this->postfix) {
+            $this->postfix = new Collection();
+        }
+
+        return $this->postfix;
+    }
+
+    /**
+     * @param Collection $postfix
+     *
+     * @return $this
+     */
+    public function setPostfix(Collection $postfix): Navigation
+    {
+        $this->postfix = $postfix;
+
+        return $this;
+    }
+
+    /**
+     * @return Tag|null
+     */
+    public function getWrapper(): ?Tag
+    {
+        return $this->wrapper;
+    }
+
+    /**
+     * @param Tag $wrapper
+     *
+     * @return $this
+     */
+    public function setWrapper(Tag $wrapper): Navigation
+    {
+        $this->wrapper = $wrapper;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        $prefix = $this->prefix ? (string)$this->prefix : '';
+        $main = parent::__toString();
+        if ($this->wrapper) {
+            $main = (string)$this->wrapper->setContent($main);
+        }
+        $postfix = $this->postfix ? (string)$this->postfix : '';
+
+        return $prefix . $main . $postfix;
     }
 }

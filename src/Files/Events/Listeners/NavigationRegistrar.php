@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace AbterPhp\Files\Events\Listeners;
 
 use AbterPhp\Files\Constant\Routes;
-use AbterPhp\Framework\Constant\Dependencies;
+use AbterPhp\Framework\Constant\Navigation as NavConstant;
 use AbterPhp\Framework\Events\NavigationReady;
 use AbterPhp\Framework\Html\Component\IComponent;
 use AbterPhp\Framework\I18n\ITranslator;
@@ -36,9 +36,9 @@ class NavigationRegistrar
      *
      * @throws \Opulence\Routing\Urls\URLException
      */
-    public function register(NavigationReady $event)
+    public function handle(NavigationReady $event)
     {
-        if ($event->getNavigation()->getName() !== Dependencies::NAVIGATION_PRIMARY) {
+        if ($event->getNavigation()->getName() !== NavConstant::PRIMARY) {
             return;
         }
 

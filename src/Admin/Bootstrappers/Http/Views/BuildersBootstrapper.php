@@ -6,7 +6,7 @@ use AbterPhp\Admin\Http\Views\Builders\AdminBuilder;
 use AbterPhp\Admin\Http\Views\Builders\HtmlErrorBuilder;
 use AbterPhp\Admin\Http\Views\Builders\LoginBuilder;
 use AbterPhp\Framework\Assets\AssetManager;
-use AbterPhp\Framework\Constant\Dependencies;
+use AbterPhp\Framework\Constant\Navigation as NavConstant;
 use AbterPhp\Framework\Navigation\Navigation;
 use Opulence\Events\Dispatchers\IEventDispatcher;
 use Opulence\Ioc\Bootstrappers\Bootstrapper;
@@ -41,7 +41,7 @@ class BuildersBootstrapper extends Bootstrapper
                 $eventDispatcher = $container->resolve(IEventDispatcher::class);
 
                 /** @var Navigation $primaryNavigation */
-                $primaryNavigation = $container->resolve(Dependencies::NAVIGATION_PRIMARY);
+                $primaryNavigation = $container->resolve(NavConstant::PRIMARY);
 
                 /** @see AdminBuilder::build() */
                 return (new AdminBuilder($session, $assets, $eventDispatcher, $primaryNavigation))->build($view);

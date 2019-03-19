@@ -30,8 +30,8 @@ return [
             sprintf('%s@register', Events\Listeners\TemplateRegistrar::class),
         ],
         Event::NAVIGATION_READY      => [
-            /** @see \AbterPhp\Files\Events\Listeners\NavigationRegistrar::register */
-            sprintf('%s@register', Events\Listeners\NavigationRegistrar::class),
+            /** @see \AbterPhp\Files\Events\Listeners\NavigationRegistrar::handle */
+            sprintf('%s@handle', Events\Listeners\NavigationRegistrar::class),
         ],
         Event::DASHBOARD_READY       => [
             /** @see \AbterPhp\Files\Events\Listeners\DashboardRegistrar::handle() */

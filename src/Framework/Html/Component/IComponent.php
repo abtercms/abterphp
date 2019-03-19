@@ -31,6 +31,18 @@ interface IComponent
     public function setAttributes(array $attributes = []): IComponent;
 
     /**
+     * @return string|IComponent
+     */
+    public function getContent();
+
+    /**
+     * @param string|IComponent
+     *
+     * @return $this
+     */
+    public function setContent($content): IComponent;
+
+    /**
      * @return string
      */
     public function __toString(): string;

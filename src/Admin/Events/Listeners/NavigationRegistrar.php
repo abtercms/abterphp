@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace AbterPhp\Admin\Events\Listeners;
 
 use AbterPhp\Admin\Constant\Routes;
-use AbterPhp\Framework\Constant\Dependencies;
+use AbterPhp\Framework\Constant\Navigation as NavConstant;
 use AbterPhp\Framework\Events\NavigationReady;
 use AbterPhp\Framework\Html\Component\IComponent;
 use AbterPhp\Framework\I18n\ITranslator;
@@ -36,15 +36,13 @@ class NavigationRegistrar
      *
      * @throws \Opulence\Routing\Urls\URLException
      */
-    public function register(NavigationReady $event)
+    public function handle(NavigationReady $event)
     {
-        if ($event->getNavigation()->getName() !== Dependencies::NAVIGATION_PRIMARY) {
+        if ($event->getNavigation()->getName() !== NavConstant::PRIMARY) {
             return;
         }
 
         $navigation = $event->getNavigation();
-
-        $navigation->appendToAttribute(Navigation::ATTRIBUTE_CLASS, 'nav pmd-sidebar-nav');
 
         $this->addUser($navigation);
         $this->addUserGroup($navigation);

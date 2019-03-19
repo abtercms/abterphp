@@ -42,14 +42,7 @@
     </nav><!--End Nav bar -->
     <!-- Header Ends -->
 
-    <!-- Sidebar Starts -->
-    <div class="pmd-sidebar-overlay"></div>
-
-    <!-- Left sidebar -->
-    <aside class="pmd-sidebar sidebar-default pmd-sidebar-slide-push pmd-sidebar-left pmd-sidebar-open bg-fill-darkblue sidebar-with-icons" role="navigation">
-        {{! $navigation !}}
-    </aside><!-- End Left sidebar -->
-    <!-- Sidebar Ends -->
+    {{! $navigation !}}
 
     <!--content area start-->
     <div id="content" class="pmd-content inner-page">

@@ -11,6 +11,10 @@
 
     <link rel="shortcut icon" type="image/png" href="/favicon.png">
 
+    {{! $preHeader !}}
+    {{! $header !}}
+    {{! $postHeader !}}
+
     {{! assetCss('admin-layout') !}}
     <% if ($page) %>
     {{! assetCss($page) !}}
@@ -24,6 +28,11 @@
 
 <body class="body-custom">
     <% show("content") %>
+
+    <!-- Optional JavaScript -->
+    {{! $preFooter !}}
+    {{! $footer !}}
+    {{! $postFooter !}}
 
     <!-- Scripts Starts -->
     {{! assetJs('admin-layout-footer') !}}

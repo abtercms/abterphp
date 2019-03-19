@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace AbterPhp\Framework\Events\Listeners;
 
-use AbterPhp\Framework\Constant\Dependencies;
+use AbterPhp\Framework\Constant\Navigation;
 use AbterPhp\Framework\Events\NavigationReady;
 use AbterPhp\Framework\I18n\ITranslator;
 use AbterPhp\Framework\Navigation\UserBlock;
@@ -32,9 +32,9 @@ class NavigationRegistrar
     /**
      * @param NavigationReady $event
      */
-    public function register(NavigationReady $event)
+    public function handle(NavigationReady $event)
     {
-        if ($event->getNavigation()->getName() !== Dependencies::NAVIGATION_PRIMARY) {
+        if ($event->getNavigation()->getName() !== Navigation::PRIMARY) {
             return;
         }
         $component = new UserBlock($this->session, $this->translator, $this->urlGenerator);

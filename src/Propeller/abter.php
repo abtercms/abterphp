@@ -21,6 +21,10 @@ return [
             /** @see \AbterPhp\Propeller\Events\Listeners\GridDecorator::handle() */
             sprintf('%s@handle', Events\Listeners\GridDecorator::class),
         ],
+        Event::NAVIGATION_READY => [
+            /** @see \AbterPhp\Propeller\Events\Listeners\NavigationRegistrar::register() */
+            sprintf('%s@handle', Events\Listeners\NavigationRegistrar::class),
+        ],
         AdminEvent::ADMIN_READY  => [
             /** @see \AbterPhp\Propeller\Events\Listeners\AdminDecorator::handle() */
             sprintf('%s@handle', Events\Listeners\AdminDecorator::class),

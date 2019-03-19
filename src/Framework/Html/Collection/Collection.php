@@ -43,6 +43,28 @@ class Collection extends Tag implements ICollection
         parent::__construct('', $attributes, $translator, $tag);
     }
 
+    /**
+     * @return string|IComponent
+     */
+    public function getContent()
+    {
+        return $this->__toString();
+    }
+
+    /**
+     * @param string|IComponent
+     *
+     * @return $this
+     */
+    public function setContent($content): IComponent
+    {
+        $this->components = [];
+
+        $this[] = $content;
+
+        return $this;
+    }
+
     public function rewind()
     {
         $this->position = 0;

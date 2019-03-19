@@ -19,8 +19,11 @@ class Tag implements IComponent
     const TAG_P   = 'p';
 
     const ATTRIBUTE_CLASS = 'class';
+    const ATTRIBUTE_ROLE  = 'role';
     const ATTRIBUTE_ID    = 'id';
     const ATTRIBUTE_HREF  = 'href';
+
+    const ROLE_NAVIGATION = 'navigation';
 
     const ERROR_MSG_INVALID_CONTENT = 'content must be a string or an instance of %s';
 
@@ -50,7 +53,9 @@ class Tag implements IComponent
         ?ITranslator $translator = null,
         ?string $tag = null
     ) {
-        $this->setContent($content);
+        if ($content) {
+            $this->setContent($content);
+        }
         $this->mergeAttributes($attributes);
         $this->setTag($tag);
         $this->setTranslator($translator);

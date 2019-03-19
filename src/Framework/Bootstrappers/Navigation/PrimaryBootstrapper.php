@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace AbterPhp\Framework\Bootstrappers\Navigation;
 
-use AbterPhp\Framework\Constant\Dependencies;
+use AbterPhp\Framework\Constant\Navigation as NavConstant;
 use AbterPhp\Framework\Constant\Event;
 use AbterPhp\Framework\Constant\Session;
 use AbterPhp\Framework\Events\NavigationReady;
@@ -21,7 +21,7 @@ use Opulence\Sessions\ISession;
 class PrimaryBootstrapper extends Bootstrapper implements ILazyBootstrapper
 {
     /** @var string */
-    protected $name = Dependencies::NAVIGATION_PRIMARY;
+    protected $name = NavConstant::PRIMARY;
 
     /**
      * @return array
