@@ -4,18 +4,13 @@ declare(strict_types=1);
 
 namespace AbterPhp\Framework\Form\Element;
 
+use AbterPhp\Framework\Constant\Html5;
 use AbterPhp\Framework\Form\Component\Option;
-use AbterPhp\Framework\Html\Collection\Collection;
-use AbterPhp\Framework\I18n\ITranslator;
+use AbterPhp\Framework\Html\Component;
 
-class Select extends Collection implements IElement
+class Select extends Component implements IElement
 {
-    const DEFAULT_TAG = 'select';
-
-    const ATTRIBUTE_NAME     = 'name';
-    const ATTRIBUTE_VALUE    = 'value';
-    const ATTRIBUTE_MULTIPLE = 'multiple';
-    const ATTRIBUTE_SIZE     = 'size';
+    const DEFAULT_TAG = Html5::TAG_SELECT;
 
     /** @var Option[] */
     protected $components = [];
@@ -23,46 +18,28 @@ class Select extends Collection implements IElement
     /** @var string */
     protected $componentClass = Option::class;
 
-    /** @var array */
-    protected $attributes = [
-        self::ATTRIBUTE_CLASS => 'form-control',
-    ];
-
-    /** @var string */
-    protected $value = '';
-
     /**
      * Select constructor.
      *
-     * @param string           $inputId
-     * @param string           $name
-     * @param bool             $multiple
-     * @param array            $attributes
-     * @param ITranslator|null $translator
-     * @param string|null      $tag
+     * @param string      $inputId
+     * @param string      $name
+     * @param string[]    $intents
+     * @param string[][]  $attributes
+     * @param string|null $tag
      */
     public function __construct(
         string $inputId,
         string $name,
-        bool $multiple = false,
+        array $intents = [],
         array $attributes = [],
-        ?ITranslator $translator = null,
         ?string $tag = null
     ) {
         if ($inputId) {
-            $attributes[static::ATTRIBUTE_ID] = $inputId;
+            $attributes[Html5::ATTR_ID] = $inputId;
         }
-        $attributes[static::ATTRIBUTE_NAME] = $name;
-        if (array_key_exists(static::ATTRIBUTE_VALUE, $attributes)) {
-            $this->value = $attributes[static::ATTRIBUTE_VALUE];
-            unset($attributes[static::ATTRIBUTE_VALUE]);
-        }
+        $attributes[Html5::ATTR_NAME] = $name;
 
-        if ($multiple) {
-            $attributes[static::ATTRIBUTE_MULTIPLE] = null;
-        }
-
-        parent::__construct($attributes, $translator, $tag);
+        parent::__construct(null, $intents, $attributes, $tag);
     }
 
     /**
@@ -70,9 +47,30 @@ class Select extends Collection implements IElement
      *
      * @return $this
      */
-    public function setValue(string $value): IElement
+    public function setValue($value): IElement
     {
-        $this->value = $value;
+        if (!is_string($value)) {
+            throw new \InvalidArgumentException();
+        }
+
+        return $this->setValueInner([$value]);
+    }
+
+    /**
+     * @param string[] $value
+     *
+     * @return $this
+     */
+    public function setValueInner(array $values): IElement
+    {
+        /** @var Option $option */
+        foreach ($this->nodes as $option) {
+            if (in_array($option->getValue(), $values, true)) {
+                $option->setAttribute(Html5::ATTR_SELECTED, null);
+            } elseif ($option->hasAttribute(Html5::ATTR_SELECTED)) {
+                $option->unsetAttribute(Html5::ATTR_SELECTED);
+            }
+        }
 
         return $this;
     }
@@ -82,10 +80,10 @@ class Select extends Collection implements IElement
      */
     public function getName(): string
     {
-        if (array_key_exists(static::ATTRIBUTE_NAME, $this->attributes)) {
-            return (string)$this->attributes[static::ATTRIBUTE_NAME];
+        if (!$this->hasAttribute(Html5::ATTR_NAME)) {
+            return '';
         }
 
-        return '';
+        return $this->getAttribute(Html5::ATTR_NAME);
     }
 }

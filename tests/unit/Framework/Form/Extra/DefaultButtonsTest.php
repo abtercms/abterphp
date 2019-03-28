@@ -13,18 +13,14 @@ class DefaultButtonsTest extends \PHPUnit\Framework\TestCase
      */
     public function renderProvider()
     {
+        $simpleExpected = [
+            "<div><button name=\"continue\" type=\"submit\" value=\"0\">framework:save</button>",
+            "<button name=\"continue\" type=\"submit\" value=\"1\">framework:saveAndEdit</button>",
+            "<a href=\"/url\">framework:backToGrid</a></div>",
+        ];
+
         return [
-            'simple' => [
-                '/url',
-                [],
-                [],
-                null,
-                [
-                    '/\<button.*name="continue" type="submit" value="0"/Ums',
-                    '/\<button.*name="continue" type="submit" value="1"/Ums',
-                    '/\<a.*href="\/url"/Ums',
-                ],
-            ],
+            'simple' => ['/url', [], [], null, implode("\n", $simpleExpected)],
         ];
     }
 
@@ -35,14 +31,14 @@ class DefaultButtonsTest extends \PHPUnit\Framework\TestCase
      * @param array       $attributes
      * @param string[]    $translations
      * @param string|null $tag
-     * @param string[]    $regexps
+     * @param string      $expected
      */
     public function testRender(
         string $showUrl,
         array $attributes,
         array $translations,
         ?string $tag,
-        array $regexps
+        string $expected
     ) {
         $sut = $this->createElement($showUrl, $attributes, $translations, $tag);
 
@@ -50,9 +46,7 @@ class DefaultButtonsTest extends \PHPUnit\Framework\TestCase
         $repeatedResult = (string)$sut;
         $this->assertSame($actualResult, $repeatedResult);
 
-        foreach ($regexps as $piece) {
-            $this->assertRegExp($piece, $actualResult);
-        }
+        $this->assertSame($expected, $actualResult);
     }
 
     /**
@@ -71,6 +65,10 @@ class DefaultButtonsTest extends \PHPUnit\Framework\TestCase
     ): DefaultButtons {
         $translatorMock = MockTranslatorFactory::createSimpleTranslator($this, $translations);
 
-        return new DefaultButtons($showUrl, $translatorMock, $attributes, $tag);
+        $defaultButtons = new DefaultButtons($showUrl, [], $attributes, $tag);
+
+        $defaultButtons->setTranslator($translatorMock);
+
+        return $defaultButtons;
     }
 }

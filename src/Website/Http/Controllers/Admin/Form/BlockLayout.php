@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace AbterPhp\Website\Http\Controllers\Admin\Form;
 
+use AbterPhp\Framework\Domain\Entities\IStringerEntity;
 use AbterPhp\Framework\Http\Controllers\Admin\FormAbstract;
 use AbterPhp\Framework\I18n\ITranslator;
 use AbterPhp\Framework\Session\FlashService;
-use AbterPhp\Website\Form\Factory\BlockLayout as FormFactory;
 use AbterPhp\Website\Domain\Entities\BlockLayout as Entity;
-use AbterPhp\Framework\Domain\Entities\IStringerEntity;
+use AbterPhp\Website\Form\Factory\BlockLayout as FormFactory;
 use AbterPhp\Website\Orm\BlockLayoutRepo as Repo;
+use Opulence\Events\Dispatchers\IEventDispatcher;
 use Opulence\Routing\Urls\UrlGenerator;
 use Opulence\Sessions\ISession;
 
@@ -28,12 +29,13 @@ class BlockLayout extends FormAbstract
     /**
      * Layout constructor.
      *
-     * @param FlashService $flashService
-     * @param ITranslator  $translator
-     * @param UrlGenerator $urlGenerator
-     * @param Repo         $repo
-     * @param ISession     $session
-     * @param FormFactory  $formFactory
+     * @param FlashService     $flashService
+     * @param ITranslator      $translator
+     * @param UrlGenerator     $urlGenerator
+     * @param Repo             $repo
+     * @param ISession         $session
+     * @param FormFactory      $formFactory
+     * @param IEventDispatcher $eventDispatcher
      */
     public function __construct(
         FlashService $flashService,
@@ -41,9 +43,10 @@ class BlockLayout extends FormAbstract
         UrlGenerator $urlGenerator,
         Repo $repo,
         ISession $session,
-        FormFactory $formFactory
+        FormFactory $formFactory,
+        IEventDispatcher $eventDispatcher
     ) {
-        parent::__construct($flashService, $translator, $urlGenerator, $repo, $session, $formFactory);
+        parent::__construct($flashService, $translator, $urlGenerator, $repo, $session, $formFactory, $eventDispatcher);
     }
 
     /**

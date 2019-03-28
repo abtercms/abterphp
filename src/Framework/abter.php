@@ -48,8 +48,8 @@ return [
     ],
     Module::EVENTS             => [
         Event::NAVIGATION_READY => [
-            /** @see \AbterPhp\Framework\Events\Listeners\NavigationRegistrar::handle */
-            sprintf('%s@handle', Events\Listeners\NavigationRegistrar::class),
+            /** @see \AbterPhp\Framework\Events\Listeners\NavigationBuilder::handle */
+            sprintf('%s@handle', Events\Listeners\NavigationBuilder::class),
         ],
     ],
     Module::MIDDLEWARE             => [

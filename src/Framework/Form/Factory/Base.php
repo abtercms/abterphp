@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace AbterPhp\Framework\Form\Factory;
 
+use AbterPhp\Framework\Constant\Html5;
 use AbterPhp\Framework\Form\Element\Input;
 use AbterPhp\Framework\Form\Extra\DefaultButtons;
 use AbterPhp\Framework\Form\Form;
+use AbterPhp\Framework\Html\IComponent;
 use AbterPhp\Framework\I18n\ITranslator;
 use Opulence\Framework\Http\CsrfTokenChecker;
 use Opulence\Http\Requests\RequestMethods;
@@ -39,22 +41,28 @@ abstract class Base implements IFormFactory
     }
 
     /**
-     * @param string $action
-     * @param string $method
-     * @param bool   $isMultipart
-     * @param array  $attributes
+     * @param string     $action
+     * @param string     $method
+     * @param bool       $isMultipart
+     * @param string[]   $intents
+     * @param string[][] $attributes
      *
      * @return $this
      */
-    public function createForm(string $action, string $method, bool $isMultipart = false, $attributes = []): Base
-    {
+    public function createForm(
+        string $action,
+        string $method,
+        bool $isMultipart = false,
+        $intents = [],
+        $attributes = []
+    ): Base {
         if ($isMultipart) {
-            $attributes[Form::ATTRIBUTE_ENCTYPE] = Form::ENCTYPE_MULTIPART;
+            $attributes[Html5::ATTR_ENCTYPE] = [Form::ENCTYPE_MULTIPART];
         }
 
         $formMethod = $method == RequestMethods::GET ? $method : RequestMethods::POST;
 
-        $this->form = new Form($action, $formMethod, $attributes);
+        $this->form = new Form($action, $formMethod, $intents, $attributes);
 
         $this->addHttpMethod($method);
 
@@ -70,7 +78,8 @@ abstract class Base implements IFormFactory
             '',
             Input::NAME_HTTP_METHOD,
             $method,
-            [Input::ATTRIBUTE_TYPE => Input::TYPE_HIDDEN]
+            [],
+            [Html5::ATTR_TYPE => Input::TYPE_HIDDEN]
         );
     }
 
@@ -82,9 +91,9 @@ abstract class Base implements IFormFactory
         $name  = CsrfTokenChecker::TOKEN_INPUT_NAME;
         $value = (string)$this->session->get($name);
 
-        $attributes[Input::ATTRIBUTE_TYPE] = Input::TYPE_HIDDEN;
+        $attributes[Html5::ATTR_TYPE] = Input::TYPE_HIDDEN;
 
-        $this->form[] = new Input($name, $name, $value, $attributes, $this->translator);
+        $this->form[] = new Input($name, $name, $value, [], $attributes);
 
         return $this;
     }
@@ -96,7 +105,7 @@ abstract class Base implements IFormFactory
      */
     protected function addDefaultButtons(string $showUrl): Base
     {
-        $this->form[] = new DefaultButtons($showUrl, $this->translator);
+        $this->form[] = new DefaultButtons($showUrl);
 
         return $this;
     }

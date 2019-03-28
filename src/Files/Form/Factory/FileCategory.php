@@ -7,9 +7,11 @@ namespace AbterPhp\Files\Form\Factory;
 use AbterPhp\Admin\Domain\Entities\UserGroup;
 use AbterPhp\Admin\Orm\UserGroupRepo;
 use AbterPhp\Files\Domain\Entities\FileCategory as Entity;
+use AbterPhp\Framework\Constant\Html5;
 use AbterPhp\Framework\Form\Component\Option;
 use AbterPhp\Framework\Form\Container\FormGroup;
 use AbterPhp\Framework\Form\Element\Input;
+use AbterPhp\Framework\Form\Element\MultiSelect;
 use AbterPhp\Framework\Form\Element\Select;
 use AbterPhp\Framework\Form\Factory\Base;
 use AbterPhp\Framework\Form\Factory\IFormFactory;
@@ -80,7 +82,8 @@ class FileCategory extends Base
             'identifier',
             'identifier',
             $entity->getIdentifier(),
-            [Input::ATTRIBUTE_TYPE => Input::TYPE_HIDDEN]
+            [],
+            [Html5::ATTR_TYPE => Input::TYPE_HIDDEN]
         );
 
         return $this;
@@ -93,12 +96,8 @@ class FileCategory extends Base
      */
     protected function addName(Entity $entity): FileCategory
     {
-        $input = new Input(
-            'name',
-            'name',
-            $entity->getName()
-        );
-        $label = new Label('name', 'files:fileCategoryName', [], $this->translator);
+        $input = new Input('name', 'name', $entity->getName());
+        $label = new Label('name', 'files:fileCategoryName');
 
         $this->form[] = new FormGroup($input, $label);
 
@@ -173,14 +172,14 @@ class FileCategory extends Base
     protected function createUserGroupSelect(array $options): Select
     {
         $attributes = [
-            Select::ATTRIBUTE_SIZE => $this->getMultiSelectSize(
+            Html5::ATTR_SIZE => $this->getMultiSelectSize(
                 count($options),
                 static::MULTISELECT_MIN_SIZE,
                 static::MULTISELECT_MAX_SIZE
             ),
         ];
 
-        $select = new Select('user_group_ids', 'user_group_ids[]', true, $attributes);
+        $select = new MultiSelect('user_group_ids', 'user_group_ids[]', [], $attributes);
 
         foreach ($options as $option) {
             $select[] = $option;
@@ -194,7 +193,7 @@ class FileCategory extends Base
      */
     protected function createUserGroupLabel(): Label
     {
-        return new Label('user_group_ids', 'files:fileCategoryUserGroups', [], $this->translator);
+        return new Label('user_group_ids', 'files:fileCategoryUserGroups');
     }
 
     /**

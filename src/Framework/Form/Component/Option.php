@@ -4,43 +4,50 @@ declare(strict_types=1);
 
 namespace AbterPhp\Framework\Form\Component;
 
-use AbterPhp\Framework\Html\Component\IComponent;
-use AbterPhp\Framework\Html\Component\Tag;
-use AbterPhp\Framework\I18n\ITranslator;
+use AbterPhp\Framework\Constant\Html5;
+use AbterPhp\Framework\Html\Component;
+use AbterPhp\Framework\Html\INode;
 
-class Option extends Tag
+class Option extends Component
 {
-    const DEFAULT_TAG = self::TAG_OPTION;
-
-    const TAG_OPTION = 'option';
-
-    const ATTRIBUTE_VALUE    = 'value';
-    const ATTRIBUTE_SELECTED = 'selected';
+    const DEFAULT_TAG = Html5::TAG_OPTION;
 
     /**
-     * Tag constructor.
+     * Option constructor.
      *
-     * @param string            $value
-     * @param string|IComponent $content
-     * @param bool              $isSelected
-     * @param string[]          $attributes
-     * @param ITranslator|null  $translator
-     * @param string|null       $tag
+     * @param string                    $value
+     * @param INode[]|INode|string|null $content
+     * @param bool                      $isSelected
+     * @param string[]                  $intents
+     * @param string[][]                $attributes
+     * @param string|null               $tag
      */
     public function __construct(
         string $value,
         $content,
         bool $isSelected = false,
+        array $intents = [],
         array $attributes = [],
-        ?ITranslator $translator = null,
         ?string $tag = null
     ) {
-        $this->attributes[static::ATTRIBUTE_VALUE] = $value;
+        $attributes[Html5::ATTR_VALUE] = $value;
 
         if ($isSelected) {
-            $this->attributes[static::ATTRIBUTE_SELECTED] = null;
+            $attributes[Html5::ATTR_SELECTED] = null;
         }
 
-        parent::__construct($content, $attributes, $translator, $tag);
+        parent::__construct($content, $intents, $attributes, $tag);
+    }
+
+    /**
+     * @return string
+     */
+    public function getValue(): string
+    {
+        if (!$this->hasAttribute(Html5::ATTR_VALUE)) {
+            return '';
+        }
+
+        return $this->getAttribute(Html5::ATTR_VALUE);
     }
 }

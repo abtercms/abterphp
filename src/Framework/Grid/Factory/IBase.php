@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace AbterPhp\Framework\Grid\Factory;
 
-use AbterPhp\Framework\Grid\Collection\Filters;
+use AbterPhp\Framework\Grid\Component\Filters;
 use AbterPhp\Framework\Grid\IGrid;
 
 interface IBase

@@ -30,20 +30,20 @@ return [
     ],
     Module::EVENTS             => [
         Event::AUTH_READY         => [
-            /** @see Events\Listeners\AuthRegistrar::register */
-            sprintf('%s@register', Events\Listeners\AuthRegistrar::class),
+            /** @see Events\Listeners\AuthInitializer::handle */
+            sprintf('%s@handle', Events\Listeners\AuthInitializer::class),
         ],
         Event::NAVIGATION_READY   => [
-            /** @see Events\Listeners\NavigationRegistrar::handle */
-            sprintf('%s@handle', Events\Listeners\NavigationRegistrar::class),
+            /** @see Events\Listeners\NavigationBuilder::handle */
+            sprintf('%s@handle', Events\Listeners\NavigationBuilder::class),
         ],
         Event::ENTITY_POST_CHANGE => [
-            /** @see Events\Listeners\AuthInvalidator::handle() */
+            /** @see Events\Listeners\AuthInvalidator::handle */
             sprintf('%s@handle', Events\Listeners\AuthInvalidator::class),
         ],
         Event::DASHBOARD_READY    => [
-            /** @see Events\Listeners\DashboardRegistrar::handle() */
-            sprintf('%s@handle', Events\Listeners\DashboardRegistrar::class),
+            /** @see Events\Listeners\DashboardRegistrar::build */
+            sprintf('%s@handle', Events\Listeners\DashboardBuilder::class),
         ],
     ],
     Module::MIDDLEWARE         => [

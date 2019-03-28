@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace AbterPhp\Framework\Grid\Cell;
 
-use AbterPhp\Framework\Helper\ArrayHelper;
-use AbterPhp\Framework\Html\Component\ComponentTest;
 use AbterPhp\Framework\Html\Component\StubAttributeFactory;
+use AbterPhp\Framework\Html\ComponentTest;
+use AbterPhp\Framework\Html\Helper\ArrayHelper;
+use AbterPhp\Framework\Html\INode;
 use AbterPhp\Framework\I18n\MockTranslatorFactory;
 
 class CellTest extends ComponentTest
@@ -16,35 +17,30 @@ class CellTest extends ComponentTest
      */
     public function renderProvider()
     {
-        $defaultAttributes = [Cell::ATTRIBUTE_CLASS => 'td-a'];
-
-        $extraAttributes = StubAttributeFactory::createAttributes();
-
-        $combinedAttributes = ArrayHelper::mergeAttributes($extraAttributes, $defaultAttributes);
-
-        $str = ArrayHelper::toAttributes($combinedAttributes);
+        $attribs = StubAttributeFactory::createAttributes();
+        $str     = ArrayHelper::toAttributes($attribs);
 
         return [
-            'simple'               => ['ABC', 'a', [], null, null, "<td class=\"td-a\">ABC</td>"],
-            'with attributes'      => ['ABC', 'a', $extraAttributes, null, null, "<td$str>ABC</td>"],
-            'missing translations' => ['ABC', 'a', [], [], null, "<td class=\"td-a\">ABC</td>"],
-            'custom tag'           => ['ABC', 'a', [], null, 'mytd', "<mytd class=\"mytd-a\">ABC</mytd>"],
-            'with translations'    => ['ABC', 'a', [], ['ABC' => 'CBA'], null, "<td class=\"td-a\">CBA</td>"],
+            'simple'               => ['ABC', 'a', [], null, null, "<td>ABC</td>"],
+            'with attributes'      => ['ABC', 'a', $attribs, null, null, "<td$str>ABC</td>"],
+            'missing translations' => ['ABC', 'a', [], [], null, "<td>ABC</td>"],
+            'custom tag'           => ['ABC', 'a', [], null, 'mytd', "<mytd>ABC</mytd>"],
+            'with translations'    => ['ABC', 'a', [], ['ABC' => 'CBA'], null, "<td>CBA</td>"],
         ];
     }
 
     /**
      * @dataProvider renderProvider
      *
-     * @param string      $content
-     * @param string      $group
-     * @param array       $attributes
-     * @param array|null  $translations
-     * @param string|null $tag
-     * @param string      $expectedResult
+     * @param INode[]|INode|string|null $content
+     * @param string                    $group
+     * @param array                     $attributes
+     * @param array|null                $translations
+     * @param string|null               $tag
+     * @param string                    $expectedResult
      */
     public function testRender(
-        string $content,
+        $content,
         string $group,
         array $attributes,
         ?array $translations,
@@ -61,23 +57,25 @@ class CellTest extends ComponentTest
     }
 
     /**
-     * @param string      $content
-     * @param string      $group
-     * @param array       $attributes
-     * @param array|null  $translations
-     * @param string|null $tag
+     * @param INode[]|INode|string|null $content
+     * @param string                    $group
+     * @param array                     $attributes
+     * @param array|null                $translations
+     * @param string|null               $tag
      *
      * @return Cell
      */
     protected function createElement(
-        string $content,
+        $content,
         string $group,
         array $attributes,
         ?array $translations,
         ?string $tag
     ): Cell {
-        $translatorMock = MockTranslatorFactory::createSimpleTranslator($this, $translations);
+        $cell = new Cell($content, $group, [], $attributes, $tag);
 
-        return new Cell($content, $group, $attributes, $translatorMock, $tag);
+        $cell->setTranslator(MockTranslatorFactory::createSimpleTranslator($this, $translations));
+
+        return $cell;
     }
 }

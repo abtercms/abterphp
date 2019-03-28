@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace AbterPhp\Framework\Grid\Filter;
 
-use AbterPhp\Framework\Html\Component\IComponent;
+use AbterPhp\Framework\Form\Label\Label;
+use AbterPhp\Framework\Html\IComponent;
 
 interface IFilter extends IComponent
 {
@@ -29,4 +30,14 @@ interface IFilter extends IComponent
      * @return string
      */
     public function getQueryPart(): string;
+
+    /**
+     * @return IComponent
+     */
+    public function getWrapper(): IComponent;
+
+    /**
+     * @return Label|null
+     */
+    public function getLabel(): ?Label;
 }

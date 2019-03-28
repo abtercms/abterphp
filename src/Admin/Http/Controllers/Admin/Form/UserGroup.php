@@ -11,6 +11,7 @@ use AbterPhp\Framework\Domain\Entities\IStringerEntity;
 use AbterPhp\Framework\Http\Controllers\Admin\FormAbstract;
 use AbterPhp\Framework\I18n\ITranslator;
 use AbterPhp\Framework\Session\FlashService;
+use Opulence\Events\Dispatchers\IEventDispatcher;
 use Opulence\Routing\Urls\UrlGenerator;
 use Opulence\Sessions\ISession;
 
@@ -31,12 +32,13 @@ class UserGroup extends FormAbstract
     /**
      * UserGroup constructor.
      *
-     * @param FlashService $flashService
-     * @param ITranslator  $translator
-     * @param UrlGenerator $urlGenerator
-     * @param Repo         $repo
-     * @param ISession     $session
-     * @param FormFactory  $formFactory
+     * @param FlashService     $flashService
+     * @param ITranslator      $translator
+     * @param UrlGenerator     $urlGenerator
+     * @param Repo             $repo
+     * @param ISession         $session
+     * @param FormFactory      $formFactory
+     * @param IEventDispatcher $eventDispatcher
      */
     public function __construct(
         FlashService $flashService,
@@ -44,9 +46,10 @@ class UserGroup extends FormAbstract
         UrlGenerator $urlGenerator,
         Repo $repo,
         ISession $session,
-        FormFactory $formFactory
+        FormFactory $formFactory,
+        IEventDispatcher $eventDispatcher
     ) {
-        parent::__construct($flashService, $translator, $urlGenerator, $repo, $session, $formFactory);
+        parent::__construct($flashService, $translator, $urlGenerator, $repo, $session, $formFactory, $eventDispatcher);
     }
 
     /**

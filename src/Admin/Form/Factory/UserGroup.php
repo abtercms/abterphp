@@ -7,9 +7,11 @@ namespace AbterPhp\Admin\Form\Factory;
 use AbterPhp\Admin\Domain\Entities\AdminResource;
 use AbterPhp\Admin\Domain\Entities\UserGroup as Entity;
 use AbterPhp\Admin\Orm\AdminResourceRepo;
+use AbterPhp\Framework\Constant\Html5;
 use AbterPhp\Framework\Form\Component\Option;
 use AbterPhp\Framework\Form\Container\FormGroup;
 use AbterPhp\Framework\Form\Element\Input;
+use AbterPhp\Framework\Form\Element\MultiSelect;
 use AbterPhp\Framework\Form\Element\Select;
 use AbterPhp\Framework\Form\Factory\Base;
 use AbterPhp\Framework\Form\Factory\IFormFactory;
@@ -81,7 +83,7 @@ class UserGroup extends Base
             'identifier',
             $entity->getIdentifier()
         );
-        $label = new Label('body', 'admin:userGroupIdentifier', [], $this->translator);
+        $label = new Label('body', 'admin:userGroupIdentifier');
 
         $this->form[] = new FormGroup($input, $label);
 
@@ -100,7 +102,7 @@ class UserGroup extends Base
             'name',
             $entity->getName()
         );
-        $label = new Label('body', 'admin:userGroupName', [], $this->translator);
+        $label = new Label('body', 'admin:userGroupName');
 
         $this->form[] = new FormGroup($input, $label);
 
@@ -178,17 +180,17 @@ class UserGroup extends Base
     protected function createAdminResourceSelect(array $options): Select
     {
         $attributes = [
-            Select::ATTRIBUTE_SIZE => $this->getMultiSelectSize(
+            Html5::ATTR_SIZE => $this->getMultiSelectSize(
                 count($options),
                 static::MULTISELECT_MIN_SIZE,
                 static::MULTISELECT_MAX_SIZE
             ),
         ];
 
-        $select = new Select(
+        $select = new MultiSelect(
             'admin_resource_ids',
             'admin_resource_ids[]',
-            true,
+            [],
             $attributes
         );
 
@@ -204,7 +206,7 @@ class UserGroup extends Base
      */
     protected function createAdminResourceLabel(): Label
     {
-        return new Label('admin_resource_ids', 'admin:adminResources', [], $this->translator);
+        return new Label('admin_resource_ids', 'admin:adminResources');
     }
 
     /**

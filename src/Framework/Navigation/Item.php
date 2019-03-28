@@ -4,32 +4,30 @@ declare(strict_types=1);
 
 namespace AbterPhp\Framework\Navigation;
 
-use AbterPhp\Framework\Html\Component\Tag;
-use AbterPhp\Framework\Html\Component\IComponent;
-use AbterPhp\Framework\I18n\ITranslator;
+use AbterPhp\Framework\Constant\Html5;
+use AbterPhp\Framework\Html\Component;
+use AbterPhp\Framework\Html\INode;
 
-class Item extends Tag
+class Item extends Component
 {
-    const DEFAULT_TAG = self::TAG_LI;
+    const DEFAULT_TAG = Html5::TAG_LI;
 
-    const TAG_LI = 'li';
-
-    const ATTRIBUTE_HREF = 'href';
+    const INTENT_DROPDOWN = 'dropdown';
 
     /**
      * Item constructor.
      *
-     * @param string|IComponent $content
-     * @param array             $attributes
-     * @param ITranslator|null  $translator
-     * @param string|null       $tag
+     * @param INode[]|INode|string|null $content
+     * @param string[]                  $intents
+     * @param array                     $attributes
+     * @param string|null               $tag
      */
     public function __construct(
-        $content = '',
+        $content = null,
+        $intents = [],
         $attributes = [],
-        ?ITranslator $translator = null,
         ?string $tag = null
     ) {
-        parent::__construct($content, $attributes, $translator, $tag);
+        parent::__construct($content, $intents, $attributes, $tag);
     }
 }

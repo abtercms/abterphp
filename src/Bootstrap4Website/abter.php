@@ -13,7 +13,7 @@ return [
     ],
     Module::EVENTS             => [
         WebsiteEvent::WEBSITE_READY  => [
-            /** @see \AbterPhp\Bootstrap4Website\Events\Listeners\WebsiteDecorator::handle() */
+            /** @see \AbterPhp\Bootstrap4Website\Events\Listeners\WebsiteDecorator::handle */
             sprintf('%s@handle', Events\Listeners\WebsiteDecorator::class),
         ],
     ],

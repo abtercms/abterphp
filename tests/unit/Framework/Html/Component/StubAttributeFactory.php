@@ -2,8 +2,18 @@
 
 namespace AbterPhp\Framework\Html\Component;
 
+use AbterPhp\Framework\Html\Helper\ArrayHelper;
+
 class StubAttributeFactory
 {
+    const ATTRIBUTE_FOO = 'foo';
+    const ATTRIBUTE_BAR = 'bar';
+    const ATTRIBUTE_BAZ = 'baz';
+
+    const VALUE_FOO = 'foo';
+    const VALUE_BAZ = 'baz';
+    const VALUE_BAR_BAZ = 'bar baz';
+
     /**
      * @param array $extraAttributes
      *
@@ -12,19 +22,11 @@ class StubAttributeFactory
     public static function createAttributes(array $extraAttributes = []): array
     {
         $attributes = [
-            TagTest::ATTRIBUTE_FOO => [TagTest::VALUE_FOO, TagTest::VALUE_BAZ],
-            TagTest::ATTRIBUTE_BAR => TagTest::VALUE_BAR_BAZ,
-            Tag::ATTRIBUTE_CLASS   => TagTest::VALUE_FOO,
+            static::ATTRIBUTE_FOO => [static::VALUE_FOO, static::VALUE_BAZ],
+            static::ATTRIBUTE_BAR => static::VALUE_BAR_BAZ,
         ];
 
-        foreach ($extraAttributes as $key => $values) {
-            if (!array_key_exists($key, $attributes)) {
-                $attributes[$key] = $attributes;
-                continue;
-            }
-
-            $attributes[$key] = array_merge((array)$attributes[$key], (array)$values);
-        }
+        $attributes = ArrayHelper::unsafeMergeAttributes($attributes, $extraAttributes);
 
         return $attributes;
     }

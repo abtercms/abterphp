@@ -7,14 +7,14 @@ namespace AbterPhp\Files\Grid\Factory;
 use AbterPhp\Files\Domain\Entities\FileDownload as Entity;
 use AbterPhp\Files\Grid\Factory\Table\FileDownload as Table;
 use AbterPhp\Files\Grid\Filters\FileDownload as Filters;
-use AbterPhp\Framework\Grid\Factory\Base;
-use AbterPhp\Framework\Grid\Factory\Grid;
-use AbterPhp\Framework\Grid\Factory\Pagination as PaginationFactory;
+use AbterPhp\Framework\Grid\Factory\BaseFactory;
+use AbterPhp\Framework\Grid\Factory\GridFactory;
+use AbterPhp\Framework\Grid\Factory\PaginationFactory as PaginationFactory;
 use AbterPhp\Framework\Helper\DateHelper;
 use AbterPhp\Framework\I18n\ITranslator;
 use Opulence\Routing\Urls\UrlGenerator;
 
-class FileDownload extends Base
+class FileDownload extends BaseFactory
 {
     const GROUP_ID            = 'fileDownload-id';
     const GROUP_FILE          = 'fileDownload-file';
@@ -32,7 +32,7 @@ class FileDownload extends Base
      * @param UrlGenerator      $urlGenerator
      * @param PaginationFactory $paginationFactory
      * @param Table             $tableFactory
-     * @param Grid              $gridFactory
+     * @param GridFactory       $gridFactory
      * @param ITranslator       $translator
      * @param Filters           $filters
      */
@@ -40,7 +40,7 @@ class FileDownload extends Base
         UrlGenerator $urlGenerator,
         PaginationFactory $paginationFactory,
         Table $tableFactory,
-        Grid $gridFactory,
+        GridFactory $gridFactory,
         ITranslator $translator,
         Filters $filters
     ) {
@@ -59,14 +59,6 @@ class FileDownload extends Base
             /** @see FileDownload::getDownloadedAt() */
             static::GROUP_DOWNLOADED_AT => [$this, 'getDownloadedAt'],
         ];
-    }
-
-    /**
-     * @return array
-     */
-    public function getHeaders(): array
-    {
-        return [];
     }
 
     /**

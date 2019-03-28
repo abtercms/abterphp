@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace AbterPhp\Website\Http\Controllers\Admin\Form;
 
 use AbterPhp\Framework\Assets\AssetManager;
+use AbterPhp\Framework\Domain\Entities\IStringerEntity;
 use AbterPhp\Framework\Http\Controllers\Admin\FormAbstract;
 use AbterPhp\Framework\I18n\ITranslator;
 use AbterPhp\Framework\Session\FlashService;
-use AbterPhp\Website\Form\Factory\Block as FormFactory;
 use AbterPhp\Website\Domain\Entities\Block as Entity;
-use AbterPhp\Framework\Domain\Entities\IStringerEntity;
+use AbterPhp\Website\Form\Factory\Block as FormFactory;
 use AbterPhp\Website\Orm\BlockRepo as Repo;
+use Opulence\Events\Dispatchers\IEventDispatcher;
 use Opulence\Orm\OrmException;
 use Opulence\Routing\Urls\UrlGenerator;
 use Opulence\Sessions\ISession;
@@ -36,13 +37,14 @@ class Block extends FormAbstract
     /**
      * Block constructor.
      *
-     * @param FlashService $flashService
-     * @param ITranslator  $translator
-     * @param UrlGenerator $urlGenerator
-     * @param Repo         $repo
-     * @param ISession     $session
-     * @param FormFactory  $formFactory
-     * @param AssetManager $assetManager
+     * @param FlashService     $flashService
+     * @param ITranslator      $translator
+     * @param UrlGenerator     $urlGenerator
+     * @param Repo             $repo
+     * @param ISession         $session
+     * @param FormFactory      $formFactory
+     * @param AssetManager     $assetManager
+     * @param IEventDispatcher $eventDispatcher
      */
     public function __construct(
         FlashService $flashService,
@@ -51,9 +53,10 @@ class Block extends FormAbstract
         Repo $repo,
         ISession $session,
         FormFactory $formFactory,
-        AssetManager $assetManager
+        AssetManager $assetManager,
+        IEventDispatcher $eventDispatcher
     ) {
-        parent::__construct($flashService, $translator, $urlGenerator, $repo, $session, $formFactory);
+        parent::__construct($flashService, $translator, $urlGenerator, $repo, $session, $formFactory, $eventDispatcher);
 
         $this->formFactory = $formFactory;
         $this->assets      = $assetManager;

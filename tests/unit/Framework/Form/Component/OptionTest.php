@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace AbterPhp\Framework\Form\Component;
 
-use AbterPhp\Framework\Helper\ArrayHelper;
+use AbterPhp\Framework\Constant\Html5;
 use AbterPhp\Framework\Html\Component\StubAttributeFactory;
+use AbterPhp\Framework\Html\Helper\ArrayHelper;
+use AbterPhp\Framework\Html\INode;
 use AbterPhp\Framework\I18n\MockTranslatorFactory;
 
 class OptionTest extends \PHPUnit\Framework\TestCase
@@ -20,7 +22,7 @@ class OptionTest extends \PHPUnit\Framework\TestCase
 
         return [
             'simple'           => ['abc', 'ABC', false, [], null, null, "<option value=\"abc\">ABC</option>"],
-            'attributes'       => ['abc', 'ABC', false, $attribs, null, null, "<option value=\"abc\"$str>ABC</option>"],
+            'attributes'       => ['abc', 'ABC', false, $attribs, null, null, "<option$str value=\"abc\">ABC</option>"],
             'w/o translations' => ['abc', 'ABC', false, [], [], null, "<option value=\"abc\">ABC</option>"],
             'custom tag'       => ['abc', 'ABC', false, [], null, 'foo', "<foo value=\"abc\">ABC</foo>"],
             'w translations'   => ['abc', 'ABC', false, [], ['ABC' => '+'], null, "<option value=\"abc\">+</option>"],
@@ -30,16 +32,16 @@ class OptionTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider renderProvider
      *
-     * @param string      $value
-     * @param string      $content
-     * @param array       $attributes
-     * @param array|null  $translations
-     * @param string|null $tag
-     * @param string      $expectedResult
+     * @param string                    $value
+     * @param INode[]|INode|string|null $content
+     * @param string[][]                $attributes
+     * @param string[]|null             $translations
+     * @param string|null               $tag
+     * @param string                    $expectedResult
      */
     public function testRender(
         string $value,
-        string $content,
+        $content,
         bool $isSelected,
         array $attributes,
         ?array $translations,
@@ -56,18 +58,18 @@ class OptionTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @param string      $value
-     * @param string      $content
-     * @param bool        $isSelected
-     * @param array       $attributes
-     * @param array|null  $translations
-     * @param string|null $tag
+     * @param string                    $value
+     * @param INode[]|INode|string|null $content
+     * @param bool                      $isSelected
+     * @param string[][]                $attributes
+     * @param string[]|null             $translations
+     * @param string|null               $tag
      *
      * @return Option
      */
     protected function createElement(
         string $value,
-        string $content,
+        $content,
         bool $isSelected,
         array $attributes,
         ?array $translations,
@@ -75,6 +77,19 @@ class OptionTest extends \PHPUnit\Framework\TestCase
     ): Option {
         $translatorMock = MockTranslatorFactory::createSimpleTranslator($this, $translations);
 
-        return new Option($value, $content, $isSelected, $attributes, $translatorMock, $tag);
+        $option = new Option($value, $content, $isSelected, [], $attributes, $tag);
+
+        $option->setTranslator($translatorMock);
+
+        return $option;
+    }
+
+    public function testGetValueReturnsEmptyStringIfValueIsUnset()
+    {
+        $sut = new Option('foo', 'Foo');
+
+        $sut->unsetAttribute(Html5::ATTR_VALUE);
+
+        $this->assertSame('', $sut->getValue());
     }
 }

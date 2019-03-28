@@ -4,28 +4,30 @@ declare(strict_types=1);
 
 namespace AbterPhp\PropellerAdmin\Navigation;
 
+use AbterPhp\Framework\Constant\Html5;
 use AbterPhp\Framework\Html\Component\Button;
-use AbterPhp\Framework\Html\Component\IComponent;
-use AbterPhp\Framework\I18n\ITranslator;
+use AbterPhp\Framework\Html\Helper\StringHelper;
+use AbterPhp\Framework\Html\IComponent;
 use AbterPhp\Framework\Navigation\Item;
 
 class Header extends Item
 {
-    const DEFAULT_TAG = self::TAG_DIV;
+    const DEFAULT_TAG = Html5::TAG_DIV;
 
-    const HAMBURGER_BTN_ICON  = '<i class="material-icons">menu</i>';
-    const HAMBURGER_BTN_CLASS = 'btn btn-sm pmd-btn-fab pmd-btn-flat pmd-ripple-effect pull-left margin-r8 pmd-sidebar-toggle'; // nolint
-    const HAMBURGER_BTN_HREF  = 'javascript:void(0);';
+    const HAMBURGER_BTN_INTENT = 'header-btn';
+    const HAMBURGER_BTN_ICON   = '<i class="material-icons">menu</i>';
+    const HAMBURGER_BTN_CLASS  = 'btn btn-sm pmd-btn-fab pmd-btn-flat pmd-ripple-effect pull-left margin-r8 pmd-sidebar-toggle'; // nolint
+    const HAMBURGER_BTN_HREF   = 'javascript:void(0);';
 
     const BRAND_BTN_CLASS = 'navbar-brand';
 
     /** @var array */
     protected $attributes = [
-        self::ATTRIBUTE_CLASS => 'navbar-header',
+        Html5::ATTR_CLASS => 'navbar-header',
     ];
 
-    /** @var IComponent */
-    protected $homeBtn;
+    /** @var Button */
+    protected $brandBtn;
 
     /** @var IComponent */
     protected $hamburgerBtn;
@@ -33,22 +35,20 @@ class Header extends Item
     /**
      * Header constructor.
      *
-     * @param Button           $brandBtn
-     * @param IComponent|null  $hamburgerBtn
-     * @param array            $attributes
-     * @param ITranslator|null $translator
-     * @param string|null      $tag
+     * @param Button          $brandBtn
+     * @param IComponent|null $hamburgerBtn
+     * @param array           $attributes
+     * @param string|null     $tag
      */
     public function __construct(
         Button $brandBtn,
-        IComponent $hamburgerBtn = null,
+        ?IComponent $hamburgerBtn = null,
         array $attributes = [],
-        ?ITranslator $translator = null,
         ?string $tag = null
     ) {
-        parent::__construct('', $attributes, $translator, $tag);
+        parent::__construct(null, [], $attributes, $tag);
 
-        $this->homeBtn      = $brandBtn->appendToAttribute(Button::ATTRIBUTE_CLASS, static::BRAND_BTN_CLASS);
+        $this->brandBtn     = $brandBtn->appendToAttribute(Html5::ATTR_CLASS, static::BRAND_BTN_CLASS);
         $this->hamburgerBtn = $hamburgerBtn ?: $this->createDefaultHamburgerBtn();
     }
 
@@ -57,15 +57,32 @@ class Header extends Item
      */
     protected function createDefaultHamburgerBtn(): Button
     {
-        return new Button(
-            static::HAMBURGER_BTN_ICON,
-            [
-                Button::ATTRIBUTE_CLASS => static::HAMBURGER_BTN_CLASS,
-                Button::ATTRIBUTE_HREF  => static::HAMBURGER_BTN_HREF,
-            ],
-            $this->translator,
-            Button::TAG_A
-        );
+        $attribs = [
+            Html5::ATTR_CLASS => static::HAMBURGER_BTN_CLASS,
+            Html5::ATTR_HREF  => static::HAMBURGER_BTN_HREF,
+        ];
+
+        return new Button(static::HAMBURGER_BTN_ICON, [self::HAMBURGER_BTN_INTENT], $attribs, Html5::TAG_A);
+    }
+
+    /**
+     * @param int $depth
+     *
+     * @return array
+     */
+    public function getAllNodes(int $depth = -1): array
+    {
+        $nodes = parent::getAllNodes($depth);
+
+        if ($depth !== 0) {
+            $nodes = array_merge(
+                $this->brandBtn->getAllNodes($depth - 1),
+                $this->hamburgerBtn->getAllNodes($depth - 1),
+                $nodes
+            );
+        }
+
+        return array_merge([$this->brandBtn, $this->hamburgerBtn], $nodes);
     }
 
     /**
@@ -73,8 +90,10 @@ class Header extends Item
      */
     public function __toString(): string
     {
-        $this->content = (string)$this->hamburgerBtn . (string)$this->homeBtn;
+        $content = (string)$this->hamburgerBtn . (string)$this->brandBtn;
 
-        return parent::__toString();
+        $content = StringHelper::wrapInTag($content, $this->tag, $this->attributes);
+
+        return $content;
     }
 }

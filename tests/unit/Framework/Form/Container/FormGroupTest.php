@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace AbterPhp\Framework\Form\Container;
 
+use AbterPhp\Framework\Constant\Html5;
+use AbterPhp\Framework\Form\Element\IElement;
 use AbterPhp\Framework\Form\Element\Input;
 use AbterPhp\Framework\Form\Extra\Help;
-use AbterPhp\Framework\Form\Element\IElement;
 use AbterPhp\Framework\Form\Label\Label;
 use AbterPhp\Framework\I18n\MockTranslatorFactory;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -19,15 +20,7 @@ class FormGroupTest extends \PHPUnit\Framework\TestCase
     public function renderProvider()
     {
         return [
-            'simple' => [
-                '<foo>',
-                '<bar>',
-                '<baz>',
-                [],
-                null,
-                null,
-                '<div class="form-group"><bar><foo><baz></div>',
-            ],
+            'simple' => ['<foo>', '<bar>', '<baz>', [], null, null, '<div><bar><foo><baz></div>'],
         ];
     }
 
@@ -77,7 +70,7 @@ class FormGroupTest extends \PHPUnit\Framework\TestCase
         array $attributes,
         ?array $translations,
         ?string $tag
-    ) {
+    ): FormGroup {
         /** @var IElement|MockObject $inputMock */
         $inputMock = $this->getMockBuilder(Input::class)
             ->disableOriginalConstructor()
@@ -101,6 +94,71 @@ class FormGroupTest extends \PHPUnit\Framework\TestCase
 
         $translatorMock = MockTranslatorFactory::createSimpleTranslator($this, $translations);
 
-        return new FormGroup($inputMock, $labelMock, $helpMock, $attributes, $translatorMock, $tag);
+        $formGroup = new FormGroup($inputMock, $labelMock, $helpMock, [], $attributes, $tag);
+
+        $formGroup->setTranslator($translatorMock);
+
+        return $formGroup;
+    }
+
+    public function testGetAllNodesIncludesInputLabelAndHelp()
+    {
+        $input = new Input('foo', 'foo');
+        $label = new Label('foo', 'Foo');
+        $help  = new Help('help');
+
+        $sut = new FormGroup($input, $label, $help);
+
+        $actualResult = $sut->getAllNodes();
+
+        $this->assertContains($input, $actualResult);
+        $this->assertContains($label, $actualResult);
+        $this->assertContains($help, $actualResult);
+    }
+
+    public function testGetElementsReturnsInput()
+    {
+        $input = new Input('foo', 'foo');
+        $label = new Label('foo', 'Foo');
+
+        $sut = new FormGroup($input, $label);
+
+        $actualResult = $sut->getElements();
+
+        $this->assertSame([$input], $actualResult);
+    }
+
+    public function testSetValueSetsInputValue()
+    {
+        $expectedResult = 'bar';
+
+        $input = new Input('foo', 'foo');
+        $label = new Label('foo', 'Foo');
+        $help  = new Help('help');
+
+        $sut = new FormGroup($input, $label, $help);
+
+        $sut->setValue($expectedResult);
+
+        $actualResult = $input->getAttribute(Html5::ATTR_VALUE);
+
+        $this->assertContains($expectedResult, $actualResult);
+    }
+
+    public function testSetTemplateChangesRender()
+    {
+        $expectedResult = '==||==';
+
+        $input = new Input('foo', 'foo');
+        $label = new Label('foo', 'Foo');
+        $help  = new Help('help');
+
+        $sut = new FormGroup($input, $label, $help);
+
+        $sut->setTemplate($expectedResult);
+
+        $actualResult = (string)$sut;
+
+        $this->assertContains($expectedResult, $actualResult);
     }
 }

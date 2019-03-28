@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace AbterPhp\Website\Grid\Factory\Table\Header;
 
-use AbterPhp\Framework\Grid\Factory\Table\Header;
+use AbterPhp\Framework\Grid\Factory\Table\HeaderFactory;
 
-class PageLayout extends Header
+class PageLayout extends HeaderFactory
 {
     const GROUP_ID         = 'pageLayout-id';
     const GROUP_IDENTIFIER = 'pageLayout-identifier';

@@ -4,30 +4,39 @@ declare(strict_types=1);
 
 namespace AbterPhp\Framework\Form\Container;
 
+use AbterPhp\Framework\Constant\Html5;
 use AbterPhp\Framework\Form\Element\IElement;
 use AbterPhp\Framework\Form\Label\Label;
-use AbterPhp\Framework\Html\Component\Tag;
-use AbterPhp\Framework\Html\Component\IComponent;
+use AbterPhp\Framework\Html\Helper\StringHelper;
+use AbterPhp\Framework\Html\INode;
+use AbterPhp\Framework\Html\INodeContainer;
+use AbterPhp\Framework\Html\ITemplater;
+use AbterPhp\Framework\Html\Tag;
 use AbterPhp\Framework\I18n\ITranslator;
 
-class FormGroup extends Tag implements IContainer
+class FormGroup extends Tag implements ITemplater
 {
+    const DEFAULT_TAG = Html5::TAG_DIV;
+
+    /**
+     * %1$s - label
+     * %2$s - input
+     * %3$s - help
+     */
     const DEFAULT_TEMPLATE = '%1$s%2$s%3$s';
 
     const CLASS_COUNTABLE = 'countable';
 
     /** @var string[] */
-    protected $attributes = [
-        self::ATTRIBUTE_CLASS => 'form-group',
-    ];
+    protected $attributes = [];
 
-    /** @var IElement|null */
+    /** @var IElement */
     protected $input;
 
-    /** @var Label|null */
+    /** @var Label */
     protected $label;
 
-    /** @var IComponent|null */
+    /** @var INode|null */
     protected $help;
 
     /** @var string */
@@ -36,22 +45,22 @@ class FormGroup extends Tag implements IContainer
     /**
      * FormGroup constructor.
      *
-     * @param IElement|null    $input
-     * @param Label|null       $label
-     * @param IComponent|null  $help
-     * @param array            $attributes
-     * @param ITranslator|null $translator
-     * @param string|null      $tag
+     * @param IElement $input
+     * @param Label    $label
+     * @param INode|null    $help
+     * @param string[]      $intents
+     * @param array         $attributes
+     * @param string|null   $tag
      */
     public function __construct(
-        ?IElement $input,
-        ?Label $label = null,
-        ?IComponent $help = null,
+        IElement $input,
+        Label $label,
+        ?INode $help = null,
+        array $intents = [],
         array $attributes = [],
-        ?ITranslator $translator = null,
         ?string $tag = null
     ) {
-        parent::__construct('', $attributes, $translator, $tag);
+        parent::__construct(null, $intents, $attributes, $tag);
 
         $this->label = $label;
         $this->input = $input;
@@ -63,7 +72,7 @@ class FormGroup extends Tag implements IContainer
      *
      * @return $this
      */
-    public function setValue(string $value): IElement
+    public function setValue(string $value): FormGroup
     {
         $this->input->setValue($value);
 
@@ -87,9 +96,9 @@ class FormGroup extends Tag implements IContainer
     }
 
     /**
-     * @return IComponent|null
+     * @return INode|null
      */
-    public function getHelp(): ?IComponent
+    public function getHelp(): ?INode
     {
         return $this->help;
     }
@@ -107,7 +116,7 @@ class FormGroup extends Tag implements IContainer
      *
      * @return $this
      */
-    public function setTemplate(string $template): IContainer
+    public function setTemplate(string $template): INode
     {
         $this->template = $template;
 
@@ -115,14 +124,73 @@ class FormGroup extends Tag implements IContainer
     }
 
     /**
+     * @param ITranslator|null $translator
+     *
+     * @return $this
+     */
+    public function setTranslator(?ITranslator $translator): INode
+    {
+        $this->translator = $translator;
+
+        $nodes = $this->getNodes();
+        foreach ($nodes as $node) {
+            $node->setTranslator($translator);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return INode[]
+     */
+    public function getNodes(): array
+    {
+        return $this->getAllNodes(0);
+    }
+
+    /**
+     * @param int $depth
+     *
+     * @return array
+     */
+    public function getAllNodes(int $depth = -1): array
+    {
+        $nodes = [$this->label, $this->input];
+
+        if ($this->help instanceof INodeContainer) {
+            $nodes = array_merge($nodes, [$this->help]);
+        }
+
+        if ($depth !== 0) {
+            $nodes = array_merge(
+                $nodes,
+                $this->label->getAllNodes($depth - 1)
+            );
+
+            if ($this->help instanceof INodeContainer) {
+                $nodes = array_merge($nodes, $this->help->getAllNodes($depth - 1));
+            }
+        }
+
+        return $nodes;
+    }
+
+    /**
      * @return string
      */
     public function __toString(): string
     {
-        if (empty($this->content)) {
-            $this->content = sprintf($this->template, (string)$this->label, (string)$this->input, (string)$this->help);
-        }
+        $help = $this->help ?: '';
 
-        return parent::__toString();
+        $content = sprintf(
+            $this->template,
+            (string)$this->label,
+            (string)$this->input,
+            (string)$help
+        );
+
+        $content = StringHelper::wrapInTag($content, $this->tag, $this->attributes);
+
+        return $content;
     }
 }

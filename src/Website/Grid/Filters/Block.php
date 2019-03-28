@@ -4,36 +4,25 @@ declare(strict_types=1);
 
 namespace AbterPhp\Website\Grid\Filters;
 
-use AbterPhp\Framework\Grid\Collection\Filters;
-use AbterPhp\Framework\Grid\Filter\Input;
-use AbterPhp\Framework\I18n\ITranslator;
+use AbterPhp\Framework\Grid\Component\Filters;
+use AbterPhp\Framework\Grid\Filter\ExactFilter;
+use AbterPhp\Framework\Grid\Filter\LikeFilter;
 
 class Block extends Filters
 {
     /**
      * Block constructor.
      *
-     * @param ITranslator $translator
+     * @param string[]    $intents
+     * @param array       $attributes
+     * @param string|null $tag
      */
-    public function __construct(ITranslator $translator)
+    public function __construct(array $intents = [], array $attributes = [], ?string $tag = null)
     {
-        $this->components[] = new Input(
-            'identifier',
-            'identifier',
-            'pages:blockIdentifier',
-            Input::FILTER_EXACT,
-            [],
-            $translator
-        );
-        $this->components[] = new Input(
-            'title',
-            'title',
-            'pages:blockTitle',
-            Input::FILTER_LIKE,
-            [],
-            $translator
-        );
+        parent::__construct($intents, $attributes, $tag);
 
-        parent::__construct([], $translator);
+        $this->nodes[] = new ExactFilter('identifier', 'pages:blockIdentifier');
+
+        $this->nodes[] = new LikeFilter('title', 'pages:blockTitle');
     }
 }

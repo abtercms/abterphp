@@ -4,27 +4,27 @@ declare(strict_types=1);
 
 namespace AbterPhp\Framework\Events;
 
-use AbterPhp\Framework\Grid\Grid;
+use AbterPhp\Framework\Grid\IGrid;
 
 class GridReady
 {
-    /** @var Grid */
+    /** @var IGrid */
     private $grid;
 
     /**
      * GridReady constructor.
      *
-     * @param Grid $grid
+     * @param IGrid $grid
      */
-    public function __construct(Grid $grid)
+    public function __construct(IGrid $grid)
     {
         $this->grid = $grid;
     }
 
     /**
-     * @return Grid
+     * @return IGrid
      */
-    public function getGrid(): Grid
+    public function getGrid(): IGrid
     {
         return $this->grid;
     }

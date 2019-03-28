@@ -13,12 +13,12 @@ return [
     ],
     Module::EVENTS             => [
         Event::TEMPLATE_ENGINE_READY => [
-            /** @see \AbterPhp\Contact\Events\Listeners\TemplateRegistrar::register */
-            sprintf('%s@register', Events\Listeners\TemplateRegistrar::class),
+            /** @see \AbterPhp\Contact\Events\Listeners\TemplateInitializer::handle */
+            sprintf('%s@handle', Events\Listeners\TemplateInitializer::class),
         ],
         Event::DASHBOARD_READY       => [
-            /** @see \AbterPhp\Contact\Events\Listeners\DashboardRegistrar::handle() */
-            sprintf('%s@handle', Events\Listeners\DashboardRegistrar::class),
+            /** @see \AbterPhp\Contact\Events\Listeners\DashboardBuilder::handle */
+            sprintf('%s@handle', Events\Listeners\DashboardBuilder::class),
         ],
     ],
     Module::ROUTE_PATHS        => [

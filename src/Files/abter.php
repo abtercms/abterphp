@@ -22,20 +22,20 @@ return [
     ],
     Module::EVENTS        => [
         Event::AUTH_READY            => [
-            /** @see \AbterPhp\Files\Events\Listeners\AuthRegistrar::register */
-            sprintf('%s@register', Events\Listeners\AuthRegistrar::class),
+            /** @see \AbterPhp\Files\Events\Listeners\AuthInitializer::handle */
+            sprintf('%s@handle', Events\Listeners\AuthInitializer::class),
         ],
         Event::TEMPLATE_ENGINE_READY => [
-            /** @see \AbterPhp\Files\Events\Listeners\TemplateRegistrar::register */
-            sprintf('%s@register', Events\Listeners\TemplateRegistrar::class),
+            /** @see \AbterPhp\Files\Events\Listeners\TemplateInitializer::handle */
+            sprintf('%s@handle', Events\Listeners\TemplateInitializer::class),
         ],
         Event::NAVIGATION_READY      => [
-            /** @see \AbterPhp\Files\Events\Listeners\NavigationRegistrar::handle */
-            sprintf('%s@handle', Events\Listeners\NavigationRegistrar::class),
+            /** @see \AbterPhp\Files\Events\Listeners\NavigationBuilder::handle */
+            sprintf('%s@handle', Events\Listeners\NavigationBuilder::class),
         ],
         Event::DASHBOARD_READY       => [
-            /** @see \AbterPhp\Files\Events\Listeners\DashboardRegistrar::handle() */
-            sprintf('%s@handle', Events\Listeners\DashboardRegistrar::class),
+            /** @see \AbterPhp\Files\Events\Listeners\DashboardBuilder::handle */
+            sprintf('%s@handle', Events\Listeners\DashboardBuilder::class),
         ],
     ],
     Module::MIGRATION_PATHS    => [

@@ -4,15 +4,24 @@ declare(strict_types=1);
 
 namespace AbterPhp\Framework\Navigation;
 
-use AbterPhp\Admin\Constant\Routes;
+use AbterPhp\Framework\Constant\Html5;
 use AbterPhp\Framework\Constant\Session;
+use AbterPhp\Framework\Html\Component;
+use AbterPhp\Framework\Html\Contentless;
+use AbterPhp\Framework\Html\Helper\StringHelper;
+use AbterPhp\Framework\Html\IComponent;
+use AbterPhp\Framework\Html\INode;
+use AbterPhp\Framework\Html\INodeContainer;
+use AbterPhp\Framework\Html\Tag;
 use AbterPhp\Framework\I18n\ITranslator;
 use Opulence\Routing\Urls\UrlGenerator;
 use Opulence\Sessions\ISession;
 
-class UserBlock extends Item
+class UserBlock extends Tag implements INodeContainer
 {
-    const DEFAULT_USER_IMAGE = '<img src="/admin-assets/themes/images/user-icon.png" alt="%s">';
+    const DEFAULT_TAG = Html5::TAG_A;
+
+    const AVATAR_BASE_URL = 'https://www.gravatar.com/avatar/%1$s';
 
     /** @var ISession */
     protected $session;
@@ -20,95 +29,185 @@ class UserBlock extends Item
     /** @var UrlGenerator */
     protected $urlGenerator;
 
+    /** @var IComponent */
+    protected $mediaLeft;
+
+    /** @var IComponent */
+    protected $mediaBody;
+
+    /** @var IComponent */
+    protected $mediaRight;
+
     /**
      * UserBlock constructor.
      *
      * @param ISession     $session
-     * @param ITranslator  $translator
      * @param UrlGenerator $urlGenerator
-     *
-     * @throws \Opulence\Routing\Urls\URLException
+     * @param string|null  $content
+     * @param string[]     $intents
+     * @param array        $attributes
+     * @param string|null  $tag
      */
-    public function __construct(ISession $session, ITranslator $translator, UrlGenerator $urlGenerator)
-    {
+    public function __construct(
+        ISession $session,
+        UrlGenerator $urlGenerator,
+        ?string $content = null,
+        array $intents = [],
+        array $attributes = [],
+        ?string $tag = null
+    ) {
         $this->session      = $session;
         $this->urlGenerator = $urlGenerator;
-        $this->translator   = $translator;
 
-        $content   = sprintf('%1$s%2$s', $this->getUserBlock(), $this->getDropdown());
-
-        parent::__construct($content, [], $translator, static::TAG_LI);
-    }
-
-    /**
-     * @return string
-     */
-    protected function getUserBlock(): string
-    {
-        $str = '
-            <a aria-expanded="false" data-toggle="dropdown" class="btn-user dropdown-toggle media" data-sidebar="true">
-                <div class="media-left">%1$s</div>
-                <div class="media-body media-middle">%2$s</div>
-                <div class="media-right media-middle"><i class="dic-more-vert dic"></i></div>
-            </a>
-            ';
-
-        return sprintf(
-            $str,
-            $this->getUserImage(),
-            (string)$this->session->get(Session::USERNAME)
-        );
-    }
-
-    /**
-     * @return string
-     */
-    protected function getUserImage(): string
-    {
         if (!$this->session || !$this->session->has(Session::USERNAME)) {
-            return sprintf(static::DEFAULT_USER_IMAGE, '');
+            throw new \LogicException('session must be set');
         }
 
+        $username = (string)$this->session->get(Session::USERNAME, '');
+
+        $this->mediaLeft  = new Component($this->getUserImage($username), [], [], Html5::TAG_DIV);
+        $this->mediaBody  = new Component($username, [], [], Html5::TAG_DIV);
+        $this->mediaRight = new Component(null, [], [], Html5::TAG_DIV);
+
+        parent::__construct($content, $intents, $attributes, $tag);
+    }
+
+    /**
+     * @param string $username
+     *
+     * @return INode
+     */
+    protected function getUserImage(string $username): INode
+    {
         if (!$this->session->has(Session::EMAIL) || !$this->session->get(Session::IS_GRAVATAR_ALLOWED)) {
-            return sprintf(static::DEFAULT_USER_IMAGE, $this->session->get(Session::USERNAME));
+            return $this->getDefaultUserImage($username);
         }
 
-        $str = '
-                    <div class="user-img" style="background: url(https://www.gravatar.com/avatar/%1$s) no-repeat;">
-                        <img src="https://www.gravatar.com/avatar/%1$s" alt="%1$s">
-                    </div>
-                    ';
+        $emailHash = md5((string)$this->session->get(Session::EMAIL));
+        $url       = sprintf(static::AVATAR_BASE_URL, $emailHash);
 
-        return sprintf(
-            $str,
-            md5((string)$this->session->get(Session::EMAIL)),
-            (string)$this->session->get(Session::USERNAME)
-        );
+        $img     = new Contentless([], [Html5::ATTR_SRC => $url, Html5::ATTR_ALT => $username], Html5::TAG_IMG);
+        $style   = sprintf('background: url(%1$s) no-repeat;', $url);
+        $attribs = [Html5::ATTR_CLASS => 'user-img', Html5::ATTR_STYLE => $style];
+
+        return new Component($img, [], $attribs, Html5::TAG_DIV);
+    }
+
+    /**
+     * @param string $username
+     *
+     * @return INode
+     */
+    protected function getDefaultUserImage(string $username): INode
+    {
+        $url = 'https://via.placeholder.com/40/09f/fff.png';
+
+        return new Contentless([Html5::ATTR_SRC => $url, Html5::ATTR_ALT => $username]);
+    }
+
+    /**
+     * @param ITranslator|null $translator
+     *
+     * @return $this
+     */
+    public function setTranslator(?ITranslator $translator): INode
+    {
+        $this->translator = $translator;
+
+        $nodes = $this->getNodes();
+        foreach ($nodes as $node) {
+            $node->setTranslator($translator);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return INode[]
+     */
+    public function getNodes(): array
+    {
+        return $this->getAllNodes(0);
+    }
+
+    /**
+     * @param int $depth
+     *
+     * @return INode[]
+     */
+    public function getAllNodes(int $depth = -1): array
+    {
+        $nodes = [$this->mediaLeft, $this->mediaBody, $this->mediaRight];
+
+        if ($depth !== 0) {
+            $nodes = array_merge(
+                $nodes,
+                $this->mediaLeft->getAllNodes($depth - 1),
+                $this->mediaBody->getAllNodes($depth - 1),
+                $this->mediaRight->getAllNodes($depth - 1)
+            );
+        }
+
+        return $nodes;
+    }
+
+    /**
+     * @return IComponent
+     */
+    public function getMediaLeft(): IComponent
+    {
+        return $this->mediaLeft;
+    }
+
+    /**
+     * @param IComponent $mediaLeft
+     */
+    public function setMediaLeft(IComponent $mediaLeft): void
+    {
+        $this->mediaLeft = $mediaLeft;
+    }
+
+    /**
+     * @return IComponent
+     */
+    public function getMediaBody(): IComponent
+    {
+        return $this->mediaBody;
+    }
+
+    /**
+     * @param IComponent $mediaBody
+     */
+    public function setMediaBody(IComponent $mediaBody): void
+    {
+        $this->mediaBody = $mediaBody;
+    }
+
+    /**
+     * @return IComponent
+     */
+    public function getMediaRight(): IComponent
+    {
+        return $this->mediaRight;
+    }
+
+    /**
+     * @param IComponent $mediaRight
+     */
+    public function setMediaRight(IComponent $mediaRight): void
+    {
+        $this->mediaRight = $mediaRight;
     }
 
     /**
      * @return string
-     * @throws \Opulence\Routing\Urls\URLException
      */
-    protected function getDropdown(): string
+    public function __toString(): string
     {
-        if (!$this->session || !$this->session->has(Session::USERNAME)) {
-            return '';
-        }
+        $content[] = (string)$this->mediaLeft;
+        $content[] = (string)$this->mediaBody;
+        $content[] = (string)$this->mediaRight;
 
-        $str = '
-            <div class="pmd-dropdown-menu-container">
-                <div class="pmd-dropdown-menu-bg"></div>
-                <ul class="dropdown-menu">
-                    <li><a href="%1$s">%2$s</a></li>
-                </ul>
-            </div>
-                    ';
-
-        return sprintf(
-            $str,
-            $this->urlGenerator->createFromName(Routes::ROUTE_LOGOUT),
-            (string)$this->translator->translate('framework:logout')
-        );
+        return StringHelper::wrapInTag(implode("\n", $content), $this->tag, $this->attributes);
     }
 }

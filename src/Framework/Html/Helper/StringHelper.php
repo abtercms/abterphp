@@ -4,15 +4,14 @@ declare(strict_types=1);
 
 namespace AbterPhp\Framework\Html\Helper;
 
-use AbterPhp\Framework\Helper\ArrayHelper;
-use AbterPhp\Framework\Html\Component\IComponent;
+use AbterPhp\Framework\Html\IComponent;
 
 class StringHelper
 {
     /**
      * @param string|IComponent $content
      * @param string|null       $tag
-     * @param array             $attributes
+     * @param string[][]        $attributes
      * @param string            $whitespace
      *
      * @return string

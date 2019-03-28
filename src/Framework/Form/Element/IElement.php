@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace AbterPhp\Framework\Form\Element;
 
-use AbterPhp\Framework\Html\Component\IComponent;
+use AbterPhp\Framework\Html\ITag;
 
-interface IElement extends IComponent
+interface IElement extends ITag
 {
     /**
-     * @param string $value
+     * @param string|array $value
      *
      * @return $this
      */
-    public function setValue(string $value): IElement;
+    public function setValue($value): IElement;
 
     /**
      * @return $this

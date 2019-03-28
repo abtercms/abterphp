@@ -4,15 +4,17 @@ declare(strict_types=1);
 
 namespace AbterPhp\Framework\Form\Extra;
 
-use AbterPhp\Framework\Html\Collection\Collection;
+use AbterPhp\Framework\Constant\Html5;
+use AbterPhp\Framework\Html\Component;
 use AbterPhp\Framework\Html\Component\Button;
-use AbterPhp\Framework\I18n\ITranslator;
 
-class DefaultButtons extends Collection
+class DefaultButtons extends Component
 {
     const DEFAULT_TAG = 'div';
 
-    const DEFAULT_BTN_CLASS = 'btn pmd-checkbox-ripple-effect';
+    const BTN_CONTENT_SAVE          = 'framework:save';
+    const BTN_CONTENT_SAVE_AND_EDIT = 'framework:saveAndEdit';
+    const BTN_CONTENT_BACK_TO_GRID  = 'framework:backToGrid';
 
     const BTN_NAME_CONTINUE = 'continue';
 
@@ -20,33 +22,30 @@ class DefaultButtons extends Collection
     protected $components;
 
     /** @var array */
-    protected $attributes = [
-        self::ATTRIBUTE_CLASS => 'form-group pmd-textfield pmd-textfield-floating-label',
-    ];
+    protected $attributes = [];
 
     /** @var array */
     protected $btnAttributes = [
-        Button::ATTRIBUTE_CLASS   => [self::DEFAULT_BTN_CLASS],
-        Button::ATTRIBUTE_NAME  => self::BTN_NAME_CONTINUE,
-        Button::ATTRIBUTE_TYPE  => Button::TYPE_SUBMIT,
-        Button::ATTRIBUTE_VALUE => '0',
+        Html5::ATTR_NAME  => [self::BTN_NAME_CONTINUE],
+        Html5::ATTR_TYPE  => [Button::TYPE_SUBMIT],
+        Html5::ATTR_VALUE => ['0'],
     ];
 
     /**
      * DefaultButtons constructor.
      *
-     * @param string           $showUrl
-     * @param ITranslator|null $translator
-     * @param array            $attributes
-     * @param string|null      $tag
+     * @param string      $showUrl
+     * @param string[]    $intents
+     * @param array       $attributes
+     * @param string|null $tag
      */
     public function __construct(
         string $showUrl,
-        ITranslator $translator,
+        array $intents = [],
         array $attributes = [],
         ?string $tag = null
     ) {
-        parent::__construct($attributes, $translator, $tag);
+        parent::__construct(null, $intents, $attributes, $tag);
 
         $this->addSave();
         $this->addSaveAndEdit();
@@ -55,25 +54,24 @@ class DefaultButtons extends Collection
 
     protected function addSave()
     {
-        $attributes = $this->btnAttributes;
-
-        $attributes[Button::ATTRIBUTE_CLASS][] = Button::CLASS_PRIMARY;
-
-        $content = $this->translator->translate('framework:save');
-
-        $this->components[] = new Button($content, $attributes);
+        $this->nodes[] = new Button(
+            static::BTN_CONTENT_SAVE,
+            [Button::INTENT_PRIMARY, Button::INTENT_FORM],
+            $this->btnAttributes
+        );
     }
 
     protected function addSaveAndEdit()
     {
         $attributes = $this->btnAttributes;
 
-        $attributes[Button::ATTRIBUTE_CLASS][] = Button::CLASS_SUCCESS;
-        $attributes[Button::ATTRIBUTE_VALUE] = '1';
+        $attributes[Html5::ATTR_VALUE] = ['1'];
 
-        $content = $this->translator->translate('framework:saveAndEdit');
-
-        $this->components[] = new Button($content, $attributes);
+        $this->nodes[] = new Button(
+            static::BTN_CONTENT_SAVE_AND_EDIT,
+            [Button::INTENT_SUCCESS, Button::INTENT_FORM],
+            $attributes
+        );
     }
 
     /**
@@ -82,12 +80,14 @@ class DefaultButtons extends Collection
     protected function addBackToGrid(string $showUrl)
     {
         $attributes = [
-            static::ATTRIBUTE_CLASS => static::DEFAULT_BTN_CLASS . ' ' . Button::CLASS_LINK,
-            static::ATTRIBUTE_HREF  => $showUrl,
+            Html5::ATTR_HREF => [$showUrl],
         ];
 
-        $content = $this->translator->translate('framework:backToGrid');
-
-        $this->components[] = new Button($content, $attributes, null, Button::TAG_A);
+        $this->nodes[] = new Button(
+            static::BTN_CONTENT_BACK_TO_GRID,
+            [Button::INTENT_PRIMARY, Button::INTENT_FORM],
+            $attributes,
+            Html5::TAG_A
+        );
     }
 }

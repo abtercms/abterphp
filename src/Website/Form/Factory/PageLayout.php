@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace AbterPhp\Website\Form\Factory;
 
+use AbterPhp\Framework\Constant\Html5;
 use AbterPhp\Framework\Form\Container\FormGroup;
 use AbterPhp\Framework\Form\Container\Hideable;
 use AbterPhp\Framework\Form\Element\Input;
@@ -72,12 +73,8 @@ class PageLayout extends Base
      */
     protected function addIdentifier(Entity $entity): PageLayout
     {
-        $input = new Input(
-            'identifier',
-            'identifier',
-            $entity->getIdentifier()
-        );
-        $label = new Label('identifier', 'pages:pageLayoutIdentifier', [], $this->translator);
+        $input = new Input('identifier', 'identifier', $entity->getIdentifier());
+        $label = new Label('identifier', 'pages:pageLayoutIdentifier');
 
         $this->form[] = new FormGroup($input, $label, null);
 
@@ -91,13 +88,8 @@ class PageLayout extends Base
      */
     protected function addBody(Entity $entity): PageLayout
     {
-        $input = new Textarea(
-            'body',
-            'body',
-            htmlspecialchars($entity->getBody()),
-            [Textarea::ATTRIBUTE_ROWS => '15']
-        );
-        $label = new Label('body', 'pages:pageLayoutBody', [], $this->translator);
+        $input = new Textarea('body', 'body', $entity->getBody(), [], [Html5::ATTR_ROWS => '15']);
+        $label = new Label('body', 'pages:pageLayoutBody');
 
         $this->form[] = new FormGroup($input, $label);
 

@@ -4,11 +4,22 @@ declare(strict_types=1);
 
 namespace AbterPhp\Framework\Html\Component;
 
+use AbterPhp\Framework\Html\ITemplater;
+use AbterPhp\Framework\Html\Helper\StringHelper;
+use AbterPhp\Framework\Html\IComponent;
+use AbterPhp\Framework\Html\INode;
 use AbterPhp\Framework\I18n\ITranslator;
 
-class ButtonWithIcon extends Button
+class ButtonWithIcon extends Button implements ITemplater
 {
+    /**
+     *   %1$s - text
+     *   %2$s - icon
+     */
     const DEFAULT_TEMPLATE = '%2$s %1$s';
+
+    const ICON_INTENT = 'button-icon';
+    const TEXT_INTENT = 'button-text';
 
     /** @var string */
     protected $template = self::DEFAULT_TEMPLATE;
@@ -20,24 +31,25 @@ class ButtonWithIcon extends Button
     protected $icon;
 
     /**
-     * Button constructor.
+     * ButtonWithIcon constructor.
      *
-     * @param IComponent|string $content
-     * @param array            $attributes
-     * @param ITranslator|null $translator
-     * @param string|null      $tag
+     * @param IComponent  $text
+     * @param IComponent  $icon
+     * @param string[]    $intents
+     * @param string[][]  $attributes
+     * @param string|null $tag
      */
     public function __construct(
         IComponent $text,
         IComponent $icon,
+        array $intents = [],
         array $attributes = [],
-        ITranslator $translator = null,
         ?string $tag = null
     ) {
-        parent::__construct('', $attributes, $translator, $tag);
+        parent::__construct(null, $intents, $attributes, $tag);
 
-        $this->text = $text;
-        $this->icon = $icon;
+        $this->text = $text->addIntent(static::TEXT_INTENT);
+        $this->icon = $icon->addIntent(static::ICON_INTENT);
     }
 
     /**
@@ -45,7 +57,7 @@ class ButtonWithIcon extends Button
      *
      * @return $this
      */
-    public function setTemplate(string $template): ButtonWithIcon
+    public function setTemplate(string $template): INode
     {
         $this->template = $template;
 
@@ -53,16 +65,46 @@ class ButtonWithIcon extends Button
     }
 
     /**
+     * @return INode[]
+     */
+    public function getNodes(): array
+    {
+        return $this->getAllNodes(0);
+    }
+
+    /**
+     * @param int $depth
+     *
+     * @return array
+     */
+    public function getAllNodes(int $depth = -1): array
+    {
+        $nodes = parent::getAllNodes($depth);
+
+        if ($depth !== 0) {
+            $nodes = array_merge(
+                $this->text->getAllNodes($depth - 1),
+                $this->icon->getAllNodes($depth - 1),
+                $nodes
+            );
+        }
+
+        return array_merge([$this->text, $this->icon], $nodes);
+    }
+
+    /**
      * @return string
      */
     public function __toString(): string
     {
-        $this->content = sprintf(
+        $content = sprintf(
             $this->template,
             (string)$this->text,
             (string)$this->icon
         );
 
-        return parent::__toString();
+        $content = StringHelper::wrapInTag($content, $this->tag, $this->attributes);
+
+        return $content;
     }
 }

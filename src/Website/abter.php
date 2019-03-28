@@ -7,7 +7,7 @@ use AbterPhp\Framework\Constant\Module;
 
 return [
     Module::IDENTIFIER         => 'AbterPhp\Website',
-    Module::DEPENDENCIES       => ['AbterPhp\Framework'],
+    Module::DEPENDENCIES       => ['AbterPhp\Admin'],
     Module::BOOTSTRAPPERS      => [
         Bootstrappers\Orm\OrmBootstrapper::class,
         Bootstrappers\Validation\ValidatorBootstrapper::class,
@@ -18,20 +18,20 @@ return [
     ],
     Module::EVENTS             => [
         Event::TEMPLATE_ENGINE_READY => [
-            /** @see \AbterPhp\Website\Events\Listeners\TemplateRegistrar::register */
-            sprintf('%s@register', Events\Listeners\TemplateRegistrar::class),
+            /** @see \AbterPhp\Website\Events\Listeners\TemplateInitializer::handle */
+            sprintf('%s@handle', Events\Listeners\TemplateInitializer::class),
         ],
         Event::NAVIGATION_READY      => [
-            /** @see \AbterPhp\Website\Events\Listeners\NavigationRegistrar::register */
-            sprintf('%s@register', Events\Listeners\NavigationRegistrar::class),
+            /** @see \AbterPhp\Website\Events\Listeners\NavigationBuilder::handle */
+            sprintf('%s@handle', Events\Listeners\NavigationBuilder::class),
         ],
         Event::ENTITY_POST_CHANGE    => [
-            /** @see \AbterPhp\Website\Events\Listeners\PageInvalidator::handle() */
+            /** @see \AbterPhp\Website\Events\Listeners\PageInvalidator::handle */
             sprintf('%s@handle', Events\Listeners\PageInvalidator::class),
         ],
         Event::DASHBOARD_READY       => [
-            /** @see \AbterPhp\Website\Events\Listeners\DashboardRegistrar::handle() */
-            sprintf('%s@handle', Events\Listeners\DashboardRegistrar::class),
+            /** @see \AbterPhp\Website\Events\Listeners\DashboardBuilder::handle */
+            sprintf('%s@handle', Events\Listeners\DashboardBuilder::class),
         ],
     ],
     Module::ROUTE_PATHS        => [

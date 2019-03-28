@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace AbterPhp\Framework\Grid\Pagination;
 
-use AbterPhp\Framework\Grid\Action\Button;
-use AbterPhp\Framework\Grid\Collection\Actions;
+use AbterPhp\Framework\Constant\Html5;
+use AbterPhp\Framework\Grid\Action\Action;
+use AbterPhp\Framework\Grid\Component\Actions;
 
 class Numbers extends Actions
 {
@@ -14,14 +15,17 @@ class Numbers extends Actions
 
     /** @var array */
     protected $fakeBtnAttr = [
-        Button::ATTRIBUTE_CLASS    => Button::CLASS_PRIMARY,
-        Button::ATTRIBUTE_DISABLED => Button::ATTRIBUTE_DISABLED,
+        Html5::ATTR_DISABLED => null,
     ];
 
     /** @var array */
-    protected $realBtnAttr = [
-        Button::ATTRIBUTE_CLASS => Button::CLASS_PRIMARY,
-    ];
+    protected $fakeBtnIntents = [Action::INTENT_PRIMARY];
+
+    /** @var array */
+    protected $realBtnAttr = [];
+
+    /** @var array */
+    protected $realBtnIntents = [Action::INTENT_PRIMARY];
 
     /**
      * Numbers constructor.
@@ -74,19 +78,19 @@ class Numbers extends Actions
     protected function attachLeft(bool $isFirst, bool $isFirstVisible, int $currentPage)
     {
         if (!$isFirstVisible) {
-            $this->realBtnAttr[Button::ATTRIBUTE_HREF] = sprintf('%spage=%d', $this->baseUrl, 1);
+            $this->realBtnAttr[Html5::ATTR_HREF] = sprintf('%spage=%d', $this->baseUrl, 1);
 
-            $this->components[] = new Button('<<', Button::TAG_A, $this->realBtnAttr);
+            $this->nodes[] = new Action('<<', $this->realBtnIntents, $this->realBtnAttr, [], Html5::TAG_A);
         }
 
         if (!$isFirst) {
-            $this->realBtnAttr[Button::ATTRIBUTE_HREF] = sprintf('%spage=%d', $this->baseUrl, $currentPage - 1);
+            $this->realBtnAttr[Html5::ATTR_HREF] = sprintf('%spage=%d', $this->baseUrl, $currentPage - 1);
 
-            $this->components[] = new Button('<', Button::TAG_A, $this->realBtnAttr);
+            $this->nodes[] = new Action('<', $this->realBtnIntents, $this->realBtnAttr, [], Html5::TAG_A);
         }
 
         if (!$isFirstVisible) {
-            $this->components[] = new Button('...', Button::TAG_BUTTON, $this->fakeBtnAttr);
+            $this->nodes[] = new Action('...', $this->realBtnIntents, $this->fakeBtnAttr, [], Html5::TAG_BUTTON);
         }
     }
 
@@ -98,11 +102,11 @@ class Numbers extends Actions
     {
         foreach ($numbers as $number) {
             if ($currentPage == $number) {
-                $this->components[] = new Button("$number", $this->fakeBtnAttr);
+                $this->nodes[] = new Action("$number", $this->fakeBtnIntents, $this->fakeBtnAttr);
             } else {
-                $this->realBtnAttr[Button::ATTRIBUTE_HREF] = sprintf('%spage=%d', $this->baseUrl, $number);
+                $this->realBtnAttr[Html5::ATTR_HREF] = sprintf('%spage=%d', $this->baseUrl, $number);
 
-                $this->components[] = new Button("$number", $this->realBtnAttr, [], null, Button::TAG_A);
+                $this->nodes[] = new Action("$number", $this->realBtnIntents, $this->realBtnAttr, [], Html5::TAG_A);
             }
         }
     }
@@ -116,19 +120,19 @@ class Numbers extends Actions
     protected function attachRight(bool $isLast, bool $isLastVisible, int $currentPage, int $lastPage)
     {
         if (!$isLastVisible) {
-            $this->components[] = new Button('...', $this->fakeBtnAttr);
+            $this->nodes[] = new Action('...', $this->fakeBtnIntents, $this->fakeBtnAttr);
         }
 
         if (!$isLast) {
-            $this->realBtnAttr[Button::ATTRIBUTE_HREF] = sprintf('%spage=%d', $this->baseUrl, $currentPage + 1);
+            $this->realBtnAttr[Html5::ATTR_HREF] = sprintf('%spage=%d', $this->baseUrl, $currentPage + 1);
 
-            $this->components[] = new Button('>', $this->realBtnAttr, [], null, Button::TAG_A);
+            $this->nodes[] = new Action('>', $this->realBtnIntents, $this->realBtnAttr, [], Html5::TAG_A);
         }
 
         if (!$isLastVisible) {
-            $this->realBtnAttr[Button::ATTRIBUTE_HREF] = sprintf('%spage=%d', $this->baseUrl, $lastPage);
+            $this->realBtnAttr[Html5::ATTR_HREF] = sprintf('%spage=%d', $this->baseUrl, $lastPage);
 
-            $this->components[] = new Button('>>', $this->realBtnAttr, [], null, Button::TAG_A);
+            $this->nodes[] = new Action('>>', $this->realBtnIntents, $this->realBtnAttr, [], Html5::TAG_A);
         }
     }
 }

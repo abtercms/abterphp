@@ -48,7 +48,7 @@ return [
     ],
     Module::EVENTS             => [
         Event::NAVIGATION_READY => [
-            /** @see \AbterPhp\Framework\Events\Listeners\NavigationRegistrar::register */
+            /** @see \AbterPhp\Framework\Events\Listeners\NavigationBuilder::register */
             'Events\Listeners\NavigationRegistrar@register'
         ],
     ],

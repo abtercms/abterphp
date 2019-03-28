@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace AbterPhp\Contact\Form\Factory;
 
+use AbterPhp\Framework\Constant\Html5;
 use AbterPhp\Framework\Form\Container\FormGroup;
 use AbterPhp\Framework\Form\Element\Input;
 use AbterPhp\Framework\Form\Element\Textarea;
@@ -53,9 +54,9 @@ class Contact extends Base
         $name  = CsrfTokenChecker::TOKEN_INPUT_NAME;
         $value = (string)$this->session->get($name);
 
-        $attributes[Input::ATTRIBUTE_TYPE] = Input::TYPE_HIDDEN;
+        $attributes[Html5::ATTR_TYPE] = Input::TYPE_HIDDEN;
 
-        $this->form[] = new Input($name, $name, $value, null, $attributes, $this->translator);
+        $this->form[] = new Input($name, $name, $value, [], $attributes);
 
         return $this;
     }
@@ -65,12 +66,8 @@ class Contact extends Base
      */
     protected function addFromName(): Contact
     {
-        $input = new Input(
-            'from-name',
-            'from-name',
-            ''
-        );
-        $label = new Label('from-name', 'contact:fromName', null, [], $this->translator);
+        $input = new Input('from-name', 'from-name', '');
+        $label = new Label('from-name', 'contact:fromName');
 
         $this->form[] = new FormGroup($input, $label, null);
 
@@ -82,16 +79,10 @@ class Contact extends Base
      */
     protected function addFromEmail(): Contact
     {
-        $input = new Input(
-            'from-email',
-            'from-email',
-            '',
-            null,
-            [Input::ATTRIBUTE_TYPE => Input::TYPE_EMAIL]
-        );
-        $label = new Label('from-email', 'contact:fromEmail', null, [], $this->translator);
+        $input = new Input('from-email', 'from-email', '', [], [Html5::ATTR_TYPE => Input::TYPE_EMAIL]);
+        $label = new Label('from-email', 'contact:fromEmail');
 
-        $this->form[] = new FormGroup($input, $label, null);
+        $this->form[] = new FormGroup($input, $label);
 
         return $this;
     }
@@ -106,9 +97,9 @@ class Contact extends Base
             'subject',
             ''
         );
-        $label = new Label('subject', 'contact:subject', null, [], $this->translator);
+        $label = new Label('subject', 'contact:subject');
 
-        $this->form[] = new FormGroup($input, $label, null);
+        $this->form[] = new FormGroup($input, $label);
 
         return $this;
     }
@@ -118,16 +109,10 @@ class Contact extends Base
      */
     protected function addBody(): Contact
     {
-        $input = new Textarea(
-            'body',
-            'body',
-            '',
-            null,
-            [Textarea::ATTRIBUTE_ROWS => '15']
-        );
-        $label = new Label('body', 'contact:body', null, [], $this->translator);
+        $input = new Textarea('body', 'body', '', null, [Html5::ATTR_ROWS => '15']);
+        $label = new Label('body', 'contact:body');
 
-        $this->form[] = new FormGroup($input, $label, null);
+        $this->form[] = new FormGroup($input, $label);
 
         return $this;
     }
@@ -137,13 +122,9 @@ class Contact extends Base
      */
     protected function addSubmit(): Contact
     {
-        $attributes = [];
-
-        $attributes[Button::ATTRIBUTE_CLASS][] = Button::CLASS_PRIMARY;
-
         $content = $this->translator->translate('contact:submit');
 
-        $this->form[] = new Button($content, $attributes);
+        $this->form[] = new Button($content, [Button::INTENT_PRIMARY]);
 
         return $this;
     }

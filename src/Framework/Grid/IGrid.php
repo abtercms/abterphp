@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace AbterPhp\Framework\Grid;
 
-use AbterPhp\Framework\Html\Component\IComponent;
+use AbterPhp\Framework\Html\IComponent;
 use AbterPhp\Framework\Domain\Entities\IStringerEntity;
 
 interface IGrid extends IComponent

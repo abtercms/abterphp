@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace AbterPhp\Framework\Html\Component;
 
-use AbterPhp\Framework\Helper\ArrayHelper;
-use AbterPhp\Framework\I18n\ITranslator;
+use AbterPhp\Framework\Constant\Html5;
+use AbterPhp\Framework\Html\Component;
+use AbterPhp\Framework\Html\Helper\ArrayHelper;
 use Opulence\Routing\Urls\UrlException;
 use Opulence\Routing\Urls\UrlGenerator;
 
@@ -24,46 +25,46 @@ class ButtonFactory
     protected $attributes = [];
 
     /** @var string */
-    protected $iconTag = 'i';
+    protected $iconTag = Html5::TAG_I;
 
     /** @var string */
-    protected $textTag = 'span';
+    protected $textTag = Html5::TAG_SPAN;
 
     /**
      * ButtonFactory constructor.
      *
      * @param UrlGenerator $urlGenerator
-     * @param array        $iconAttributes
-     * @param array        $textAttributes
-     * @param array        $attributes
-     * @param string       $iconTag
+     * @param string[][]   $textAttributes
+     * @param string[][]   $iconAttributes
+     * @param string[][]   $attributes
      * @param string       $textTag
+     * @param string       $iconTag
      */
     public function __construct(
         UrlGenerator $urlGenerator,
-        array $iconAttributes = [],
         array $textAttributes = [],
+        array $iconAttributes = [],
         array $attributes = [],
-        string $iconTag = 'i',
-        string $textTag = 'span'
+        string $textTag = Html5::TAG_SPAN,
+        string $iconTag = Html5::TAG_I
     ) {
-        $this->urlGenerator   = $urlGenerator;
-        $this->iconAttributes = $iconAttributes;
+        $this->urlGenerator = $urlGenerator;
         $this->textAttributes = $textAttributes;
+        $this->iconAttributes = $iconAttributes;
         $this->attributes     = $attributes;
         $this->iconTag        = $iconTag;
         $this->textTag        = $textTag;
     }
 
     /**
-     * @param string           $text
-     * @param string           $url
-     * @param string           $icon
-     * @param array            $textAttribs
-     * @param array            $iconAttribs
-     * @param array            $attribs
-     * @param ITranslator|null $translator
-     * @param string|null      $tag
+     * @param string      $text
+     * @param string      $url
+     * @param string      $icon
+     * @param string[][]  $textAttribs
+     * @param string[][]  $iconAttribs
+     * @param string[]    $intents
+     * @param string[][]  $attribs
+     * @param string|null $tag
      *
      * @return Button
      */
@@ -73,29 +74,29 @@ class ButtonFactory
         string $icon = '',
         array $textAttribs = [],
         array $iconAttribs = [],
+        $intents = [],
         $attribs = [],
-        ?ITranslator $translator = null,
-        ?string $tag = Button::TAG_A
+        ?string $tag = Html5::TAG_A
     ): Button {
-        $attribs[Button::ATTRIBUTE_HREF] = $url;
+        $attribs[Html5::ATTR_HREF] = [$url];
 
         if ($icon) {
-            return $this->createWithIcon($text, $icon, $textAttribs, $iconAttribs, $attribs, $translator, $tag);
+            return $this->createWithIcon($text, $icon, $textAttribs, $iconAttribs, $intents, $attribs, $tag);
         }
 
-        return $this->createSimple($text, $attribs, $translator, $tag);
+        return $this->createSimple($text, $intents, $attribs, $tag);
     }
 
     /**
-     * @param string           $text
-     * @param string           $urlName
-     * @param array            $urlArgs
-     * @param string           $icon
-     * @param array            $textAttribs
-     * @param array            $iconAttribs
-     * @param array            $attribs
-     * @param ITranslator|null $translator
-     * @param string|null      $tag
+     * @param string      $text
+     * @param string      $urlName
+     * @param string[]    $urlArgs
+     * @param string      $icon
+     * @param string[][]  $textAttribs
+     * @param string[][]  $iconAttribs
+     * @param string[]    $intents
+     * @param string[][]  $attribs
+     * @param string|null $tag
      *
      * @return Button
      */
@@ -106,9 +107,9 @@ class ButtonFactory
         string $icon = '',
         array $textAttribs = [],
         array $iconAttribs = [],
+        $intents = [],
         $attribs = [],
-        ?ITranslator $translator = null,
-        ?string $tag = Button::TAG_A
+        ?string $tag = Html5::TAG_A
     ): Button {
         try {
             $url = $this->urlGenerator->createFromName($urlName, ...$urlArgs);
@@ -116,44 +117,40 @@ class ButtonFactory
             $url = '';
         }
 
-        $attribs[Button::ATTRIBUTE_HREF] = $url;
+        $attribs[Html5::ATTR_HREF] = [$url];
 
         if ($icon) {
-            return $this->createWithIcon($text, $icon, $textAttribs, $iconAttribs, $attribs, $translator, $tag);
+            return $this->createWithIcon($text, $icon, $textAttribs, $iconAttribs, $intents, $attribs, $tag);
         }
 
-        return $this->createSimple($text, $attribs, $translator, $tag);
+        return $this->createSimple($text, $intents, $attribs, $tag);
     }
 
     /**
-     * @param string           $text
-     * @param array            $attributes
-     * @param ITranslator|null $translator
-     * @param string|null      $tag
+     * @param string      $text
+     * @param string[]    $intents
+     * @param array       $attributes
+     * @param string|null $tag
      *
      * @return Button
      */
-    protected function createSimple(
-        string $text,
-        $attributes,
-        ?ITranslator $translator,
-        ?string $tag
-    ): Button {
-        $attributes = ArrayHelper::mergeAttributes($this->attributes, $attributes);
+    protected function createSimple(string $text, array $intents, array $attributes, ?string $tag): Button
+    {
+        $attributes = ArrayHelper::unsafeMergeAttributes($this->attributes, $attributes);
 
-        $linkComponent = new Button($text, $attributes, $translator, $tag);
+        $linkComponent = new Button($text, $intents, $attributes, $tag);
 
         return $linkComponent;
     }
 
     /**
-     * @param string           $text
-     * @param string           $icon
-     * @param array            $textAttribs
-     * @param array            $iconAttribs
-     * @param array            $attributes
-     * @param ITranslator|null $translator
-     * @param string|null      $tag
+     * @param string      $text
+     * @param string      $icon
+     * @param string[][]  $textAttribs
+     * @param string[][]  $iconAttribs
+     * @param string[]    $intents
+     * @param array       $attributes
+     * @param string|null $tag
      *
      * @return ButtonWithIcon
      */
@@ -162,19 +159,19 @@ class ButtonFactory
         string $icon,
         array $textAttribs,
         array $iconAttribs,
+        array $intents,
         $attributes,
-        ?ITranslator $translator,
         string $tag
     ): ButtonWithIcon {
-        $iconAttribs =  ArrayHelper::mergeAttributes($this->iconAttributes, $iconAttribs);
-        $textAttribs =  ArrayHelper::mergeAttributes($this->textAttributes, $textAttribs);
+        $iconAttribs = ArrayHelper::unsafeMergeAttributes($this->iconAttributes, $iconAttribs);
+        $textAttribs = ArrayHelper::unsafeMergeAttributes($this->textAttributes, $textAttribs);
 
-        $textComponent = new Tag($text, $textAttribs, $translator, $this->textTag);
-        $iconComponent = new Tag($icon, $iconAttribs, $translator, $this->iconTag);
+        $textComponent = new Component($text, [], $textAttribs, $this->textTag);
+        $iconComponent = new Component($icon, [], $iconAttribs, $this->iconTag);
 
-        $attributes = ArrayHelper::mergeAttributes($this->attributes, $attributes);
+        $attributes = ArrayHelper::unsafeMergeAttributes($this->attributes, $attributes);
 
-        $linkComponent = new ButtonWithIcon($textComponent, $iconComponent, $attributes, $translator, $tag);
+        $linkComponent = new ButtonWithIcon($textComponent, $iconComponent, $intents, $attributes, $tag);
 
         return $linkComponent;
     }

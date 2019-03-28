@@ -4,16 +4,27 @@ declare(strict_types=1);
 
 namespace AbterPhp\Framework\Grid\Pagination;
 
+use AbterPhp\Framework\Constant\Html5;
 use AbterPhp\Framework\Form\Component\Option;
 use AbterPhp\Framework\Form\Element\Select;
-use AbterPhp\Framework\Html\Component\Tag;
-use AbterPhp\Framework\I18n\ITranslator;
+use AbterPhp\Framework\Html\Helper\StringHelper;
+use AbterPhp\Framework\Html\INode;
+use AbterPhp\Framework\Html\ITemplater;
+use AbterPhp\Framework\Html\Tag;
 
 /**
  * @SuppressWarnings(PHPMD.ShortVariable)
  */
-class Pagination extends Tag implements IPagination
+class Pagination extends Tag implements IPagination, ITemplater
 {
+    const DEFAULT_TAG = Html5::TAG_DIV;
+
+    /**
+     * %1$s - numbers
+     * %2$s - options
+     */
+    const DEFAULT_TEMPLATE = '<div class="gp-numbers">%1$s</div><div class="gp-options">%2$s%3$s</div>';
+
     const PARAM_KEY_PAGE = 'page';
     const PARAM_KEY_SIZE = 'page-size';
 
@@ -22,7 +33,7 @@ class Pagination extends Tag implements IPagination
     const ERROR_MSG_TOTAL_COUNT_NON_POSITIVE        = 'Total count must be a positive number.';
     const ERROR_MSG_TOTAL_COUNT_SMALLER_THAN_OFFSET = 'Offset must be smaller than total count.';
 
-    const TEMPLATE = '<div class="gp-numbers col-md-6">%1$s</div><div class="gp-options col-md-6">%2$s%3$s</div>';
+    const LABEL_CONTENT = 'framework:pageSize';
 
     /** @var array */
     protected $params = [];
@@ -54,6 +65,9 @@ class Pagination extends Tag implements IPagination
     /** @var Select */
     protected $sizeOptions;
 
+    /** @var string */
+    protected $template = self::DEFAULT_TEMPLATE;
+
     /**
      * Pagination constructor.
      *
@@ -62,8 +76,8 @@ class Pagination extends Tag implements IPagination
      * @param int         $numberCount
      * @param int         $pageSize
      * @param array       $pageSizes
+     * @param string[]    $intents
      * @param array       $attributes
-     * @param ITranslator $translator
      * @param string|null $tag
      */
     public function __construct(
@@ -72,14 +86,13 @@ class Pagination extends Tag implements IPagination
         int $numberCount,
         int $pageSize,
         array $pageSizes,
-        array $attributes,
-        ITranslator $translator,
+        array $intents = [],
+        array $attributes = [],
         ?string $tag = null
     ) {
         $this->params      = $params;
         $this->pageSize    = $pageSize;
         $this->numberCount = $numberCount;
-        $this->translator  = $translator;
 
         $this->setParams($params);
 
@@ -87,9 +100,9 @@ class Pagination extends Tag implements IPagination
 
         $this->buildComponents($baseUrl, $pageSizes);
 
-        parent::__construct('', $attributes, $translator, $tag);
+        parent::__construct(null, $intents, $attributes, $tag);
 
-        $this->appendToAttribute(Tag::ATTRIBUTE_CLASS, 'grid-pagination row');
+        $this->appendToAttribute(Html5::ATTR_CLASS, 'grid-pagination row');
     }
 
     /**
@@ -117,7 +130,7 @@ class Pagination extends Tag implements IPagination
         if ($this->numberCount % 2 !== 1 || $this->numberCount < 1) {
             throw new \InvalidArgumentException(static::ERROR_MSG_INVALID_NUMBER_COUNT);
         }
-        if (!in_array($this->pageSize, $pageSizes)) {
+        if (!in_array($this->pageSize, $pageSizes, true)) {
             throw new \InvalidArgumentException(static::ERROR_MSG_INVALID_PAGE_SIZE);
         }
     }
@@ -130,14 +143,14 @@ class Pagination extends Tag implements IPagination
     {
         $baseUrl    = $this->getPageSizeUrl($baseUrl);
         $attributes = [
-            Select::ATTRIBUTE_CLASS => 'pagination-sizes',
+            Html5::ATTR_CLASS => 'pagination-sizes',
         ];
 
         $this->numbers     = new Numbers($baseUrl);
         $this->sizeOptions = new Select(
             'pagination-sizes',
             'pagination-sizes',
-            false,
+            [],
             $attributes
         );
 
@@ -205,14 +218,6 @@ class Pagination extends Tag implements IPagination
     /**
      * @return int
      */
-    protected function getRangeEnd(): int
-    {
-        return min($this->totalCount, $this->rangeStart + $this->pageSize - 1);
-    }
-
-    /**
-     * @return int
-     */
     protected function getCurrentPage(): int
     {
         $currentPage = (int)floor($this->rangeStart / $this->pageSize) + 1;
@@ -261,16 +266,56 @@ class Pagination extends Tag implements IPagination
     }
 
     /**
+     * @return INode[]
+     */
+    public function getNodes(): array
+    {
+        return $this->getAllNodes(0);
+    }
+
+    /**
+     * @param int $depth
+     *
+     * @return INode[]
+     */
+    public function getAllNodes(int $depth = -1): array
+    {
+        $nodes = [$this->numbers, $this->sizeOptions];
+
+        if ($depth !== 0) {
+            $nodes = array_merge(
+                $nodes,
+                $this->numbers->getAllNodes($depth - 1),
+                $this->sizeOptions->getAllNodes($depth - 1)
+            );
+        }
+
+        return $nodes;
+    }
+
+    /**
+     * @param string $template
+     *
+     * @return $this
+     */
+    public function setTemplate(string $template): INode
+    {
+        $this->template = $template;
+
+        return $this;
+    }
+
+    /**
      * @return string
      */
     public function __toString(): string
     {
         $numbers     = (string)$this->numbers;
-        $sizeLabel   = $this->translator->translate('framework:pageSize');
+        $sizeLabel   = $this->translator ? $this->translator->translate(static::LABEL_CONTENT) : static::LABEL_CONTENT;
         $sizeOptions = (string)$this->sizeOptions;
 
-        $this->content = sprintf(static::TEMPLATE, $numbers, $sizeLabel, $sizeOptions);
+        $content = sprintf($this->template, $numbers, $sizeLabel, $sizeOptions);
 
-        return parent::__toString();
+        return StringHelper::wrapInTag($content, $this->tag, $this->attributes);
     }
 }

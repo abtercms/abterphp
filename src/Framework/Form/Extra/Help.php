@@ -4,14 +4,17 @@ declare(strict_types=1);
 
 namespace AbterPhp\Framework\Form\Extra;
 
-use AbterPhp\Framework\Html\Component\Tag;
+use AbterPhp\Framework\Constant\Html5;
+use AbterPhp\Framework\Html\Component;
 
-class Help extends Tag
+class Help extends Component
 {
-    const DEFAULT_TAG = 'div';
+    const DEFAULT_TAG = Html5::TAG_DIV;
+
+    const CLASS_HELP_BLOCK = 'help-block';
 
     /** @var array */
     protected $attributes = [
-        Help::ATTRIBUTE_CLASS => 'help-block'
+        Html5::ATTR_CLASS => [self::CLASS_HELP_BLOCK],
     ];
 }

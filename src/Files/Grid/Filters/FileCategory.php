@@ -4,39 +4,25 @@ declare(strict_types=1);
 
 namespace AbterPhp\Files\Grid\Filters;
 
-use AbterPhp\Framework\Grid\Collection\Filters;
-use AbterPhp\Framework\Grid\Filter\Input;
-use AbterPhp\Framework\I18n\ITranslator;
+use AbterPhp\Framework\Grid\Component\Filters;
+use AbterPhp\Framework\Grid\Filter\ExactFilter;
+use AbterPhp\Framework\Grid\Filter\LikeFilter;
 
 class FileCategory extends Filters
 {
     /**
      * FileCategory constructor.
      *
-     * @param string|null      $tag
-     * @param array            $attributes
-     * @param ITranslator|null $translator
+     * @param string[]    $intents
+     * @param array       $attributes
+     * @param string|null $tag
      */
-    public function __construct(array $attributes = [], ITranslator $translator = null, ?string $tag = null)
+    public function __construct(array $intents = [], array $attributes = [], ?string $tag = null)
     {
-        $this->components[] = new Input(
-            'identifier',
-            'identifier',
-            'files:fileCategoryIdentifier',
-            Input::FILTER_EXACT,
-            [],
-            $translator
-        );
+        parent::__construct($intents, $attributes, $tag);
 
-        $this->components[] = new Input(
-            'name',
-            'name',
-            'files:fileCategoryName',
-            Input::FILTER_LIKE,
-            [],
-            $translator
-        );
+        $this->nodes[] = new ExactFilter('identifier', 'files:fileCategoryIdentifier');
 
-        parent::__construct($attributes, $translator, $tag);
+        $this->nodes[] = new LikeFilter('name', 'files:fileCategoryName');
     }
 }

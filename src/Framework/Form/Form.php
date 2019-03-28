@@ -4,41 +4,35 @@ declare(strict_types=1);
 
 namespace AbterPhp\Framework\Form;
 
-use AbterPhp\Framework\Html\Collection\Collection;
-use AbterPhp\Framework\I18n\ITranslator;
+use AbterPhp\Framework\Constant\Html5;
+use AbterPhp\Framework\Html\Component;
 use Opulence\Http\Requests\RequestMethods;
 
-class Form extends Collection implements IForm
+class Form extends Component implements IForm
 {
-    const DEFAULT_TAG = self::TAG_FORM;
-
-    const TAG_FORM = 'form';
-
-    const ATTRIBUTE_ACTION  = 'action';
-    const ATTRIBUTE_METHOD  = 'method';
-    const ATTRIBUTE_ENCTYPE = 'enctype';
+    const DEFAULT_TAG = Html5::TAG_FORM;
 
     const ENCTYPE_MULTIPART = 'multipart/form-data';
 
     /**
      * Form constructor.
      *
-     * @param string           $action
-     * @param string           $method
-     * @param array            $attributes
-     * @param ITranslator|null $translator
-     * @param string|null      $tag
+     * @param string      $action
+     * @param string      $method
+     * @param string[]    $intents
+     * @param string[][]  $attributes
+     * @param string|null $tag
      */
     public function __construct(
         string $action,
         string $method = RequestMethods::POST,
+        array $intents = [],
         array $attributes = [],
-        ?ITranslator $translator = null,
         ?string $tag = null
     ) {
-        $attributes[static::ATTRIBUTE_ACTION] = $action;
-        $attributes[static::ATTRIBUTE_METHOD] = $method;
+        $attributes[Html5::ATTR_ACTION] = $action;
+        $attributes[Html5::ATTR_METHOD] = $method;
 
-        parent::__construct($attributes, $translator, $tag);
+        parent::__construct(null, $intents, $attributes, $tag);
     }
 }

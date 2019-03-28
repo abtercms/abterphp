@@ -4,22 +4,26 @@ declare(strict_types=1);
 
 namespace AbterPhp\Framework\Grid;
 
-use AbterPhp\Framework\Grid\Collection\Actions;
-use AbterPhp\Framework\Grid\Collection\Filters;
+use AbterPhp\Framework\Constant\Html5;
+use AbterPhp\Framework\Domain\Entities\IStringerEntity;
+use AbterPhp\Framework\Grid\Component\Actions;
+use AbterPhp\Framework\Grid\Component\Filters;
 use AbterPhp\Framework\Grid\Pagination\IPagination;
 use AbterPhp\Framework\Grid\Table\ITable;
-use AbterPhp\Framework\Html\Component\Tag;
-use AbterPhp\Framework\I18n\ITranslator;
-use AbterPhp\Framework\Domain\Entities\IStringerEntity;
+use AbterPhp\Framework\Html\Component;
+use AbterPhp\Framework\Html\Helper\StringHelper;
+use AbterPhp\Framework\Html\INode;
+use AbterPhp\Framework\Html\ITemplater;
 
-class Grid extends Tag implements IGrid
+class Grid extends Component implements IGrid, ITemplater
 {
     /**
-     *   %1$s - filter
-     *   %2$s - actions
-     *   %3$s - table
+     * %1$s - filter
+     * %2$s - actions
+     * %3$s - table
+     * %4$s - pagination
      */
-    const TEMPLATE_CONTENT = '%1$s%4$s%2$s%3$s%4$s';
+    const DEFAULT_TEMPLATE = '%1$s%4$s%2$s%3$s%4$s';
 
     const TAG_GRID    = 'div';
     const TAG_FILTER  = 'div';
@@ -44,37 +48,42 @@ class Grid extends Tag implements IGrid
     /** @var Actions */
     protected $actions;
 
+    /** @var string */
+    protected $template = self::DEFAULT_TEMPLATE;
+
     /**
-     * @param ITable           $rows
-     * @param IPagination      $pagination
-     * @param Filters|null     $filters
-     * @param Actions|null     $massActions
-     * @param array            $attributes
-     * @param ITranslator|null $translator
+     * Grid constructor.
+     *
+     * @param ITable       $rows
+     * @param IPagination  $pagination
+     * @param Filters|null $filters
+     * @param Actions|null $massActions
+     * @param string[]     $intents
+     * @param array        $attributes
      */
     public function __construct(
         ITable $table,
         IPagination $pagination = null,
         Filters $filters = null,
         Actions $actions = null,
-        array $attributes = [],
-        ITranslator $translator = null
+        array $intents = [],
+        array $attributes = []
     ) {
         $this->table      = $table;
         $this->pagination = $pagination;
 
-        parent::__construct('', $attributes, $translator, static::TAG_GRID);
+        parent::__construct(null, $intents, $attributes, static::TAG_GRID);
 
-        $this->appendToAttribute(Tag::ATTRIBUTE_CLASS, static::ATTRIBUTE_GRID_CLASS);
+        $this->appendToAttribute(Html5::ATTR_CLASS, static::ATTRIBUTE_GRID_CLASS);
 
         if ($actions) {
             $this->actions = $actions;
-            $this->actions->appendToAttribute(Tag::ATTRIBUTE_CLASS, static::ATTRIBUTE_ACTIONS_CLASS);
+            $this->actions->appendToAttribute(Html5::ATTR_CLASS, static::ATTRIBUTE_ACTIONS_CLASS);
         }
 
         if ($filters) {
             $this->filters = $filters;
-            $this->filters->appendToAttribute(Tag::ATTRIBUTE_CLASS, static::ATTRIBUTE_FILTER_CLASS);
+            $this->filters->appendToAttribute(Html5::ATTR_CLASS, static::ATTRIBUTE_FILTER_CLASS);
         }
     }
 
@@ -83,6 +92,10 @@ class Grid extends Tag implements IGrid
      */
     public function getPageSize(): int
     {
+        if (!$this->pagination) {
+            throw new \LogicException();
+        }
+
         $pageSize = $this->pagination->getPageSize();
 
         return $pageSize;
@@ -101,6 +114,10 @@ class Grid extends Tag implements IGrid
      */
     public function getWhereConditions(): array
     {
+        if (!$this->filters) {
+            throw new \LogicException();
+        }
+
         return $this->filters->getWhereConditions();
     }
 
@@ -109,6 +126,10 @@ class Grid extends Tag implements IGrid
      */
     public function getSqlParams(): array
     {
+        if (!$this->filters) {
+            throw new \LogicException();
+        }
+
         $tableParams   = $this->table->getSqlParams();
         $filtersParams = $this->filters->getSqlParams();
 
@@ -122,6 +143,10 @@ class Grid extends Tag implements IGrid
      */
     public function setTotalCount(int $totalCount): IGrid
     {
+        if (!$this->pagination) {
+            throw new \LogicException();
+        }
+
         $this->pagination->setTotalCount($totalCount);
 
         return $this;
@@ -140,6 +165,47 @@ class Grid extends Tag implements IGrid
     }
 
     /**
+     * @param string $template
+     *
+     * @return $this
+     */
+    public function setTemplate(string $template): INode
+    {
+        $this->template = $template;
+
+        return $this;
+    }
+
+    /**
+     * @return INode[]
+     */
+    public function getNodes(): array
+    {
+        return $this->getAllNodes(0);
+    }
+
+    /**
+     * @param int $depth
+     *
+     * @return INode[]
+     */
+    public function getAllNodes(int $depth = -1): array
+    {
+        $nodes = [$this->filters, $this->pagination, $this->table];
+
+        if ($depth !== 0) {
+            $nodes = array_merge(
+                $this->filters->getAllNodes($depth - 1),
+                $this->pagination->getAllNodes($depth - 1),
+                $this->table->getAllNodes($depth - 1),
+                $nodes
+            );
+        }
+
+        return array_merge($nodes, parent::getAllNodes($depth));
+    }
+
+    /**
      * @return string
      */
     public function __toString(): string
@@ -149,8 +215,10 @@ class Grid extends Tag implements IGrid
         $table      = (string)$this->table;
         $pagination = (string)$this->pagination;
 
-        $this->content = sprintf(static::TEMPLATE_CONTENT, $filters, $actions, $table, $pagination);
+        $content = sprintf($this->template, $filters, $actions, $table, $pagination);
 
-        return parent::__toString();
+        $content = StringHelper::wrapInTag($content, $this->tag, $this->attributes);
+
+        return $content;
     }
 }

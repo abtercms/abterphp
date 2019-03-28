@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace AbterPhp\Files\Grid\Factory\Table\Header;
 
-use AbterPhp\Framework\Grid\Factory\Table\Header;
+use AbterPhp\Framework\Grid\Factory\Table\HeaderFactory;
 
-class FileDownload extends Header
+class FileDownload extends HeaderFactory
 {
     const GROUP_ID            = 'fileDownload-id';
     const GROUP_FILE          = 'fileDownload-file';

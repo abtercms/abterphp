@@ -5,14 +5,17 @@ declare(strict_types=1);
 namespace AbterPhp\Framework\Http\Controllers\Admin;
 
 use AbterPhp\Framework\Assets\AssetManager;
+use AbterPhp\Framework\Constant\Event;
+use AbterPhp\Framework\Databases\Queries\FoundRows;
+use AbterPhp\Framework\Domain\Entities\IStringerEntity;
+use AbterPhp\Framework\Events\GridReady;
 use AbterPhp\Framework\Grid\Factory\IBase as GridFactory;
 use AbterPhp\Framework\Grid\Pagination\Options as PaginationOptions;
 use AbterPhp\Framework\I18n\ITranslator;
-use AbterPhp\Framework\Session\FlashService;
-use AbterPhp\Framework\Service\RepoGrid\IRepoGrid;
-use AbterPhp\Framework\Domain\Entities\IStringerEntity;
-use AbterPhp\Framework\Databases\Queries\FoundRows;
 use AbterPhp\Framework\Orm\IGridRepo;
+use AbterPhp\Framework\Service\RepoGrid\IRepoGrid;
+use AbterPhp\Framework\Session\FlashService;
+use Opulence\Events\Dispatchers\IEventDispatcher;
 use Opulence\Http\Responses\Response;
 use Opulence\Routing\Urls\UrlGenerator;
 
@@ -51,26 +54,32 @@ abstract class GridAbstract extends AdminAbstract
     /** @var IRepoGrid */
     protected $repoGrid;
 
+    /** @var IEventDispatcher */
+    protected $eventDispatcher;
+
     /**
      * GridAbstract constructor.
      *
-     * @param FlashService $flashService
-     * @param ITranslator  $translator
-     * @param UrlGenerator $urlGenerator
-     * @param AssetManager $assets
-     * @param IRepoGrid    $repoGrid
+     * @param FlashService     $flashService
+     * @param ITranslator      $translator
+     * @param UrlGenerator     $urlGenerator
+     * @param AssetManager     $assets
+     * @param IRepoGrid        $repoGrid
+     * @param IEventDispatcher $eventDispatcher
      */
     public function __construct(
         FlashService $flashService,
         ITranslator $translator,
         UrlGenerator $urlGenerator,
         AssetManager $assets,
-        IRepoGrid $repoGrid
+        IRepoGrid $repoGrid,
+        IEventDispatcher $eventDispatcher
     ) {
         parent::__construct($flashService, $translator, $urlGenerator);
 
-        $this->assets   = $assets;
-        $this->repoGrid = $repoGrid;
+        $this->assets          = $assets;
+        $this->repoGrid        = $repoGrid;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**
@@ -81,6 +90,10 @@ abstract class GridAbstract extends AdminAbstract
     public function show(): Response
     {
         $grid = $this->repoGrid->createAndPopulate($this->request->getQuery(), $this->getBaseUrl());
+
+        $this->eventDispatcher->dispatch(Event::GRID_READY, new GridReady($grid));
+
+        $grid->setTranslator($this->translator);
 
         $title = $this->translator->translate(static::TITLE_SHOW, static::ENTITY_TITLE_PLURAL);
 

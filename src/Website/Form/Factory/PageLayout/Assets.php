@@ -5,30 +5,16 @@ declare(strict_types=1);
 namespace AbterPhp\Website\Form\Factory\PageLayout;
 
 use AbterPhp\Framework\Form\Container\FormGroup;
-use AbterPhp\Framework\Form\Container\IContainer;
 use AbterPhp\Framework\Form\Element\Textarea;
 use AbterPhp\Framework\Form\Extra\Help;
 use AbterPhp\Framework\Form\Label\Label;
-use AbterPhp\Framework\I18n\ITranslator;
+use AbterPhp\Framework\Html\INode;
 use AbterPhp\Website\Domain\Entities\PageLayout as Entity;
 
 class Assets
 {
-    /** @var ITranslator */
-    protected $translator;
-
     /**
-     * Hideable constructor.
-     *
-     * @param ITranslator $translator
-     */
-    public function __construct(ITranslator $translator)
-    {
-        $this->translator = $translator;
-    }
-
-    /**
-     * @return IContainer[]
+     * @return INode[]
      */
     public function create(Entity $entity): array
     {
@@ -45,20 +31,15 @@ class Assets
     /**
      * @param Entity $entity
      *
-     * @return IContainer
+     * @return INode
      */
-    protected function addHeader(Entity $entity): IContainer
+    protected function addHeader(Entity $entity): INode
     {
         $header = $entity->getAssets() ? $entity->getAssets()->getHeader() : '';
 
         $input = new Textarea('header', 'header', $header);
-        $label = new Label(
-            'header',
-            'pages:pageLayoutHeader',
-            [],
-            $this->translator
-        );
-        $help  = new Help('pages:pageLayoutHeaderHelp', [], $this->translator);
+        $label = new Label('header', 'pages:pageLayoutHeader');
+        $help  = new Help('pages:pageLayoutHeaderHelp');
 
         return new FormGroup($input, $label, $help);
     }
@@ -66,20 +47,15 @@ class Assets
     /**
      * @param Entity $entity
      *
-     * @return IContainer
+     * @return INode
      */
-    protected function addFooter(Entity $entity): IContainer
+    protected function addFooter(Entity $entity): INode
     {
         $footer = $entity->getAssets() ? $entity->getAssets()->getFooter() : '';
 
         $input = new Textarea('footer', 'footer', $footer);
-        $label = new Label(
-            'footer',
-            'pages:pageLayoutFooter',
-            [],
-            $this->translator
-        );
-        $help  = new Help('pages:pageLayoutHeaderHelp', [], $this->translator);
+        $label = new Label('footer', 'pages:pageLayoutFooter');
+        $help  = new Help('pages:pageLayoutHeaderHelp');
 
         return new FormGroup($input, $label, $help);
     }
@@ -87,20 +63,15 @@ class Assets
     /**
      * @param Entity $entity
      *
-     * @return IContainer
+     * @return INode
      */
-    protected function addCssFiles(Entity $entity): IContainer
+    protected function addCssFiles(Entity $entity): INode
     {
         $cssFiles = $entity->getAssets() ? $entity->getAssets()->getCssFiles() : [];
 
         $input = new Textarea('css-files', 'css-files', implode("\r\n", $cssFiles));
-        $label = new Label(
-            'css-files',
-            'pages:pageLayoutCssFiles',
-            [],
-            $this->translator
-        );
-        $help  = new Help('pages:pageLayoutCssFilesHelp', [], $this->translator);
+        $label = new Label('css-files', 'pages:pageLayoutCssFiles');
+        $help  = new Help('pages:pageLayoutCssFilesHelp');
 
         return new FormGroup($input, $label, $help);
     }
@@ -108,20 +79,15 @@ class Assets
     /**
      * @param Entity $entity
      *
-     * @return IContainer
+     * @return INode
      */
-    protected function addJsFiles(Entity $entity): IContainer
+    protected function addJsFiles(Entity $entity): INode
     {
         $jsFiles = $entity->getAssets() ? $entity->getAssets()->getJsFiles() : [];
 
         $input = new Textarea('js-files', 'js-files', implode("\r\n", $jsFiles));
-        $label = new Label(
-            'js-files',
-            'pages:pageLayoutJsFiles',
-            [],
-            $this->translator
-        );
-        $help  = new Help('pages:pageLayoutJsFilesHelp', [], $this->translator);
+        $label = new Label('js-files', 'pages:pageLayoutJsFiles');
+        $help  = new Help('pages:pageLayoutJsFilesHelp');
 
         return new FormGroup($input, $label, $help);
     }

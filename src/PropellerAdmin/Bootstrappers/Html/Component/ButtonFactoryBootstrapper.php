@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace AbterPhp\PropellerAdmin\Bootstrappers\Html\Component;
 
-use AbterPhp\Framework\Html\Component\Button;
+use AbterPhp\Framework\Constant\Html5;
 use AbterPhp\Framework\Html\Component\ButtonFactory;
 use Opulence\Ioc\Bootstrappers\Bootstrapper;
 use Opulence\Ioc\Bootstrappers\ILazyBootstrapper;
@@ -15,12 +15,12 @@ class ButtonFactoryBootstrapper extends Bootstrapper implements ILazyBootstrappe
 {
     /** @var array */
     protected $iconAttributes = [
-        Button::ATTRIBUTE_CLASS => 'material-icons media-left media-middle',
+        Html5::ATTR_CLASS => 'material-icons media-left media-middle',
     ];
 
     /** @var array */
     protected $textAttributes = [
-        Button::ATTRIBUTE_CLASS => 'media-body',
+        Html5::ATTR_CLASS => 'media-body',
     ];
 
     /**
@@ -41,7 +41,7 @@ class ButtonFactoryBootstrapper extends Bootstrapper implements ILazyBootstrappe
         /** @var UrlGenerator $urlGenerator */
         $urlGenerator = $container->resolve(UrlGenerator::class);
 
-        $buttonFactory = new ButtonFactory($urlGenerator, $this->iconAttributes, $this->textAttributes);
+        $buttonFactory = new ButtonFactory($urlGenerator, $this->textAttributes, $this->iconAttributes);
 
         $container->bindInstance(ButtonFactory::class, $buttonFactory);
     }

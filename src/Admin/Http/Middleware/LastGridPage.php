@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace AbterPhp\Admin\Http\Middleware;
 
 use AbterPhp\Framework\Constant\Session;
-use AbterPhp\Framework\Helper\ArrayHelper;
+use AbterPhp\Framework\Html\Helper\ArrayHelper;
 use Closure;
 use Opulence\Http\Requests\Request;
 use Opulence\Http\Responses\Response;

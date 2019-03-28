@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace AbterPhp\Framework\Form\Element;
 
-use AbterPhp\Framework\Helper\ArrayHelper;
+use AbterPhp\Framework\Constant\Html5;
 use AbterPhp\Framework\Html\Component\StubAttributeFactory;
+use AbterPhp\Framework\Html\Helper\ArrayHelper;
 use AbterPhp\Framework\I18n\MockTranslatorFactory;
 
 class InputTest extends \PHPUnit\Framework\TestCase
@@ -17,8 +18,7 @@ class InputTest extends \PHPUnit\Framework\TestCase
     {
         $attributes = StubAttributeFactory::createAttributes();
 
-        $finalAttribs = ArrayHelper::mergeAttributes([Input::ATTRIBUTE_CLASS => 'form-control'], $attributes);
-        $str          = ArrayHelper::toAttributes($finalAttribs);
+        $str = ArrayHelper::toAttributes($attributes);
 
         return [
             'simple'               => [
@@ -28,7 +28,7 @@ class InputTest extends \PHPUnit\Framework\TestCase
                 [],
                 null,
                 null,
-                '<input class="form-control" id="abc" type="text" name="bcd" value="val">',
+                '<input id="abc" type="text" name="bcd" value="val">',
             ],
             'missing translations' => [
                 'abc',
@@ -37,7 +37,7 @@ class InputTest extends \PHPUnit\Framework\TestCase
                 [],
                 [],
                 null,
-                '<input class="form-control" id="abc" type="text" name="bcd" value="val">',
+                '<input id="abc" type="text" name="bcd" value="val">',
             ],
             'extra attributes'     => [
                 'abc',
@@ -54,13 +54,13 @@ class InputTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider renderProvider
      *
-     * @param string      $inputId
-     * @param string      $name
-     * @param string      $value
-     * @param array       $attributes
-     * @param array|null  $translations
-     * @param string|null $tag
-     * @param string      $expectedResult
+     * @param string        $inputId
+     * @param string        $name
+     * @param string        $value
+     * @param string[][]    $attributes
+     * @param string[]|null $translations
+     * @param string|null   $tag
+     * @param string        $expectedResult
      */
     public function testRender(
         string $inputId,
@@ -81,12 +81,12 @@ class InputTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @param string      $inputId
-     * @param string      $name
-     * @param string      $value
-     * @param array       $attributes
-     * @param array|null  $translations
-     * @param string|null $tag
+     * @param string        $inputId
+     * @param string        $name
+     * @param string        $value
+     * @param string[][]    $attributes
+     * @param string[]|null $translations
+     * @param string|null   $tag
      *
      * @return Input
      */
@@ -100,6 +100,70 @@ class InputTest extends \PHPUnit\Framework\TestCase
     ): Input {
         $translatorMock = MockTranslatorFactory::createSimpleTranslator($this, $translations);
 
-        return new Input($inputId, $name, $value, $attributes, $translatorMock, $tag);
+        $input = new Input($inputId, $name, $value, [], $attributes, $tag);
+
+        $input->setTranslator($translatorMock);
+
+        return $input;
+    }
+
+    public function testSetValueSetsAttribute()
+    {
+        $expectedResult = 'foo';
+
+        $sut = new Textarea('id', 'name');
+
+        $sut->setValue($expectedResult);
+
+        $this->assertEquals($sut->getAttribute(Html5::ATTR_VALUE), $expectedResult);
+    }
+
+    /**
+     * @return array
+     */
+    public function setValueFailureProvider(): array
+    {
+        return [
+            'array'    => [[]],
+            'stdclass' => [new \stdClass()],
+            'int'      => [123],
+            'bool'     => [false],
+            'float'    => [123.53],
+        ];
+    }
+
+    /**
+     * @dataProvider setValueFailureProvider
+     * @expectedException \InvalidArgumentException
+     *
+     * @param mixed $value
+     */
+    public function testSetValueThrowsExceptionOnInvalid($value)
+    {
+        $sut = new Input('id', 'name');
+
+        $sut->setValue($value);
+    }
+
+    public function testGetNameReturnsEmptyStringIfUnset()
+    {
+        $sut = new Input('id', 'name');
+
+        $sut->unsetAttribute(Html5::ATTR_NAME);
+
+        $actualResult = $sut->getName();
+
+        $this->assertSame('', $actualResult);
+    }
+
+    public function testGetName()
+    {
+        $expectedResult = 'foo';
+
+        $sut = new Input('id', $expectedResult);
+
+        $actualResult = $sut->getName();
+
+        $this->assertEquals($expectedResult, $actualResult);
     }
 }

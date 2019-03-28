@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace AbterPhp\Website\Form\Factory;
 
+use AbterPhp\Framework\Constant\Html5;
 use AbterPhp\Framework\Constant\Session;
 use AbterPhp\Framework\Form\Component\Option;
 use AbterPhp\Framework\Form\Container\FormGroup;
@@ -118,12 +119,8 @@ class Page extends Base
      */
     protected function addIdentifier(Entity $entity): Page
     {
-        $input = new Input(
-            'identifier',
-            'identifier',
-            $entity->getIdentifier()
-        );
-        $label = new Label('title', 'pages:pageIdentifier', [], $this->translator);
+        $input = new Input('identifier', 'identifier', $entity->getIdentifier());
+        $label = new Label('title', 'pages:pageIdentifier');
 
         $this->form[] = new FormGroup($input, $label);
 
@@ -137,12 +134,8 @@ class Page extends Base
      */
     protected function addTitle(Entity $entity): Page
     {
-        $input = new Input(
-            'title',
-            'title',
-            $entity->getTitle()
-        );
-        $label = new Label('title', 'pages:pageTitle', [], $this->translator);
+        $input = new Input('title', 'title', $entity->getTitle());
+        $label = new Label('title', 'pages:pageTitle');
 
         $this->form[] = new FormGroup($input, $label);
 
@@ -156,25 +149,16 @@ class Page extends Base
      */
     protected function addDescription(Entity $entity): Page
     {
-        $input = new Textarea(
-            'description',
-            'description',
-            $entity->getMeta()->getDescription()
-        );
-        $label = new Countable(
-            'description',
-            'pages:pageDescription',
-            Countable::DEFAULT_SIZE,
-            [],
-            $this->translator
-        );
-        $help  = new Help('pages:pageDescriptionHelp', [], $this->translator);
+        $input = new Textarea('description', 'description', $entity->getMeta()->getDescription());
+        $label = new Countable('description', 'pages:pageDescription', Countable::DEFAULT_SIZE);
+        $help  = new Help('pages:pageDescriptionHelp');
 
         $this->form[] = new FormGroup(
             $input,
             $label,
             $help,
-            [FormGroup::ATTRIBUTE_CLASS => FormGroup::CLASS_COUNTABLE]
+            [],
+            [Html5::ATTR_CLASS => FormGroup::CLASS_COUNTABLE]
         );
 
         return $this;
@@ -204,13 +188,9 @@ class Page extends Base
      */
     protected function addBody(Entity $entity): Page
     {
-        $input = new Textarea(
-            'body',
-            'body',
-            $entity->getBody(),
-            [Textarea::ATTRIBUTE_CLASS => ['wysiwyg'], Textarea::ATTRIBUTE_ROWS => '15']
-        );
-        $label = new Label('body', 'pages:pageBody', [], $this->translator);
+        $attribs = [Html5::ATTR_CLASS => 'wysiwyg', Html5::ATTR_ROWS => '15'];
+        $input   = new Textarea('body', 'body', $entity->getBody(), [], $attribs);
+        $label   = new Label('body', 'pages:pageBody');
 
         $this->form[] = new FormGroup($input, $label);
 
@@ -254,7 +234,7 @@ class Page extends Base
     protected function createLayoutIdOptions(array $allLayouts, ?int $layoutId): array
     {
         $options   = [];
-        $options[] = new Option('', 'framework:none', false, [], $this->translator);
+        $options[] = new Option('', 'framework:none', false);
         foreach ($allLayouts as $layout) {
             $content    = $layout->getIdentifier();
             $isSelected = (int)$layout->getId() === $layoutId;
@@ -285,7 +265,7 @@ class Page extends Base
      */
     protected function createLayoutIdLabel(): Label
     {
-        return new Label('layout_id', 'pages:pageLayoutIdLabel', [], $this->translator);
+        return new Label('layout_id', 'pages:pageLayoutIdLabel');
     }
 
     /**
@@ -310,12 +290,8 @@ class Page extends Base
      */
     protected function addLayoutHidden(Entity $entity): Page
     {
-        $this->form[] = new Input(
-            'layout',
-            'layout',
-            htmlspecialchars($entity->getLayout()),
-            [Input::ATTRIBUTE_TYPE => Input::TYPE_HIDDEN]
-        );
+        $attribs      = [Html5::ATTR_TYPE => Input::TYPE_HIDDEN];
+        $this->form[] = new Input('layout', 'layout', $entity->getLayout(), [], $attribs);
 
         return $this;
     }
@@ -327,15 +303,10 @@ class Page extends Base
      */
     protected function addLayoutTextarea(Entity $entity): Page
     {
-        $input = new Textarea(
-            'layout',
-            'layout',
-            htmlspecialchars($entity->getLayout()),
-            [Textarea::ATTRIBUTE_ROWS => '15']
-        );
-        $label = new Label('layout', 'pages:pageLayoutLabel', [], $this->translator);
+        $input = new Textarea('layout', 'layout', $entity->getLayout(), [], [Html5::ATTR_ROWS => '15']);
+        $label = new Label('layout', 'pages:pageLayoutLabel');
 
-        $this->form[] = new FormGroup($input, $label, null, [FormGroup::ATTRIBUTE_ID => 'layout-div']);
+        $this->form[] = new FormGroup($input, $label, null, [], [Html5::ATTR_ID => 'layout-div']);
 
         return $this;
     }
@@ -353,8 +324,10 @@ class Page extends Base
         }
 
         $hideable = new Hideable($this->translator->translate('pages:pageAssetsBtn'));
-        foreach ($this->assetsFactory->create($entity) as $component) {
-            $hideable[] = $component;
+
+        $nodes = $this->assetsFactory->create($entity);
+        foreach ($nodes as $node) {
+            $hideable[] = $node;
         }
 
         $this->form[] = $hideable;

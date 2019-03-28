@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace AbterPhp\Framework\Form\Element;
 
-use AbterPhp\Framework\Helper\ArrayHelper;
+use AbterPhp\Framework\Constant\Html5;
 use AbterPhp\Framework\Html\Component\StubAttributeFactory;
+use AbterPhp\Framework\Html\Helper\ArrayHelper;
 use AbterPhp\Framework\I18n\MockTranslatorFactory;
 
 class TextareaTest extends \PHPUnit\Framework\TestCase
@@ -15,10 +16,8 @@ class TextareaTest extends \PHPUnit\Framework\TestCase
      */
     public function renderProvider()
     {
-        $attributes = StubAttributeFactory::createAttributes();
-
-        $finalAttribs = ArrayHelper::mergeAttributes([Textarea::ATTRIBUTE_CLASS => 'form-control'], $attributes);
-        $str          = ArrayHelper::toAttributes($finalAttribs);
+        $attribs = StubAttributeFactory::createAttributes();
+        $str     = ArrayHelper::toAttributes($attribs);
 
         return [
             'simple'               => [
@@ -28,7 +27,7 @@ class TextareaTest extends \PHPUnit\Framework\TestCase
                 [],
                 null,
                 null,
-                '<textarea class="form-control" id="abc" rows="3" name="bcd">val</textarea>',
+                '<textarea id="abc" rows="3" name="bcd">val</textarea>',
             ],
             'missing translations' => [
                 'abc',
@@ -37,13 +36,13 @@ class TextareaTest extends \PHPUnit\Framework\TestCase
                 [],
                 [],
                 null,
-                '<textarea class="form-control" id="abc" rows="3" name="bcd">val</textarea>',
+                '<textarea id="abc" rows="3" name="bcd">val</textarea>',
             ],
             'extra attributes'     => [
                 'abc',
                 'bcd',
                 'val',
-                $attributes,
+                $attribs,
                 [],
                 null,
                 "<textarea$str id=\"abc\" rows=\"3\" name=\"bcd\">val</textarea>",
@@ -54,13 +53,13 @@ class TextareaTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider renderProvider
      *
-     * @param string      $inputId
-     * @param string      $name
-     * @param string      $value
-     * @param array       $attributes
-     * @param array|null  $translations
-     * @param string|null $tag
-     * @param string      $expectedResult
+     * @param string        $inputId
+     * @param string        $name
+     * @param string        $value
+     * @param string[][]    $attributes
+     * @param string[]|null $translations
+     * @param string|null   $tag
+     * @param string        $expectedResult
      */
     public function testRender(
         string $inputId,
@@ -81,12 +80,12 @@ class TextareaTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @param string      $inputId
-     * @param string      $name
-     * @param string      $value
-     * @param array       $attributes
-     * @param array|null  $translations
-     * @param string|null $tag
+     * @param string        $inputId
+     * @param string        $name
+     * @param string        $value
+     * @param string[][]    $attributes
+     * @param string[]|null $translations
+     * @param string|null   $tag
      *
      * @return Textarea
      */
@@ -100,6 +99,70 @@ class TextareaTest extends \PHPUnit\Framework\TestCase
     ): Textarea {
         $translatorMock = MockTranslatorFactory::createSimpleTranslator($this, $translations);
 
-        return new Textarea($inputId, $name, $value, $attributes, $translatorMock, $tag);
+        $textarea = new Textarea($inputId, $name, $value, [], $attributes, $tag);
+
+        $textarea->setTranslator($translatorMock);
+
+        return $textarea;
+    }
+
+    public function testSetValueSetsAttribute()
+    {
+        $expectedResult = 'foo';
+
+        $sut = new Textarea('id', 'name');
+
+        $sut->setValue($expectedResult);
+
+        $this->assertEquals($sut->getAttribute(Html5::ATTR_VALUE), $expectedResult);
+    }
+
+    /**
+     * @return array
+     */
+    public function setValueFailureProvider(): array
+    {
+        return [
+            'array'    => [[]],
+            'stdclass' => [new \stdClass()],
+            'int'      => [123],
+            'bool'     => [false],
+            'float'    => [123.53],
+        ];
+    }
+
+    /**
+     * @dataProvider setValueFailureProvider
+     * @expectedException \InvalidArgumentException
+     *
+     * @param mixed $value
+     */
+    public function testSetValueThrowsExceptionOnInvalid($value)
+    {
+        $sut = new Textarea('id', 'name');
+
+        $sut->setValue($value);
+    }
+
+    public function testGetNameReturnsEmptyStringIfUnset()
+    {
+        $sut = new Textarea('id', 'name');
+
+        $sut->unsetAttribute(Html5::ATTR_NAME);
+
+        $actualResult = $sut->getName();
+
+        $this->assertSame('', $actualResult);
+    }
+
+    public function testGetName()
+    {
+        $expectedResult = 'foo';
+
+        $sut = new Textarea('id', $expectedResult);
+
+        $actualResult = $sut->getName();
+
+        $this->assertEquals($expectedResult, $actualResult);
     }
 }

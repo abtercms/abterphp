@@ -4,15 +4,19 @@ declare(strict_types=1);
 
 namespace AbterPhp\Framework\Grid\Cell;
 
-use AbterPhp\Framework\Html\Component\Tag;
+use AbterPhp\Framework\Constant\Html5;
+use AbterPhp\Framework\Html\Component;
+use AbterPhp\Framework\Html\Helper\StringHelper;
+use AbterPhp\Framework\Html\INode;
 use AbterPhp\Framework\I18n\ITranslator;
 
-class Cell extends Tag implements ICell
+class Cell extends Component implements ICell
 {
-    const DEFAULT_TAG = self::BODY;
+    const DEFAULT_TAG = Html5::TAG_TD;
 
-    const HEAD = 'th';
-    const BODY = 'td';
+    const INTENT_ACTIONS = 'actions';
+
+    const GROUP_ACTIONS = 'actions';
 
     /** @var string */
     protected $group = '';
@@ -20,24 +24,23 @@ class Cell extends Tag implements ICell
     /**
      * Cell constructor.
      *
-     * @param string           $content
-     * @param string           $group
-     * @param array            $attributes
-     * @param ITranslator|null $translator
-     * @param string|null      $tag
+     * @param INode[]|INode|string|null $content
+     * @param string                    $group
+     * @param string[]                  $intents
+     * @param array                     $attributes
+     * @param ITranslator|null          $translator
+     * @param string|null               $tag
      */
     public function __construct(
-        string $content,
+        $content,
         string $group,
+        array $intents = [],
         array $attributes = [],
-        ?ITranslator $translator = null,
         ?string $tag = null
     ) {
+        parent::__construct($content, $intents, $attributes, $tag);
+
         $this->group = $group;
-
-        parent::__construct($content, $attributes, $translator, $tag);
-
-        $this->appendToAttribute(Tag::ATTRIBUTE_CLASS, $this->tag . '-' . $group);
     }
 
     /**

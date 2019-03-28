@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace AbterPhp\Admin\Grid\Factory\Table\Header;
 
-use AbterPhp\Framework\Grid\Factory\Table\Header;
+use AbterPhp\Framework\Grid\Factory\Table\HeaderFactory;
 
-class User extends Header
+class User extends HeaderFactory
 {
     const GROUP_ID       = 'user-id';
     const GROUP_USERNAME = 'user-username';

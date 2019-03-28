@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace AbterPhp\Framework\Session;
 
-use AbterPhp\Framework\Helper\ArrayHelper;
+use AbterPhp\Framework\Session\Helper\ArrayHelper;
 use AbterPhp\Framework\I18n\ITranslator;
 use Opulence\Sessions\ISession;
 

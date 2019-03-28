@@ -5,32 +5,18 @@ declare(strict_types=1);
 namespace AbterPhp\Website\Form\Factory\Page;
 
 use AbterPhp\Framework\Form\Container\FormGroup;
-use AbterPhp\Framework\Form\Container\IContainer;
 use AbterPhp\Framework\Form\Element\Input;
 use AbterPhp\Framework\Form\Element\Textarea;
 use AbterPhp\Framework\Form\Extra\Help;
 use AbterPhp\Framework\Form\Label\Countable;
 use AbterPhp\Framework\Form\Label\Label;
-use AbterPhp\Framework\I18n\ITranslator;
+use AbterPhp\Framework\Html\INode;
 use AbterPhp\Website\Domain\Entities\Page as Entity;
 
 class Meta
 {
-    /** @var ITranslator */
-    protected $translator;
-
     /**
-     * Hideable constructor.
-     *
-     * @param ITranslator $translator
-     */
-    public function __construct(ITranslator $translator)
-    {
-        $this->translator = $translator;
-    }
-
-    /**
-     * @return IContainer[]
+     * @return INode[]
      */
     public function create(Entity $entity): array
     {
@@ -50,13 +36,13 @@ class Meta
     /**
      * @param Entity $entity
      *
-     * @return IContainer
+     * @return INode
      */
-    protected function addOGTitle(Entity $entity): IContainer
+    protected function addOGTitle(Entity $entity): INode
     {
         $input = new Input('og-title', 'og-title', $entity->getMeta()->getOGTitle());
-        $label = new Label('og-title', 'pages:pageOGTitle', [], $this->translator);
-        $help  = new Help('pages:pageOGTitleHelp', [], $this->translator);
+        $label = new Label('og-title', 'pages:pageOGTitle');
+        $help  = new Help('pages:pageOGTitleHelp');
 
         return new FormGroup($input, $label, $help);
     }
@@ -64,13 +50,13 @@ class Meta
     /**
      * @param Entity $entity
      *
-     * @return IContainer
+     * @return INode
      */
-    protected function addOGImage(Entity $entity): IContainer
+    protected function addOGImage(Entity $entity): INode
     {
         $input = new Input('og-image', 'og-image', $entity->getMeta()->getOGImage());
-        $label = new Label('og-image', 'pages:pageOGImage', [], $this->translator);
-        $help  = new Help('pages:pageOGImageHelp', [], $this->translator);
+        $label = new Label('og-image', 'pages:pageOGImage');
+        $help  = new Help('pages:pageOGImageHelp');
 
         return new FormGroup($input, $label, $help);
     }
@@ -78,20 +64,17 @@ class Meta
     /**
      * @param Entity $entity
      *
-     * @return IContainer
+     * @return INode
      */
-    protected function addOGDescription(Entity $entity): IContainer
+    protected function addOGDescription(Entity $entity): INode
     {
         $input = new Textarea('og-description', 'og-description', $entity->getMeta()->getOGDescription());
         $label = new Countable(
             'og-description',
             'pages:pageOGDescription',
-            Countable::DEFAULT_SIZE,
-            null,
-            [],
-            $this->translator
+            Countable::DEFAULT_SIZE
         );
-        $help  = new Help('pages:pageOGDescriptionHelp', [], $this->translator);
+        $help  = new Help('pages:pageOGDescriptionHelp');
 
         return new FormGroup($input, $label, $help);
     }
@@ -99,13 +82,13 @@ class Meta
     /**
      * @param Entity $entity
      *
-     * @return IContainer
+     * @return INode
      */
-    protected function addAuthor(Entity $entity): IContainer
+    protected function addAuthor(Entity $entity): INode
     {
         $input = new Input('author', 'author', $entity->getMeta()->getAuthor());
-        $label = new Label('author', 'pages:pageAuthor', [], $this->translator);
-        $help  = new Help('pages:pageAuthor', [], $this->translator);
+        $label = new Label('author', 'pages:pageAuthor');
+        $help  = new Help('pages:pageAuthor');
 
         return new FormGroup($input, $label, $help);
     }
@@ -113,13 +96,13 @@ class Meta
     /**
      * @param Entity $entity
      *
-     * @return IContainer
+     * @return INode
      */
-    protected function addCopyright(Entity $entity): IContainer
+    protected function addCopyright(Entity $entity): INode
     {
         $input = new Input('copyright', 'copyright', $entity->getMeta()->getAuthor());
-        $label = new Label('copyright', 'pages:pageCopyright', [], $this->translator);
-        $help  = new Help('pages:pageCopyrightHelp', [], $this->translator);
+        $label = new Label('copyright', 'pages:pageCopyright');
+        $help  = new Help('pages:pageCopyrightHelp');
 
         return new FormGroup($input, $label, $help);
     }
@@ -127,13 +110,13 @@ class Meta
     /**
      * @param Entity $entity
      *
-     * @return IContainer
+     * @return INode
      */
-    protected function addKeywords(Entity $entity): IContainer
+    protected function addKeywords(Entity $entity): INode
     {
         $input = new Input('keywords', 'keywords', $entity->getMeta()->getKeywords());
-        $label = new Label('keywords', 'pages:pageKeywords', [], $this->translator);
-        $help  = new Help('pages:pageKeywordsHelp', [], $this->translator);
+        $label = new Label('keywords', 'pages:pageKeywords');
+        $help  = new Help('pages:pageKeywordsHelp');
 
         return new FormGroup($input, $label, $help);
     }
@@ -141,13 +124,13 @@ class Meta
     /**
      * @param Entity $entity
      *
-     * @return IContainer
+     * @return INode
      */
-    protected function addRobots(Entity $entity): IContainer
+    protected function addRobots(Entity $entity): INode
     {
         $input = new Input('robots', 'robots', $entity->getMeta()->getRobots());
-        $label = new Label('robots', 'pages:pageRobots', [], $this->translator);
-        $help  = new Help('pages:pageRobotsHelp', [], $this->translator);
+        $label = new Label('robots', 'pages:pageRobots');
+        $help  = new Help('pages:pageRobotsHelp');
 
         return new FormGroup($input, $label, $help);
     }

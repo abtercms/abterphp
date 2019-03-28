@@ -15,11 +15,17 @@ class StringHelperTest extends \PHPUnit\Framework\TestCase
             'empty'           => ['', null, [], '', ''],
             'simple'          => ['A', null, [], '', 'A'],
             'html'            => ['A', 'B', [], '', '<B>A</B>'],
-            'with-attributes' => ['A', 'B', ['foo' => 'foo', 'bar' => 'baz'], '', "<B foo=\"foo\" bar=\"baz\">A</B>"],
+            'with-attributes' => [
+                'A',
+                'B',
+                ['foo' => ['foo'], 'bar' => ['baz']],
+                '',
+                "<B foo=\"foo\" bar=\"baz\">A</B>",
+            ],
             'whitespace'      => [
                 'A',
                 'B',
-                ['foo' => 'foo', 'bar' => 'baz'],
+                ['foo' => ['foo'], 'bar' => ['baz']],
                 '  ',
                 "  <B foo=\"foo\" bar=\"baz\">\nA\n  </B>",
             ],
@@ -31,12 +37,17 @@ class StringHelperTest extends \PHPUnit\Framework\TestCase
      *
      * @param string      $content
      * @param string|null $tag
-     * @param array       $attributes
+     * @param string[][]  $attributes
      * @param string      $whitespace
      * @param string      $expectedResult
      */
-    public function testWrapInTag($content, $tag, $attributes, $whitespace, $expectedResult)
-    {
+    public function testWrapInTag(
+        string $content,
+        ?string $tag,
+        array $attributes,
+        string $whitespace,
+        string $expectedResult
+    ) {
         $actualResult = StringHelper::wrapInTag($content, $tag, $attributes, $whitespace);
 
         $this->assertSame($expectedResult, $actualResult);

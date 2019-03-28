@@ -162,62 +162,61 @@ before the first stable version.
 
 ### First alpha musts:
 
-1. Make the frontend framework decoupled from the backend system
-2. Pick new frontend framework for backend system and implement it
-3. ~~Use ILogger instead of Logger~~
-4. More fine grained authorization
+1. ~~Make the frontend framework decoupled from the backend system~~
+1. ~~Use ILogger instead of Logger~~
+1. More fine grained authorization
    - ACL implemented for pages
    - ~~Advanced settings access role for pages~~
    - ~~Multiple user group for one user~~
    - ~~New user roles: file uploader, layout designer, page writer~~
-5. Improve security implementing related headers as recommended:
+1. Improve security implementing related headers as recommended:
    - https://medium.freecodecamp.org/secure-your-web-application-with-these-http-headers-fd66e0367628
    - https://medium.freecodecamp.org/web-security-hardening-http-cookies-be8d8d8016e1
-6. Improve validation
+1. Improve validation
    - Review validation factories
    - Create new validation rules where needed
-7. 70%+ of PHP source code unit tested, except for bootstrappers
-8. Verify that localhost_router.php works as expected or remove it if too hard to fix
-9. Modular asset management
-10. Complete test automation and automatic reviews set up
-11. ~~Refactor module manager~~
-12. Test AbterPHP on OSX and Windows 10.
-13. Ensure that user creation enforces good passwords in CLI.
-14. Ulid IDS
-15. ~~Remove $value in Select constructor~~
-16. ~~Switch `$attribute` and `$tag` order~~
+1. 70%+ of PHP source code unit tested, except for bootstrappers
+1. Verify that `localhost_router.php` works as expected or remove it if too hard to fix
+1. Modular asset management
+1. Complete test automation and automatic reviews set up
+1. ~~Refactor module manager~~
+1. Ensure that user creation enforces good passwords in CLI.
+1. Ulid IDS
+1. ~~Remove $value in Select constructor~~
+1. ~~Switch `$attribute` and `$tag` order~~
+1. Test AbterPHP on OSX and Windows 10.
 
 ### First beta musts:
 
 1. API implemented
-2. 1 grid is covered with acceptance tests (filters, pagination included)
-3. 1 form is covered with acceptance tests (displaying with new and existing entity and saving included)
-4. Documentation page exists
-5. Highlight form fields with validation errors
-6. 12-factor compliance reviewed and improvements planned
-7. Existing phpmd ignore cases reviewed
-8. Review and refactor global `$abterModuleManager` usage
-9. Must-accept-cookie module
-10. More useful dashboard (community input?)
-11. Test loading entities that don't exist or faulty
-12. Fix empty exceptions (\LogicException, \RuntimeException, \InvalidArgumentException)
-13. Ensure identifiers do not contain a comma (explode issue)
-14. 70%+ of JS source code unit tested
-15. Enable `Generic.Commenting.DocComment` phpcs rules
+1. 1 grid is covered with acceptance tests (filters, pagination included)
+1. 1 form is covered with acceptance tests (displaying with new and existing entity and saving included)
+1. Documentation page exists
+1. Highlight form fields with validation errors
+1. 12-factor compliance reviewed and improvements planned
+1. Existing phpmd ignore cases reviewed
+1. Review and refactor global `$abterModuleManager` usage
+1. Must-accept-cookie module
+1. More useful dashboard (community input?)
+1. Test loading entities that don't exist or faulty
+1. Fix empty exceptions (\LogicException, \RuntimeException, \InvalidArgumentException)
+1. Ensure identifiers do not contain a comma (explode issue)
+1. 70%+ of JS source code unit tested
+1. Enable `Generic.Commenting.DocComment` phpcs rules
 
 ### 1.0 musts:
 
 1. At least 1 use cases for each module is implemented in acceptance tests
-2. All grids, paginations, filters covered with acceptance tests
-3. Displaying and saving of all forms and proper returns covered with acceptance tests
-4. API test complete
-5. Refactor helpers
-6. AbterPhp\Framework\Form\Factory\Base::getMultiSelectSize -> move to helper or Select
-7. Refactor configs
-8. Refactor bootstrappers (again)
-9. Review all constants
-10. Documentation complete
-11. 12-factor compliance clearly stated
+1. All grids, paginations, filters covered with acceptance tests
+1. Displaying and saving of all forms and proper returns covered with acceptance tests
+1. API test complete
+1. Refactor helpers
+1. AbterPhp\Framework\Form\Factory\Base::getMultiSelectSize -> move to helper or Select
+1. Refactor configs
+1. Refactor bootstrappers (again)
+1. Review all constants
+1. Documentation complete
+1. 12-factor compliance clearly stated
 
 ## Ideas
 
@@ -231,10 +230,13 @@ before the first stable version.
    - https://github.com/RobThree/TwoFactorAuth
    - https://www.idontplaydarts.com/2011/07/google-totp-two-factor-authentication-for-php/
    - https://medium.com/@richb_/easy-two-factor-authentication-2fa-with-google-authenticator-php-108388a1ea23
+   - https://medium.com/s/the-firewall/episode-3-multifactor-authentication-b25e9e1d2c18
  - Serverless support
    - S3 usage as filesystem?
  - Contact form table holding contact details
  - Simple blog module
+ - Pick new frontend framework for backend system and implement it
+ - Actions to extend Cell
 
 ### Ideas for 1.1:
  - WYSIWYG file selector

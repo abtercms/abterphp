@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace AbterPhp\Website\Form\Factory\Page;
 
 use AbterPhp\Framework\Form\Container\FormGroup;
-use AbterPhp\Framework\Form\Container\IContainer;
 use AbterPhp\Framework\Form\Element\Textarea;
 use AbterPhp\Framework\Form\Extra\Help;
 use AbterPhp\Framework\Form\Label\Label;
+use AbterPhp\Framework\Html\INode;
 use AbterPhp\Framework\I18n\ITranslator;
 use AbterPhp\Website\Domain\Entities\Page as Entity;
 
@@ -28,7 +28,7 @@ class Assets
     }
 
     /**
-     * @return IContainer[]
+     * @return INode[]
      */
     public function create(Entity $entity): array
     {
@@ -45,20 +45,15 @@ class Assets
     /**
      * @param Entity $entity
      *
-     * @return IContainer
+     * @return INode
      */
-    protected function addHeader(Entity $entity): IContainer
+    protected function addHeader(Entity $entity): INode
     {
         $header = $entity->getAssets() ? $entity->getAssets()->getHeader() : '';
 
         $input = new Textarea('header', 'header', $header);
-        $label = new Label(
-            'header',
-            'pages:pageHeader',
-            [],
-            $this->translator
-        );
-        $help  = new Help('pages:pageHeaderHelp', [], $this->translator);
+        $label = new Label('header', 'pages:pageHeader');
+        $help  = new Help('pages:pageHeaderHelp');
 
         return new FormGroup($input, $label, $help);
     }
@@ -66,20 +61,15 @@ class Assets
     /**
      * @param Entity $entity
      *
-     * @return IContainer
+     * @return INode
      */
-    protected function addFooter(Entity $entity): IContainer
+    protected function addFooter(Entity $entity): INode
     {
         $footer = $entity->getAssets() ? $entity->getAssets()->getFooter() : '';
 
         $input = new Textarea('footer', 'footer', $footer);
-        $label = new Label(
-            'footer',
-            'pages:pageFooter',
-            [],
-            $this->translator
-        );
-        $help  = new Help('pages:pageHeaderHelp', [], $this->translator);
+        $label = new Label('footer', 'pages:pageFooter');
+        $help  = new Help('pages:pageHeaderHelp');
 
         return new FormGroup($input, $label, $help);
     }
@@ -87,20 +77,15 @@ class Assets
     /**
      * @param Entity $entity
      *
-     * @return IContainer
+     * @return INode
      */
-    protected function addCssFiles(Entity $entity): IContainer
+    protected function addCssFiles(Entity $entity): INode
     {
         $cssFiles = $entity->getAssets() ? $entity->getAssets()->getCssFiles() : [];
 
         $input = new Textarea('css-files', 'css-files', implode("\r\n", $cssFiles));
-        $label = new Label(
-            'css-files',
-            'pages:pageCssFiles',
-            [],
-            $this->translator
-        );
-        $help  = new Help('pages:pageCssFilesHelp', [], $this->translator);
+        $label = new Label('css-files', 'pages:pageCssFiles');
+        $help  = new Help('pages:pageCssFilesHelp');
 
         return new FormGroup($input, $label, $help);
     }
@@ -108,20 +93,15 @@ class Assets
     /**
      * @param Entity $entity
      *
-     * @return IContainer
+     * @return INode
      */
-    protected function addJsFiles(Entity $entity): IContainer
+    protected function addJsFiles(Entity $entity): INode
     {
         $jsFiles = $entity->getAssets() ? $entity->getAssets()->getJsFiles() : [];
 
         $input = new Textarea('js-files', 'js-files', implode("\r\n", $jsFiles));
-        $label = new Label(
-            'js-files',
-            'pages:pageJsFiles',
-            [],
-            $this->translator
-        );
-        $help  = new Help('pages:pageJsFilesHelp', [], $this->translator);
+        $label = new Label('js-files', 'pages:pageJsFiles');
+        $help  = new Help('pages:pageJsFilesHelp');
 
         return new FormGroup($input, $label, $help);
     }

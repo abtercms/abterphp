@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace AbterPhp\Website\Form\Factory;
 
+use AbterPhp\Framework\Constant\Html5;
 use AbterPhp\Framework\Constant\Session;
 use AbterPhp\Framework\Form\Component\Option;
 use AbterPhp\Framework\Form\Container\FormGroup;
@@ -99,12 +100,8 @@ class Block extends Base
      */
     protected function addIdentifier(Entity $entity): Block
     {
-        $input = new Input(
-            'identifier',
-            'identifier',
-            $entity->getIdentifier()
-        );
-        $label = new Label('title', 'pages:blockIdentifier', [], $this->translator);
+        $input = new Input('identifier', 'identifier', $entity->getIdentifier());
+        $label = new Label('title', 'pages:blockIdentifier');
 
         $this->form[] = new FormGroup($input, $label);
 
@@ -118,12 +115,8 @@ class Block extends Base
      */
     protected function addTitle(Entity $entity): Block
     {
-        $input = new Input(
-            'title',
-            'title',
-            $entity->getTitle()
-        );
-        $label = new Label('title', 'pages:blockTitle', [], $this->translator);
+        $input = new Input('title', 'title', $entity->getTitle());
+        $label = new Label('title', 'pages:blockTitle');
 
         $this->form[] = new FormGroup($input, $label);
 
@@ -137,13 +130,9 @@ class Block extends Base
      */
     protected function addBody(Entity $entity): Block
     {
-        $input = new Textarea(
-            'body',
-            'body',
-            $entity->getBody(),
-            [Textarea::ATTRIBUTE_CLASS => [Textarea::CLASS_WYSIWYG], Textarea::ATTRIBUTE_ROWS => '15']
-        );
-        $label = new Label('body', 'pages:blockBody', [], $this->translator);
+        $attribs = [Html5::ATTR_CLASS => Textarea::CLASS_WYSIWYG, Html5::ATTR_ROWS => '15'];
+        $input   = new Textarea('body', 'body', $entity->getBody(), [], $attribs);
+        $label   = new Label('body', 'pages:blockBody');
 
         $this->form[] = new FormGroup($input, $label);
 
@@ -187,10 +176,10 @@ class Block extends Base
     protected function createLayoutIdOptions(array $allLayouts, ?int $layoutId): array
     {
         $options   = [];
-        $options[] = new Option('', 'form:none', false, [], $this->translator);
+        $options[] = new Option('', 'form:none', false);
         foreach ($allLayouts as $layout) {
             $isSelected = (int)$layout->getId() === $layoutId;
-            $options[] = new Option((string)$layout->getId(), $layout->getIdentifier(), $isSelected);
+            $options[]  = new Option((string)$layout->getId(), $layout->getIdentifier(), $isSelected);
         }
 
         return $options;
@@ -217,7 +206,7 @@ class Block extends Base
      */
     protected function createLayoutIdLabel(): Label
     {
-        return new Label('layout_id', 'pages:blockLayoutIdLabel', [], $this->translator);
+        return new Label('layout_id', 'pages:blockLayoutIdLabel');
     }
 
     /**
@@ -242,12 +231,9 @@ class Block extends Base
      */
     protected function addLayoutHidden(Entity $entity): Block
     {
-        $this->form[] = new Input(
-            'layout',
-            'layout',
-            htmlspecialchars($entity->getLayout()),
-            [Input::ATTRIBUTE_TYPE => Input::TYPE_HIDDEN]
-        );
+        $attribs = [Html5::ATTR_TYPE => Input::TYPE_HIDDEN];
+
+        $this->form[] = new Input('layout', 'layout', $entity->getLayout(), [], $attribs);
 
         return $this;
     }
@@ -259,29 +245,11 @@ class Block extends Base
      */
     protected function addLayoutTextarea(Entity $entity): Block
     {
-        $input = new Textarea(
-            'layout',
-            'layout',
-            htmlspecialchars($entity->getLayout()),
-            [Textarea::ATTRIBUTE_ROWS => '15']
-        );
-        $label = new Countable(
-            'description',
-            'pages:blockLayoutLabel',
-            Countable::DEFAULT_SIZE,
-            [],
-            $this->translator
-        );
+        $input   = new Textarea('layout', 'layout', $entity->getLayout(), [], [Html5::ATTR_ROWS => '15']);
+        $label   = new Countable('description', 'pages:blockLayoutLabel', Countable::DEFAULT_SIZE);
+        $attribs = [Html5::ATTR_ID => 'layout-div', Html5::ATTR_CLASS => FormGroup::CLASS_COUNTABLE];
 
-        $this->form[] = new FormGroup(
-            $input,
-            $label,
-            null,
-            [
-                FormGroup::ATTRIBUTE_ID    => 'layout-div',
-                FormGroup::ATTRIBUTE_CLASS => FormGroup::CLASS_COUNTABLE,
-            ]
-        );
+        $this->form[] = new FormGroup($input, $label, null, [], $attribs);
 
         return $this;
     }

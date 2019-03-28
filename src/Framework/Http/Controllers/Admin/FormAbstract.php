@@ -4,12 +4,15 @@ declare(strict_types=1);
 
 namespace AbterPhp\Framework\Http\Controllers\Admin;
 
+use AbterPhp\Framework\Constant\Event;
 use AbterPhp\Framework\Domain\Entities\IStringerEntity;
+use AbterPhp\Framework\Events\FormReady;
 use AbterPhp\Framework\Form\Factory\IFormFactory;
 use AbterPhp\Framework\I18n\ITranslator;
 use AbterPhp\Framework\Orm\IGridRepo;
 use AbterPhp\Framework\Session\FlashService;
 use Casbin\Exceptions\CasbinException;
+use Opulence\Events\Dispatchers\IEventDispatcher;
 use Opulence\Http\Requests\RequestMethods;
 use Opulence\Http\Responses\Response;
 use Opulence\Orm\OrmException;
@@ -46,15 +49,19 @@ abstract class FormAbstract extends AdminAbstract
     /** @var IFormFactory */
     protected $formFactory;
 
+    /** @var IEventDispatcher */
+    protected $eventDispatcher;
+
     /**
      * FormAbstract constructor.
      *
-     * @param FlashService $flashService
-     * @param ITranslator  $translator
-     * @param UrlGenerator $urlGenerator
-     * @param IGridRepo    $repo
-     * @param ISession     $session
-     * @param IFormFactory $formFactory
+     * @param FlashService     $flashService
+     * @param ITranslator      $translator
+     * @param UrlGenerator     $urlGenerator
+     * @param IGridRepo        $repo
+     * @param ISession         $session
+     * @param IFormFactory     $formFactory
+     * @param IEventDispatcher $eventDispatcher
      */
     public function __construct(
         FlashService $flashService,
@@ -62,13 +69,15 @@ abstract class FormAbstract extends AdminAbstract
         UrlGenerator $urlGenerator,
         IGridRepo $repo,
         ISession $session,
-        IFormFactory $formFactory
+        IFormFactory $formFactory,
+        IEventDispatcher $eventDispatcher
     ) {
         parent::__construct($flashService, $translator, $urlGenerator);
 
-        $this->repo        = $repo;
-        $this->session     = $session;
-        $this->formFactory = $formFactory;
+        $this->repo            = $repo;
+        $this->session         = $session;
+        $this->formFactory     = $formFactory;
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**
@@ -84,6 +93,10 @@ abstract class FormAbstract extends AdminAbstract
         $url   = $this->urlGenerator->createFromName(sprintf(static::URL_NEW, static::ENTITY_PLURAL));
         $title = $this->translator->translate(static::TITLE_NEW, static::ENTITY_TITLE_SINGULAR);
         $form  = $this->formFactory->create($url, RequestMethods::POST, $this->getShowUrl(), $entity);
+
+        $form->setTranslator($this->translator);
+
+        $this->eventDispatcher->dispatch(Event::FORM_READY, new FormReady($form));
 
         $this->view = $this->viewFactory->createView(static::VIEW_FORM);
         $this->view->setVar(static::VAR_ENTITY, $entity);
@@ -109,6 +122,10 @@ abstract class FormAbstract extends AdminAbstract
         $url   = $this->getEditUrl($entityId);
         $title = $this->translator->translate(static::TITLE_EDIT, static::ENTITY_TITLE_SINGULAR, (string)$entity);
         $form  = $this->formFactory->create($url, RequestMethods::PUT, $this->getShowUrl(), $entity);
+
+        $this->eventDispatcher->dispatch(Event::FORM_READY, new FormReady($form));
+
+        $form->setTranslator($this->translator);
 
         $this->view = $this->viewFactory->createView(sprintf(static::VIEW_FORM, strtolower(static::ENTITY_SINGULAR)));
         $this->view->setVar(static::VAR_ENTITY, $entity);

@@ -4,27 +4,27 @@ declare(strict_types=1);
 
 namespace AbterPhp\Framework\Events;
 
-use AbterPhp\Framework\Form\Form;
+use AbterPhp\Framework\Form\IForm;
 
 class FormReady
 {
-    /** @var Form */
+    /** @var IForm */
     private $form;
 
     /**
      * FormReady constructor.
      *
-     * @param Form $form
+     * @param IForm $form
      */
-    public function __construct(Form $form)
+    public function __construct(IForm $form)
     {
         $this->form = $form;
     }
 
     /**
-     * @return Form
+     * @return IForm
      */
-    public function getForm(): Form
+    public function getForm(): IForm
     {
         return $this->form;
     }

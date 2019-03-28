@@ -8,17 +8,18 @@ use AbterPhp\Admin\Domain\Entities\User as Entity;
 use AbterPhp\Admin\Domain\Entities\UserLanguage;
 use AbterPhp\Admin\Orm\UserGroupRepo;
 use AbterPhp\Admin\Orm\UserLanguageRepo;
+use AbterPhp\Framework\Constant\Html5;
 use AbterPhp\Framework\Form\Component\Option;
 use AbterPhp\Framework\Form\Container\FormGroup;
-use AbterPhp\Framework\Form\Container\Toggle;
+use AbterPhp\Framework\Form\Container\ToggleGroup;
 use AbterPhp\Framework\Form\Element\Input;
+use AbterPhp\Framework\Form\Element\MultiSelect;
 use AbterPhp\Framework\Form\Element\Select;
 use AbterPhp\Framework\Form\Factory\Base;
 use AbterPhp\Framework\Form\Factory\IFormFactory;
 use AbterPhp\Framework\Form\IForm;
 use AbterPhp\Framework\Form\Label\Label;
-use AbterPhp\Framework\Form\Label\ToggleLabel;
-use AbterPhp\Framework\Html\Component\Tag;
+use AbterPhp\Framework\Html\Component;
 use AbterPhp\Framework\I18n\ITranslator;
 use Opulence\Orm\IEntity;
 use Opulence\Sessions\ISession;
@@ -98,9 +99,9 @@ class User extends Base
             '<i class="material-icons">warning</i>&nbsp;%s',
             $this->translator->translate('admin:jsOnly')
         );
-        $attributes = [Tag::ATTRIBUTE_CLASS => 'only-js-form-warning'];
+        $attributes = [Html5::ATTR_CLASS => 'only-js-form-warning'];
 
-        $this->form[] = new Tag($content, $attributes, null, Tag::TAG_P);
+        $this->form[] = new Component($content, [], $attributes, Html5::TAG_P);
 
         return $this;
     }
@@ -116,9 +117,10 @@ class User extends Base
             'username',
             'username',
             $entity->getUsername(),
-            [Input::ATTRIBUTE_NAME => Input::AUTOCOMPLETE_OFF]
+            [],
+            [Html5::ATTR_NAME => Input::AUTOCOMPLETE_OFF]
         );
-        $label = new Label('body', 'admin:userUsername', [], $this->translator);
+        $label = new Label('body', 'admin:userUsername');
 
         $this->form[] = new FormGroup($input, $label);
 
@@ -136,9 +138,10 @@ class User extends Base
             'email',
             'email',
             $entity->getEmail(),
-            [Input::ATTRIBUTE_NAME => Input::AUTOCOMPLETE_OFF]
+            [],
+            [Html5::ATTR_NAME => [Input::AUTOCOMPLETE_OFF]]
         );
-        $label = new Label('email', 'admin:userEmail', [], $this->translator);
+        $label = new Label('email', 'admin:userEmail');
 
         $this->form[] = new FormGroup($input, $label);
 
@@ -154,7 +157,8 @@ class User extends Base
             'password',
             'password',
             '',
-            [Input::ATTRIBUTE_TYPE => Input::TYPE_HIDDEN]
+            [],
+            [Html5::ATTR_NAME => [Input::TYPE_HIDDEN]]
         );
 
         return $this;
@@ -169,7 +173,8 @@ class User extends Base
             'password_confirmed',
             'password_confirmed',
             '',
-            [Input::ATTRIBUTE_TYPE => Input::TYPE_HIDDEN]
+            [],
+            [Html5::ATTR_NAME => [Input::TYPE_HIDDEN]]
         );
 
         return $this;
@@ -184,9 +189,10 @@ class User extends Base
             'raw_password',
             'raw_password',
             '',
-            [Input::ATTRIBUTE_NAME => Input::AUTOCOMPLETE_OFF]
+            [],
+            [Html5::ATTR_NAME => [Input::AUTOCOMPLETE_OFF]]
         );
-        $label = new Label('raw_password', 'admin:userPassword', [], $this->translator);
+        $label = new Label('raw_password', 'admin:userPassword');
 
         $this->form[] = new FormGroup($input, $label);
 
@@ -202,9 +208,10 @@ class User extends Base
             'raw_password_confirmed',
             'raw_password_confirmed',
             '',
-            [Input::ATTRIBUTE_NAME => Input::AUTOCOMPLETE_OFF]
+            [],
+            [Html5::ATTR_NAME => [Input::AUTOCOMPLETE_OFF]]
         );
-        $label = new Label('raw_password_confirmed', 'admin:userConfirmPassword', [], $this->translator);
+        $label = new Label('raw_password_confirmed', 'admin:userConfirmPassword');
 
         $this->form[] = new FormGroup($input, $label);
 
@@ -218,19 +225,20 @@ class User extends Base
      */
     protected function addCanLogin(Entity $entity): User
     {
-        $attributes = [Input::ATTRIBUTE_TYPE => Input::TYPE_CHECKBOX];
+        $attributes = [Html5::ATTR_TYPE => Input::TYPE_CHECKBOX];
         if ($entity->canLogin()) {
-            $attributes[Input::ATTRIBUTE_CHECKED] = null;
+            $attributes[Html5::ATTR_CHECKED] = null;
         }
         $input = new Input(
             'can_login',
             'can_login',
             '1',
+            [],
             $attributes
         );
-        $label = new ToggleLabel('can_login', 'admin:userCanLogin', [], $this->translator);
+        $label = new Label('can_login', 'admin:userCanLogin');
 
-        $this->form[] = new Toggle($input, $label);
+        $this->form[] = new ToggleGroup($input, $label);
 
         return $this;
     }
@@ -242,24 +250,23 @@ class User extends Base
      */
     protected function addIsGravatarAllowed(Entity $entity): User
     {
-        $attributes = [Input::ATTRIBUTE_TYPE => Input::TYPE_CHECKBOX];
+        $attributes = [Html5::ATTR_TYPE => [Input::TYPE_CHECKBOX]];
         if ($entity->isGravatarAllowed()) {
-            $attributes[Input::ATTRIBUTE_CHECKED] = null;
+            $attributes[Html5::ATTR_CHECKED] = null;
         }
         $input = new Input(
             'is_gravatar_allowed',
             'is_gravatar_allowed',
             '1',
+            [],
             $attributes
         );
-        $label = new ToggleLabel(
+        $label = new Label(
             'is_gravatar_allowed',
-            'admin:userIsGravatarAllowed',
-            [],
-            $this->translator
+            'admin:userIsGravatarAllowed'
         );
 
-        $this->form[] = new Toggle($input, $label);
+        $this->form[] = new ToggleGroup($input, $label);
 
         return $this;
     }
@@ -321,14 +328,14 @@ class User extends Base
     protected function createUserGroupSelect(array $options): Select
     {
         $attributes = [
-            Select::ATTRIBUTE_SIZE => $this->getMultiSelectSize(
+            Html5::ATTR_SIZE => $this->getMultiSelectSize(
                 count($options),
                 static::MULTISELECT_MIN_SIZE,
                 static::MULTISELECT_MAX_SIZE
             ),
         ];
 
-        $select = new Select('user_group_ids', 'user_group_ids[]', true, $attributes);
+        $select = new MultiSelect('user_group_ids', 'user_group_ids[]', [], $attributes);
 
         foreach ($options as $option) {
             $select[] = $option;
@@ -342,7 +349,7 @@ class User extends Base
      */
     protected function createUserGroupLabel(): Label
     {
-        return new Label('user_group_ids', 'admin:userGroups', [], $this->translator);
+        return new Label('user_group_ids', 'admin:userGroups');
     }
 
     /**
@@ -398,14 +405,14 @@ class User extends Base
     protected function createUserLanguageSelect(array $options): Select
     {
         $attributes = [
-            Select::ATTRIBUTE_SIZE => $this->getMultiSelectSize(
+            Html5::ATTR_SIZE => $this->getMultiSelectSize(
                 count($options),
                 static::MULTISELECT_MIN_SIZE,
                 static::MULTISELECT_MAX_SIZE
             ),
         ];
 
-        $select = new Select('user_language_id', 'user_language_id', true, $attributes);
+        $select = new MultiSelect('user_language_id', 'user_language_id', [], $attributes);
 
         foreach ($options as $option) {
             $select[] = $option;
@@ -419,6 +426,6 @@ class User extends Base
      */
     protected function createUserLanguageLabel(): Label
     {
-        return new Label('user_language_id', 'admin:userLanguages', [], $this->translator);
+        return new Label('user_language_id', 'admin:userLanguages');
     }
 }

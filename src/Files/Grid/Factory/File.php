@@ -8,16 +8,18 @@ use AbterPhp\Files\Constant\Routes;
 use AbterPhp\Files\Domain\Entities\File as Entity;
 use AbterPhp\Files\Grid\Factory\Table\File as Table;
 use AbterPhp\Files\Grid\Filters\File as Filters;
-use AbterPhp\Framework\Grid\Action\Button;
-use AbterPhp\Framework\Grid\Collection\Actions;
-use AbterPhp\Framework\Grid\Factory\Base;
-use AbterPhp\Framework\Grid\Factory\Grid;
-use AbterPhp\Framework\Grid\Factory\Pagination as PaginationFactory;
+use AbterPhp\Framework\Constant\Html5;
+use AbterPhp\Framework\Grid\Action\Action;
+use AbterPhp\Framework\Grid\Component\Actions;
+use AbterPhp\Framework\Grid\Factory\BaseFactory;
+use AbterPhp\Framework\Grid\Factory\GridFactory;
+use AbterPhp\Framework\Grid\Factory\PaginationFactory as PaginationFactory;
 use AbterPhp\Framework\Helper\DateHelper;
+use AbterPhp\Framework\Html\Component;
 use AbterPhp\Framework\I18n\ITranslator;
 use Opulence\Routing\Urls\UrlGenerator;
 
-class File extends Base
+class File extends BaseFactory
 {
     const GROUP_ID          = 'file-id';
     const GROUP_FILENAME    = 'file-filename';
@@ -38,7 +40,7 @@ class File extends Base
      * @param UrlGenerator      $urlGenerator
      * @param PaginationFactory $paginationFactory
      * @param Table             $tableFactory
-     * @param Grid              $gridFactory
+     * @param GridFactory       $gridFactory
      * @param ITranslator       $translator
      * @param Filters           $filters
      */
@@ -46,7 +48,7 @@ class File extends Base
         UrlGenerator $urlGenerator,
         PaginationFactory $paginationFactory,
         Table $tableFactory,
-        Grid $gridFactory,
+        GridFactory $gridFactory,
         ITranslator $translator,
         Filters $filters
     ) {
@@ -69,14 +71,6 @@ class File extends Base
     }
 
     /**
-     * @return array
-     */
-    public function getHeaders(): array
-    {
-        return [];
-    }
-
-    /**
      * @param Entity $entity
      *
      * @return string
@@ -95,39 +89,36 @@ class File extends Base
         $downloadCallbacks  = $this->getDownloadCallbacks();
 
         $downloadAttributes = [
-            static::ATTRIBUTE_CLASS => Button::CLASS_WARNING,
-            static::ATTRIBUTE_HREF  => Routes::ROUTE_FILES_DOWNLOAD,
+            Html5::ATTR_HREF  => Routes::ROUTE_FILES_DOWNLOAD,
         ];
         $editAttributes     = [
-            static::ATTRIBUTE_CLASS => Button::CLASS_PRIMARY,
-            static::ATTRIBUTE_HREF  => Routes::ROUTE_FILES_EDIT,
+            Html5::ATTR_HREF  => Routes::ROUTE_FILES_EDIT,
         ];
         $deleteAttributes   = [
-            static::ATTRIBUTE_CLASS => Button::CLASS_DANGER,
-            static::ATTRIBUTE_HREF  => Routes::ROUTE_FILES_DELETE,
+            Html5::ATTR_HREF  => Routes::ROUTE_FILES_DELETE,
         ];
 
         $cellActions   = new Actions();
-        $cellActions[] = new Button(
+        $cellActions[] = new Action(
             static::LABEL_DOWNLOAD,
+            $this->downloadIntents,
             $downloadAttributes,
             $downloadCallbacks,
-            $this->translator,
-            Button::TAG_A
+            Html5::TAG_A
         );
-        $cellActions[] = new Button(
+        $cellActions[] = new Action(
             static::LABEL_EDIT,
+            $this->editIntents,
             $editAttributes,
             $attributeCallbacks,
-            $this->translator,
-            Button::TAG_A
+            Html5::TAG_A
         );
-        $cellActions[] = new Button(
+        $cellActions[] = new Action(
             static::LABEL_DELETE,
+            $this->deleteIntents,
             $deleteAttributes,
             $attributeCallbacks,
-            $this->translator,
-            Button::TAG_A
+            Html5::TAG_A
         );
 
         return $cellActions;
@@ -140,8 +131,8 @@ class File extends Base
     {
         $attributeCallbacks = parent::getAttributeCallbacks();
 
-        $attributeCallbacks[self::ATTRIBUTE_CLASS] = function ($attribute, Entity $entity) {
-            return $entity->isWritable() ? $attribute : Button::CLASS_HIDDEN;
+        $attributeCallbacks[Html5::ATTR_CLASS] = function ($attribute, Entity $entity) {
+            return $entity->isWritable() ? $attribute : Component::INTENT_HIDDEN;
         };
 
         return $attributeCallbacks;
@@ -163,7 +154,7 @@ class File extends Base
         };
 
         $attributeCallbacks = [
-            self::ATTRIBUTE_HREF => $closure,
+            Html5::ATTR_HREF => $closure,
         ];
 
         return $attributeCallbacks;

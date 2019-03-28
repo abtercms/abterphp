@@ -4,16 +4,15 @@ declare(strict_types=1);
 
 namespace AbterPhp\Framework\Grid\Row;
 
-use AbterPhp\Framework\Grid\Collection\Actions;
 use AbterPhp\Framework\Grid\Collection\Cells;
-use AbterPhp\Framework\Html\Component\IComponent;
+use AbterPhp\Framework\Html\IComponent;
+use AbterPhp\Framework\Html\INode;
+use AbterPhp\Framework\Html\INodeContainer;
 use Opulence\Orm\IEntity;
 
-interface IRow extends IComponent
+interface IRow extends INode, INodeContainer
 {
     public function getCells(): Cells;
-
-    public function getActions(): Actions;
 
     public function setEntity(IEntity $entity);
 

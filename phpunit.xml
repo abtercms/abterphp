@@ -1,8 +1,13 @@
 <phpunit
         bootstrap="vendor/autoload.php"
         colors="true">
-    <testsuite name="Project">
-        <directory>tests</directory>
+    <testsuite name="AbterPHP">
+        <testsuite name="unit">
+            <directory>tests/unit</directory>
+        </testsuite>
+        <testsuite name="integration">
+            <directory>tests/integration</directory>
+        </testsuite>
     </testsuite>
     <php>
         <env name="ENV_NAME" value="testing"/>
@@ -19,21 +24,12 @@
         <whitelist processUncoveredFilesFromWhitelist="true">
             <directory suffix=".php">./src</directory>
             <exclude>
-                <directory suffix=".php">./src/Admin/Bootstrappers</directory>
-                <directory suffix=".php">./src/Bootstrap4/Bootstrappers</directory>
-                <directory suffix=".php">./src/Contact/Bootstrappers</directory>
-                <directory suffix=".php">./src/Framework/Bootstrappers</directory>
-                <directory suffix=".php">./src/Files/Bootstrappers</directory>
-                <directory suffix=".php">./src/Website/Bootstrappers</directory>
-                <file>src/Admin/routes.php</file>
-                <file>src/Contact/routes.php</file>
-                <file>src/Files/routes.php</file>
-                <file>src/Website/routes.php</file>
+                <directory suffix=".php">./src/*/Bootstrappers</directory>
+                <directory suffix="routes.php">./src/*</directory>
             </exclude>
         </whitelist>
     </filter>
     <logging>
         <log type="coverage-html" target="./tmp/report" lowUpperBound="35" highLowerBound="70"/>
-        <log type="coverage-text" target="php://stdout" showUncoveredFiles="true"/>
     </logging>
 </phpunit>

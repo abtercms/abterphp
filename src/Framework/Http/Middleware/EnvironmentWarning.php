@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace AbterPhp\Framework\Http\Middleware;
 
 use AbterPhp\Framework\Constant\Env;
-use AbterPhp\Framework\Helper\ArrayHelper;
+use AbterPhp\Framework\Html\Helper\ArrayHelper;
 use AbterPhp\Framework\I18n\ITranslator;
 use Closure;
 use Opulence\Environments\Environment;

@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace AbterPhp\Framework\Form\Label;
 
-use AbterPhp\Framework\Helper\ArrayHelper;
-use AbterPhp\Framework\Html\Component\StubAttributeFactory;
 use AbterPhp\Framework\I18n\MockTranslatorFactory;
 
 class ToggleLabelTest extends \PHPUnit\Framework\TestCase
@@ -15,30 +13,51 @@ class ToggleLabelTest extends \PHPUnit\Framework\TestCase
      */
     public function renderProvider()
     {
-        $defaultAttributes = ['class' => 'control-label', 'for' => 'abc'];
-        $defaultStr        = ArrayHelper::toAttributes($defaultAttributes);
-
-        $extraAttributes    = StubAttributeFactory::createAttributes();
-        $combinedAttributes = ArrayHelper::mergeAttributes($defaultAttributes, $extraAttributes);
-        $combinedStr        = ArrayHelper::toAttributes($combinedAttributes);
-
         return [
-            'simple'            => ['abc', 'ABC', [], null, null, "<span$defaultStr>ABC</span>"],
-            'with attributes'   => ['abc', 'ABC', $extraAttributes, [], null, "<span$combinedStr>ABC</span>"],
-            'with translations' => ['abc', 'ABC', [], ['ABC' => 'CBA'], null, "<span$defaultStr>CBA</span>"],
-            'with custom tag'   => ['abc', 'ABC', [], null, 'foo', "<foo$defaultStr>ABC</foo>"],
+            'simple'            => [
+                'a',
+                'ABC',
+                [],
+                null,
+                null,
+                '<label for="a">ABC</label>',
+            ],
+            'with attributes'   => [
+                'a',
+                'ABC',
+                ['foo' => ['bar'], 'class' => ['baz']],
+                null,
+                null,
+                '<label for="a" foo="bar" class="baz">ABC</label>',
+            ],
+            'with translations' => [
+                'a',
+                'ABC',
+                [],
+                ['ABC' => 'CBA'],
+                null,
+                '<label for="a">CBA</label>',
+            ],
+            'custom tag'        => [
+                'a',
+                'ABC',
+                [],
+                [],
+                'foo',
+                '<foo for="a">ABC</foo>',
+            ],
         ];
     }
 
     /**
      * @dataProvider renderProvider
      *
-     * @param string      $inputId
-     * @param string      $content
-     * @param array       $attributes
-     * @param array|null  $translations
-     * @param string|null $tag
-     * @param string      $expectedResult
+     * @param string        $inputId
+     * @param string        $content
+     * @param string[][]    $attributes
+     * @param string[]|null $translations
+     * @param string|null   $tag
+     * @param string        $expectedResult
      */
     public function testRender(
         string $inputId,
@@ -50,10 +69,6 @@ class ToggleLabelTest extends \PHPUnit\Framework\TestCase
     ) {
         $sut = $this->createElement($inputId, $content, $attributes, $translations, $tag);
 
-        $actualResult   = (string)$sut;
-        $repeatedResult = (string)$sut;
-
-        $this->assertSame($actualResult, $repeatedResult);
         $this->assertSame($expectedResult, (string)$sut);
     }
 
@@ -64,7 +79,7 @@ class ToggleLabelTest extends \PHPUnit\Framework\TestCase
      * @param array|null  $translations
      * @param string|null $tag
      *
-     * @return ToggleLabel
+     * @return Label
      */
     private function createElement(
         string $inputId,
@@ -72,9 +87,13 @@ class ToggleLabelTest extends \PHPUnit\Framework\TestCase
         array $attributes,
         ?array $translations,
         ?string $tag
-    ): ToggleLabel {
+    ): Label {
         $translatorMock = MockTranslatorFactory::createSimpleTranslator($this, $translations);
 
-        return new ToggleLabel($inputId, $content, $attributes, $translatorMock, $tag);
+        $label = new Label($inputId, $content, [], $attributes, $tag);
+
+        $label->setTranslator($translatorMock);
+
+        return $label;
     }
 }

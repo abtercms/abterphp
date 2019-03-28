@@ -1,8 +1,13 @@
 <phpunit
         bootstrap="vendor/autoload.php"
         colors="true">
-    <testsuite name="Project">
-        <directory>tests</directory>
+    <testsuite name="AbterPHP">
+        <testsuite name="unit">
+            <directory>tests/unit</directory>
+        </testsuite>
+        <testsuite name="integration">
+            <directory>tests/integration</directory>
+        </testsuite>
     </testsuite>
     <php>
         <env name="ENV_NAME" value="testing"/>

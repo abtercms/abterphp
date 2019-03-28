@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace AbterPhp\Website\Grid\Factory\Table\Header;
 
-use AbterPhp\Framework\Grid\Factory\Table\Header;
+use AbterPhp\Framework\Grid\Factory\Table\HeaderFactory;
 
-class Page extends Header
+class Page extends HeaderFactory
 {
     const GROUP_ID         = 'page-id';
     const GROUP_IDENTIFIER = 'page-identifier';

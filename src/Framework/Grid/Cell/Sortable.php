@@ -4,15 +4,37 @@ declare(strict_types=1);
 
 namespace AbterPhp\Framework\Grid\Cell;
 
+use AbterPhp\Framework\Constant\Html5;
+use AbterPhp\Framework\Html\Collection;
+use AbterPhp\Framework\Html\Component;
+use AbterPhp\Framework\Html\Component\Button;
 use AbterPhp\Framework\Html\Helper\StringHelper;
+use AbterPhp\Framework\Html\INode;
+use AbterPhp\Framework\Html\ITemplater;
 use AbterPhp\Framework\I18n\ITranslator;
 
-class Sortable extends Cell implements ICell
+class Sortable extends Cell implements ICell, ITemplater
 {
+    const DEFAULT_TAG = Html5::TAG_TH;
+
+    /**
+     * %1$s - nodes
+     * %2$s - sort button
+     */
+    const DEFAULT_TEMPLATE = '%1$s %2$s';
+
     const NAME_PREFIX = 'sort-';
 
-    const DIR_ASC = 'ASC';
+    const DIR_ASC  = 'ASC';
     const DIR_DESC = 'DESC';
+
+    const BTN_INTENT_SHOARTING    = 'grid-sortable-shoarting';
+    const BTN_INTENT_CARET_DOWN   = 'caret-down';
+    const BTN_INTENT_CARET_UP     = 'caret-up';
+    const BTN_INTENT_CARET_ACTIVE = 'caret-active';
+
+    /** @var string */
+    protected $template = self::DEFAULT_TEMPLATE;
 
     /** @var string */
     protected $baseUrl;
@@ -29,28 +51,35 @@ class Sortable extends Cell implements ICell
     /** @var int */
     protected $value = 0;
 
+    /** @var Button */
+    protected $sortBtn;
+
     /**
      * Sortable constructor.
      *
-     * @param string           $content
-     * @param string           $group
-     * @param string           $inputName
-     * @param string           $fieldName
-     * @param array            $attributes
-     * @param ITranslator|null $translator
+     * @param INode[]|INode|string|null $content
+     * @param string                    $group
+     * @param string                    $inputName
+     * @param string                    $fieldName
+     * @param string[]                  $intents
+     * @param array                     $attributes
+     * @param string|null               $tag
      */
     public function __construct(
-        string $content,
+        $content,
         string $group,
         string $inputName,
         string $fieldName,
+        array $intents = [],
         array $attributes = [],
-        ?ITranslator $translator = null
+        ?string $tag = null
     ) {
-        parent::__construct($content, $group, $attributes, $translator, self::HEAD);
+        parent::__construct($content, $group, $intents, $attributes, $tag);
 
         $this->fieldName = $fieldName;
         $this->inputName = static::NAME_PREFIX . $inputName;
+
+        $this->sortBtn = new Button(null, [static::BTN_INTENT_SHOARTING], [], Html5::TAG_A);
     }
 
     /**
@@ -63,6 +92,14 @@ class Sortable extends Cell implements ICell
         $this->baseUrl = $baseUrl;
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBaseUrl(): string
+    {
+        return $this->baseUrl;
     }
 
     /**
@@ -84,21 +121,51 @@ class Sortable extends Cell implements ICell
      */
     public function setParams(array $params): Sortable
     {
-        if (empty($params[$this->inputName])) {
-            return $this;
+        if (!array_key_exists($this->inputName, $params)) {
+            return $this->setSortBtnDirection();
         }
 
         $this->value = (int)$params[$this->inputName];
 
         if ($this->value === 0) {
-            return $this;
+            return $this->setSortBtnDirection();
         }
 
         $dir = $this->value > 0 ? static::DIR_ASC : static::DIR_DESC;
 
         $this->sortConditions = [sprintf('%s %s', $this->fieldName, $dir)];
 
+        return $this->setSortBtnDirection();
+    }
+
+    /**
+     * @return string
+     */
+    protected function setSortBtnDirection(): Sortable
+    {
+        if ($this->value === 0) {
+            $this->sortBtn->addIntent(static::BTN_INTENT_CARET_DOWN);
+            $dir = '1';
+        } elseif ($this->value > 0) {
+            $this->sortBtn->addIntent(static::BTN_INTENT_CARET_DOWN, static::BTN_INTENT_CARET_ACTIVE);
+            $dir = '-1';
+        } else {
+            $this->sortBtn->addIntent(static::BTN_INTENT_CARET_UP, static::BTN_INTENT_CARET_ACTIVE);
+            $dir = '0';
+        }
+
+        $href = sprintf('%s%s=%s', $this->baseUrl, $this->inputName, $dir);
+        $this->sortBtn->setAttribute(Html5::ATTR_HREF, $href);
+
         return $this;
+    }
+
+    /**
+     * @return Button
+     */
+    public function getSortBtn(): Button
+    {
+        return $this->sortBtn;
     }
 
     /**
@@ -122,47 +189,56 @@ class Sortable extends Cell implements ICell
     }
 
     /**
-     * @return string
+     * @param string $template
+     *
+     * @return $this
      */
-    public function __toString(): string
+    public function setTemplate(string $template): INode
     {
-        $content = $this->content;
+        $this->template = $template;
 
-        if ($this->translator) {
-            $content = $this->translator->translate($this->content);
+        return $this;
+    }
 
-            if (substr($content, 0, 2) === '{{') {
-                $content = $this->content;
-            }
+    /**
+     * @return INode[]
+     */
+    public function getNodes(): array
+    {
+        return $this->getAllNodes(0);
+    }
+
+    /**
+     * @param int $depth
+     *
+     * @return array
+     */
+    public function getAllNodes(int $depth = -1): array
+    {
+        $nodes = parent::getAllNodes($depth);
+
+        if ($depth !== 0) {
+            $nodes = array_merge($nodes, $this->sortBtn->getAllNodes($depth - 1));
         }
 
-        $content .= $this->getDirection();
-
-        return StringHelper::wrapInTag($content, $this->tag, $this->attributes);
+        return array_merge([$this->sortBtn], $nodes);
     }
 
     /**
      * @return string
      */
-    protected function getDirection(): string
+    public function __toString(): string
     {
-        if ($this->value === 0) {
-            $class = 'caret-down';
-            $dir   = '1';
-        } elseif ($this->value > 0) {
-            $class = 'caret-down caret-active';
-            $dir   = '-1';
-        } else {
-            $class = 'caret-up caret-active';
-            $dir   = '0';
-        }
+        $nodes = Collection::__toString();
 
-        return sprintf(
-            '<a class="%s shoarting" href="%s%s=%s"></a>',
-            $class,
-            $this->baseUrl,
-            $this->inputName,
-            $dir
+        $content = sprintf(
+            $this->template,
+            $nodes,
+            (string)$this->sortBtn
         );
+
+        $content = StringHelper::wrapInTag($content, $this->tag, $this->attributes);
+
+        return $content;
     }
 }

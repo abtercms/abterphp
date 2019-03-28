@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace AbterPhp\Framework\Form\Extra;
 
-use AbterPhp\Framework\Helper\ArrayHelper;
+use AbterPhp\Framework\Constant\Html5;
 use AbterPhp\Framework\Html\Component\StubAttributeFactory;
+use AbterPhp\Framework\Html\Helper\ArrayHelper;
 use AbterPhp\Framework\I18n\MockTranslatorFactory;
 
 class HelpTest extends \PHPUnit\Framework\TestCase
@@ -17,7 +18,7 @@ class HelpTest extends \PHPUnit\Framework\TestCase
     {
         $attributes = StubAttributeFactory::createAttributes();
 
-        $finalAttribs = ArrayHelper::mergeAttributes([Help::ATTRIBUTE_CLASS => 'help-block'], $attributes);
+        $finalAttribs = ArrayHelper::mergeAttributes([Html5::ATTR_CLASS => [Help::CLASS_HELP_BLOCK]], $attributes);
         $str          = ArrayHelper::toAttributes($finalAttribs);
 
         return [
@@ -31,11 +32,11 @@ class HelpTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider renderProvider
      *
-     * @param string      $content
-     * @param array       $attributes
-     * @param array|null  $translations
-     * @param string|null $tag
-     * @param string      $expectedResult
+     * @param string        $content
+     * @param array         $attributes
+     * @param string[]|null $translations
+     * @param string|null   $tag
+     * @param string        $expectedResult
      */
     public function testRender(
         string $content,
@@ -54,10 +55,10 @@ class HelpTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @param string      $content
-     * @param array       $attributes
-     * @param array|null  $translations
-     * @param string|null $tag
+     * @param string        $content
+     * @param array         $attributes
+     * @param string[]|null $translations
+     * @param string|null   $tag
      *
      * @return Help
      */
@@ -69,6 +70,10 @@ class HelpTest extends \PHPUnit\Framework\TestCase
     ): Help {
         $translatorMock = MockTranslatorFactory::createSimpleTranslator($this, $translations);
 
-        return new Help($content, $attributes, $translatorMock, $tag);
+        $help = new Help($content, [], $attributes, $tag);
+
+        $help->setTranslator($translatorMock);
+
+        return $help;
     }
 }

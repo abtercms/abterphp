@@ -11,6 +11,7 @@ use AbterPhp\Framework\Assets\AssetManager;
 use AbterPhp\Framework\Constant\Env;
 use AbterPhp\Framework\I18n\ITranslator;
 use AbterPhp\Framework\Session\FlashService;
+use Opulence\Events\Dispatchers\IEventDispatcher;
 use Opulence\Ioc\Bootstrappers\Bootstrapper;
 use Opulence\Ioc\Bootstrappers\ILazyBootstrapper;
 use Opulence\Ioc\IContainer;
@@ -34,14 +35,15 @@ class UserBootstrapper extends Bootstrapper implements ILazyBootstrapper
      */
     public function registerBindings(IContainer $container)
     {
-        $flashService = $container->resolve(FlashService::class);
-        $translator   = $container->resolve(ITranslator::class);
-        $urlGenerator = $container->resolve(UrlGenerator::class);
-        $repo         = $container->resolve(Repo::class);
-        $session      = $container->resolve(ISession::class);
-        $formFactory  = $container->resolve(FormFactory::class);
-        $assets       = $container->resolve(AssetManager::class);
-        $frontendSalt = getenv(Env::CRYPTO_FRONTEND_SALT);
+        $flashService    = $container->resolve(FlashService::class);
+        $translator      = $container->resolve(ITranslator::class);
+        $urlGenerator    = $container->resolve(UrlGenerator::class);
+        $repo            = $container->resolve(Repo::class);
+        $session         = $container->resolve(ISession::class);
+        $formFactory     = $container->resolve(FormFactory::class);
+        $assets          = $container->resolve(AssetManager::class);
+        $eventDispatcher = $container->resolve(IEventDispatcher::class);
+        $frontendSalt    = getenv(Env::CRYPTO_FRONTEND_SALT);
 
         $login = new User(
             $flashService,
@@ -50,6 +52,7 @@ class UserBootstrapper extends Bootstrapper implements ILazyBootstrapper
             $repo,
             $session,
             $formFactory,
+            $eventDispatcher,
             $assets,
             $frontendSalt
         );

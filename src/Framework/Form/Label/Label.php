@@ -4,46 +4,42 @@ declare(strict_types=1);
 
 namespace AbterPhp\Framework\Form\Label;
 
-use AbterPhp\Framework\Html\Component\Tag;
-use AbterPhp\Framework\I18n\ITranslator;
+use AbterPhp\Framework\Constant\Html5;
+use AbterPhp\Framework\Html\Component;
+use AbterPhp\Framework\Html\INode;
 
-class Label extends Tag
+class Label extends Component
 {
-    const DEFAULT_TAG = 'label';
+    const DEFAULT_TAG = Html5::TAG_LABEL;
 
-    const ATTRIBUTE_FOR = 'for';
+    const INTENT_TOGGLE = 'toggle';
 
     /** @var string */
     protected $template;
 
     /** @var array */
     protected $attributes = [
-        self::ATTRIBUTE_CLASS => 'control-label',
-        self::ATTRIBUTE_FOR   => '',
+        Html5::ATTR_FOR => '',
     ];
 
     /**
      * Label constructor.
      *
-     * @param string           $inputId
-     * @param string           $content
-     * @param array            $attributes
-     * @param ITranslator|null $translator
-     * @param string|null      $tag
+     * @param string                    $inputId
+     * @param INode[]|INode|string|null $content
+     * @param string[]                  $intents
+     * @param string[][]                $attributes
+     * @param string|null               $tag
      */
     public function __construct(
         string $inputId,
-        $content,
+        $content = null,
+        array $intents = [],
         array $attributes = [],
-        ?ITranslator $translator = null,
         ?string $tag = null
     ) {
-        $this->attributes[static::ATTRIBUTE_FOR] = $inputId;
+        $this->attributes[Html5::ATTR_FOR] = [$inputId];
 
-        if ($translator && $translator->canTranslate($content)) {
-            $content = $translator->translate($content);
-        }
-
-        parent::__construct($content, $attributes, $translator, $tag);
+        parent::__construct($content, $intents, $attributes, $tag);
     }
 }

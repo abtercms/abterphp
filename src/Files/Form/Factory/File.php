@@ -7,6 +7,7 @@ namespace AbterPhp\Files\Form\Factory;
 use AbterPhp\Files\Domain\Entities\File as Entity;
 use AbterPhp\Files\Domain\Entities\FileCategory;
 use AbterPhp\Files\Orm\FileCategoryRepo;
+use AbterPhp\Framework\Constant\Html5;
 use AbterPhp\Framework\Form\Component\Option;
 use AbterPhp\Framework\Form\Container\FormGroup;
 use AbterPhp\Framework\Form\Element\Input;
@@ -76,8 +77,8 @@ class File extends Base
      */
     protected function addFile(): File
     {
-        $input = new Input('file', 'file', '', [Input::ATTRIBUTE_TYPE => Input::TYPE_FILE]);
-        $label = new Label('file', 'files:file', [], $this->translator);
+        $input = new Input('file', 'file', '', [], [Html5::ATTR_TYPE => Input::TYPE_FILE]);
+        $label = new Label('file', 'files:file');
 
         $this->form[] = new FormGroup($input, $label);
 
@@ -89,12 +90,8 @@ class File extends Base
      */
     protected function addDescription(Entity $entity): File
     {
-        $input = new Textarea(
-            'description',
-            'description',
-            $entity->getDescription()
-        );
-        $label = new Label('description', 'files:fileDescription', [], $this->translator);
+        $input = new Textarea('description', 'description', $entity->getDescription());
+        $label = new Label('description', 'files:fileDescription');
 
         $this->form[] = new FormGroup($input, $label);
 
@@ -109,7 +106,7 @@ class File extends Base
     protected function addFileCategory(Entity $entity): File
     {
         $allFileCategories = $this->getAllFileCategories();
-        $fileCategoryId   = (int)$entity->getCategory()->getId();
+        $fileCategoryId    = (int)$entity->getCategory()->getId();
 
         $options = $this->createFileCategoryOptions($allFileCategories, $fileCategoryId);
 
@@ -141,7 +138,7 @@ class File extends Base
         $options = [];
         foreach ($allFileCategories as $fileCategory) {
             $isSelected = $fileCategory->getId() === $fileCategoryId;
-            $options[] = new Option((string)$fileCategory->getId(), $fileCategory->getName(), $isSelected);
+            $options[]  = new Option((string)$fileCategory->getId(), $fileCategory->getName(), $isSelected);
         }
 
         return $options;
@@ -155,14 +152,14 @@ class File extends Base
     protected function createFileCategorySelect(array $options): Select
     {
         $attributes = [
-            Select::ATTRIBUTE_SIZE => $this->getMultiSelectSize(
+            Html5::ATTR_SIZE => $this->getMultiSelectSize(
                 count($options),
                 static::MULTISELECT_MIN_SIZE,
                 static::MULTISELECT_MAX_SIZE
             ),
         ];
 
-        $select = new Select('category_id', 'category_id', false, $attributes);
+        $select = new Select('category_id', 'category_id', [], $attributes);
 
         foreach ($options as $option) {
             $select[] = $option;
@@ -176,7 +173,7 @@ class File extends Base
      */
     protected function createFileCategoryLabel(): Label
     {
-        return new Label('file_category_id', 'files:fileCategory', [], $this->translator);
+        return new Label('file_category_id', 'files:fileCategory');
     }
 
     /**

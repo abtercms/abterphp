@@ -4,12 +4,17 @@ declare(strict_types=1);
 
 namespace AbterPhp\Framework\Dashboard;
 
-use AbterPhp\Framework\Html\Collection\Collection;
+use AbterPhp\Framework\Constant\Html5;
+use AbterPhp\Framework\Html\Component;
 
-class Dashboard extends Collection
+class Dashboard extends Component
 {
+    const DEFAULT_TAG = Html5::TAG_DIV;
+
+    const CLASS_DASHBOARD = 'dashboard-container';
+
     /** @var string[] */
     protected $attributes = [
-        self::ATTRIBUTE_CLASS => 'dashboard-container',
+        Html5::ATTR_CLASS => self::CLASS_DASHBOARD,
     ];
 }

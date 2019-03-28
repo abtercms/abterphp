@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace AbterPhp\Website\Grid\Factory\Table\Header;
 
-use AbterPhp\Framework\Grid\Factory\Table\Header;
+use AbterPhp\Framework\Grid\Factory\Table\HeaderFactory;
 
-class BlockLayout extends Header
+class BlockLayout extends HeaderFactory
 {
     const GROUP_ID         = 'blockLayout-id';
     const GROUP_IDENTIFIER = 'blockLayout-identifier';

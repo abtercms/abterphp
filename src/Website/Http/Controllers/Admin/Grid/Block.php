@@ -9,6 +9,7 @@ use AbterPhp\Framework\Http\Controllers\Admin\GridAbstract;
 use AbterPhp\Framework\I18n\ITranslator;
 use AbterPhp\Framework\Session\FlashService;
 use AbterPhp\Website\Service\RepoGrid\Block as RepoGrid;
+use Opulence\Events\Dispatchers\IEventDispatcher;
 use Opulence\Routing\Urls\UrlGenerator;
 
 class Block extends GridAbstract
@@ -23,25 +24,28 @@ class Block extends GridAbstract
     /**
      * Block constructor.
      *
-     * @param FlashService $flashService
-     * @param ITranslator  $translator
-     * @param UrlGenerator $urlGenerator
-     * @param AssetManager $assets
-     * @param RepoGrid     $repoGrid
+     * @param FlashService     $flashService
+     * @param ITranslator      $translator
+     * @param UrlGenerator     $urlGenerator
+     * @param AssetManager     $assets
+     * @param RepoGrid         $repoGrid
+     * @param IEventDispatcher $eventDispatcher
      */
     public function __construct(
         FlashService $flashService,
         ITranslator $translator,
         UrlGenerator $urlGenerator,
         AssetManager $assets,
-        RepoGrid $repoGrid
+        RepoGrid $repoGrid,
+        IEventDispatcher $eventDispatcher
     ) {
         parent::__construct(
             $flashService,
             $translator,
             $urlGenerator,
             $assets,
-            $repoGrid
+            $repoGrid,
+            $eventDispatcher
         );
     }
 }

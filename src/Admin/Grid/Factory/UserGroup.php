@@ -5,17 +5,18 @@ declare(strict_types=1);
 namespace AbterPhp\Admin\Grid\Factory;
 
 use AbterPhp\Admin\Constant\Routes;
-use AbterPhp\Framework\Grid\Action\Button;
-use AbterPhp\Framework\Grid\Collection\Actions;
-use AbterPhp\Framework\Grid\Factory\Base;
-use AbterPhp\Framework\Grid\Factory\Grid;
-use AbterPhp\Framework\Grid\Factory\Pagination as PaginationFactory;
+use AbterPhp\Framework\Constant\Html5;
+use AbterPhp\Framework\Grid\Action\Action;
+use AbterPhp\Framework\Grid\Component\Actions;
+use AbterPhp\Framework\Grid\Factory\BaseFactory;
+use AbterPhp\Framework\Grid\Factory\GridFactory;
+use AbterPhp\Framework\Grid\Factory\PaginationFactory as PaginationFactory;
 use AbterPhp\Framework\I18n\ITranslator;
 use AbterPhp\Admin\Grid\Factory\Table\UserGroup as Table;
 use AbterPhp\Admin\Grid\Filters\UserGroup as Filters;
 use Opulence\Routing\Urls\UrlGenerator;
 
-class UserGroup extends Base
+class UserGroup extends BaseFactory
 {
     const GROUP_ID         = 'userGroup-id';
     const GROUP_NAME       = 'userGroup-name';
@@ -35,7 +36,7 @@ class UserGroup extends Base
      * @param UrlGenerator      $urlGenerator
      * @param PaginationFactory $paginationFactory
      * @param Table             $tableFactory
-     * @param Grid              $gridFactory
+     * @param GridFactory       $gridFactory
      * @param ITranslator       $translator
      * @param Filters           $filters
      */
@@ -43,7 +44,7 @@ class UserGroup extends Base
         UrlGenerator $urlGenerator,
         PaginationFactory $paginationFactory,
         Table $tableFactory,
-        Grid $gridFactory,
+        GridFactory $gridFactory,
         ITranslator $translator,
         Filters $filters
     ) {
@@ -63,14 +64,6 @@ class UserGroup extends Base
     }
 
     /**
-     * @return array
-     */
-    public function getHeaders(): array
-    {
-        return [];
-    }
-
-    /**
      * @return Actions
      */
     protected function getRowActions(): Actions
@@ -78,29 +71,27 @@ class UserGroup extends Base
         $attributeCallbacks = $this->getAttributeCallbacks();
 
         $editAttributes = [
-            static::ATTRIBUTE_CLASS => Button::CLASS_PRIMARY,
-            static::ATTRIBUTE_HREF  => Routes::ROUTE_USER_GROUPS_EDIT,
+            Html5::ATTR_HREF  => Routes::ROUTE_USER_GROUPS_EDIT,
         ];
 
         $deleteAttributes = [
-            static::ATTRIBUTE_CLASS => Button::CLASS_DANGER,
-            static::ATTRIBUTE_HREF  => Routes::ROUTE_USER_GROUPS_DELETE,
+            Html5::ATTR_HREF  => Routes::ROUTE_USER_GROUPS_DELETE,
         ];
 
         $cellActions   = new Actions();
-        $cellActions[] = new Button(
+        $cellActions[] = new Action(
             static::LABEL_EDIT,
+            $this->editIntents,
             $editAttributes,
             $attributeCallbacks,
-            $this->translator,
-            Button::TAG_A
+            Html5::TAG_A
         );
-        $cellActions[] = new Button(
+        $cellActions[] = new Action(
             static::LABEL_DELETE,
+            $this->deleteIntents,
             $deleteAttributes,
             $attributeCallbacks,
-            $this->translator,
-            Button::TAG_A
+            Html5::TAG_A
         );
 
         return $cellActions;

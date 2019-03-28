@@ -8,15 +8,16 @@ use AbterPhp\Files\Constant\Routes;
 use AbterPhp\Files\Domain\Entities\FileCategory as Entity;
 use AbterPhp\Files\Grid\Factory\Table\FileCategory as Table;
 use AbterPhp\Files\Grid\Filters\FileCategory as Filters;
-use AbterPhp\Framework\Grid\Action\Button;
-use AbterPhp\Framework\Grid\Collection\Actions;
-use AbterPhp\Framework\Grid\Factory\Base;
-use AbterPhp\Framework\Grid\Factory\Grid;
-use AbterPhp\Framework\Grid\Factory\Pagination as PaginationFactory;
+use AbterPhp\Framework\Constant\Html5;
+use AbterPhp\Framework\Grid\Action\Action;
+use AbterPhp\Framework\Grid\Component\Actions;
+use AbterPhp\Framework\Grid\Factory\BaseFactory;
+use AbterPhp\Framework\Grid\Factory\GridFactory;
+use AbterPhp\Framework\Grid\Factory\PaginationFactory as PaginationFactory;
 use AbterPhp\Framework\I18n\ITranslator;
 use Opulence\Routing\Urls\UrlGenerator;
 
-class FileCategory extends Base
+class FileCategory extends BaseFactory
 {
     const GROUP_ID         = 'fileCategory-id';
     const GROUP_IDENTIFIER = 'fileCategory-identifier';
@@ -34,7 +35,7 @@ class FileCategory extends Base
      * @param UrlGenerator      $urlGenerator
      * @param PaginationFactory $paginationFactory
      * @param Table             $tableFactory
-     * @param Grid              $gridFactory
+     * @param GridFactory       $gridFactory
      * @param ITranslator       $translator
      * @param Filters           $filters
      */
@@ -42,7 +43,7 @@ class FileCategory extends Base
         UrlGenerator $urlGenerator,
         PaginationFactory $paginationFactory,
         Table $tableFactory,
-        Grid $gridFactory,
+        GridFactory $gridFactory,
         ITranslator $translator,
         Filters $filters
     ) {
@@ -71,15 +72,7 @@ class FileCategory extends Base
     {
         $expr = $entity->isPublic() ? 'framework:yes' : 'framework:no';
 
-        return $this->translator->translate($expr);
-    }
-
-    /**
-     * @return array
-     */
-    public function getHeaders(): array
-    {
-        return [];
+        return $expr;
     }
 
     /**
@@ -90,29 +83,27 @@ class FileCategory extends Base
         $attributeCallbacks = $this->getAttributeCallbacks();
 
         $editAttributes = [
-            static::ATTRIBUTE_CLASS => Button::CLASS_PRIMARY,
-            static::ATTRIBUTE_HREF  => Routes::ROUTE_FILE_CATEGORIES_EDIT,
+            Html5::ATTR_HREF  => Routes::ROUTE_FILE_CATEGORIES_EDIT,
         ];
 
         $deleteAttributes = [
-            static::ATTRIBUTE_CLASS => Button::CLASS_DANGER,
-            static::ATTRIBUTE_HREF  => Routes::ROUTE_FILE_CATEGORIES_DELETE,
+            Html5::ATTR_HREF  => Routes::ROUTE_FILE_CATEGORIES_DELETE,
         ];
 
         $cellActions   = new Actions();
-        $cellActions[] = new Button(
+        $cellActions[] = new Action(
             static::LABEL_EDIT,
+            $this->editIntents,
             $editAttributes,
             $attributeCallbacks,
-            $this->translator,
-            Button::TAG_A
+            Html5::TAG_A
         );
-        $cellActions[] = new Button(
+        $cellActions[] = new Action(
             static::LABEL_DELETE,
+            $this->deleteIntents,
             $deleteAttributes,
             $attributeCallbacks,
-            $this->translator,
-            Button::TAG_A
+            Html5::TAG_A
         );
 
         return $cellActions;

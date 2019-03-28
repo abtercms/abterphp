@@ -6,7 +6,8 @@ namespace AbterPhp\Framework\Form\Container;
 
 use AbterPhp\Framework\Form\Element\Input;
 use AbterPhp\Framework\Form\Extra\Help;
-use AbterPhp\Framework\Form\Label\ToggleLabel;
+use AbterPhp\Framework\Form\Label\Label;
+use AbterPhp\Framework\Form\Label\ToggleLabelTest;
 use AbterPhp\Framework\I18n\MockTranslatorFactory;
 use PHPUnit\Framework\MockObject\MockObject;
 
@@ -18,28 +19,20 @@ class ToggleTest extends \PHPUnit\Framework\TestCase
     public function renderProvider()
     {
         return [
-            'simple' => [
-                '<foo>',
-                '<bar>',
-                '<baz>',
-                [],
-                null,
-                null,
-                '<div class="checkbox pmd-default-theme"><label class="pmd-checkbox pmd-checkbox-ripple-effect"><bar><foo></label><baz></div>', // nolint
-            ],
+            'simple' => ['<foo>', '<bar>', '<baz>', [], null, null, '<div><bar><baz></div>'],
         ];
     }
 
     /**
      * @dataProvider renderProvider
      *
-     * @param string      $inputOutput
-     * @param string      $labelOutput
-     * @param string      $helpOutput
-     * @param array       $attributes
-     * @param array|null  $translations
-     * @param string|null $tag
-     * @param string      $expectedResult
+     * @param string        $inputOutput
+     * @param string        $labelOutput
+     * @param string        $helpOutput
+     * @param array         $attributes
+     * @param string[]|null $translations
+     * @param string|null   $tag
+     * @param string        $expectedResult
      */
     public function testRender(
         string $inputOutput,
@@ -60,14 +53,14 @@ class ToggleTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @param string      $inputOutput
-     * @param string      $labelOutput
-     * @param string      $helpOutput
-     * @param array       $attributes
-     * @param array|null  $translations
-     * @param string|null $tag
+     * @param string        $inputOutput
+     * @param string        $labelOutput
+     * @param string        $helpOutput
+     * @param array         $attributes
+     * @param string[]|null $translations
+     * @param string|null   $tag
      *
-     * @return Toggle
+     * @return ToggleGroup
      */
     protected function createElement(
         string $inputOutput,
@@ -76,15 +69,15 @@ class ToggleTest extends \PHPUnit\Framework\TestCase
         array $attributes,
         ?array $translations,
         ?string $tag
-    ) {
+    ): ToggleGroup {
         /** @var Input|MockObject $inputMock */
         $inputMock = $this->getMockBuilder(Input::class)
             ->disableOriginalConstructor()
             ->setMethods(['__toString'])
             ->getMock();
 
-        /** @var ToggleLabel|MockObject $labelMock */
-        $labelMock = $this->getMockBuilder(ToggleLabel::class)
+        /** @var Label|MockObject $labelMock */
+        $labelMock = $this->getMockBuilder(Label::class)
             ->disableOriginalConstructor()
             ->setMethods(['__toString'])
             ->getMock();
@@ -100,6 +93,25 @@ class ToggleTest extends \PHPUnit\Framework\TestCase
 
         $translatorMock = MockTranslatorFactory::createSimpleTranslator($this, $translations);
 
-        return new Toggle($inputMock, $labelMock, $helpMock, $attributes, $translatorMock, $tag);
+        $toggleGroup = new ToggleGroup($inputMock, $labelMock, $helpMock, [], $attributes, $tag);
+
+        $toggleGroup->setTranslator($translatorMock);
+
+        return $toggleGroup;
+    }
+
+    public function testGetAllNodesIncludesHiderBtn()
+    {
+        $input = new Input('foo', 'foo');
+        $label = new Label('foo', 'Foo');
+        $help  = new Help('help');
+
+        $sut = new ToggleGroup($input, $label, $help);
+
+        $actualResult = $sut->getAllNodes();
+
+        $this->assertContains($input, $actualResult);
+        $this->assertContains($label, $actualResult);
+        $this->assertContains($help, $actualResult);
     }
 }

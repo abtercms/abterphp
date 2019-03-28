@@ -20,15 +20,15 @@ class LabelTest extends \PHPUnit\Framework\TestCase
                 [],
                 null,
                 null,
-                '<label class="control-label" for="a">ABC</label>',
+                '<label for="a">ABC</label>',
             ],
             'with attributes'   => [
                 'a',
                 'ABC',
-                ['foo' => 'bar', 'class' => 'baz'],
+                ['foo' => ['bar'], 'class' => ['baz']],
                 null,
                 null,
-                '<label class="control-label baz" for="a" foo="bar">ABC</label>',
+                '<label for="a" foo="bar" class="baz">ABC</label>',
             ],
             'with translations' => [
                 'a',
@@ -36,7 +36,7 @@ class LabelTest extends \PHPUnit\Framework\TestCase
                 [],
                 ['ABC' => 'CBA'],
                 null,
-                '<label class="control-label" for="a">CBA</label>',
+                '<label for="a">CBA</label>',
             ],
             'custom tag'        => [
                 'a',
@@ -44,7 +44,7 @@ class LabelTest extends \PHPUnit\Framework\TestCase
                 [],
                 [],
                 'foo',
-                '<foo class="control-label" for="a">ABC</foo>',
+                '<foo for="a">ABC</foo>',
             ],
         ];
     }
@@ -52,12 +52,12 @@ class LabelTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider renderProvider
      *
-     * @param string      $inputId
-     * @param string      $content
-     * @param array       $attributes
-     * @param array|null  $translations
-     * @param string|null $tag
-     * @param string      $expectedResult
+     * @param string        $inputId
+     * @param string        $content
+     * @param string[][]    $attributes
+     * @param string[]|null $translations
+     * @param string|null   $tag
+     * @param string        $expectedResult
      */
     public function testRender(
         string $inputId,
@@ -73,11 +73,11 @@ class LabelTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @param string      $inputId
-     * @param string      $content
-     * @param array       $attributes
-     * @param array|null  $translations
-     * @param string|null $tag
+     * @param string        $inputId
+     * @param string        $content
+     * @param string[][]    $attributes
+     * @param string[]|null $translations
+     * @param string|null   $tag
      *
      * @return Label
      */
@@ -90,6 +90,10 @@ class LabelTest extends \PHPUnit\Framework\TestCase
     ): Label {
         $translatorMock = MockTranslatorFactory::createSimpleTranslator($this, $translations);
 
-        return new Label($inputId, $content, $attributes, $translatorMock, $tag);
+        $label = new Label($inputId, $content, [], $attributes, $tag);
+
+        $label->setTranslator($translatorMock);
+
+        return $label;
     }
 }

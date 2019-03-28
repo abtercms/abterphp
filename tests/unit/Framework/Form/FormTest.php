@@ -22,12 +22,12 @@ class FormTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider renderProvider
      *
-     * @param string      $action
-     * @param string      $method
-     * @param array       $attributes
-     * @param array|null  $translations
-     * @param string|null $tag
-     * @param string      $expectedResult
+     * @param string        $action
+     * @param string        $method
+     * @param string[][]    $attributes
+     * @param string[]|null $translations
+     * @param string|null   $tag
+     * @param string        $expectedResult
      */
     public function testRender(
         string $action,
@@ -43,11 +43,11 @@ class FormTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @param string      $action
-     * @param string      $method
-     * @param array       $attributes
-     * @param array|null  $translations
-     * @param string|null $tag
+     * @param string        $action
+     * @param string        $method
+     * @param string[][]    $attributes
+     * @param string[]|null $translations
+     * @param string|null   $tag
      *
      * @return Form
      */
@@ -60,6 +60,10 @@ class FormTest extends \PHPUnit\Framework\TestCase
     ): Form {
         $translatorMock = MockTranslatorFactory::createSimpleTranslator($this, $translations);
 
-        return new Form($action, $method, $attributes, $translatorMock, $tag);
+        $form = new Form($action, $method, [], $attributes, $tag);
+
+        $form->setTranslator($translatorMock);
+
+        return $form;
     }
 }

@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace AbterPhp\Website\Form\Factory;
 
+use AbterPhp\Framework\Constant\Html5;
 use AbterPhp\Framework\Form\Container\FormGroup;
 use AbterPhp\Framework\Form\Element\Input;
 use AbterPhp\Framework\Form\Element\Textarea;
 use AbterPhp\Framework\Form\Factory\Base;
 use AbterPhp\Framework\Form\Factory\IFormFactory;
-use AbterPhp\Framework\Form\Form;
 use AbterPhp\Framework\Form\IForm;
 use AbterPhp\Framework\Form\Label\Label;
 use AbterPhp\Framework\I18n\ITranslator;
@@ -69,7 +69,7 @@ class BlockLayout extends Base
             'identifier',
             $entity->getIdentifier()
         );
-        $label = new Label('identifier', 'pages:blockLayoutIdentifier', [], $this->translator);
+        $label = new Label('identifier', 'pages:blockLayoutIdentifier');
 
         $this->form[] = new FormGroup($input, $label);
 
@@ -83,13 +83,8 @@ class BlockLayout extends Base
      */
     protected function addBody(Entity $entity): BlockLayout
     {
-        $input = new Textarea(
-            'body',
-            'body',
-            htmlspecialchars($entity->getBody()),
-            [Textarea::ATTRIBUTE_ROWS => '15']
-        );
-        $label = new Label('body', 'pages:blockLayoutBody', [], $this->translator);
+        $input = new Textarea('body', 'body', $entity->getBody(), [], [Html5::ATTR_ROWS => '15']);
+        $label = new Label('body', 'pages:blockLayoutBody');
 
         $this->form[] = new FormGroup($input, $label);
 
