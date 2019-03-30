@@ -11,6 +11,7 @@ use AbterPhp\Framework\Grid\Collection\Cells;
 use AbterPhp\Framework\Grid\Component\Actions;
 use AbterPhp\Framework\Html\Helper\StringHelper;
 use AbterPhp\Framework\Html\INode;
+use AbterPhp\Framework\Html\NodeContainerTrait;
 use AbterPhp\Framework\Html\Tag;
 use AbterPhp\Framework\I18n\ITranslator;
 use Opulence\Orm\IEntity;
@@ -30,6 +31,8 @@ class Row extends Tag implements IRow
 
     /** @var IEntity */
     protected $entity;
+
+    use NodeContainerTrait;
 
     /**
      * Row constructor.
@@ -95,30 +98,11 @@ class Row extends Tag implements IRow
      */
     public function getNodes(): array
     {
-        return $this->getAllNodes(0);
-    }
-
-    /**
-     * @param int $depth
-     *
-     * @return INode[]
-     */
-    public function getAllNodes(int $depth = -1): array
-    {
-        $nodes = [$this->cells];
         if ($this->actionCell) {
-            $nodes = [$this->cells, $this->actionCell];
+            return [$this->cells, $this->actionCell];
         }
 
-        if ($depth !== 0) {
-            $nodes = array_merge($nodes, $this->cells->getAllNodes($depth - 1));
-
-            if ($this->actionCell) {
-                $nodes = array_merge($nodes, $this->actionCell->getAllNodes($depth - 1));
-            }
-        }
-
-        return $nodes;
+        return [$this->cells];
     }
 
     /**

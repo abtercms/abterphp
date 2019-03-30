@@ -146,28 +146,7 @@ EOT;
      */
     public function getNodes(): array
     {
-        return $this->getAllNodes(0);
-    }
-
-    /**
-     * @param int $depth
-     *
-     * @return INode[]
-     */
-    public function getAllNodes(int $depth = -1): array
-    {
-        $nodes = [$this->hiderBtn, $this->filterBtn, $this->resetBtn];
-
-        if ($depth !== 0) {
-            $nodes = array_merge(
-                $this->hiderBtn->getAllNodes($depth - 1),
-                $this->filterBtn->getAllNodes($depth - 1),
-                $this->resetBtn->getAllNodes($depth - 1),
-                $nodes
-            );
-        }
-
-        return array_merge($nodes, parent::getAllNodes($depth));
+        return array_merge([$this->hiderBtn, $this->filterBtn, $this->resetBtn], parent::getNodes());
     }
 
     /**

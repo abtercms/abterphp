@@ -66,23 +66,11 @@ class Header extends Item
     }
 
     /**
-     * @param int $depth
-     *
      * @return array
      */
-    public function getAllNodes(int $depth = -1): array
+    public function getNodes(): array
     {
-        $nodes = parent::getAllNodes($depth);
-
-        if ($depth !== 0) {
-            $nodes = array_merge(
-                $this->brandBtn->getAllNodes($depth - 1),
-                $this->hamburgerBtn->getAllNodes($depth - 1),
-                $nodes
-            );
-        }
-
-        return array_merge([$this->brandBtn, $this->hamburgerBtn], $nodes);
+        return array_merge([$this->brandBtn, $this->hamburgerBtn], parent::getNodes());
     }
 
     /**

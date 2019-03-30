@@ -49,35 +49,12 @@ class ToggleGroup extends FormGroup
      */
     public function getNodes(): array
     {
-        return $this->getAllNodes(0);
-    }
-
-    /**
-     * @param int $depth
-     *
-     * @return array
-     */
-    public function getAllNodes(int $depth = -1): array
-    {
         $nodes = [$this->label, $this->input, $this->toggleSpan];
         if ($this->help) {
             $nodes[] = $this->help;
         }
 
-        if ($depth !== 0) {
-            $nodes = array_merge(
-                $nodes,
-                $this->label->getAllNodes($depth - 1),
-                $this->input->getAllNodes($depth - 1),
-                $this->toggleSpan->getAllNodes($depth - 1)
-            );
-
-            if ($this->help instanceof INodeContainer) {
-                $nodes = array_merge($nodes, $this->help->getAllNodes($depth - 1));
-            }
-        }
-
-        return array_merge($nodes, parent::getAllNodes($depth));
+        return array_merge($nodes, parent::getNodes());
     }
 
     /**

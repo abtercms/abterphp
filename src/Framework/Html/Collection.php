@@ -39,6 +39,8 @@ class Collection implements ICollection
      */
     protected $intents = [];
 
+    use NodeContainerTrait;
+
     /**
      * Collection constructor.
      *
@@ -268,26 +270,6 @@ class Collection implements ICollection
     public function getNodes(): array
     {
         return $this->nodes;
-    }
-
-    /**
-     * @param int $depth
-     *
-     * @return INode[]
-     */
-    public function getAllNodes(int $depth = -1): array
-    {
-        $nodes = [];
-        foreach ($this->nodes as $v) {
-            $nodes[] = $v;
-            if ($depth !== 0 && $v instanceof INodeContainer) {
-                $nodes = array_merge($nodes, $v->getAllNodes($depth - 1));
-            }
-        }
-
-        ksort($nodes);
-
-        return array_values($nodes);
     }
 
     /**

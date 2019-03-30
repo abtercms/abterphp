@@ -181,28 +181,7 @@ class Grid extends Component implements IGrid, ITemplater
      */
     public function getNodes(): array
     {
-        return $this->getAllNodes(0);
-    }
-
-    /**
-     * @param int $depth
-     *
-     * @return INode[]
-     */
-    public function getAllNodes(int $depth = -1): array
-    {
-        $nodes = [$this->filters, $this->pagination, $this->table];
-
-        if ($depth !== 0) {
-            $nodes = array_merge(
-                $this->filters->getAllNodes($depth - 1),
-                $this->pagination->getAllNodes($depth - 1),
-                $this->table->getAllNodes($depth - 1),
-                $nodes
-            );
-        }
-
-        return array_merge($nodes, parent::getAllNodes($depth));
+        return array_merge([$this->filters, $this->pagination, $this->table], parent::getNodes());
     }
 
     /**

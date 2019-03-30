@@ -104,27 +104,7 @@ class Table extends Component implements ITable, ITemplater
      */
     public function getNodes(): array
     {
-        return $this->getAllNodes(0);
-    }
-
-    /**
-     * @param int $depth
-     *
-     * @return INode[]
-     */
-    public function getAllNodes(int $depth = -1): array
-    {
-        $nodes = [$this->header, $this->body];
-
-        if ($depth !== 0) {
-            $nodes = array_merge(
-                $this->header->getAllNodes($depth - 1),
-                $this->body->getAllNodes($depth - 1),
-                $nodes
-            );
-        }
-
-        return array_merge($nodes, parent::getAllNodes($depth));
+        return array_merge([$this->header, $this->body], parent::getNodes());
     }
 
     /**

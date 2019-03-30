@@ -10,6 +10,7 @@ use AbterPhp\Framework\Form\Element\Select;
 use AbterPhp\Framework\Html\Helper\StringHelper;
 use AbterPhp\Framework\Html\INode;
 use AbterPhp\Framework\Html\ITemplater;
+use AbterPhp\Framework\Html\NodeContainerTrait;
 use AbterPhp\Framework\Html\Tag;
 
 /**
@@ -67,6 +68,8 @@ class Pagination extends Tag implements IPagination, ITemplater
 
     /** @var string */
     protected $template = self::DEFAULT_TEMPLATE;
+
+    use NodeContainerTrait;
 
     /**
      * Pagination constructor.
@@ -270,27 +273,7 @@ class Pagination extends Tag implements IPagination, ITemplater
      */
     public function getNodes(): array
     {
-        return $this->getAllNodes(0);
-    }
-
-    /**
-     * @param int $depth
-     *
-     * @return INode[]
-     */
-    public function getAllNodes(int $depth = -1): array
-    {
-        $nodes = [$this->numbers, $this->sizeOptions];
-
-        if ($depth !== 0) {
-            $nodes = array_merge(
-                $nodes,
-                $this->numbers->getAllNodes($depth - 1),
-                $this->sizeOptions->getAllNodes($depth - 1)
-            );
-        }
-
-        return $nodes;
+        return [$this->numbers, $this->sizeOptions];
     }
 
     /**

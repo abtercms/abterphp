@@ -170,27 +170,7 @@ abstract class Filter extends Component implements IFilter, ITemplater
      */
     public function getNodes(): array
     {
-        return $this->getAllNodes(0);
-    }
-
-    /**
-     * @param int $depth
-     *
-     * @return array
-     */
-    public function getAllNodes(int $depth = -1): array
-    {
-        $nodes = [$this->wrapper, $this->label, $this->helpBlock];
-
-        if ($depth !== 0) {
-            $nodes = array_merge(
-                $nodes,
-                $this->wrapper->getAllNodes($depth - 1),
-                $this->label->getAllNodes($depth - 1),
-                $this->helpBlock->getAllNodes($depth - 1)
-            );
-        }
-        return array_merge($nodes, parent::getAllNodes($depth));
+        return array_merge([$this->wrapper, $this->label, $this->helpBlock], parent::getNodes());
     }
 
     /**

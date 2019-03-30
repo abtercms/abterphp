@@ -11,6 +11,7 @@ use AbterPhp\Framework\Html\Helper\StringHelper;
 use AbterPhp\Framework\Html\INode;
 use AbterPhp\Framework\Html\INodeContainer;
 use AbterPhp\Framework\Html\ITemplater;
+use AbterPhp\Framework\Html\NodeContainerTrait;
 use AbterPhp\Framework\Html\Tag;
 use AbterPhp\Framework\I18n\ITranslator;
 
@@ -41,6 +42,8 @@ class FormGroup extends Tag implements ITemplater
 
     /** @var string */
     protected $template = self::DEFAULT_TEMPLATE;
+
+    use NodeContainerTrait;
 
     /**
      * FormGroup constructor.
@@ -145,31 +148,10 @@ class FormGroup extends Tag implements ITemplater
      */
     public function getNodes(): array
     {
-        return $this->getAllNodes(0);
-    }
-
-    /**
-     * @param int $depth
-     *
-     * @return array
-     */
-    public function getAllNodes(int $depth = -1): array
-    {
         $nodes = [$this->label, $this->input];
 
         if ($this->help instanceof INodeContainer) {
             $nodes = array_merge($nodes, [$this->help]);
-        }
-
-        if ($depth !== 0) {
-            $nodes = array_merge(
-                $nodes,
-                $this->label->getAllNodes($depth - 1)
-            );
-
-            if ($this->help instanceof INodeContainer) {
-                $nodes = array_merge($nodes, $this->help->getAllNodes($depth - 1));
-            }
         }
 
         return $nodes;

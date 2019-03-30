@@ -12,6 +12,7 @@ use AbterPhp\Framework\Html\Helper\StringHelper;
 use AbterPhp\Framework\Html\IComponent;
 use AbterPhp\Framework\Html\INode;
 use AbterPhp\Framework\Html\INodeContainer;
+use AbterPhp\Framework\Html\NodeContainerTrait;
 use AbterPhp\Framework\Html\Tag;
 use AbterPhp\Framework\I18n\ITranslator;
 use Opulence\Routing\Urls\UrlGenerator;
@@ -37,6 +38,8 @@ class UserBlock extends Tag implements INodeContainer
 
     /** @var IComponent */
     protected $mediaRight;
+
+    use NodeContainerTrait;
 
     /**
      * UserBlock constructor.
@@ -127,28 +130,7 @@ class UserBlock extends Tag implements INodeContainer
      */
     public function getNodes(): array
     {
-        return $this->getAllNodes(0);
-    }
-
-    /**
-     * @param int $depth
-     *
-     * @return INode[]
-     */
-    public function getAllNodes(int $depth = -1): array
-    {
-        $nodes = [$this->mediaLeft, $this->mediaBody, $this->mediaRight];
-
-        if ($depth !== 0) {
-            $nodes = array_merge(
-                $nodes,
-                $this->mediaLeft->getAllNodes($depth - 1),
-                $this->mediaBody->getAllNodes($depth - 1),
-                $this->mediaRight->getAllNodes($depth - 1)
-            );
-        }
-
-        return $nodes;
+        return [$this->mediaLeft, $this->mediaBody, $this->mediaRight];
     }
 
     /**

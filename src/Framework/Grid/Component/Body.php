@@ -73,23 +73,16 @@ class Body extends Component
     }
 
     /**
-     * @param int $depth
-     *
      * @return INode[]
      */
-    public function getAllNodes(int $depth = -1): array
+    public function getNodes(): array
     {
         $nodes = [];
-
         if ($this->actions) {
             $nodes[] = $this->actions;
         }
 
-        if ($depth !== 0 && $this->actions) {
-            $nodes = array_merge($nodes, $this->actions->getAllNodes($depth - 1));
-        }
-
-        return $nodes = array_merge($nodes, parent::getAllNodes($depth));
+        return array_merge($nodes, parent::getNodes());
     }
 
     /**

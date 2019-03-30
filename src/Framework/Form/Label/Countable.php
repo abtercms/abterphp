@@ -76,23 +76,7 @@ class Countable extends Label implements ITemplater
      */
     public function getNodes(): array
     {
-        return $this->getAllNodes(0);
-    }
-
-    /**
-     * @param int $depth
-     *
-     * @return array
-     */
-    public function getAllNodes(int $depth = -1): array
-    {
-        $nodes = parent::getAllNodes($depth);
-
-        if ($depth !== 0) {
-            $nodes = array_merge($nodes, $this->counter->getAllNodes($depth - 1));
-        }
-
-        return array_merge([$this->counter], $nodes);
+        return array_merge([$this->counter], parent::getNodes());
     }
 
     /**

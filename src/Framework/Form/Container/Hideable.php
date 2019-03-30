@@ -87,23 +87,7 @@ class Hideable extends Component implements ITemplater
      */
     public function getNodes(): array
     {
-        return $this->getAllNodes(0);
-    }
-
-    /**
-     * @param int $depth
-     *
-     * @return array
-     */
-    public function getAllNodes(int $depth = -1): array
-    {
-        $nodes = parent::getAllNodes($depth);
-
-        if ($depth !== 0) {
-            $nodes = array_merge($nodes, $this->hiderBtn->getAllNodes($depth - 1));
-        }
-
-        return array_merge([$this->hiderBtn], $nodes);
+        return array_merge([$this->hiderBtn], parent::getNodes());
     }
 
     /**

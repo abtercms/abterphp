@@ -197,7 +197,6 @@ before the first stable version.
 1. Existing phpmd ignore cases reviewed
 1. Review and refactor global `$abterModuleManager` usage
 1. Must-accept-cookie module
-1. More useful dashboard (community input?)
 1. Test loading entities that don't exist or faulty
 1. Fix empty exceptions (\LogicException, \RuntimeException, \InvalidArgumentException)
 1. Ensure identifiers do not contain a comma (explode issue)
@@ -217,6 +216,7 @@ before the first stable version.
 1. Review all constants
 1. Documentation complete
 1. 12-factor compliance clearly stated
+1. More useful dashboard (community input?)
 
 ## Ideas
 

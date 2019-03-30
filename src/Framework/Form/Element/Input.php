@@ -101,28 +101,6 @@ class Input extends Tag implements IElement
     }
 
     /**
-     * @return INode[]
-     */
-    public function getNodes(): array
-    {
-        return $this->getAllNodes(0);
-    }
-
-    /**
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
-     *
-     * @param int $depth
-     *
-     * @return array
-     */
-    public function getAllNodes(int $depth = -1): array
-    {
-        $nodes = [];
-
-        return $nodes;
-    }
-
-    /**
      * @return string
      */
     public function __toString(): string

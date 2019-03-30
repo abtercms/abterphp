@@ -94,34 +94,13 @@ class Dropdown extends Component
      */
     public function getNodes(): array
     {
-        return $this->getAllNodes(0);
-    }
-
-    /**
-     * @param int $depth
-     *
-     * @return INode[]
-     */
-    public function getAllNodes(int $depth = -1): array
-    {
         $nodes = [$this->prefix, $this->postfix];
+
         if ($this->wrapper) {
             $nodes = [$this->wrapper, $this->prefix, $this->postfix];
         }
 
-        if ($depth !== 0) {
-            if ($this->wrapper) {
-                $nodes = array_merge($nodes, [$this->wrapper->getAllNodes($depth - 1)]);
-            }
-
-            $nodes = array_merge(
-                $nodes,
-                $this->prefix->getAllNodes($depth - 1),
-                $this->postfix->getAllNodes($depth - 1)
-            );
-        }
-
-        return array_merge($nodes, parent::getAllNodes($depth));
+        return array_merge($nodes, parent::getNodes());
     }
 
     /**
