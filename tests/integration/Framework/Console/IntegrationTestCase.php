@@ -5,6 +5,8 @@ namespace Integration\Framework\Console;
 use AbterPhp\Framework\Module\Manager;
 use LogicException;
 use Opulence\Applications\Tasks\Dispatchers\ITaskDispatcher;
+use Opulence\Databases\Migrations\IMigrator;
+use Opulence\Databases\Migrations\Migrator;
 use Opulence\Framework\Configuration\Config;
 use Opulence\Framework\Console\Testing\PhpUnit\IntegrationTestCase as BaseIntegrationTestCase;
 use Opulence\Ioc\Bootstrappers\Caching\FileCache;
@@ -89,7 +91,19 @@ class IntegrationTestCase extends BaseIntegrationTestCase
         $bootstrapperDispatcher = new BootstrapperDispatcher($container, $bootstrapperRegistry, $bootstrapperResolver);
         $bootstrapperDispatcher->dispatch(false);
 
+        /** @var IMigrator $migrator */
+        $migrator = $container->resolve(IMigrator::class);
+        $migrator->runMigrations();
+
         parent::setUp();
+    }
+
+    public function tearDown()
+    {
+        // TODO: Fix this after https://github.com/opulencephp/Opulence/issues/106
+        /** @var IMigrator $migrator */
+//        $migrator = $this->container->resolve(IMigrator::class);
+//        $migrator->rollBackAllMigrations();
     }
 
     /**

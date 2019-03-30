@@ -38,20 +38,6 @@ services:
 
   php:
     image: abtercms/php:72
-    environment:
-      - DB_HOST=db
-      - DB_USER=abter
-      - DB_NAME=abter
-      - DB_PASSWORD=28T3pqyvKG3tEgsjE8Rj
-      - DB_PORT=3306
-      - MEMCACHED_HOST=memcached
-      - MEMCACHED_PORT=11211
-      - REDIS_HOST=redis
-      - REDIS_PORT=6379
-      - DEFAULT_LANGUAGE=hu
-      - ENCRYPTION_KEY=b8fbb40c129ad0e426e19b7d28f42e517ce639282e55ba7a98bd2b698fda7daa
-      - CRYPTO_FRONTEND_SALT=R6n9gNH9ND6USc6D
-      - CRYPTO_ENCRYPTION_PEPPER=h9fyyWr36vBnky9G
     links:
       - db
       - db_test
