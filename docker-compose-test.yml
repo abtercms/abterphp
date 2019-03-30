@@ -1,46 +1,43 @@
 version: '3'
 services:
-  db:
+  db_test:
     image: mariadb
     environment:
       - MYSQL_ROOT_PASSWORD=85TKjy8ZnYGpThBTfYAv
-      - MYSQL_DATABASE=abter
-      - MYSQL_USER=abter
-      - MYSQL_PASSWORD=28T3pqyvKG3tEgsjE8Rj
+      - MYSQL_DATABASE=abter_test
+      - MYSQL_USER=abter_test
+      - MYSQL_PASSWORD=abter_test
       - MYSQL_PORT=3306
     volumes:
       - ./docker/mysql/dumps:/docker-entrypoint-initdb.d:ro
     ports:
-      - "3366:3306"
+      - "3376:3306"
 
-  memcached:
+  memcached_test:
     image: memcached:alpine
     ports:
-      - "11271:11211"
+      - "11281:11211"
 
-  redis:
+  redis_test:
     image: redis:alpine
     ports:
-      - "6439:6379"
+      - "6449:6379"
 
-  php:
+  php_test:
     image: abtercms/php:72
     links:
-      - db
-      - memcached
-      - redis
+      - db_test
+      - memcached_test
+      - redis_test
     volumes:
       - .:/website
       - ./docker/php/config/zzz.ini:/usr/local/etc/php/conf.d/zzz.ini:ro
     working_dir: /website
 
-  nginx:
+  nginx_test:
     image: nginx
     links:
-      - php
-    ports:
-      - "443:443"
-      - "80:80"
+      - php_test
     volumes:
       - .:/website
       - ./docker/nginx/conf.d:/etc/nginx/conf.d:ro
