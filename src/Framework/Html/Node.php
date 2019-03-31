@@ -61,6 +61,10 @@ class Node implements INode
             return $this;
         }
 
+        if (is_scalar($content)) {
+            $content = (string)$content;
+        }
+
         if (!is_string($content) && !($content instanceof INode)) {
             throw new \InvalidArgumentException();
         }

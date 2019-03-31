@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace AbterPhp\Framework\Html;
 
-class CollectionTest extends NodeTest
+class CollectionTest extends NodeTestCase
 {
     public function testToStringIsEmptyByDefault()
     {
@@ -24,17 +24,6 @@ class CollectionTest extends NodeTest
     }
 
     /**
-     * @dataProvider toStringReturnsRawContentByDefaultProvider
-     *
-     * @param string $rawContent
-     * @param string $expectedResult
-     */
-    public function testToStringReturnsRawContentByDefault($rawContent, string $expectedResult)
-    {
-        parent::testToStringReturnsRawContentByDefault($rawContent, $expectedResult);
-    }
-
-    /**
      * @return array
      */
     public function toStringCanReturnTranslatedContentProvider(): array
@@ -47,7 +36,6 @@ class CollectionTest extends NodeTest
             'INode[]' => [[new Node('foo')], $translations, 'bar'],
         ];
     }
-
 
     /**
      * @dataProvider toStringCanReturnTranslatedContentProvider
@@ -430,7 +418,7 @@ class CollectionTest extends NodeTest
                 true,
                 [$needle, $node2, $node3],
             ],
-            'non-last-matching-content'     => [
+            'non-last-matching-content'      => [
                 [$needle, $node2],
                 $needle,
                 [$node3, $node3],
@@ -516,7 +504,7 @@ class CollectionTest extends NodeTest
                 true,
                 [$node2, $node3, $node3],
             ],
-            'non-last-matching-content'     => [
+            'non-last-matching-content'      => [
                 [$needle, $node2],
                 $needle,
                 [$node3, $node3],
@@ -597,7 +585,7 @@ class CollectionTest extends NodeTest
                 true,
                 [$node2],
             ],
-            'non-last-matching-content'     => [
+            'non-last-matching-content'      => [
                 [$needle, $node2],
                 $needle,
                 true,
@@ -632,6 +620,24 @@ class CollectionTest extends NodeTest
 
         $this->assertSame($expectedResult, $actualResult);
         $this->assertEquals($expectedNodes, $sut->getNodes());
+    }
+
+    /**
+     * @return array
+     */
+    public function isMatchProvider(): array
+    {
+        return [
+            'INode-no-intent'               => [INode::class, [], true],
+            'INode-foo-intent'              => [INode::class, ['foo'], true],
+            'INode-bar-intent'              => [INode::class, ['bar'], true],
+            'INode-foo-and-bar-intent'      => [INode::class, ['foo', 'bar'], true],
+            'fail-IComponent-foo-intent'    => [IComponent::class, ['foo'], false],
+            'fail-Component-foo-intent'     => [Component::class, ['foo'], false],
+            'fail-INode-baz-intent'         => [INode::class, ['baz'], false],
+            'fail-INode-foo-and-baz-intent' => [INode::class, ['foo', 'baz'], false],
+            'fail-Node-foo-intent'          => [Node::class, ['foo'], false],
+        ];
     }
 
     /**

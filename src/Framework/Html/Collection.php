@@ -475,7 +475,7 @@ class Collection implements ICollection
         }
 
         throw new InvalidArgumentException(
-            sprintf(static::ERROR_INVALID_INSTANCE_ARG, $this->nodeClass, $type)
+            sprintf(static::ERROR_INVALID_INSTANCE_ARG, $this->nodeClass, get_class($node))
         );
     }
 }

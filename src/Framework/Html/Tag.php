@@ -4,22 +4,25 @@ declare(strict_types=1);
 
 namespace AbterPhp\Framework\Html;
 
+use AbterPhp\Framework\Constant\Html5;
 use AbterPhp\Framework\Html\Helper\StringHelper;
 
 class Tag extends Node implements ITag
 {
+    const DEFAULT_TAG = Html5::TAG_DIV;
+
     use TagTrait;
 
     /**
      * Row constructor.
      *
-     * @param string|null $content
+     * @param mixed       $content
      * @param string[]    $intents
      * @param array       $attributes
      * @param string|null $tag
      */
     public function __construct(
-        ?string $content = null,
+        $content = null,
         array $intents = [],
         array $attributes = [],
         ?string $tag = null
@@ -35,8 +38,8 @@ class Tag extends Node implements ITag
      */
     public function __toString(): string
     {
-        $content = StringHelper::wrapInTag($this->content, $this->tag, $this->attributes);
+        $content = $this->translate($this->content);
 
-        return $content;
+        return StringHelper::wrapInTag($content, $this->tag, $this->attributes);
     }
 }

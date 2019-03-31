@@ -8,6 +8,8 @@ use AbterPhp\Framework\Html\Helper\StringHelper;
 
 final class Contentless extends Component
 {
+    const ERROR_NO_CONTENT = 'Contentless can not contain nodes';
+
     /**
      * Contentless constructor.
      *
@@ -15,9 +17,46 @@ final class Contentless extends Component
      * @param array       $attributes
      * @param string|null $tag
      */
-    public function __construct($intents = [], array $attributes = [], ?string $tag = null)
+    public function __construct(array $intents = [], array $attributes = [], ?string $tag = null)
     {
         parent::__construct(null, $intents, $attributes, $tag);
+    }
+
+    /**
+     * @param INode $node
+     *
+     * @return int|null
+     */
+    public function find(INode $node): ?int
+    {
+        throw new \LogicException(static::ERROR_NO_CONTENT);
+    }
+
+    /**
+     * Collects all children, grandchildren, etc that match the arguments provided
+     *
+     * @param string|null $className
+     * @param array       $intents
+     * @param int         $depth maximum level of recursion, -1 or smaller means infinite, 0 is direct children only
+     *
+     * @return IComponent[]
+     */
+    public function collect(?string $className = null, array $intents = [], int $depth = -1): array
+    {
+        throw new \LogicException(static::ERROR_NO_CONTENT);
+    }
+
+    /**
+     * Tries to find the first child that matches the arguments provided
+     *
+     * @param string|null $className
+     * @param string      ...$intents
+     *
+     * @return IComponent|null
+     */
+    public function findFirstChild(?string $className = null, string ...$intents): ?IComponent
+    {
+        throw new \LogicException(static::ERROR_NO_CONTENT);
     }
 
     /**
@@ -26,7 +65,7 @@ final class Contentless extends Component
     public function __toString(): string
     {
         if ($this->nodes) {
-            throw new \LogicException('Contentless must not have nodes');
+            throw new \LogicException(static::ERROR_NO_CONTENT);
         }
 
         $content = StringHelper::createTag($this->tag, $this->attributes);

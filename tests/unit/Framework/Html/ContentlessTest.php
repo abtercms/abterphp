@@ -4,44 +4,15 @@ declare(strict_types=1);
 
 namespace AbterPhp\Framework\Html;
 
-class ComponentTest extends CollectionTest
+use PHPUnit\Framework\TestCase;
+
+class ContentlessTest extends TestCase
 {
-    /**
-     * @return array
-     */
-    public function toStringReturnsRawContentByDefaultProvider(): array
+    public function testToStringIsEmptyByDefault()
     {
-        return [
-            'string'  => ['foo', '<span>foo</span>'],
-            'INode'   => [new Node('foo'), '<span>foo</span>'],
-            'INode[]' => [[new Node('foo')], '<span>foo</span>'],
-        ];
-    }
+        $sut = $this->createNode();
 
-    /**
-     * @return array
-     */
-    public function toStringCanReturnTranslatedContentProvider(): array
-    {
-        $translations = ['foo' => 'bar'];
-
-        return [
-            'string'  => ['foo', $translations, '<span>bar</span>'],
-            'INode'   => [new Node('foo'), $translations, '<span>bar</span>'],
-            'INode[]' => [[new Node('foo')], $translations, '<span>bar</span>'],
-        ];
-    }
-
-
-    /**
-     * @dataProvider toStringCanReturnTranslatedContentProvider
-     *
-     * @param string $rawContent
-     * @param string $expectedResult
-     */
-    public function testToStringCanReturnTranslatedContent($rawContent, array $translations, string $expectedResult)
-    {
-        parent::testToStringCanReturnTranslatedContent($rawContent, $translations, $expectedResult);
+        $this->assertContains('', (string)$sut);
     }
 
     public function testSetIntentsCanOverwriteExistingIntents()
@@ -254,35 +225,15 @@ class ComponentTest extends CollectionTest
     }
 
     /**
-     * @return array
+     * @expectedException \LogicException
      */
-    public function findProvider(): array
+    public function testFind()
     {
-        $node1 = new Node('1');
-        $node2 = new Node('2');
+        $nodeToFind = new Node('');
 
-        return [
-            [[], $node1, null],
-            [[$node2], $node1, null],
-            [[$node1, $node2], $node1, 0],
-            [[$node1, $node2], $node2, 1],
-        ];
-    }
+        $sut = $this->createNode();
 
-    /**
-     * @dataProvider findProvider
-     *
-     * @param INode[]  $content
-     * @param INode    $nodeToFind
-     * @param int|null $expectedResult
-     */
-    public function testFind(array $content, INode $nodeToFind, ?int $expectedResult)
-    {
-        $sut = $this->createNode($content);
-
-        $actualResult = $sut->find($nodeToFind);
-
-        $this->assertSame($expectedResult, $actualResult);
+        $sut->find($nodeToFind);
     }
 
     /**
@@ -304,102 +255,54 @@ class ComponentTest extends CollectionTest
     }
 
     /**
-     * @return array
-     */
-    public function findFirstChildProvider(): array
-    {
-        $node0       = new Node('0');
-        $component1  = (new Component('1'))->setIntent('foo');
-        $component2  = (new Component('2'))->setIntent('bar');
-        $component3  = (new Component('3'))->setIntent('foo', 'bar');
-        $notFindable = new Collection((new Component('4'))->setIntent('foo', 'baz'));
-        $content     = [$node0, $component1, $component2, $component3, $notFindable];
-
-        return [
-            'INode-no-intent'               => [$content, INode::class, [], $component1],
-            'INode-foo-intent'              => [$content, INode::class, ['foo'], $component1],
-            'INode-bar-intent'              => [$content, INode::class, ['bar'], $component2],
-            'INode-foo-and-bar-intent'      => [$content, INode::class, ['foo', 'bar'], $component3],
-            'IComponent-foo-intent'         => [$content, IComponent::class, ['foo'], $component1],
-            'Component-foo-intent'          => [$content, Component::class, ['foo'], $component1],
-            'fail-INode-baz-intent'         => [$content, INode::class, ['baz'], null],
-            'fail-INode-foo-and-baz-intent' => [$content, INode::class, ['foo', 'baz'], null],
-            'fail-Node-foo-intent'          => [$content, Node::class, ['foo'], null],
-        ];
-    }
-
-    /**
-     * @dataProvider findFirstChildProvider
+     * @dataProvider isMatchProvider
      *
-     * @param INode[]     $content
      * @param string|null $className
      * @param string[]    $intents
-     * @param INode|null  $expectedResult
+     * @param int|null    $expectedResult
      */
-    public function testFindFirstChild(array $content, ?string $className, array $intents, ?INode $expectedResult)
+    public function testIsMatch(?string $className, array $intents, bool $expectedResult)
     {
-        $sut = $this->createNode($content);
+        $sut = $this->createNode();
+        $sut->setIntent('foo', 'bar');
 
-        $actualResult = $sut->findFirstChild($className, ...$intents);
+        $actualResult = $sut->isMatch($className, ...$intents);
 
         $this->assertSame($expectedResult, $actualResult);
     }
 
     /**
-     * @return array
+     * @expectedException \LogicException
      */
-    public function collectProvider(): array
+    public function testFindFirstChild()
     {
-        $node0   = new Node('0');
-        $comp1   = (new Component('1'))->setIntent('foo');
-        $comp2   = (new Component('2'))->setIntent('bar');
-        $comp3   = (new Component('3'))->setIntent('foo', 'bar');
-        $coll1   = new Collection([$comp1, $node0, $comp2]);
-        $coll2   = new Collection([$comp3, $node0, $coll1, $comp1]);
-        $content = [$comp1, $node0, $comp2, $coll2, $comp3];
+        $className = 'foo';
+        $intents   = ['bar'];
 
-        $level0Expected     = [$comp1, $comp2, $comp3];
-        $level1Expected     = [$comp1, $comp2, $comp3, $comp1, $comp3];
-        $defaultExpected    = [$comp1, $comp2, $comp3, $comp1, $comp2, $comp1, $comp3];
-        $fooOnlyExpected    = [$comp1, $comp3, $comp1, $comp1, $comp3];
-        $fooBarOnlyExpected = [$comp3, $comp3];
+        $sut = $this->createNode();
 
-        return [
-            '0-depth'       => [$content, null, 0, [], $level0Expected],
-            '1-depth'       => [$content, null, 1, [], $level1Expected],
-            'default'       => [$content, null, -1, [], $defaultExpected],
-            'inode-only'    => [$content, INode::class, -1, [], $defaultExpected],
-            'stdclass-only' => [$content, \stdClass::class, -1, [], []],
-            'foo-only'      => [$content, null, -1, ['foo'], $fooOnlyExpected],
-            'foo-bar-only'  => [$content, null, -1, ['foo', 'bar'], $fooBarOnlyExpected],
-        ];
+        $sut->findFirstChild($className, ...$intents);
     }
 
     /**
-     * @dataProvider collectProvider
-     *
-     * @param INode[]     $content
-     * @param string|null $className
-     * @param int         $depth
-     * @param string[]    $intents
-     * @param INode[]     $expectedResult
+     * @expectedException \LogicException
      */
-    public function testCollect(array $content, ?string $className, int $depth, array $intents, array $expectedResult)
+    public function testCollect()
     {
-        $sut = $this->createNode($content);
+        $className = 'foo';
+        $intents   = ['bar'];
+        $depth     = -1;
 
-        $actualResult = $sut->collect($className, $intents, $depth);
+        $sut = $this->createNode();
 
-        $this->assertEquals($expectedResult, $actualResult);
+        $sut->collect($className, $intents, $depth);
     }
 
     /**
-     * @param INode[]|INode|string|null $content
-     *
-     * @return Component
+     * @return Contentless
      */
-    protected function createNode($content = null): INode
+    protected function createNode(): INode
     {
-        return new Component($content);
+        return new Contentless();
     }
 }

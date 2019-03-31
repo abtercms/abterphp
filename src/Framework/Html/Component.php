@@ -40,8 +40,6 @@ class Component extends Collection implements IComponent
     }
 
     /**
-     * Return the key of the node if it is found, comparison uses spl_object_id
-     *
      * @param INode $node
      *
      * @return int|null

@@ -4,19 +4,11 @@ declare(strict_types=1);
 
 namespace AbterPhp\Framework\Html;
 
-class NodeTest extends NodeTestCase
+class TagTest extends NodeTestCase
 {
-    public function testGetRawContent()
-    {
-        $rawContent = 'A';
-
-        $sut = $this->createNode(new Node(new Node($rawContent)));
-
-        $actualResult = $sut->getRawContent();
-
-        $this->assertSame($rawContent, $actualResult);
-    }
-
+    /**
+     * @return array
+     */
     public function isMatchProvider(): array
     {
         return [
@@ -29,6 +21,17 @@ class NodeTest extends NodeTestCase
             'fail-INode-baz-intent'         => [INode::class, ['baz'], false],
             'fail-INode-foo-and-baz-intent' => [INode::class, ['foo', 'baz'], false],
             'Node-foo-intent'               => [Node::class, ['foo'], true],
+            'Tag-foo-intent'                => [Tag::class, ['foo'], true],
         ];
+    }
+
+    /**
+     * @param INode[]|INode|string|null $content
+     *
+     * @return Component
+     */
+    protected function createNode($content = null): INode
+    {
+        return new Tag($content);
     }
 }
