@@ -14,6 +14,7 @@ use Opulence\Console\Requests\Option;
 use Opulence\Console\Requests\OptionTypes;
 use Opulence\Console\Responses\IResponse;
 use Opulence\Orm\IUnitOfWork;
+use ZxcvbnPhp\Zxcvbn;
 
 class UpdatePassword extends Command
 {
@@ -21,12 +22,14 @@ class UpdatePassword extends Command
     const COMMAND_DESCRIPTION     = 'Update the password of an existing user';
     const COMMAND_SUCCESS         = '<success>User password is updated.</success>';
     const COMMAND_DRY_RUN_MESSAGE = '<info>Dry run prevented updating user password.</info>';
+    const COMMAND_UNSAFE_PASSWORD = '<fatal>Password provided is not safe.</fatal>';
 
     const ARGUMENT_IDENTIFIER = 'identifier';
     const ARGUMENT_PASSWORD   = 'password';
 
     const OPTION_DRY_RUN    = 'dry-run';
     const SHORTENED_DRY_RUN = 'd';
+    const OPTION_UNSAFE     = 'unsafe';
 
     /** @var UserRepo */
     protected $userRepo;
@@ -40,6 +43,9 @@ class UpdatePassword extends Command
     /** @var CacheManager */
     protected $cacheManager;
 
+    /** @var Zxcvbn */
+    protected $zxcvbn;
+
     /**
      * CreateUserCommand constructor.
      *
@@ -47,13 +53,20 @@ class UpdatePassword extends Command
      * @param Crypto       $crypto
      * @param IUnitOfWork  $unitOfWork
      * @param CacheManager $cacheManager
+     * @param Zxcvbn       $zxcvbn
      */
-    public function __construct(UserRepo $userRepo, Crypto $crypto, IUnitOfWork $unitOfWork, CacheManager $cacheManager)
-    {
+    public function __construct(
+        UserRepo $userRepo,
+        Crypto $crypto,
+        IUnitOfWork $unitOfWork,
+        CacheManager $cacheManager,
+        Zxcvbn $zxcvbn
+    ) {
         $this->userRepo     = $userRepo;
         $this->crypto       = $crypto;
         $this->unitOfWork   = $unitOfWork;
         $this->cacheManager = $cacheManager;
+        $this->zxcvbn       = $zxcvbn;
 
         parent::__construct();
     }
@@ -81,6 +94,15 @@ class UpdatePassword extends Command
                     'Dry run (default: 0)',
                     '0'
                 )
+            )
+            ->addOption(
+                new Option(
+                    static::OPTION_UNSAFE,
+                    null,
+                    OptionTypes::OPTIONAL_VALUE,
+                    'Unsafe (default: 0)',
+                    '0'
+                )
             );
     }
 
@@ -92,6 +114,12 @@ class UpdatePassword extends Command
         $identifier = $this->getArgumentValue(static::ARGUMENT_IDENTIFIER);
         $password   = $this->getArgumentValue(static::ARGUMENT_PASSWORD);
         $dryRun     = $this->getOptionValue(static::OPTION_DRY_RUN);
+
+        if (!$this->isSafe()) {
+            $response->writeln(static::COMMAND_UNSAFE_PASSWORD);
+
+            return;
+        }
 
         $preparedPassword = $this->crypto->prepareSecret($password);
         $packedPassword   = $this->crypto->hashCrypt($preparedPassword);
@@ -115,12 +143,31 @@ class UpdatePassword extends Command
         try {
             $this->unitOfWork->commit();
             $this->cacheManager->clearAll();
-            $response->writeln(static::COMMAND_SUCCESS);
         } catch (\Exception $e) {
             if ($e->getPrevious()) {
                 $response->writeln(sprintf('<error>%s</error>', $e->getPrevious()->getMessage()));
             }
             $response->writeln(sprintf('<fatal>%s</fatal>', $e->getMessage()));
+
+            return;
         }
+
+        $response->writeln(static::COMMAND_SUCCESS);
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isSafe(): bool
+    {
+        $unsafe = $this->getOptionValue(static::OPTION_UNSAFE);
+        if ($unsafe) {
+            return true;
+        }
+
+        $password = (string)$this->getArgumentValue(static::ARGUMENT_PASSWORD);
+        $strength = $this->zxcvbn->passwordStrength($password);
+
+        return (int)$strength['score'] >= 4;
     }
 }

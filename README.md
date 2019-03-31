@@ -148,6 +148,7 @@ AbterPHP is based on [Opulence](https://www.opulencephp.com/), but uses a few mo
  - [js-sha3](https://github.com/emn178/js-sha3) for browser-side encryption (Admin module)
  - [Trumbowyg](https://alex-d.github.io/Trumbowyg/documentation/) as a wysiwyg solution (Admin module)
  - [zxcvbn](https://github.com/dropbox/zxcvbn) from Dropbox for password strength estimations (Admin module)
+ - [zxcvbn-php](https://github.com/bjeavons/zxcvbn-php) PHP version of `zxcvbn` (Admin module)
  - [php-ulid](https://github.com/robinvdvleuten/php-ulid) for ID generation
  
 If you want to contribute code you'll also need to get familiar with these tools:
@@ -178,7 +179,7 @@ before the first stable version.
 1. Modular asset management
 1. Complete test automation and automatic reviews set up
 1. ~~Refactor module manager~~
-1. Ensure that user creation enforces good passwords in CLI.
+1. ~~Ensure that user creation enforces good passwords in CLI.~~
 1. ~~Uuid ids~~
 1. ~~Remove $value in Select constructor~~
 1. ~~Switch `$attribute` and `$tag` order~~

@@ -103,12 +103,15 @@ class Delete extends Command
         try {
             $this->unitOfWork->commit();
             $this->cacheManager->clearAll();
-            $response->writeln(static::COMMAND_SUCCESS);
         } catch (\Exception $e) {
             if ($e->getPrevious()) {
                 $response->writeln(sprintf('<error>%s</error>', $e->getPrevious()->getMessage()));
             }
             $response->writeln(sprintf('<fatal>%s</fatal>', $e->getMessage()));
+
+            return;
         }
+
+        $response->writeln(static::COMMAND_SUCCESS);
     }
 }

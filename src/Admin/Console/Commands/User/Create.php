@@ -16,8 +16,8 @@ use Opulence\Console\Requests\ArgumentTypes;
 use Opulence\Console\Requests\Option;
 use Opulence\Console\Requests\OptionTypes;
 use Opulence\Console\Responses\IResponse;
-use Opulence\Orm\Ids\Generators\UuidV4Generator;
 use Opulence\Orm\IUnitOfWork;
+use ZxcvbnPhp\Zxcvbn;
 
 /**
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
@@ -28,6 +28,7 @@ class Create extends Command
     const COMMAND_DESCRIPTION     = 'Creates a new user';
     const COMMAND_SUCCESS         = '<success>New user is created.</success>';
     const COMMAND_DRY_RUN_MESSAGE = '<info>Dry run prevented creating new user.</info>';
+    const COMMAND_UNSAFE_PASSWORD = '<fatal>Password provided is not safe.</fatal>';
 
     const ARGUMENT_USERNAME    = 'username';
     const ARGUMENT_EMAIL       = 'email';
@@ -41,6 +42,7 @@ class Create extends Command
     const SHORTENED_HAS_GRAVATAR = 'g';
     const OPTION_DRY_RUN         = 'dry-run';
     const SHORTENED_DRY_RUN      = 'd';
+    const OPTION_UNSAFE          = 'unsafe';
 
     /** @var UserRepo */
     protected $userRepo;
@@ -60,6 +62,9 @@ class Create extends Command
     /** @var CacheManager */
     protected $cacheManager;
 
+    /** @var Zxcvbn */
+    protected $zxcvbn;
+
     /**
      * CreateCommand constructor.
      *
@@ -69,6 +74,7 @@ class Create extends Command
      * @param Crypto           $crypto
      * @param IUnitOfWork      $unitOfWork
      * @param CacheManager     $cacheManager
+     * @param Zxcvbn           $zxcvbn
      */
     public function __construct(
         UserRepo $userRepo,
@@ -76,7 +82,8 @@ class Create extends Command
         UserLanguageRepo $userLanguageRepo,
         Crypto $crypto,
         IUnitOfWork $unitOfWork,
-        CacheManager $cacheManager
+        CacheManager $cacheManager,
+        Zxcvbn $zxcvbn
     ) {
         $this->userRepo         = $userRepo;
         $this->userGroupRepo    = $userGroupRepo;
@@ -84,6 +91,7 @@ class Create extends Command
         $this->crypto           = $crypto;
         $this->unitOfWork       = $unitOfWork;
         $this->cacheManager     = $cacheManager;
+        $this->zxcvbn           = $zxcvbn;
 
         parent::__construct();
     }
@@ -132,6 +140,15 @@ class Create extends Command
                     'Dry run (default: 0)',
                     '0'
                 )
+            )
+            ->addOption(
+                new Option(
+                    static::OPTION_UNSAFE,
+                    null,
+                    OptionTypes::OPTIONAL_VALUE,
+                    'Unsafe (default: 0)',
+                    '0'
+                )
             );
     }
 
@@ -140,6 +157,12 @@ class Create extends Command
      */
     protected function doExecute(IResponse $response)
     {
+        if (!$this->isSafe()) {
+            $response->writeln(static::COMMAND_UNSAFE_PASSWORD);
+
+            return;
+        }
+
         try {
             $entity = $this->getEntity();
 
@@ -169,13 +192,16 @@ class Create extends Command
         try {
             $this->unitOfWork->commit();
             $this->cacheManager->clearAll();
-            $response->writeln(static::COMMAND_SUCCESS);
         } catch (\Exception $e) {
             if ($e->getPrevious()) {
                 $response->writeln(sprintf('<error>%s</error>', $e->getPrevious()->getMessage()));
             }
             $response->writeln(sprintf('<fatal>%s</fatal>', $e->getMessage()));
+
+            return;
         }
+
+        $response->writeln(static::COMMAND_SUCCESS);
     }
 
     /**
@@ -207,5 +233,21 @@ class Create extends Command
             $userLanguage,
             $userGroups
         );
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isSafe(): bool
+    {
+        $unsafe = $this->getOptionValue(static::OPTION_UNSAFE);
+        if ($unsafe) {
+            return true;
+        }
+
+        $password = (string)$this->getArgumentValue(static::ARGUMENT_PASSWORD);
+        $strength = $this->zxcvbn->passwordStrength($password);
+
+        return (int)$strength['score'] >= 4;
     }
 }
