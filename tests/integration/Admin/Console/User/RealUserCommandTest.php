@@ -6,9 +6,12 @@ use AbterPhp\Admin\Console\Commands\User\Create;
 use AbterPhp\Admin\Console\Commands\User\Delete;
 use AbterPhp\Admin\Console\Commands\User\UpdatePassword;
 use Integration\Framework\Console\IntegrationTestCase;
+use Opulence\Databases\IConnection;
 
 class RealUserCommandTest extends IntegrationTestCase
 {
+    const PREFIX = 'RealUserCommandTest-';
+
     /**
      * Tests calling the command with proper options
      */
@@ -30,7 +33,7 @@ class RealUserCommandTest extends IntegrationTestCase
             ->execute()
             ->assertResponse
             ->isOK()
-            ->outputEquals(strip_tags(UpdatePassword::COMMAND_SUCCESS)  . PHP_EOL);
+            ->outputEquals(strip_tags(UpdatePassword::COMMAND_SUCCESS) . PHP_EOL);
 
         $this->command(Delete::COMMAND_NAME)
             ->withArguments($arguments[0])
@@ -38,7 +41,7 @@ class RealUserCommandTest extends IntegrationTestCase
             ->execute()
             ->assertResponse
             ->isOK()
-            ->outputEquals(strip_tags(Delete::COMMAND_SUCCESS)  . PHP_EOL);
+            ->outputEquals(strip_tags(Delete::COMMAND_SUCCESS) . PHP_EOL);
     }
 
     /**
@@ -88,7 +91,7 @@ class RealUserCommandTest extends IntegrationTestCase
      */
     protected function getArguments(): array
     {
-        $user = 'user' . rand(0, PHP_INT_MAX);
+        $user = static::PREFIX . rand(0, PHP_INT_MAX);
 
         return [$user, "$user@example.com", 'u5W3$yX2PfTuJFAY', 'admin'];
     }
@@ -98,8 +101,29 @@ class RealUserCommandTest extends IntegrationTestCase
      */
     protected function getUnsafeArguments(): array
     {
-        $user = 'user' . rand(0, PHP_INT_MAX);
+        $user = static::PREFIX . rand(0, PHP_INT_MAX);
 
         return [$user, "$user@example.com", 'hello', 'admin'];
+    }
+
+    public function tearDown()
+    {
+        /** @var IConnection $connection */
+        $connection = $this->container->resolve(IConnection::class);
+
+        $queries = [];
+        $queries[] = 'DELETE FROM users_user_groups WHERE user_id IN (SELECT id FROM users WHERE deleted = 1)';
+        $queries[] = 'DELETE FROM users WHERE deleted = 1';
+        $queries[] = sprintf(
+            'DELETE FROM users_user_groups WHERE user_id IN (SELECT id FROM users WHERE username LIKE \'%s%%\')',
+            static::PREFIX
+        );
+        $queries[] = sprintf('DELETE FROM users WHERE username LIKE \'%s%%\'', static::PREFIX);
+
+        foreach ($queries as $query) {
+            $connection->exec($query);
+        }
+
+        parent::tearDown();
     }
 }
