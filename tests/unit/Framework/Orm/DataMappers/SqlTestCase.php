@@ -149,6 +149,30 @@ abstract class SqlTestCase extends \PHPUnit\Framework\TestCase
     }
 
     /**
+     * @param array $valuesToBind
+     * @param mixed $column
+     * @param int   $atBindValues
+     * @param int   $atExecute
+     * @param int   $atFetchAll
+     *
+     * @return IStatement|MockObject
+     */
+    protected function createReadColumnStatement(
+        array $valuesToBind,
+        $column,
+        int $atBindValues = self::EXPECTATION_ONCE,
+        int $atExecute = self::EXPECTATION_ONCE,
+        int $atFetchAll = self::EXPECTATION_ONCE
+    ) {
+        $statement = $this->createStatement();
+        $statement->expects($this->getExpectation($atBindValues))->method('bindValues')->with($valuesToBind);
+        $statement->expects($this->getExpectation($atExecute))->method('execute')->willReturn(true);
+        $statement->expects($this->getExpectation($atFetchAll))->method('fetchColumn')->willReturn($column);
+
+        return $statement;
+    }
+
+    /**
      * @param array $values
      * @param int   $atBindValues
      * @param int   $atExecute
@@ -162,7 +186,7 @@ abstract class SqlTestCase extends \PHPUnit\Framework\TestCase
     ) {
         $statement = $this->createStatement();
         $statement->expects($this->getExpectation($atBindValues))->method('bindValues')->with($values);
-        $statement->expects($this->getExpectation($atExecute))->method('execute');
+        $statement->expects($this->getExpectation($atExecute))->method('execute')->willReturn(true);
 
         return $statement;
     }
@@ -192,7 +216,7 @@ abstract class SqlTestCase extends \PHPUnit\Framework\TestCase
         /** @var IStatement|MockObject $mock */
         $statement = $this->getMockBuilder(Statement::class)
             ->disableOriginalConstructor()
-            ->setMethods(['bindValues', 'execute', 'rowCount', 'fetchAll'])
+            ->setMethods(['bindValues', 'execute', 'rowCount', 'fetchAll', 'fetchColumn'])
             ->getMock();
 
         return $statement;

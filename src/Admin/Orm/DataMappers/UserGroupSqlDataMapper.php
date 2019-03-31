@@ -8,8 +8,6 @@ use AbterPhp\Admin\Domain\Entities\AdminResource;
 use AbterPhp\Admin\Domain\Entities\UserGroup as Entity;
 use AbterPhp\Framework\Orm\DataMappers\IdGeneratorUserTrait;
 use Opulence\Orm\DataMappers\SqlDataMapper;
-use Opulence\Orm\Ids\Generators\IIdGenerator;
-use Opulence\Orm\Ids\Generators\UuidV4Generator;
 use Opulence\QueryBuilders\MySql\QueryBuilder;
 use Opulence\QueryBuilders\MySql\SelectQuery;
 

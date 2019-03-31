@@ -35,11 +35,10 @@ class LoginThrottle
         $query = (new QueryBuilder())
             ->select('COUNT(*) AS count')
             ->from('login_attempts', 'la')
-            ->where('(la.ip_hash = ? OR la.username = ?)')
+            ->where('la.ip_hash = ? OR la.username = ?')
             ->andWhere('la.created_at > NOW() - INTERVAL 1 HOUR')
             ->addUnnamedPlaceholderValue($ipHash, \PDO::PARAM_STR)
-            ->addUnnamedPlaceholderValue($username, \PDO::PARAM_STR)
-        ;
+            ->addUnnamedPlaceholderValue($username, \PDO::PARAM_STR);
 
         $connection = $this->connectionPool->getReadConnection();
         $statement  = $connection->prepare($query->getSql());
@@ -66,15 +65,14 @@ class LoginThrottle
             ->andWhere('login_attempts.username = ?')
             ->andWhere('login_attempts.created_at > NOW() - INTERVAL 1 HOUR')
             ->addUnnamedPlaceholderValue($ipHash, \PDO::PARAM_STR)
-            ->addUnnamedPlaceholderValue($username, \PDO::PARAM_STR)
-        ;
+            ->addUnnamedPlaceholderValue($username, \PDO::PARAM_STR);
 
-        $sql   = $query->getSql();
-        $param = $query->getParameters();
+        $sql    = $query->getSql();
+        $params = $query->getParameters();
 
-        $connection = $this->connectionPool->getReadConnection();
+        $connection = $this->connectionPool->getWriteConnection();
         $statement  = $connection->prepare($sql);
-        $statement->bindValues($param);
+        $statement->bindValues($params);
 
         return $statement->execute();
     }

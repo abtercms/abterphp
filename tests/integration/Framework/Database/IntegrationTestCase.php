@@ -1,13 +1,12 @@
 <?php
 
-namespace Integration\Framework\Console;
+namespace Integration\Framework\Database;
 
 use AbterPhp\Framework\Module\Manager;
-use LogicException;
 use Opulence\Applications\Tasks\Dispatchers\ITaskDispatcher;
 use Opulence\Databases\Migrations\IMigrator;
 use Opulence\Framework\Configuration\Config;
-use Opulence\Framework\Console\Testing\PhpUnit\IntegrationTestCase as BaseIntegrationTestCase;
+use PHPUnit\Framework\TestCase;
 use Opulence\Ioc\Bootstrappers\Caching\FileCache;
 use Opulence\Ioc\Bootstrappers\Caching\ICache;
 use Opulence\Ioc\Bootstrappers\Dispatchers\BootstrapperDispatcher;
@@ -18,30 +17,10 @@ use Opulence\Ioc\IContainer;
 /**
  * Defines the console application integration test
  */
-class IntegrationTestCase extends BaseIntegrationTestCase
+class IntegrationTestCase extends TestCase
 {
-    /** @var array */
-    protected $supportedTags = ['success', 'info', 'question', 'comment', 'error', 'fatal', 'b', 'u'];
-
-    /** @var array */
-    protected $compiledTags = [];
-
-    /**
-     * @return array
-     */
-    protected function getCompiledTags(): array
-    {
-        if (!empty($this->compiledTags)) {
-            return $this->compiledTags;
-        }
-
-        foreach ($this->supportedTags as $supportedTag) {
-            $this->compiledTags[] = "<$supportedTag>";
-            $this->compiledTags[] = "</$supportedTag>";
-        }
-
-        return $this->compiledTags;
-    }
+    /** @var IContainer The IoC container */
+    protected $container = null;
 
     /**
      * @inheritdoc
@@ -103,50 +82,5 @@ class IntegrationTestCase extends BaseIntegrationTestCase
         /** @var IMigrator $migrator */
 //        $migrator = $this->container->resolve(IMigrator::class);
 //        $migrator->rollBackAllMigrations();
-    }
-
-    /**
-     * Asserts that the output is an expected value
-     *
-     * @param string $expected The expected output
-     *
-     * @return self For method chaining
-     */
-    public function outputContains(string $needle, string $message = ''): self
-    {
-        $needle = str_replace($this->getCompiledTags(), '', $needle);
-
-        $this->checkResponseIsSet();
-        $this->assertContains($needle, $this->getOutput(), $message);
-
-        return $this;
-    }
-
-    /**
-     * Checks if the response was set
-     * Useful for making sure the response was set before making any assertions on it
-     */
-    private function checkResponseIsSet()
-    {
-        if ($this->response === null) {
-            $this->fail('Must call call() before assertions');
-        }
-    }
-
-    /**
-     * Gets the output of the previous command
-     *
-     * @return string The output
-     * @throws LogicException Thrown if the response is not set
-     */
-    private function getOutput(): string
-    {
-        if ($this->response === null) {
-            throw new LogicException('Must call call() before assertions');
-        }
-
-        rewind($this->response->getStream());
-
-        return stream_get_contents($this->response->getStream());
     }
 }
