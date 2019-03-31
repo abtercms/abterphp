@@ -8,23 +8,19 @@ use AbterPhp\Admin\Domain\Entities\User;
 use AbterPhp\Admin\Domain\Entities\UserGroup;
 use AbterPhp\Admin\Domain\Entities\UserLanguage;
 use AbterPhp\Admin\Orm\DataMappers\UserSqlDataMapper;
-use AbterPhp\Framework\Orm\DataMapper\SqlDataMapperTest;
+use AbterPhp\Framework\Orm\DataMapper\SqlTestCase;
 use AbterPhp\Framework\Orm\MockIdGeneratorFactory;
-use Opulence\Databases\Adapters\Pdo\Connection as Connection;
 
-class UserSqlDataMapperTest extends SqlDataMapperTest
+class UserSqlDataMapperTest extends SqlTestCase
 {
     /** @var UserSqlDataMapper */
     protected $sut;
 
     public function setUp()
     {
-        $this->connection = $this->getMockBuilder(Connection::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['prepare', 'read', 'lastInsertId'])
-            ->getMock();
+        parent::setUp();
 
-        $this->sut = new UserSqlDataMapper($this->connection, $this->connection);
+        $this->sut = new UserSqlDataMapper($this->readConnectionMock, $this->writeConnectionMock);
     }
 
     public function testAddWithoutRelated()
@@ -47,7 +43,7 @@ class UserSqlDataMapperTest extends SqlDataMapperTest
             [$canLogin, \PDO::PARAM_INT],
             [$isGravatarAllowed, \PDO::PARAM_INT],
         ];
-        $this->prepare($sql, $this->createWriteStatement($values));
+        $this->prepare($this->writeConnectionMock, $sql, $this->createWriteStatement($values));
 
         $entity = new User($nextId, $username, $email, $password, $canLogin, $isGravatarAllowed, $userLanguage);
         $this->sut->add($entity);
@@ -83,15 +79,15 @@ class UserSqlDataMapperTest extends SqlDataMapperTest
             [$canLogin, \PDO::PARAM_INT],
             [$isGravatarAllowed, \PDO::PARAM_INT],
         ];
-        $this->prepare($sql0, $this->createWriteStatement($values), 0);
+        $this->prepare($this->writeConnectionMock, $sql0, $this->createWriteStatement($values), 0);
 
         $sql1    = 'INSERT INTO users_user_groups (id, user_id, user_group_id) VALUES (?, ?, ?)'; // phpcs:ignore
         $values1 = [[$uugId0, \PDO::PARAM_STR], [$nextId, \PDO::PARAM_STR], [$userGroups[0]->getId(), \PDO::PARAM_STR]];
-        $this->prepare($sql1, $this->createWriteStatement($values1), 1);
+        $this->prepare($this->writeConnectionMock, $sql1, $this->createWriteStatement($values1), 1);
 
         $sql2    = 'INSERT INTO users_user_groups (id, user_id, user_group_id) VALUES (?, ?, ?)'; // phpcs:ignore
         $values2 = [[$uugId1, \PDO::PARAM_STR], [$nextId, \PDO::PARAM_STR], [$userGroups[1]->getId(), \PDO::PARAM_STR]];
-        $this->prepare($sql2, $this->createWriteStatement($values2), 2);
+        $this->prepare($this->writeConnectionMock, $sql2, $this->createWriteStatement($values2), 2);
 
         $entity = new User(
             $nextId,
@@ -120,10 +116,10 @@ class UserSqlDataMapperTest extends SqlDataMapperTest
 
         $sql0    = 'DELETE FROM users_user_groups WHERE (user_id = ?)'; // phpcs:ignore
         $values0 = [[$id, \PDO::PARAM_STR]];
-        $this->prepare($sql0, $this->createWriteStatement($values0), 0);
+        $this->prepare($this->writeConnectionMock, $sql0, $this->createWriteStatement($values0), 0);
 
         $sql1 = 'UPDATE users AS users SET deleted = ?, email = ?, username = ?, password = ? WHERE (id = ?)'; // phpcs:ignore
-        $this->prepare($sql1, $this->createWriteStatementWithAny(), 1);
+        $this->prepare($this->writeConnectionMock, $sql1, $this->createWriteStatementWithAny(), 1);
 
         $entity = new User($id, $username, $email, $password, $canLogin, $isGravatarAllowed, $userLanguage);
         $this->sut->delete($entity);
@@ -154,7 +150,7 @@ class UserSqlDataMapperTest extends SqlDataMapperTest
             ],
         ];
 
-        $this->prepare($sql, $this->createReadStatement($values, $expectedData));
+        $this->prepare($this->readConnectionMock, $sql, $this->createReadStatement($values, $expectedData));
 
         $actualResult = $this->sut->getAll();
 
@@ -186,7 +182,7 @@ class UserSqlDataMapperTest extends SqlDataMapperTest
             ],
         ];
 
-        $this->prepare($sql, $this->createReadStatement($values, $expectedData));
+        $this->prepare($this->readConnectionMock, $sql, $this->createReadStatement($values, $expectedData));
 
         $actualResult = $this->sut->getById($id);
 
@@ -218,7 +214,7 @@ class UserSqlDataMapperTest extends SqlDataMapperTest
             ],
         ];
 
-        $this->prepare($sql, $this->createReadStatement($values, $expectedData));
+        $this->prepare($this->readConnectionMock, $sql, $this->createReadStatement($values, $expectedData));
 
         $actualResult = $this->sut->getByUsername($username);
 
@@ -250,7 +246,7 @@ class UserSqlDataMapperTest extends SqlDataMapperTest
             ],
         ];
 
-        $this->prepare($sql, $this->createReadStatement($values, $expectedData));
+        $this->prepare($this->readConnectionMock, $sql, $this->createReadStatement($values, $expectedData));
 
         $actualResult = $this->sut->getByEmail($email);
 
@@ -282,7 +278,7 @@ class UserSqlDataMapperTest extends SqlDataMapperTest
             ],
         ];
 
-        $this->prepare($sql, $this->createReadStatement($values, $expectedData));
+        $this->prepare($this->readConnectionMock, $sql, $this->createReadStatement($values, $expectedData));
 
         $actualResult = $this->sut->find($username);
 
@@ -314,7 +310,7 @@ class UserSqlDataMapperTest extends SqlDataMapperTest
             ],
         ];
 
-        $this->prepare($sql, $this->createReadStatement($values, $expectedData));
+        $this->prepare($this->readConnectionMock, $sql, $this->createReadStatement($values, $expectedData));
 
         $actualResult = $this->sut->find($email);
 
@@ -341,11 +337,11 @@ class UserSqlDataMapperTest extends SqlDataMapperTest
             [$isGravatarAllowed, \PDO::PARAM_INT],
             [$id, \PDO::PARAM_STR],
         ];
-        $this->prepare($sql0, $this->createWriteStatement($values0), 0);
+        $this->prepare($this->writeConnectionMock, $sql0, $this->createWriteStatement($values0), 0);
 
         $sql1    = 'DELETE FROM users_user_groups WHERE (user_id = ?)'; // phpcs:ignore
         $values1 = [[$id, \PDO::PARAM_STR]];
-        $this->prepare($sql1, $this->createWriteStatement($values1), 1);
+        $this->prepare($this->writeConnectionMock, $sql1, $this->createWriteStatement($values1), 1);
 
         $entity = new User($id, $username, $email, $password, $canLogin, $isGravatarAllowed, $userLanguage);
         $this->sut->update($entity);
@@ -379,19 +375,19 @@ class UserSqlDataMapperTest extends SqlDataMapperTest
             [$isGravatarAllowed, \PDO::PARAM_INT],
             [$id, \PDO::PARAM_STR],
         ];
-        $this->prepare($sql0, $this->createWriteStatement($values0), 0);
+        $this->prepare($this->writeConnectionMock, $sql0, $this->createWriteStatement($values0), 0);
 
         $sql1    = 'DELETE FROM users_user_groups WHERE (user_id = ?)'; // phpcs:ignore
         $values1 = [[$id, \PDO::PARAM_STR]];
-        $this->prepare($sql1, $this->createWriteStatement($values1), 1);
+        $this->prepare($this->writeConnectionMock, $sql1, $this->createWriteStatement($values1), 1);
 
         $sql2    = 'INSERT INTO users_user_groups (id, user_id, user_group_id) VALUES (?, ?, ?)'; // phpcs:ignore
         $values2 = [[$uugId0, \PDO::PARAM_STR], [$id, \PDO::PARAM_STR], [$userGroups[0]->getId(), \PDO::PARAM_STR]];
-        $this->prepare($sql2, $this->createWriteStatement($values2), 2);
+        $this->prepare($this->writeConnectionMock, $sql2, $this->createWriteStatement($values2), 2);
 
         $sql3    = 'INSERT INTO users_user_groups (id, user_id, user_group_id) VALUES (?, ?, ?)'; // phpcs:ignore
         $values3 = [[$uugId1, \PDO::PARAM_STR], [$id, \PDO::PARAM_STR], [$userGroups[1]->getId(), \PDO::PARAM_STR]];
-        $this->prepare($sql3, $this->createWriteStatement($values3), 3);
+        $this->prepare($this->writeConnectionMock, $sql3, $this->createWriteStatement($values3), 3);
 
         $entity = new User(
             $id,

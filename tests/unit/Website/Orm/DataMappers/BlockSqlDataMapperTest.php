@@ -4,25 +4,21 @@ declare(strict_types=1);
 
 namespace AbterPhp\Website\Orm\DataMapper;
 
-use AbterPhp\Framework\Orm\DataMapper\SqlDataMapperTest;
+use AbterPhp\Framework\Orm\DataMapper\SqlTestCase;
 use AbterPhp\Website\Domain\Entities\Block;
 use AbterPhp\Website\Orm\DataMappers\BlockSqlDataMapper;
 use Opulence\Databases\Adapters\Pdo\Connection as Connection;
 
-class BlockSqlDataMapperTest extends SqlDataMapperTest
+class BlockSqlDataMapperTest extends SqlTestCase
 {
     /** @var BlockSqlDataMapper */
     protected $sut;
 
     public function setUp()
     {
-        $this->connection = $this->getMockBuilder(Connection::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['prepare', 'read', 'lastInsertId'])
-            ->getMock()
-        ;
+        parent::setUp();
 
-        $this->sut = new BlockSqlDataMapper($this->connection, $this->connection);
+        $this->sut = new BlockSqlDataMapper($this->readConnectionMock, $this->writeConnectionMock);
     }
 
     public function testAddWithoutLayoutId()
@@ -44,7 +40,7 @@ class BlockSqlDataMapperTest extends SqlDataMapperTest
             [$layoutId, \PDO::PARAM_NULL],
         ];
 
-        $this->prepare($sql, $this->createWriteStatement($values));
+        $this->prepare($this->writeConnectionMock, $sql, $this->createWriteStatement($values));
         $entity = new Block($nextId, $identifier, $title, $body, $layout, $layoutId);
 
         $this->sut->add($entity);
@@ -71,7 +67,7 @@ class BlockSqlDataMapperTest extends SqlDataMapperTest
             [$layoutId, \PDO::PARAM_STR],
         ];
 
-        $this->prepare($sql, $this->createWriteStatement($values));
+        $this->prepare($this->writeConnectionMock, $sql, $this->createWriteStatement($values));
         $entity = new Block($nextId, $identifier, $title, $body, $layout, $layoutId);
 
         $this->sut->add($entity);
@@ -91,7 +87,7 @@ class BlockSqlDataMapperTest extends SqlDataMapperTest
         $sql    = 'UPDATE blocks AS blocks SET deleted = ? WHERE (id = ?)'; // phpcs:ignore
         $values = [[1, \PDO::PARAM_INT], [$id, \PDO::PARAM_STR]];
 
-        $this->prepare($sql, $this->createWriteStatement($values));
+        $this->prepare($this->writeConnectionMock, $sql, $this->createWriteStatement($values));
         $entity = new Block($id, $identifier, $title, $body, $layout, $layoutId);
 
         $this->sut->delete($entity);
@@ -119,7 +115,7 @@ class BlockSqlDataMapperTest extends SqlDataMapperTest
             ],
         ];
 
-        $this->prepare($sql, $this->createReadStatement($values, $expectedData));
+        $this->prepare($this->readConnectionMock, $sql, $this->createReadStatement($values, $expectedData));
 
         $actualResult = $this->sut->getAll();
 
@@ -148,7 +144,7 @@ class BlockSqlDataMapperTest extends SqlDataMapperTest
             ],
         ];
 
-        $this->prepare($sql, $this->createReadStatement($values, $expectedData));
+        $this->prepare($this->readConnectionMock, $sql, $this->createReadStatement($values, $expectedData));
 
         $actualResult = $this->sut->getById($id);
 
@@ -177,7 +173,7 @@ class BlockSqlDataMapperTest extends SqlDataMapperTest
             ],
         ];
 
-        $this->prepare($sql, $this->createReadStatement($values, $expectedData));
+        $this->prepare($this->readConnectionMock, $sql, $this->createReadStatement($values, $expectedData));
 
         $actualResult = $this->sut->getByIdentifier($identifier);
 
@@ -206,7 +202,7 @@ class BlockSqlDataMapperTest extends SqlDataMapperTest
             ],
         ];
 
-        $this->prepare($sql, $this->createReadStatement($values, $expectedData));
+        $this->prepare($this->readConnectionMock, $sql, $this->createReadStatement($values, $expectedData));
 
         $actualResult = $this->sut->getWithLayoutByIdentifiers([$identifier]);
 
@@ -232,7 +228,7 @@ class BlockSqlDataMapperTest extends SqlDataMapperTest
             [$id, \PDO::PARAM_STR],
         ];
 
-        $this->prepare($sql, $this->createWriteStatement($values));
+        $this->prepare($this->writeConnectionMock, $sql, $this->createWriteStatement($values));
         $entity = new Block($id, $identifier, $title, $body, $layout, $layoutId);
 
         $this->sut->update($entity);
@@ -257,7 +253,7 @@ class BlockSqlDataMapperTest extends SqlDataMapperTest
             [$id, \PDO::PARAM_STR],
         ];
 
-        $this->prepare($sql, $this->createWriteStatement($values));
+        $this->prepare($this->writeConnectionMock, $sql, $this->createWriteStatement($values));
         $entity = new Block($id, $identifier, $title, $body, $layout, $layoutId);
 
         $this->sut->update($entity);

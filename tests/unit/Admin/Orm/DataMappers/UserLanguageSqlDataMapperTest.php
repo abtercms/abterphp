@@ -6,22 +6,18 @@ namespace AbterPhp\Admin\Orm\DataMapper;
 
 use AbterPhp\Admin\Domain\Entities\UserLanguage;
 use AbterPhp\Admin\Orm\DataMappers\UserLanguageSqlDataMapper;
-use AbterPhp\Framework\Orm\DataMapper\SqlDataMapperTest;
-use Opulence\Databases\Adapters\Pdo\Connection as Connection;
+use AbterPhp\Framework\Orm\DataMapper\SqlTestCase;
 
-class UserLanguageSqlDataMapperTest extends SqlDataMapperTest
+class UserLanguageSqlDataMapperTest extends SqlTestCase
 {
     /** @var UserLanguageSqlDataMapper */
     protected $sut;
 
     public function setUp()
     {
-        $this->connection = $this->getMockBuilder(Connection::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['prepare', 'read', 'lastInsertId'])
-            ->getMock();
+        parent::setUp();
 
-        $this->sut = new UserLanguageSqlDataMapper($this->connection, $this->connection);
+        $this->sut = new UserLanguageSqlDataMapper($this->readConnectionMock, $this->writeConnectionMock);
     }
 
     public function testAdd()

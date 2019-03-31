@@ -9,22 +9,18 @@ use AbterPhp\Admin\Domain\Entities\UserLanguage;
 use AbterPhp\Files\Domain\Entities\File;
 use AbterPhp\Files\Domain\Entities\FileDownload;
 use AbterPhp\Files\Orm\DataMappers\FileDownloadSqlDataMapper;
-use AbterPhp\Framework\Orm\DataMapper\SqlDataMapperTest;
-use Opulence\Databases\Adapters\Pdo\Connection as Connection;
+use AbterPhp\Framework\Orm\DataMapper\SqlTestCase;
 
-class FileDownloadSqlDataMapperTest extends SqlDataMapperTest
+class FileDownloadSqlDataMapperTest extends SqlTestCase
 {
     /** @var FileDownloadSqlDataMapper */
     protected $sut;
 
     public function setUp()
     {
-        $this->connection = $this->getMockBuilder(Connection::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['prepare', 'read', 'lastInsertId'])
-            ->getMock();
+        parent::setUp();
 
-        $this->sut = new FileDownloadSqlDataMapper($this->connection, $this->connection);
+        $this->sut = new FileDownloadSqlDataMapper($this->readConnectionMock, $this->writeConnectionMock);
     }
 
     public function testAdd()
@@ -42,7 +38,7 @@ class FileDownloadSqlDataMapperTest extends SqlDataMapperTest
             [$downloadedAt->format(FileDownload::DATE_FORMAT), \PDO::PARAM_STR],
         ];
 
-        $this->prepare($sql, $this->createWriteStatement($values));
+        $this->prepare($this->writeConnectionMock, $sql, $this->createWriteStatement($values));
         $entity = $this->createEntity($nextId, $fileId, $userId, $downloadedAt);
 
         $this->sut->add($entity);
@@ -60,7 +56,7 @@ class FileDownloadSqlDataMapperTest extends SqlDataMapperTest
         $sql    = 'UPDATE file_downloads AS file_downloads SET deleted = ? WHERE (id = ?)'; // phpcs:ignore
         $values = [[1, \PDO::PARAM_INT], [$id, \PDO::PARAM_STR]];
 
-        $this->prepare($sql, $this->createWriteStatement($values));
+        $this->prepare($this->writeConnectionMock, $sql, $this->createWriteStatement($values));
         $entity = $this->createEntity($id, $fileId, $userId, $downloadedAt);
 
         $this->sut->delete($entity);
@@ -90,7 +86,7 @@ class FileDownloadSqlDataMapperTest extends SqlDataMapperTest
             ],
         ];
 
-        $this->prepare($sql, $this->createReadStatement($values, $expectedData));
+        $this->prepare($this->readConnectionMock, $sql, $this->createReadStatement($values, $expectedData));
 
         $actualResult = $this->sut->getAll();
 
@@ -121,7 +117,7 @@ class FileDownloadSqlDataMapperTest extends SqlDataMapperTest
             ],
         ];
 
-        $this->prepare($sql, $this->createReadStatement($values, $expectedData));
+        $this->prepare($this->readConnectionMock, $sql, $this->createReadStatement($values, $expectedData));
 
         $actualResult = $this->sut->getById($id);
 
@@ -143,7 +139,7 @@ class FileDownloadSqlDataMapperTest extends SqlDataMapperTest
             [$id, \PDO::PARAM_STR],
         ];
 
-        $this->prepare($sql, $this->createWriteStatement($values));
+        $this->prepare($this->writeConnectionMock, $sql, $this->createWriteStatement($values));
         $entity = $this->createEntity($id, $fileId, $userId, $downloadedAt);
 
         $this->sut->update($entity);
@@ -173,7 +169,7 @@ class FileDownloadSqlDataMapperTest extends SqlDataMapperTest
             ],
         ];
 
-        $this->prepare($sql, $this->createReadStatement($values, $expectedData));
+        $this->prepare($this->readConnectionMock, $sql, $this->createReadStatement($values, $expectedData));
 
         $actualResult = $this->sut->getByFileId($fileId);
 
@@ -204,7 +200,7 @@ class FileDownloadSqlDataMapperTest extends SqlDataMapperTest
             ],
         ];
 
-        $this->prepare($sql, $this->createReadStatement($values, $expectedData));
+        $this->prepare($this->readConnectionMock, $sql, $this->createReadStatement($values, $expectedData));
 
         $actualResult = $this->sut->getByUserId($userId);
 

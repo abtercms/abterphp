@@ -4,25 +4,20 @@ declare(strict_types=1);
 
 namespace AbterPhp\Website\Orm\DataMapper;
 
-use AbterPhp\Framework\Orm\DataMapper\SqlDataMapperTest;
+use AbterPhp\Framework\Orm\DataMapper\SqlTestCase;
 use AbterPhp\Website\Domain\Entities\BlockLayout;
 use AbterPhp\Website\Orm\DataMappers\BlockLayoutSqlDataMapper;
-use Opulence\Databases\Adapters\Pdo\Connection as Connection;
 
-class LayoutSqlDataMapperTest extends SqlDataMapperTest
+class BlockLayoutSqlDataMapperTest extends SqlTestCase
 {
     /** @var BlockLayoutSqlDataMapper */
     protected $sut;
 
     public function setUp()
     {
-        $this->connection = $this->getMockBuilder(Connection::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['prepare', 'read', 'lastInsertId'])
-            ->getMock()
-        ;
+        parent::setUp();
 
-        $this->sut = new BlockLayoutSqlDataMapper($this->connection, $this->connection);
+        $this->sut = new BlockLayoutSqlDataMapper($this->readConnectionMock, $this->writeConnectionMock);
     }
 
     public function testAdd()
@@ -34,7 +29,7 @@ class LayoutSqlDataMapperTest extends SqlDataMapperTest
         $sql    = 'INSERT INTO block_layouts (id, identifier, body) VALUES (?, ?, ?)'; // phpcs:ignore
         $values = [[$nextId, \PDO::PARAM_STR], [$identifier, \PDO::PARAM_STR], [$body, \PDO::PARAM_STR]];
 
-        $this->prepare($sql, $this->createWriteStatement($values));
+        $this->prepare($this->writeConnectionMock, $sql, $this->createWriteStatement($values));
         $entity = new BlockLayout($nextId, $identifier, $body);
 
         $this->sut->add($entity);
@@ -51,7 +46,7 @@ class LayoutSqlDataMapperTest extends SqlDataMapperTest
         $sql    = 'UPDATE block_layouts AS block_layouts SET deleted = ? WHERE (id = ?)'; // phpcs:ignore
         $values = [[1, \PDO::PARAM_INT], [$id, \PDO::PARAM_STR]];
 
-        $this->prepare($sql, $this->createWriteStatement($values));
+        $this->prepare($this->writeConnectionMock, $sql, $this->createWriteStatement($values));
         $entity = new BlockLayout($id, $identifier, $body);
 
         $this->sut->delete($entity);
@@ -67,7 +62,7 @@ class LayoutSqlDataMapperTest extends SqlDataMapperTest
         $values       = [];
         $expectedData = [['id' => $id, 'identifier' => $identifier, 'body' => $body]];
 
-        $this->prepare($sql, $this->createReadStatement($values, $expectedData));
+        $this->prepare($this->readConnectionMock, $sql, $this->createReadStatement($values, $expectedData));
 
         $actualResult = $this->sut->getAll();
 
@@ -84,7 +79,7 @@ class LayoutSqlDataMapperTest extends SqlDataMapperTest
         $values       = ['layout_id' => [$id, \PDO::PARAM_STR]];
         $expectedData = [['id' => $id, 'identifier' => $identifier, 'body' => $body]];
 
-        $this->prepare($sql, $this->createReadStatement($values, $expectedData));
+        $this->prepare($this->readConnectionMock, $sql, $this->createReadStatement($values, $expectedData));
 
         $actualResult = $this->sut->getById($id);
 
@@ -101,7 +96,7 @@ class LayoutSqlDataMapperTest extends SqlDataMapperTest
         $values       = ['identifier' => $identifier];
         $expectedData = [['id' => $id, 'identifier' => $identifier, 'body' => $body]];
 
-        $this->prepare($sql, $this->createReadStatement($values, $expectedData));
+        $this->prepare($this->readConnectionMock, $sql, $this->createReadStatement($values, $expectedData));
 
         $actualResult = $this->sut->getByIdentifier($identifier);
 
@@ -117,7 +112,7 @@ class LayoutSqlDataMapperTest extends SqlDataMapperTest
         $sql    = 'UPDATE block_layouts AS block_layouts SET identifier = ?, body = ? WHERE (id = ?) AND (deleted = 0)'; // phpcs:ignore
         $values = [[$identifier, \PDO::PARAM_STR], [$body, \PDO::PARAM_STR], [$id, \PDO::PARAM_STR]];
 
-        $this->prepare($sql, $this->createWriteStatement($values));
+        $this->prepare($this->writeConnectionMock, $sql, $this->createWriteStatement($values));
         $entity = new BlockLayout($id, $identifier, $body);
 
         $this->sut->update($entity);

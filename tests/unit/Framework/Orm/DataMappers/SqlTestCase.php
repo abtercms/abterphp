@@ -6,6 +6,7 @@ namespace AbterPhp\Framework\Orm\DataMapper;
 
 use Opulence\Databases\Adapters\Pdo\Connection;
 use Opulence\Databases\Adapters\Pdo\Statement;
+use Opulence\Databases\ConnectionPools\ConnectionPool;
 use Opulence\Databases\IConnection;
 use Opulence\Databases\IStatement;
 use PHPUnit\Framework\MockObject\Matcher\AnyInvokedCount;
@@ -13,42 +14,90 @@ use PHPUnit\Framework\MockObject\Matcher\InvokedAtIndex;
 use PHPUnit\Framework\MockObject\Matcher\InvokedCount;
 use PHPUnit_Framework_MockObject_MockObject as MockObject;
 
-abstract class SqlDataMapperTest extends \PHPUnit\Framework\TestCase
+abstract class SqlTestCase extends \PHPUnit\Framework\TestCase
 {
     const EXPECTATION_ONCE  = -1;
     const EXPECTATION_ANY   = -2;
     const EXPECTATION_NEVER = -4;
 
     /** @var IConnection|MockObject */
-    protected $connection = null;
+    protected $readConnectionMock;
+
+    /** @var IConnection|MockObject */
+    protected $writeConnectionMock;
+
+    /** @var ConnectionPool|MockObject */
+    protected $connectionPoolMock;
+
+    public function setUp()
+    {
+        parent::setUp();
+
+        $this->readConnectionMock  = $this->getReadConnectionMock();
+        $this->writeConnectionMock = $this->getWriteConnectionMock();
+
+        $this->connectionPoolMock = $this->getConnectionPoolMock($this->readConnectionMock, $this->writeConnectionMock);
+    }
 
     /**
      * @return IConnection|MockObject
      */
-    public function getConnectionMock()
+    public function getReadConnectionMock()
     {
-        $this->connection = $this->getMockBuilder(Connection::class)
+        return $this->getMockBuilder(Connection::class)
             ->disableOriginalConstructor()
             ->setMethods(['prepare', 'read'])
-            ->getMock()
-        ;
-
-        return $this->connection;
+            ->getMock();
     }
 
     /**
-     * @param string $sql
-     * @param mixed  $returnValue
-     * @param int    $at
+     * @return IConnection|MockObject
      */
-    protected function prepare(string $sql, $returnValue, int $at = self::EXPECTATION_ONCE)
+    public function getWriteConnectionMock()
     {
-        $this->connection
+        return $this->getMockBuilder(Connection::class)
+            ->disableOriginalConstructor()
+            ->setMethods(['prepare'])
+            ->getMock();
+    }
+
+    /**
+     * @param IConnection|null $readConnection
+     * @param IConnection|null $writeConnection
+     *
+     * @return ConnectionPool|MockObject
+     */
+    public function getConnectionPoolMock(?IConnection $readConnection, ?IConnection $writeConnection)
+    {
+        $connectionPool = $this->getMockBuilder(ConnectionPool::class)
+            ->disableOriginalConstructor()
+            ->setMethods(['getReadConnection', 'getWriteConnection', 'setReadConnection', 'setWriteConnection'])
+            ->getMock();
+
+        if ($readConnection) {
+            $connectionPool->expects($this->any())->method('getReadConnection')->willReturn($readConnection);
+        }
+
+        if ($writeConnection) {
+            $connectionPool->expects($this->any())->method('getWriteConnection')->willReturn($writeConnection);
+        }
+
+        return $connectionPool;
+    }
+
+    /**
+     * @param MockObject $connectionMock
+     * @param string     $sql
+     * @param mixed      $returnValue
+     * @param int        $at
+     */
+    protected function prepare(MockObject $connectionMock, string $sql, $returnValue, int $at = self::EXPECTATION_ONCE)
+    {
+        $connectionMock
             ->expects($this->getExpectation($at))
             ->method('prepare')
             ->with($sql)
-            ->willReturn($returnValue)
-        ;
+            ->willReturn($returnValue);
     }
 
     /**
@@ -73,7 +122,7 @@ abstract class SqlDataMapperTest extends \PHPUnit\Framework\TestCase
     abstract protected function assertEntity(array $expectedData, $entity);
 
     /**
-     * @param array $values
+     * @param array $valuesToBind
      * @param array $rows
      * @param int   $atBindValues
      * @param int   $atExecute
@@ -83,7 +132,7 @@ abstract class SqlDataMapperTest extends \PHPUnit\Framework\TestCase
      * @return IStatement|MockObject
      */
     protected function createReadStatement(
-        array $values,
+        array $valuesToBind,
         array $rows,
         int $atBindValues = self::EXPECTATION_ONCE,
         int $atExecute = self::EXPECTATION_ONCE,
@@ -91,8 +140,8 @@ abstract class SqlDataMapperTest extends \PHPUnit\Framework\TestCase
         int $atFetchAll = self::EXPECTATION_ONCE
     ) {
         $statement = $this->createStatement();
-        $statement->expects($this->getExpectation($atBindValues))->method('bindValues')->with($values);
-        $statement->expects($this->getExpectation($atExecute))->method('execute');
+        $statement->expects($this->getExpectation($atBindValues))->method('bindValues')->with($valuesToBind);
+        $statement->expects($this->getExpectation($atExecute))->method('execute')->willReturn(true);
         $statement->expects($this->getExpectation($atRowCount))->method('rowCount')->willReturn(count($rows));
         $statement->expects($this->getExpectation($atFetchAll))->method('fetchAll')->willReturn($rows);
 
@@ -119,8 +168,8 @@ abstract class SqlDataMapperTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @param int   $atBindValues
-     * @param int   $atExecute
+     * @param int $atBindValues
+     * @param int $atExecute
      *
      * @return IStatement|MockObject
      */
@@ -144,8 +193,7 @@ abstract class SqlDataMapperTest extends \PHPUnit\Framework\TestCase
         $statement = $this->getMockBuilder(Statement::class)
             ->disableOriginalConstructor()
             ->setMethods(['bindValues', 'execute', 'rowCount', 'fetchAll'])
-            ->getMock()
-        ;
+            ->getMock();
 
         return $statement;
     }

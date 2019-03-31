@@ -4,24 +4,21 @@ declare(strict_types=1);
 
 namespace AbterPhp\Website\Orm\DataMapper;
 
-use AbterPhp\Framework\Orm\DataMapper\SqlDataMapperTest;
+use AbterPhp\Framework\Orm\DataMapper\SqlTestCase;
 use AbterPhp\Website\Domain\Entities\Page;
 use AbterPhp\Website\Orm\DataMappers\PageSqlDataMapper;
 use Opulence\Databases\Adapters\Pdo\Connection as Connection;
 
-class PageSqlDataMapperTest extends SqlDataMapperTest
+class PageSqlDataMapperTest extends SqlTestCase
 {
     /** @var PageSqlDataMapper */
     protected $sut;
 
     public function setUp()
     {
-        $this->connection = $this->getMockBuilder(Connection::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['prepare', 'read', 'lastInsertId'])
-            ->getMock();
+        parent::setUp();
 
-        $this->sut = new PageSqlDataMapper($this->connection, $this->connection);
+        $this->sut = new PageSqlDataMapper($this->readConnectionMock, $this->writeConnectionMock);
     }
 
     /**
@@ -68,7 +65,7 @@ class PageSqlDataMapperTest extends SqlDataMapperTest
             [implode("\r\n", $assets->getJsFiles()), \PDO::PARAM_STR],
         ];
 
-        $this->prepare($sql, $this->createWriteStatement($values));
+        $this->prepare($this->writeConnectionMock, $sql, $this->createWriteStatement($values));
 
         $this->sut->add($entity);
 
@@ -106,7 +103,7 @@ class PageSqlDataMapperTest extends SqlDataMapperTest
             [implode("\r\n", $assets->getJsFiles()), \PDO::PARAM_STR],
         ];
 
-        $this->prepare($sql, $this->createWriteStatement($values));
+        $this->prepare($this->writeConnectionMock, $sql, $this->createWriteStatement($values));
 
         $this->sut->add($entity);
 
@@ -121,7 +118,7 @@ class PageSqlDataMapperTest extends SqlDataMapperTest
         $sql    = 'UPDATE pages AS pages SET deleted = ? WHERE (id = ?)'; // phpcs:ignore
         $values = [[1, \PDO::PARAM_INT], [$entity->getId(), \PDO::PARAM_STR]];
 
-        $this->prepare($sql, $this->createWriteStatement($values));
+        $this->prepare($this->writeConnectionMock, $sql, $this->createWriteStatement($values));
 
         $this->sut->delete($entity);
     }
@@ -143,7 +140,7 @@ class PageSqlDataMapperTest extends SqlDataMapperTest
             ],
         ];
 
-        $this->prepare($sql, $this->createReadStatement($values, $expectedData));
+        $this->prepare($this->readConnectionMock, $sql, $this->createReadStatement($values, $expectedData));
 
         $actualResult = $this->sut->getAll();
 
@@ -182,7 +179,7 @@ class PageSqlDataMapperTest extends SqlDataMapperTest
             ],
         ];
 
-        $this->prepare($sql, $this->createReadStatement($values, $expectedData));
+        $this->prepare($this->readConnectionMock, $sql, $this->createReadStatement($values, $expectedData));
 
         $actualResult = $this->sut->getById($id);
 
@@ -221,7 +218,7 @@ class PageSqlDataMapperTest extends SqlDataMapperTest
             ],
         ];
 
-        $this->prepare($sql, $this->createReadStatement($values, $expectedData));
+        $this->prepare($this->readConnectionMock, $sql, $this->createReadStatement($values, $expectedData));
 
         $actualResult = $this->sut->getByIdentifier($entity->getIdentifier());
 
@@ -257,7 +254,7 @@ class PageSqlDataMapperTest extends SqlDataMapperTest
             [$entity->getId(), \PDO::PARAM_STR],
         ];
 
-        $this->prepare($sql, $this->createWriteStatement($values));
+        $this->prepare($this->writeConnectionMock, $sql, $this->createWriteStatement($values));
 
         $this->sut->update($entity);
     }
@@ -292,7 +289,7 @@ class PageSqlDataMapperTest extends SqlDataMapperTest
             [$entity->getId(), \PDO::PARAM_STR],
         ];
 
-        $this->prepare($sql, $this->createWriteStatement($values));
+        $this->prepare($this->writeConnectionMock, $sql, $this->createWriteStatement($values));
 
         $this->sut->update($entity);
     }

@@ -7,23 +7,19 @@ namespace Infrastructure\Orm\DataMapper;
 use AbterPhp\Admin\Domain\Entities\AdminResource;
 use AbterPhp\Admin\Domain\Entities\UserGroup;
 use AbterPhp\Admin\Orm\DataMappers\UserGroupSqlDataMapper;
-use AbterPhp\Framework\Orm\DataMapper\SqlDataMapperTest;
+use AbterPhp\Framework\Orm\DataMapper\SqlTestCase;
 use AbterPhp\Framework\Orm\MockIdGeneratorFactory;
-use Opulence\Databases\Adapters\Pdo\Connection as Connection;
 
-class UserGroupSqlDataMapperTest extends SqlDataMapperTest
+class UserGroupSqlDataMapperTest extends SqlTestCase
 {
     /** @var UserGroupSqlDataMapper */
     protected $sut;
 
     public function setUp()
     {
-        $this->connection = $this->getMockBuilder(Connection::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['prepare', 'read', 'lastInsertId'])
-            ->getMock();
+        parent::setUp();
 
-        $this->sut = new UserGroupSqlDataMapper($this->connection, $this->connection);
+        $this->sut = new UserGroupSqlDataMapper($this->readConnectionMock, $this->writeConnectionMock);
     }
 
     public function testAddWithoutRelated()
@@ -34,7 +30,7 @@ class UserGroupSqlDataMapperTest extends SqlDataMapperTest
 
         $sql    = 'INSERT INTO user_groups (id, identifier, name) VALUES (?, ?, ?)'; // phpcs:ignore
         $values = [[$nextId, \PDO::PARAM_STR], [$identifier, \PDO::PARAM_STR], [$name, \PDO::PARAM_STR]];
-        $this->prepare($sql, $this->createWriteStatement($values));
+        $this->prepare($this->writeConnectionMock, $sql, $this->createWriteStatement($values));
 
         $entity = new UserGroup($nextId, $identifier, $name);
         $this->sut->add($entity);
@@ -58,7 +54,7 @@ class UserGroupSqlDataMapperTest extends SqlDataMapperTest
 
         $sql0    = 'INSERT INTO user_groups (id, identifier, name) VALUES (?, ?, ?)'; // phpcs:ignore
         $values0 = [[$nextId, \PDO::PARAM_STR], [$identifier, \PDO::PARAM_STR], [$name, \PDO::PARAM_STR]];
-        $this->prepare($sql0, $this->createWriteStatement($values0), 0);
+        $this->prepare($this->writeConnectionMock, $sql0, $this->createWriteStatement($values0), 0);
 
         $sql1    = 'INSERT INTO user_groups_admin_resources (id, user_group_id, admin_resource_id) VALUES (?, ?, ?)'; // phpcs:ignore
         $values1 = [
@@ -66,7 +62,7 @@ class UserGroupSqlDataMapperTest extends SqlDataMapperTest
             [$nextId, \PDO::PARAM_STR],
             [$adminResources[0]->getId(), \PDO::PARAM_STR],
         ];
-        $this->prepare($sql1, $this->createWriteStatement($values1), 1);
+        $this->prepare($this->writeConnectionMock, $sql1, $this->createWriteStatement($values1), 1);
 
         $sql2    = 'INSERT INTO user_groups_admin_resources (id, user_group_id, admin_resource_id) VALUES (?, ?, ?)'; // phpcs:ignore
         $values2 = [
@@ -74,7 +70,7 @@ class UserGroupSqlDataMapperTest extends SqlDataMapperTest
             [$nextId, \PDO::PARAM_STR],
             [$adminResources[1]->getId(), \PDO::PARAM_STR],
         ];
-        $this->prepare($sql2, $this->createWriteStatement($values2), 2);
+        $this->prepare($this->writeConnectionMock, $sql2, $this->createWriteStatement($values2), 2);
 
         $entity = new UserGroup($nextId, $identifier, $name, $adminResources);
         $this->sut->add($entity);
@@ -90,11 +86,11 @@ class UserGroupSqlDataMapperTest extends SqlDataMapperTest
 
         $sql0    = 'DELETE FROM user_groups_admin_resources WHERE (user_group_id = ?)'; // phpcs:ignore
         $values0 = [[$id, \PDO::PARAM_STR]];
-        $this->prepare($sql0, $this->createWriteStatement($values0), 0);
+        $this->prepare($this->writeConnectionMock, $sql0, $this->createWriteStatement($values0), 0);
 
         $sql1    = 'UPDATE user_groups AS user_groups SET deleted = ? WHERE (id = ?)'; // phpcs:ignore
         $values1 = [[1, \PDO::PARAM_INT], [$id, \PDO::PARAM_STR]];
-        $this->prepare($sql1, $this->createWriteStatement($values1), 1);
+        $this->prepare($this->writeConnectionMock, $sql1, $this->createWriteStatement($values1), 1);
 
         $entity = new UserGroup($id, $identifier, $name);
         $this->sut->delete($entity);
@@ -110,7 +106,7 @@ class UserGroupSqlDataMapperTest extends SqlDataMapperTest
         $values       = [];
         $expectedData = [['id' => $id, 'identifier' => $identifier, 'name' => $name]];
 
-        $this->prepare($sql, $this->createReadStatement($values, $expectedData));
+        $this->prepare($this->readConnectionMock, $sql, $this->createReadStatement($values, $expectedData));
 
         $actualResult = $this->sut->getAll();
 
@@ -127,7 +123,7 @@ class UserGroupSqlDataMapperTest extends SqlDataMapperTest
         $values       = ['user_group_id' => [$id, \PDO::PARAM_STR]];
         $expectedData = [['id' => $id, 'identifier' => $identifier, 'name' => $name]];
 
-        $this->prepare($sql, $this->createReadStatement($values, $expectedData));
+        $this->prepare($this->readConnectionMock, $sql, $this->createReadStatement($values, $expectedData));
 
         $actualResult = $this->sut->getById($id);
 
@@ -144,7 +140,7 @@ class UserGroupSqlDataMapperTest extends SqlDataMapperTest
         $values       = ['identifier' => [$identifier, \PDO::PARAM_STR]];
         $expectedData = [['id' => $id, 'identifier' => $identifier, 'name' => $name]];
 
-        $this->prepare($sql, $this->createReadStatement($values, $expectedData));
+        $this->prepare($this->readConnectionMock, $sql, $this->createReadStatement($values, $expectedData));
 
         $actualResult = $this->sut->getByIdentifier($identifier);
 
@@ -159,11 +155,11 @@ class UserGroupSqlDataMapperTest extends SqlDataMapperTest
 
         $sql0    = 'UPDATE user_groups AS user_groups SET identifier = ?, name = ? WHERE (id = ?) AND (deleted = 0)'; // phpcs:ignore
         $values0 = [[$identifier, \PDO::PARAM_STR], [$name, \PDO::PARAM_STR], [$id, \PDO::PARAM_STR]];
-        $this->prepare($sql0, $this->createWriteStatement($values0), 0);
+        $this->prepare($this->writeConnectionMock, $sql0, $this->createWriteStatement($values0), 0);
 
         $sql1    = 'DELETE FROM user_groups_admin_resources WHERE (user_group_id = ?)'; // phpcs:ignore
         $values1 = [[$id, \PDO::PARAM_STR]];
-        $this->prepare($sql1, $this->createWriteStatement($values1), 1);
+        $this->prepare($this->writeConnectionMock, $sql1, $this->createWriteStatement($values1), 1);
 
         $entity = new UserGroup($id, $identifier, $name);
         $this->sut->update($entity);
@@ -185,11 +181,11 @@ class UserGroupSqlDataMapperTest extends SqlDataMapperTest
 
         $sql0    = 'UPDATE user_groups AS user_groups SET identifier = ?, name = ? WHERE (id = ?) AND (deleted = 0)'; // phpcs:ignore
         $values0 = [[$identifier, \PDO::PARAM_STR], [$name, \PDO::PARAM_STR], [$id, \PDO::PARAM_STR]];
-        $this->prepare($sql0, $this->createWriteStatement($values0), 0);
+        $this->prepare($this->writeConnectionMock, $sql0, $this->createWriteStatement($values0), 0);
 
         $sql1    = 'DELETE FROM user_groups_admin_resources WHERE (user_group_id = ?)'; // phpcs:ignore
         $values1 = [[$id, \PDO::PARAM_STR]];
-        $this->prepare($sql1, $this->createWriteStatement($values1), 1);
+        $this->prepare($this->writeConnectionMock, $sql1, $this->createWriteStatement($values1), 1);
 
         $sql2    = 'INSERT INTO user_groups_admin_resources (id, user_group_id, admin_resource_id) VALUES (?, ?, ?)'; // phpcs:ignore
         $values2 = [
@@ -197,7 +193,7 @@ class UserGroupSqlDataMapperTest extends SqlDataMapperTest
             [$id, \PDO::PARAM_STR],
             [$adminResources[0]->getId(), \PDO::PARAM_STR]
         ];
-        $this->prepare($sql2, $this->createWriteStatement($values2), 2);
+        $this->prepare($this->writeConnectionMock, $sql2, $this->createWriteStatement($values2), 2);
 
         $sql3    = 'INSERT INTO user_groups_admin_resources (id, user_group_id, admin_resource_id) VALUES (?, ?, ?)'; // phpcs:ignore
         $values3 = [
@@ -205,7 +201,7 @@ class UserGroupSqlDataMapperTest extends SqlDataMapperTest
             [$id, \PDO::PARAM_STR],
             [$adminResources[1]->getId(), \PDO::PARAM_STR]
         ];
-        $this->prepare($sql3, $this->createWriteStatement($values3), 3);
+        $this->prepare($this->writeConnectionMock, $sql3, $this->createWriteStatement($values3), 3);
 
         $entity = new UserGroup($id, $identifier, $name, $adminResources);
         $this->sut->update($entity);

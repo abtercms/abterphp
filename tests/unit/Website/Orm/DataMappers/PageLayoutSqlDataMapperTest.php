@@ -4,24 +4,23 @@ declare(strict_types=1);
 
 namespace AbterPhp\Website\Orm\DataMapper;
 
-use AbterPhp\Framework\Orm\DataMapper\SqlDataMapperTest;
+use AbterPhp\Framework\Orm\DataMapper\SqlTestCase;
 use AbterPhp\Website\Domain\Entities\PageLayout;
 use AbterPhp\Website\Orm\DataMappers\PageLayoutSqlDataMapper;
 use Opulence\Databases\Adapters\Pdo\Connection as Connection;
+use Opulence\Databases\IConnection;
+use PHPUnit\Framework\MockObject\MockObject;
 
-class PageLayoutSqlDataMapperTest extends SqlDataMapperTest
+class PageLayoutSqlDataMapperTest extends SqlTestCase
 {
     /** @var PageLayoutSqlDataMapper */
     protected $sut;
 
     public function setUp()
     {
-        $this->connection = $this->getMockBuilder(Connection::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['prepare', 'read', 'lastInsertId'])
-            ->getMock();
+        parent::setUp();
 
-        $this->sut = new PageLayoutSqlDataMapper($this->connection, $this->connection);
+        $this->sut = new PageLayoutSqlDataMapper($this->readConnectionMock, $this->writeConnectionMock);
     }
 
     public function testAdd()
@@ -33,7 +32,7 @@ class PageLayoutSqlDataMapperTest extends SqlDataMapperTest
         $sql    = 'INSERT INTO page_layouts (id, identifier, body) VALUES (?, ?, ?)'; // phpcs:ignore
         $values = [[$nextId, \PDO::PARAM_STR], [$identifier, \PDO::PARAM_STR], [$body, \PDO::PARAM_STR]];
 
-        $this->prepare($sql, $this->createWriteStatement($values));
+        $this->prepare($this->writeConnectionMock, $sql, $this->createWriteStatement($values));
         $entity = new PageLayout($nextId, $identifier, $body, null);
 
         $this->sut->add($entity);
@@ -50,7 +49,7 @@ class PageLayoutSqlDataMapperTest extends SqlDataMapperTest
         $sql    = 'UPDATE page_layouts AS page_layouts SET deleted = ? WHERE (id = ?)'; // phpcs:ignore
         $values = [[1, \PDO::PARAM_INT], [$id, \PDO::PARAM_STR]];
 
-        $this->prepare($sql, $this->createWriteStatement($values));
+        $this->prepare($this->writeConnectionMock, $sql, $this->createWriteStatement($values));
         $entity = new PageLayout($id, $identifier, $body, null);
 
         $this->sut->delete($entity);
@@ -80,7 +79,7 @@ class PageLayoutSqlDataMapperTest extends SqlDataMapperTest
             ],
         ];
 
-        $this->prepare($sql, $this->createReadStatement($values, $expectedData));
+        $this->prepare($this->readConnectionMock, $sql, $this->createReadStatement($values, $expectedData));
 
         $actualResult = $this->sut->getAll();
 
@@ -111,7 +110,7 @@ class PageLayoutSqlDataMapperTest extends SqlDataMapperTest
             ],
         ];
 
-        $this->prepare($sql, $this->createReadStatement($values, $expectedData));
+        $this->prepare($this->readConnectionMock, $sql, $this->createReadStatement($values, $expectedData));
 
         $actualResult = $this->sut->getById($id);
 
@@ -142,7 +141,7 @@ class PageLayoutSqlDataMapperTest extends SqlDataMapperTest
             ],
         ];
 
-        $this->prepare($sql, $this->createReadStatement($values, $expectedData));
+        $this->prepare($this->readConnectionMock, $sql, $this->createReadStatement($values, $expectedData));
 
         $actualResult = $this->sut->getByIdentifier($identifier);
 
@@ -170,7 +169,7 @@ class PageLayoutSqlDataMapperTest extends SqlDataMapperTest
             [$id, \PDO::PARAM_STR],
         ];
 
-        $this->prepare($sql, $this->createWriteStatement($values));
+        $this->prepare($this->writeConnectionMock, $sql, $this->createWriteStatement($values));
         $entity = new PageLayout(
             $id,
             $identifier,

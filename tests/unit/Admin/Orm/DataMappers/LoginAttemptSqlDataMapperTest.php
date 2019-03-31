@@ -6,23 +6,18 @@ namespace AbterPhp\Admin\Orm\DataMapper;
 
 use AbterPhp\Admin\Domain\Entities\LoginAttempt;
 use AbterPhp\Admin\Orm\DataMappers\LoginAttemptSqlDataMapper;
-use AbterPhp\Framework\Orm\DataMapper\SqlDataMapperTest;
-use Opulence\Databases\Adapters\Pdo\Connection as Connection;
+use AbterPhp\Framework\Orm\DataMapper\SqlTestCase;
 
-class LoginAttemptSqlDataMapperTest extends SqlDataMapperTest
+class LoginAttemptSqlDataMapperTest extends SqlTestCase
 {
     /** @var LoginAttemptSqlDataMapper */
     protected $sut;
 
     public function setUp()
     {
-        $this->connection = $this->getMockBuilder(Connection::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['prepare', 'read', 'lastInsertId'])
-            ->getMock()
-        ;
+        parent::setUp();
 
-        $this->sut = new LoginAttemptSqlDataMapper($this->connection, $this->connection);
+        $this->sut = new LoginAttemptSqlDataMapper($this->readConnectionMock, $this->writeConnectionMock);
     }
 
     public function testAdd()

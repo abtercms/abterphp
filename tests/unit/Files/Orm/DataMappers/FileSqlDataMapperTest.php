@@ -7,22 +7,18 @@ namespace AbterPhp\Files\Orm\DataMapper;
 use AbterPhp\Files\Domain\Entities\File;
 use AbterPhp\Files\Domain\Entities\FileCategory;
 use AbterPhp\Files\Orm\DataMappers\FileSqlDataMapper;
-use AbterPhp\Framework\Orm\DataMapper\SqlDataMapperTest;
-use Opulence\Databases\Adapters\Pdo\Connection as Connection;
+use AbterPhp\Framework\Orm\DataMapper\SqlTestCase;
 
-class FileSqlDataMapperTest extends SqlDataMapperTest
+class FileSqlDataMapperTest extends SqlTestCase
 {
     /** @var FileSqlDataMapper */
     protected $sut;
 
     public function setUp()
     {
-        $this->connection = $this->getMockBuilder(Connection::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['prepare', 'read', 'lastInsertId'])
-            ->getMock();
+        parent::setUp();
 
-        $this->sut = new FileSqlDataMapper($this->connection, $this->connection);
+        $this->sut = new FileSqlDataMapper($this->readConnectionMock, $this->writeConnectionMock);
     }
 
     public function testDelete()
@@ -40,7 +36,7 @@ class FileSqlDataMapperTest extends SqlDataMapperTest
         $sql    = 'UPDATE files AS files SET deleted = ? WHERE (id = ?)'; // phpcs:ignore
         $values = [[1, \PDO::PARAM_INT], [$id, \PDO::PARAM_STR]];
 
-        $this->prepare($sql, $this->createWriteStatement($values));
+        $this->prepare($this->writeConnectionMock, $sql, $this->createWriteStatement($values));
         $category = new FileCategory($categoryId, $categoryIdentifier, $categoryName, $categoryIsPublic);
         $entity   = new File($id, $filesystemName, $publicName, $description, $category, $uploadedAt);
 
@@ -73,7 +69,7 @@ class FileSqlDataMapperTest extends SqlDataMapperTest
             ],
         ];
 
-        $this->prepare($sql, $this->createReadStatement($values, $expectedData));
+        $this->prepare($this->readConnectionMock, $sql, $this->createReadStatement($values, $expectedData));
 
         $actualResult = $this->sut->getAll();
 
@@ -106,7 +102,7 @@ class FileSqlDataMapperTest extends SqlDataMapperTest
             ],
         ];
 
-        $this->prepare($sql, $this->createReadStatement($values, $expectedData));
+        $this->prepare($this->readConnectionMock, $sql, $this->createReadStatement($values, $expectedData));
 
         $actualResult = $this->sut->getById($id);
 
@@ -141,7 +137,7 @@ class FileSqlDataMapperTest extends SqlDataMapperTest
             ],
         ];
 
-        $this->prepare($sql, $this->createReadStatement($values, $expectedData));
+        $this->prepare($this->readConnectionMock, $sql, $this->createReadStatement($values, $expectedData));
 
         $actualResult = $this->sut->getByUserId($userId);
 
@@ -187,7 +183,7 @@ class FileSqlDataMapperTest extends SqlDataMapperTest
             ],
         ];
 
-        $this->prepare($sql, $this->createReadStatement($values, $expectedData));
+        $this->prepare($this->readConnectionMock, $sql, $this->createReadStatement($values, $expectedData));
 
         $actualResult = $this->sut->getAllByUsername($username);
 
@@ -216,7 +212,7 @@ class FileSqlDataMapperTest extends SqlDataMapperTest
             [$id, \PDO::PARAM_STR],
         ];
 
-        $this->prepare($sql, $this->createWriteStatement($values));
+        $this->prepare($this->writeConnectionMock, $sql, $this->createWriteStatement($values));
         $category = new FileCategory($categoryId, $categoryIdentifier, $categoryName, $categoryIsPublic);
         $entity   = new File($id, $filesystemName, $publicName, $description, $category, $uploadedAt);
 
