@@ -227,18 +227,18 @@ class Page extends Base
 
     /**
      * @param PageLayout[] $allLayouts
-     * @param int|null     $layoutId
+     * @param string|null  $layoutId
      *
      * @return Option[]
      */
-    protected function createLayoutIdOptions(array $allLayouts, ?int $layoutId): array
+    protected function createLayoutIdOptions(array $allLayouts, ?string $layoutId): array
     {
         $options   = [];
         $options[] = new Option('', 'framework:none', false);
         foreach ($allLayouts as $layout) {
             $content    = $layout->getIdentifier();
-            $isSelected = (int)$layout->getId() === $layoutId;
-            $options[]  = new Option((string)$layout->getId(), $content, $isSelected);
+            $isSelected = $layout->getId() === $layoutId;
+            $options[]  = new Option($layout->getId(), $content, $isSelected);
         }
 
         return $options;

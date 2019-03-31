@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AbterPhp\Website\Validation\Rules;
+namespace AbterPhp\Framework\Validation\Rules;
 
 use InvalidArgumentException;
 use Opulence\Validation\Rules\IRuleWithArgs;

@@ -27,18 +27,18 @@ class FileSqlDataMapperTest extends SqlDataMapperTest
 
     public function testDelete()
     {
-        $id                 = 123;
+        $id                 = '5bc63ac6-b3cd-41f0-bbc6-81a4568179db';
         $filesystemName     = 'foo';
         $publicName         = 'bar';
         $description        = 'baz';
-        $categoryId         = 66;
+        $categoryId         = 'aa961686-d042-4b43-8b0a-163d80a29166';
         $categoryName       = 'qux';
         $categoryIdentifier = 'quuux';
         $categoryIsPublic   = false;
         $uploadedAt         = new \DateTime();
 
         $sql    = 'UPDATE files AS files SET deleted = ? WHERE (id = ?)'; // phpcs:ignore
-        $values = [[1, \PDO::PARAM_INT], [$id, \PDO::PARAM_INT]];
+        $values = [[1, \PDO::PARAM_INT], [$id, \PDO::PARAM_STR]];
 
         $this->prepare($sql, $this->createWriteStatement($values));
         $category = new FileCategory($categoryId, $categoryIdentifier, $categoryName, $categoryIsPublic);
@@ -49,11 +49,11 @@ class FileSqlDataMapperTest extends SqlDataMapperTest
 
     public function testGetAll()
     {
-        $id                 = 123;
+        $id                 = '54d0ff01-f6b7-4058-9fcd-40f847cf2aef';
         $filesystemName     = 'foo';
         $publicName         = 'bar';
         $description        = 'baz';
-        $categoryId         = 66;
+        $categoryId         = 'fc14a949-03cc-4d7a-8a71-7ee31d4d3be2';
         $categoryName       = 'qux';
         $categoryIdentifier = 'quuux';
         $uploadedAt         = new \DateTime();
@@ -82,17 +82,17 @@ class FileSqlDataMapperTest extends SqlDataMapperTest
 
     public function testGetById()
     {
-        $id                 = 123;
+        $id                 = '456cdb27-c8e8-4ab5-84c0-2d20d470521f';
         $filesystemName     = 'foo';
         $publicName         = 'bar';
         $description        = 'baz';
-        $categoryId         = 66;
+        $categoryId         = 'd6ba660f-d131-4dfa-825a-81e7f3f69fcb';
         $categoryName       = 'qux';
         $categoryIdentifier = 'quuux';
         $uploadedAt         = new \DateTime();
 
         $sql          = 'SELECT files.id, files.filesystem_name, files.public_name, files.file_category_id, files.description, files.uploaded_at, file_categories.name AS file_category_name, file_categories.identifier AS file_category_identifier FROM files INNER JOIN file_categories AS file_categories ON file_categories.id = files.file_category_id AND file_categories.deleted =0 WHERE (files.deleted = 0) AND (files.id = :file_id) GROUP BY files.id'; // phpcs:ignore
-        $values       = ['file_id' => [$id, \PDO::PARAM_INT]];
+        $values       = ['file_id' => [$id, \PDO::PARAM_STR]];
         $expectedData = [
             [
                 'id'                       => $id,
@@ -115,19 +115,19 @@ class FileSqlDataMapperTest extends SqlDataMapperTest
 
     public function testGetByUserId()
     {
-        $userId = 93;
+        $userId = '673459fb-1f34-4339-8436-3fff0774fcf1';
 
-        $id                 = 123;
+        $id                 = '5574edba-c3c3-4bed-be07-72921add67b4';
         $filesystemName     = 'foo';
         $publicName         = 'bar';
         $description        = 'baz';
-        $categoryId         = 66;
+        $categoryId         = '09da12c0-e92b-4a08-a83e-6cb573a8cf79';
         $categoryName       = 'qux';
         $categoryIdentifier = 'quuux';
         $uploadedAt         = new \DateTime();
 
         $sql          = 'SELECT files.id, files.filesystem_name, files.public_name, files.file_category_id, files.description, files.uploaded_at, file_categories.name AS file_category_name, file_categories.identifier AS file_category_identifier FROM files INNER JOIN file_categories AS file_categories ON file_categories.id = files.file_category_id AND file_categories.deleted =0 INNER JOIN user_groups_file_categories AS ugfc ON file_categories.id = ugfc.file_category_id AND file_categories.deleted = 0 INNER JOIN user_groups AS user_groups ON user_groups.id = ugfc.user_group_id AND user_groups.deleted = 0 WHERE (files.deleted = 0) AND (user_groups.user_id = :user_id) GROUP BY files.id'; // phpcs:ignore
-        $values       = ['user_id' => [$userId, \PDO::PARAM_INT]];
+        $values       = ['user_id' => [$userId, \PDO::PARAM_STR]];
         $expectedData = [
             [
                 'id'                       => $id,
@@ -152,15 +152,15 @@ class FileSqlDataMapperTest extends SqlDataMapperTest
     {
         $username = 'johndoe';
 
-        $id                 = 123;
+        $id                 = 'c82cd0a6-cd5d-4189-ab37-0583f2d3f6a9';
         $filesystemName     = 'foo';
         $publicName         = 'bar';
         $description        = 'baz';
-        $categoryId         = 66;
+        $categoryId         = 'acfc178a-56d3-4e6d-b185-346b2e07db08';
         $categoryName       = 'qux';
         $categoryIdentifier = 'quuux';
         $uploadedAt         = new \DateTime();
-        $id2                = 124;
+        $id2                = 'cbad0407-5fb2-41cd-8a7c-dc505b275b0e';
 
         $sql          = 'SELECT files.id, files.filesystem_name, files.public_name, files.file_category_id, files.description, files.uploaded_at, file_categories.name AS file_category_name, file_categories.identifier AS file_category_identifier FROM files INNER JOIN file_categories AS file_categories ON file_categories.id = files.file_category_id AND file_categories.deleted =0 INNER JOIN user_groups_file_categories AS ugfc ON file_categories.id = ugfc.file_category_id AND file_categories.deleted = 0 INNER JOIN user_groups AS user_groups ON user_groups.id = ugfc.user_group_id AND user_groups.deleted = 0 INNER JOIN users AS users ON users.user_group_id = user_groups.id AND users.deleted = 0 WHERE (files.deleted = 0) AND (users.username = :username) GROUP BY files.id'; // phpcs:ignore
         $values       = ['username' => [$username, \PDO::PARAM_STR]];
@@ -196,11 +196,11 @@ class FileSqlDataMapperTest extends SqlDataMapperTest
 
     public function testUpdate()
     {
-        $id                 = 123;
+        $id                 = '542260d0-25be-4088-9253-9ad2bef63ac2';
         $filesystemName     = 'foo';
         $publicName         = 'bar';
         $description        = 'baz';
-        $categoryId         = 66;
+        $categoryId         = '29a22dcb-c4dd-4d2a-8a50-b282ed0b9b0b';
         $categoryIdentifier = 'quux';
         $categoryName       = 'qux';
         $categoryIsPublic   = false;
@@ -212,8 +212,8 @@ class FileSqlDataMapperTest extends SqlDataMapperTest
             [$publicName, \PDO::PARAM_STR],
             [$description, \PDO::PARAM_STR],
             [$uploadedAt->format(File::DATE_FORMAT), \PDO::PARAM_STR],
-            [$categoryId, \PDO::PARAM_INT],
-            [$id, \PDO::PARAM_INT],
+            [$categoryId, \PDO::PARAM_STR],
+            [$id, \PDO::PARAM_STR],
         ];
 
         $this->prepare($sql, $this->createWriteStatement($values));
@@ -232,7 +232,7 @@ class FileSqlDataMapperTest extends SqlDataMapperTest
         $uploadedAt = $entity->getUploadedAt()->format(File::DATE_FORMAT);
 
         $this->assertInstanceOf(File::class, $entity);
-        $this->assertEquals($expectedData['id'], $entity->getId());
+        $this->assertSame($expectedData['id'], $entity->getId());
         $this->assertSame($expectedData['filesystem_name'], $entity->getFilesystemName());
         $this->assertSame($expectedData['public_name'], $entity->getPublicName());
         $this->assertSame($expectedData['file_category_id'], $entity->getCategory()->getId());

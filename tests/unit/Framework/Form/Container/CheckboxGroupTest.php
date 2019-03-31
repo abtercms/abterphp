@@ -11,7 +11,7 @@ use AbterPhp\Framework\Form\Label\ToggleLabelTest;
 use AbterPhp\Framework\I18n\MockTranslatorFactory;
 use PHPUnit\Framework\MockObject\MockObject;
 
-class ToggleTest extends \PHPUnit\Framework\TestCase
+class CheckboxGroupTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @return array
@@ -19,7 +19,7 @@ class ToggleTest extends \PHPUnit\Framework\TestCase
     public function renderProvider()
     {
         return [
-            'simple' => ['<foo>', '<bar>', '<baz>', [], null, null, '<div><bar><baz></div>'],
+            'simple' => ['<foo>', '<bar>', '<baz>', [], null, null, '<div><bar></div>'],
         ];
     }
 
@@ -34,7 +34,7 @@ class ToggleTest extends \PHPUnit\Framework\TestCase
      * @param string|null   $tag
      * @param string        $expectedResult
      */
-    public function testRender(
+    public function testRenderWillMoveHelpIntoLabel(
         string $inputOutput,
         string $labelOutput,
         string $helpOutput,
@@ -60,7 +60,7 @@ class ToggleTest extends \PHPUnit\Framework\TestCase
      * @param string[]|null $translations
      * @param string|null   $tag
      *
-     * @return ToggleGroup
+     * @return CheckboxGroup
      */
     protected function createElement(
         string $inputOutput,
@@ -69,7 +69,7 @@ class ToggleTest extends \PHPUnit\Framework\TestCase
         array $attributes,
         ?array $translations,
         ?string $tag
-    ): ToggleGroup {
+    ): CheckboxGroup {
         /** @var Input|MockObject $inputMock */
         $inputMock = $this->getMockBuilder(Input::class)
             ->disableOriginalConstructor()
@@ -93,25 +93,10 @@ class ToggleTest extends \PHPUnit\Framework\TestCase
 
         $translatorMock = MockTranslatorFactory::createSimpleTranslator($this, $translations);
 
-        $toggleGroup = new ToggleGroup($inputMock, $labelMock, $helpMock, [], $attributes, $tag);
+        $checkboxGroup = new CheckboxGroup($inputMock, $labelMock, $helpMock, [], $attributes, $tag);
 
-        $toggleGroup->setTranslator($translatorMock);
+        $checkboxGroup->setTranslator($translatorMock);
 
-        return $toggleGroup;
-    }
-
-    public function testGetAllNodesIncludesHiderBtn()
-    {
-        $input = new Input('foo', 'foo');
-        $label = new Label('foo', 'Foo');
-        $help  = new Help('help');
-
-        $sut = new ToggleGroup($input, $label, $help);
-
-        $actualResult = $sut->getAllNodes();
-
-        $this->assertContains($input, $actualResult);
-        $this->assertContains($label, $actualResult);
-        $this->assertContains($help, $actualResult);
+        return $checkboxGroup;
     }
 }

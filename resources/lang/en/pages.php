@@ -50,7 +50,7 @@ return [
     'pageRobots'            => 'Robots',
     'pageRobotsHelp'        => 'One of the main functions of meta tags is to convey index instructions to search engine crawlers.',
     'pageTitle'             => 'Title',
-    'pages'                 => 'Website',
+    'pages'                 => 'Pages',
 
     'pageLayout'             => 'Page Layout',
     'pageLayoutAssetsBtn'    => 'Assets (JS, CSS, etc)',

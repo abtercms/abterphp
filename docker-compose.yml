@@ -1,7 +1,7 @@
 version: '3'
 services:
   db:
-    image: mariadb
+    image: mysql
     environment:
       - MYSQL_ROOT_PASSWORD=85TKjy8ZnYGpThBTfYAv
       - MYSQL_DATABASE=abter
@@ -10,6 +10,7 @@ services:
       - MYSQL_PORT=3306
     volumes:
       - ./docker/mysql/dumps:/docker-entrypoint-initdb.d:ro
+      - ./docker/mysql/conf.d:/etc/mysql/conf.d:ro
     ports:
       - "3366:3306"
 
@@ -31,7 +32,7 @@ services:
       - redis
     volumes:
       - .:/website
-      - ./docker/php/config/zzz.ini:/usr/local/etc/php/conf.d/zzz.ini:ro
+      - ./docker/php/conf.d/zzz.ini:/usr/local/etc/php/conf.d/zzz.ini:ro
     working_dir: /website
 
   nginx:

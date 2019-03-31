@@ -29,10 +29,11 @@ class FileSqlDataMapper extends SqlDataMapper implements IFileDataMapper
             ->insert(
                 'files',
                 [
+                    'id'               => [$entity->getId(), \PDO::PARAM_STR],
                     'filesystem_name'  => [$entity->getFilesystemName(), \PDO::PARAM_STR],
                     'public_name'      => [$entity->getPublicName(), \PDO::PARAM_STR],
                     'description'      => [$entity->getDescription(), \PDO::PARAM_STR],
-                    'file_category_id' => [$entity->getCategory()->getId(), \PDO::PARAM_INT],
+                    'file_category_id' => [$entity->getCategory()->getId(), \PDO::PARAM_STR],
                     'uploaded_at'      => [$entity->getUploadedAt()->format(Entity::DATE_FORMAT), \PDO::PARAM_STR],
                 ]
             );
@@ -40,8 +41,6 @@ class FileSqlDataMapper extends SqlDataMapper implements IFileDataMapper
         $statement = $this->writeConnection->prepare($query->getSql());
         $statement->bindValues($query->getParameters());
         $statement->execute();
-
-        $entity->setId($this->writeConnection->lastInsertId());
     }
 
     /**
@@ -56,7 +55,7 @@ class FileSqlDataMapper extends SqlDataMapper implements IFileDataMapper
         $query = (new QueryBuilder())
             ->update('files', 'files', ['deleted' => [1, \PDO::PARAM_INT]])
             ->where('id = ?')
-            ->addUnnamedPlaceholderValue($entity->getId(), \PDO::PARAM_INT);
+            ->addUnnamedPlaceholderValue($entity->getId(), \PDO::PARAM_STR);
 
         $sql = $query->getSql();
 
@@ -120,7 +119,7 @@ class FileSqlDataMapper extends SqlDataMapper implements IFileDataMapper
         $query = $this->getBaseQuery()->andWhere('files.id = :file_id');
 
         $parameters = [
-            'file_id' => [$id, \PDO::PARAM_INT],
+            'file_id' => [$id, \PDO::PARAM_STR],
         ];
 
         $sql = $query->getSql();
@@ -211,11 +210,11 @@ class FileSqlDataMapper extends SqlDataMapper implements IFileDataMapper
     }
 
     /**
-     * @param int $userId
+     * @param string $userId
      *
      * @return Entity[]
      */
-    public function getByUserId(int $userId): array
+    public function getByUserId(string $userId): array
     {
         $query = $this
             ->withUserGroup($this->getBaseQuery())
@@ -224,7 +223,7 @@ class FileSqlDataMapper extends SqlDataMapper implements IFileDataMapper
         $sql = $query->getSql();
 
         $parameters = [
-            'user_id' => [$userId, \PDO::PARAM_INT],
+            'user_id' => [$userId, \PDO::PARAM_STR],
         ];
 
         return $this->read($sql, $parameters, self::VALUE_TYPE_ARRAY);
@@ -250,12 +249,12 @@ class FileSqlDataMapper extends SqlDataMapper implements IFileDataMapper
                     'public_name'      => [$entity->getPublicName(), \PDO::PARAM_STR],
                     'description'      => [$entity->getDescription(), \PDO::PARAM_STR],
                     'uploaded_at'      => [$entity->getUploadedAt()->format(Entity::DATE_FORMAT), \PDO::PARAM_STR],
-                    'file_category_id' => [$entity->getCategory()->getId(), \PDO::PARAM_INT],
+                    'file_category_id' => [$entity->getCategory()->getId(), \PDO::PARAM_STR],
                 ]
             )
             ->where('id = ?')
             ->andWhere('deleted = 0')
-            ->addUnnamedPlaceholderValue($entity->getId(), \PDO::PARAM_INT);
+            ->addUnnamedPlaceholderValue($entity->getId(), \PDO::PARAM_STR);
 
         $sql        = $query->getSql();
         $parameters = $query->getParameters();
@@ -274,7 +273,7 @@ class FileSqlDataMapper extends SqlDataMapper implements IFileDataMapper
     protected function loadEntity(array $hash)
     {
         $category = new FileCategory(
-            (int)$hash['file_category_id'],
+            $hash['file_category_id'],
             (string)$hash['file_category_identifier'],
             (string)$hash['file_category_name'],
             (bool)$hash['file_category_name']
@@ -287,7 +286,7 @@ class FileSqlDataMapper extends SqlDataMapper implements IFileDataMapper
         }
 
         return new Entity(
-            (int)$hash['id'],
+            $hash['id'],
             $hash['filesystem_name'],
             $hash['public_name'],
             $hash['description'],

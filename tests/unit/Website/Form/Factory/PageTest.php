@@ -130,18 +130,18 @@ class PageTest extends TestCase
         $action      = 'foo';
         $method      = RequestMethods::POST;
         $showUrl     = 'bar';
-        $entityId    = 36;
+        $entityId    = '619e5cd9-342e-4405-8d51-bf9a0ce944d1';
         $identifier  = 'blah';
         $title       = 'Blah!';
         $description = 'Blah and blah and more blah, but only reasonable amount of blah';
         $body        = "Blah!\n\n...and more blah...";
-        $layoutId    = 0;
+        $layoutId    = '5131c135-185e-4342-9df2-969f57390287';
         $layout      = 'abc {{ var/body }} cba';
         $meta        = new Entity\Meta($description, '', '', '', '', '', '', '');
 
         $layouts = [
-            new PageLayout(126, 'bl-126', 'BL 126', null),
-            new PageLayout(129, 'bl-129', 'BL 129', null),
+            new PageLayout('1ee4a806-724c-447b-951a-6594e6d12fbd', 'bl-126', 'BL 126', null),
+            new PageLayout('bcd75cae-8837-4717-96fb-db09cab39ef4', 'bl-129', 'BL 129', null),
         ];
 
         $this->enforcerMock->expects($this->at(0))->method('enforce')->willReturn($advancedAllowed);

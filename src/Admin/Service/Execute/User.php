@@ -47,19 +47,19 @@ class User extends RepoServiceAbstract
     }
 
     /**
-     * @param int|null $entityId
+     * @param string $entityId
      *
      * @return Entity
      */
-    public function createEntity(int $entityId = null): IStringerEntity
+    public function createEntity(string $entityId): IStringerEntity
     {
         $userLanguage = new UserLanguage(
-            0,
+            '',
             '',
             ''
         );
         $entity       = new Entity(
-            (int)$entityId,
+            $entityId,
             '',
             '',
             '',
@@ -89,14 +89,14 @@ class User extends RepoServiceAbstract
         $isGravatarAllowed = isset($data['is_gravatar_allowed']) ? (bool)$data['is_gravatar_allowed'] : false;
         $canLogin          = isset($data['can_login']) ? (bool)$data['can_login'] : false;
         $userLanguage      = new UserLanguage(
-            (int)$data['user_language_id'],
+            (string)$data['user_language_id'],
             '',
             ''
         );
         $userGroups = [];
         foreach ($data['user_group_ids'] as $userGroupId) {
             $userGroups[] = new UserGroup(
-                (int)$userGroupId,
+                (string)$userGroupId,
                 '',
                 ''
             );

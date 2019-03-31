@@ -42,13 +42,13 @@ class PageLayout extends RepoServiceAbstract
 
 
     /**
-     * @param int|null $entityId
+     * @param string $entityId
      *
      * @return Entity
      */
-    protected function createEntity(int $entityId = null): IStringerEntity
+    protected function createEntity(string $entityId): IStringerEntity
     {
-        return new Entity((int)$entityId, '', '', '');
+        return new Entity($entityId, '', '', new Assets('', '', '', [], []));
     }
 
     /**

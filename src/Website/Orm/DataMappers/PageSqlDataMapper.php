@@ -25,7 +25,7 @@ class PageSqlDataMapper extends SqlDataMapper implements IPageDataMapper
             throw new \InvalidArgumentException(__CLASS__ . ':' . __FUNCTION__ . ' expects a Page entity.');
         }
 
-        $data  = $this->getColumnNamesToValues($entity);
+        $data  = $this->getColumnNamesToValues($entity, true);
         $query = (new QueryBuilder())->insert('pages', $data);
 
         $sql    = $query->getSql();
@@ -34,8 +34,6 @@ class PageSqlDataMapper extends SqlDataMapper implements IPageDataMapper
         $statement = $this->writeConnection->prepare($sql);
         $statement->bindValues($params);
         $statement->execute();
-
-        $entity->setId($this->writeConnection->lastInsertId());
     }
 
     /**
@@ -50,7 +48,7 @@ class PageSqlDataMapper extends SqlDataMapper implements IPageDataMapper
         $query = (new QueryBuilder())
             ->update('pages', 'pages', ['deleted' => [1, \PDO::PARAM_INT]])
             ->where('id = ?')
-            ->addUnnamedPlaceholderValue($entity->getId(), \PDO::PARAM_INT);
+            ->addUnnamedPlaceholderValue($entity->getId(), \PDO::PARAM_STR);
 
         $sql    = $query->getSql();
         $params = $query->getParameters();
@@ -115,7 +113,7 @@ class PageSqlDataMapper extends SqlDataMapper implements IPageDataMapper
 
         $sql    = $query->getSql();
         $params = [
-            'page_id' => [$id, \PDO::PARAM_INT],
+            'page_id' => [$id, \PDO::PARAM_STR],
         ];
 
         return $this->read($sql, $params, self::VALUE_TYPE_ENTITY, true);
@@ -164,13 +162,13 @@ class PageSqlDataMapper extends SqlDataMapper implements IPageDataMapper
             throw new \InvalidArgumentException(__CLASS__ . ':' . __FUNCTION__ . ' expects a Page entity.');
         }
 
-        $columnNamesToValues = $this->getColumnNamesToValues($entity);
+        $columnNamesToValues = $this->getColumnNamesToValues($entity, false);
 
         $query = (new QueryBuilder())
             ->update('pages', 'pages', $columnNamesToValues)
             ->where('id = ?')
             ->andWhere('deleted = 0')
-            ->addUnnamedPlaceholderValue($entity->getId(), \PDO::PARAM_INT);
+            ->addUnnamedPlaceholderValue($entity->getId(), \PDO::PARAM_STR);
 
         $sql    = $query->getSql();
         $params = $query->getParameters();
@@ -182,23 +180,28 @@ class PageSqlDataMapper extends SqlDataMapper implements IPageDataMapper
 
     /**
      * @param Entity $entity
+     * @param bool   $create
      *
      * @return array
      */
-    protected function getColumnNamesToValues(Entity $entity): array
+    protected function getColumnNamesToValues(Entity $entity, bool $create): array
     {
         $layoutIdType = \PDO::PARAM_NULL;
         if ($entity->getLayoutId()) {
-            $layoutIdType = \PDO::PARAM_INT;
+            $layoutIdType = \PDO::PARAM_STR;
         }
 
         $columnNamesToValues = [
-            'identifier' => $entity->getIdentifier(),
-            'title'      => $entity->getTitle(),
-            'body'       => $entity->getBody(),
-            'layout'     => $entity->getLayout(),
+            'identifier' => [$entity->getIdentifier(), \PDO::PARAM_STR],
+            'title'      => [$entity->getTitle(), \PDO::PARAM_STR],
+            'body'       => [$entity->getBody(), \PDO::PARAM_STR],
+            'layout'     => [$entity->getLayout(), \PDO::PARAM_STR],
             'layout_id'  => [$entity->getLayoutId(), $layoutIdType],
         ];
+
+        if ($create) {
+            $columnNamesToValues = array_merge(['id' => [$entity->getId(), \PDO::PARAM_STR]], $columnNamesToValues);
+        }
 
         $columnNamesToValues = $this->populateWithMeta($entity, $columnNamesToValues);
         $columnNamesToValues = $this->populateWithAssets($entity, $columnNamesToValues);
@@ -269,10 +272,10 @@ class PageSqlDataMapper extends SqlDataMapper implements IPageDataMapper
         $assets   = $this->loadAssets($hash);
         $body     = empty($hash['body']) ? '' : $hash['body'];
         $layout   = empty($hash['layout']) ? '' : $hash['layout'];
-        $layoutId = empty($hash['layout_id']) ? null : (int)$hash['layout_id'];
+        $layoutId = empty($hash['layout_id']) ? null : $hash['layout_id'];
 
         return new Entity(
-            (int)$hash['id'],
+            $hash['id'],
             $hash['identifier'],
             $hash['title'],
             $body,

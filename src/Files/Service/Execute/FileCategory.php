@@ -41,13 +41,13 @@ class FileCategory extends RepoServiceAbstract
     }
 
     /**
-     * @param int|null $entityId
+     * @param string|null $entityId
      *
      * @return Entity
      */
-    public function createEntity(int $entityId = null): IStringerEntity
+    public function createEntity(string $entityId = null): IStringerEntity
     {
-        $entity = new Entity((int)$entityId, '', '', false);
+        $entity = new Entity($entityId, '', '', false);
 
         return $entity;
     }
@@ -71,7 +71,7 @@ class FileCategory extends RepoServiceAbstract
         $userGroups = [];
         if (array_key_exists('user_group_ids', $data)) {
             foreach ($data['user_group_ids'] as $id) {
-                $userGroups[] = new UserGroup((int)$id, '', '');
+                $userGroups[] = new UserGroup((string)$id, '', '');
             }
         }
 

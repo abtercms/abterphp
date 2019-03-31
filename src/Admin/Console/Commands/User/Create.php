@@ -16,6 +16,7 @@ use Opulence\Console\Requests\ArgumentTypes;
 use Opulence\Console\Requests\Option;
 use Opulence\Console\Requests\OptionTypes;
 use Opulence\Console\Responses\IResponse;
+use Opulence\Orm\Ids\Generators\UuidV4Generator;
 use Opulence\Orm\IUnitOfWork;
 
 /**
@@ -197,7 +198,7 @@ class Create extends Command
         $userLanguage = $this->userLanguageRepo->getByIdentifier($ulIdentifier);
 
         return new User(
-            0,
+            '',
             $username,
             $email,
             '',

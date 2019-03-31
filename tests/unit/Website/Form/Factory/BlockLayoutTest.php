@@ -43,7 +43,7 @@ class BlockLayoutTest extends TestCase
         $action     = 'foo';
         $method     = RequestMethods::POST;
         $showUrl    = 'bar';
-        $entityId   = 36;
+        $entityId   = '97450fee-7c17-4416-8cec-084648b5dfe3';
         $identifier = 'blah';
         $body       = 'mah';
 

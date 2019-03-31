@@ -53,13 +53,13 @@ class FileTest extends TestCase
         $action            = 'foo';
         $method            = RequestMethods::POST;
         $showUrl           = 'bar';
-        $entityId          = 36;
+        $entityId          = '59b927de-7fea-4866-97fb-2036d4fdbe2e';
         $identifier        = 'blah';
         $allFileCategories = [
-            new FileCategory(22, 'fc-22', 'FC 22', true, []),
-            new FileCategory(73, 'fc-73', 'FC 73', true, []),
-            new FileCategory(112, 'fc-112', 'FC 112', false, []),
-            new FileCategory(432, 'fc-432', 'FC 432', true, []),
+            new FileCategory('a3e90fa1-3003-465d-82e0-570baa0aa53f', 'fc-22', 'FC 22', true, []),
+            new FileCategory('bd40cbaf-29a9-4371-aa5d-e97966792c92', 'fc-73', 'FC 73', true, []),
+            new FileCategory('544f7fac-38e1-4103-932f-452ea52733ed', 'fc-112', 'FC 112', false, []),
+            new FileCategory('63c18995-d24a-41bb-9016-ebca473019e9', 'fc-432', 'FC 432', true, []),
         ];
         $fileCategory      = $allFileCategories[1];
 

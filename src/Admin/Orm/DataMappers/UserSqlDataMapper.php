@@ -7,6 +7,7 @@ namespace AbterPhp\Admin\Orm\DataMappers;
 use AbterPhp\Admin\Domain\Entities\User as Entity;
 use AbterPhp\Admin\Domain\Entities\UserGroup;
 use AbterPhp\Admin\Domain\Entities\UserLanguage;
+use AbterPhp\Framework\Orm\DataMappers\IdGeneratorUserTrait;
 use Opulence\Orm\DataMappers\SqlDataMapper;
 use Opulence\QueryBuilders\MySql\QueryBuilder;
 use Opulence\QueryBuilders\MySql\SelectQuery;
@@ -16,6 +17,8 @@ use Opulence\QueryBuilders\MySql\SelectQuery;
  */
 class UserSqlDataMapper extends SqlDataMapper implements IUserDataMapper
 {
+    use IdGeneratorUserTrait;
+
     /**
      * @param Entity $entity
      */
@@ -29,10 +32,11 @@ class UserSqlDataMapper extends SqlDataMapper implements IUserDataMapper
             ->insert(
                 'users',
                 [
+                    'id'                  => [$entity->getId(), \PDO::PARAM_STR],
                     'username'            => [$entity->getUsername(), \PDO::PARAM_STR],
                     'email'               => [$entity->getEmail(), \PDO::PARAM_STR],
                     'password'            => [$entity->getPassword(), \PDO::PARAM_STR],
-                    'user_language_id'    => [$entity->getUserLanguage()->getId(), \PDO::PARAM_INT],
+                    'user_language_id'    => [$entity->getUserLanguage()->getId(), \PDO::PARAM_STR],
                     'can_login'           => [$entity->canLogin(), \PDO::PARAM_INT],
                     'is_gravatar_allowed' => [$entity->isGravatarAllowed(), \PDO::PARAM_INT],
                 ]
@@ -41,8 +45,6 @@ class UserSqlDataMapper extends SqlDataMapper implements IUserDataMapper
         $statement = $this->writeConnection->prepare($query->getSql());
         $statement->bindValues($query->getParameters());
         $statement->execute();
-
-        $entity->setId($this->writeConnection->lastInsertId());
 
         $this->addUserGroups($entity);
     }
@@ -73,7 +75,7 @@ class UserSqlDataMapper extends SqlDataMapper implements IUserDataMapper
                 ]
             )
             ->where('id = ?')
-            ->addUnnamedPlaceholderValue($entity->getId(), \PDO::PARAM_INT);
+            ->addUnnamedPlaceholderValue($entity->getId(), \PDO::PARAM_STR);
 
         $statement = $this->writeConnection->prepare($query->getSql());
         $statement->bindValues($query->getParameters());
@@ -132,7 +134,7 @@ class UserSqlDataMapper extends SqlDataMapper implements IUserDataMapper
     {
         $query = $this->getBaseQuery()->andWhere('users.id = :user_id');
 
-        $parameters = ['user_id' => [$id, \PDO::PARAM_INT]];
+        $parameters = ['user_id' => [$id, \PDO::PARAM_STR]];
 
         return $this->read($query->getSql(), $parameters, self::VALUE_TYPE_ENTITY, true);
     }
@@ -148,7 +150,9 @@ class UserSqlDataMapper extends SqlDataMapper implements IUserDataMapper
 
         $parameters = ['identifier' => [$identifier, \PDO::PARAM_STR]];
 
-        return $this->read($query->getSql(), $parameters, self::VALUE_TYPE_ENTITY);
+        $sql = $query->getSql();
+
+        return $this->read($sql, $parameters, self::VALUE_TYPE_ENTITY);
     }
 
     /**
@@ -196,13 +200,13 @@ class UserSqlDataMapper extends SqlDataMapper implements IUserDataMapper
                     'username'            => [$entity->getUsername(), \PDO::PARAM_STR],
                     'email'               => [$entity->getEmail(), \PDO::PARAM_STR],
                     'password'            => [$entity->getPassword(), \PDO::PARAM_STR],
-                    'user_language_id'    => [$entity->getUserLanguage()->getId(), \PDO::PARAM_INT],
+                    'user_language_id'    => [$entity->getUserLanguage()->getId(), \PDO::PARAM_STR],
                     'can_login'           => [$entity->canLogin(), \PDO::PARAM_INT],
                     'is_gravatar_allowed' => [$entity->isGravatarAllowed(), \PDO::PARAM_INT],
                 ]
             )
             ->where('id = ?')
-            ->addUnnamedPlaceholderValue($entity->getId(), \PDO::PARAM_INT);
+            ->addUnnamedPlaceholderValue($entity->getId(), \PDO::PARAM_STR);
 
         $statement = $this->writeConnection->prepare($query->getSql());
         $statement->bindValues($query->getParameters());
@@ -224,14 +228,14 @@ class UserSqlDataMapper extends SqlDataMapper implements IUserDataMapper
         }
 
         $userLanguage = new UserLanguage(
-            (int)$data['user_language_id'],
+            $data['user_language_id'],
             $data['user_language_identifier'],
             ''
         );
         $userGroups   = $this->loadUserGroups($data);
 
         return new Entity(
-            (int)$data['id'],
+            $data['id'],
             $data['username'],
             $data['email'],
             $data['password'],
@@ -263,7 +267,7 @@ class UserSqlDataMapper extends SqlDataMapper implements IUserDataMapper
 
         $userGroups = [];
         foreach ($ids as $idx => $userGroupId) {
-            $userGroups[] = new UserGroup((int)$userGroupId, $identifiers[$idx], $names[$idx]);
+            $userGroups[] = new UserGroup($userGroupId, $identifiers[$idx], $names[$idx]);
         }
 
         return $userGroups;
@@ -297,6 +301,7 @@ class UserSqlDataMapper extends SqlDataMapper implements IUserDataMapper
             )
             ->leftJoin('users_user_groups', 'uug', 'uug.user_id = users.id AND uug.deleted = 0')
             ->leftJoin('user_groups', 'ug', 'ug.id = uug.user_group_id AND ug.deleted = 0')
+            ->groupBy('users.id')
             ->where('users.deleted = 0');
 
         return $query;
@@ -310,7 +315,7 @@ class UserSqlDataMapper extends SqlDataMapper implements IUserDataMapper
         $query = (new QueryBuilder())
             ->delete('users_user_groups')
             ->where('user_id = ?')
-            ->addUnnamedPlaceholderValue($entity->getId(), \PDO::PARAM_INT);
+            ->addUnnamedPlaceholderValue($entity->getId(), \PDO::PARAM_STR);
 
         $statement = $this->writeConnection->prepare($query->getSql());
         $statement->bindValues($query->getParameters());
@@ -322,13 +327,16 @@ class UserSqlDataMapper extends SqlDataMapper implements IUserDataMapper
      */
     protected function addUserGroups(Entity $entity)
     {
+        $idGenerator = $this->getIdGenerator();
+
         foreach ($entity->getUserGroups() as $userGroup) {
             $query = (new QueryBuilder())
                 ->insert(
                     'users_user_groups',
                     [
-                        'user_id'       => [$entity->getId(), \PDO::PARAM_INT],
-                        'user_group_id' => [$userGroup->getId(), \PDO::PARAM_INT],
+                        'id'            => [$idGenerator->generate($entity), \PDO::PARAM_STR],
+                        'user_id'       => [$entity->getId(), \PDO::PARAM_STR],
+                        'user_group_id' => [$userGroup->getId(), \PDO::PARAM_STR],
                     ]
                 );
 

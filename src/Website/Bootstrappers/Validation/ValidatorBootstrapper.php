@@ -5,10 +5,11 @@ declare(strict_types=1);
 namespace AbterPhp\Website\Bootstrappers\Validation;
 
 use AbterPhp\Framework\Constant\Env;
+use AbterPhp\Framework\Validation\Rules\AtLeastOne;
+use AbterPhp\Framework\Validation\Rules\Uuid;
 use AbterPhp\Website\Validation\Factory\Block;
-use AbterPhp\Website\Validation\Factory\PageLayout;
 use AbterPhp\Website\Validation\Factory\Page;
-use AbterPhp\Website\Validation\Rules\AtLeastOne;
+use AbterPhp\Website\Validation\Factory\PageLayout;
 use InvalidArgumentException;
 use Opulence\Framework\Configuration\Config;
 use Opulence\Framework\Validation\Bootstrappers\ValidatorBootstrapper as BaseBootstrapper;
@@ -82,5 +83,6 @@ class ValidatorBootstrapper extends BaseBootstrapper
     protected function registerRuleExtensions(RuleExtensionRegistry $ruleExtensionRegistry)
     {
         $ruleExtensionRegistry->registerRuleExtension(new AtLeastOne());
+        $ruleExtensionRegistry->registerRuleExtension(new Uuid());
     }
 }

@@ -10,18 +10,18 @@ use Opulence\Orm\DataMappers\IDataMapper;
 interface IFileDownloadDataMapper extends IDataMapper
 {
     /**
-     * @param int $fileId
+     * @param string $fileId
      *
      * @return Entity[]
      */
-    public function getByFileId(int $fileId): array;
+    public function getByFileId(string $fileId): array;
 
     /**
-     * @param int $userId
+     * @param string $userId
      *
      * @return Entity[]
      */
-    public function getByUserId(int $userId): array;
+    public function getByUserId(string $userId): array;
 
     /**
      * @param int      $limitFrom

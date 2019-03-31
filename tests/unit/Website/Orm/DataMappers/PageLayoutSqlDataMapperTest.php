@@ -26,16 +26,15 @@ class PageLayoutSqlDataMapperTest extends SqlDataMapperTest
 
     public function testAdd()
     {
-        $nextId     = '123';
+        $nextId     = 'c840500d-bd00-410a-912e-e923b8e965e3';
         $identifier = 'foo';
         $body       = 'bar';
 
-        $sql    = 'INSERT INTO page_layouts (identifier, body) VALUES (?, ?)'; // phpcs:ignore
-        $values = [[$identifier, \PDO::PARAM_STR], [$body, \PDO::PARAM_STR]];
+        $sql    = 'INSERT INTO page_layouts (id, identifier, body) VALUES (?, ?, ?)'; // phpcs:ignore
+        $values = [[$nextId, \PDO::PARAM_STR], [$identifier, \PDO::PARAM_STR], [$body, \PDO::PARAM_STR]];
 
-        $this->lastInsertId($nextId);
         $this->prepare($sql, $this->createWriteStatement($values));
-        $entity = new PageLayout(0, $identifier, $body, null);
+        $entity = new PageLayout($nextId, $identifier, $body, null);
 
         $this->sut->add($entity);
 
@@ -44,12 +43,12 @@ class PageLayoutSqlDataMapperTest extends SqlDataMapperTest
 
     public function testDelete()
     {
-        $id         = 123;
+        $id         = '1dab2760-9aaa-4f36-a303-42b12e65d165';
         $identifier = 'foo';
         $body       = 'bar';
 
         $sql    = 'UPDATE page_layouts AS page_layouts SET deleted = ? WHERE (id = ?)'; // phpcs:ignore
-        $values = [[1, \PDO::PARAM_INT], [$id, \PDO::PARAM_INT]];
+        $values = [[1, \PDO::PARAM_INT], [$id, \PDO::PARAM_STR]];
 
         $this->prepare($sql, $this->createWriteStatement($values));
         $entity = new PageLayout($id, $identifier, $body, null);
@@ -59,7 +58,7 @@ class PageLayoutSqlDataMapperTest extends SqlDataMapperTest
 
     public function testGetAll()
     {
-        $id         = '123';
+        $id         = 'df6b4637-634e-4544-a167-2bddf3eab498';
         $identifier = 'foo';
         $body       = 'bar';
         $header     = 'baz';
@@ -90,7 +89,7 @@ class PageLayoutSqlDataMapperTest extends SqlDataMapperTest
 
     public function testGetById()
     {
-        $id         = '123';
+        $id         = 'fc2bdb23-bdd1-49aa-8613-b5e0ce76450d';
         $identifier = 'foo';
         $body       = 'bar';
         $header     = 'baz';
@@ -99,7 +98,7 @@ class PageLayoutSqlDataMapperTest extends SqlDataMapperTest
         $jsFiles    = 'boi';
 
         $sql          = 'SELECT page_layouts.id, page_layouts.identifier, page_layouts.body, page_layouts.header, page_layouts.footer, page_layouts.css_files, page_layouts.js_files FROM page_layouts WHERE (page_layouts.deleted = 0) AND (page_layouts.id = :layout_id)'; // phpcs:ignore
-        $values       = ['layout_id' => [$id, \PDO::PARAM_INT]];
+        $values       = ['layout_id' => [$id, \PDO::PARAM_STR]];
         $expectedData = [
             [
                 'id'         => $id,
@@ -121,7 +120,7 @@ class PageLayoutSqlDataMapperTest extends SqlDataMapperTest
 
     public function testGetByIdentifier()
     {
-        $id         = '123';
+        $id         = '4a7847c6-d202-4fc7-972b-bd4d634efda1';
         $identifier = 'foo';
         $body       = 'bar';
         $header     = 'baz';
@@ -152,7 +151,7 @@ class PageLayoutSqlDataMapperTest extends SqlDataMapperTest
 
     public function testUpdate()
     {
-        $id         = 123;
+        $id         = 'e62dd68b-c72c-464e-8e03-6ee86f26f592';
         $identifier = 'foo';
         $body       = 'bar';
         $header     = 'baz';
@@ -168,7 +167,7 @@ class PageLayoutSqlDataMapperTest extends SqlDataMapperTest
             [$footer, \PDO::PARAM_STR],
             [$cssFiles, \PDO::PARAM_STR],
             [$jsFiles, \PDO::PARAM_STR],
-            [$id, \PDO::PARAM_INT],
+            [$id, \PDO::PARAM_STR],
         ];
 
         $this->prepare($sql, $this->createWriteStatement($values));
@@ -189,7 +188,7 @@ class PageLayoutSqlDataMapperTest extends SqlDataMapperTest
     protected function assertEntity(array $expectedData, $entity)
     {
         $this->assertInstanceOf(PageLayout::class, $entity);
-        $this->assertEquals($expectedData['id'], $entity->getId());
+        $this->assertSame($expectedData['id'], $entity->getId());
         $this->assertSame($expectedData['identifier'], $entity->getIdentifier());
         $this->assertSame($expectedData['body'], $entity->getBody());
 

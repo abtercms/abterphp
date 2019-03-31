@@ -34,11 +34,11 @@ class EntityChange
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getEntityId(): int
+    public function getEntityId(): string
     {
-        return (int)$this->entity->getId();
+        return $this->entity->getId();
     }
 
     /**

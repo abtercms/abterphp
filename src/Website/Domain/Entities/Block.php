@@ -11,7 +11,7 @@ use AbterPhp\Framework\Domain\Entities\IStringerEntity;
  */
 class Block implements IStringerEntity
 {
-    /** @var int */
+    /** @var string */
     protected $id;
 
     /** @var string */
@@ -32,31 +32,31 @@ class Block implements IStringerEntity
     /**
      * Block constructor.
      *
-     * @param int      $id
-     * @param string   $identifier
-     * @param string   $title
-     * @param string   $body
-     * @param string   $layout
-     * @param int|null $layoutId
+     * @param string      $id
+     * @param string      $identifier
+     * @param string      $title
+     * @param string      $body
+     * @param string      $layout
+     * @param string|null $layoutId
      */
     public function __construct(
-        $id,
+        string $id,
         string $identifier,
         string $title,
         string $body,
         string $layout,
-        int $layoutId = null
+        string $layoutId = null
     ) {
         $this->id         = $id;
         $this->identifier = $identifier;
         $this->title      = $title;
         $this->body       = $body;
         $this->layout     = $layout;
-        $this->layoutId   = $layoutId > 0 ? $layoutId : null;
+        $this->layoutId   = $layoutId ? $layoutId : null;
     }
 
     /**
-     * @return int
+     * @return string
      */
     public function getId()
     {
@@ -64,7 +64,7 @@ class Block implements IStringerEntity
     }
 
     /**
-     * @param int $id
+     * @param string $id
      */
     public function setId($id)
     {
@@ -152,19 +152,19 @@ class Block implements IStringerEntity
     }
 
     /**
-     * @return int|null
+     * @return string|null
      */
-    public function getLayoutId(): ?int
+    public function getLayoutId(): ?string
     {
         return $this->layoutId;
     }
 
     /**
-     * @param int|null $layout
+     * @param string|null $layout
      *
      * @return $this
      */
-    public function setLayoutId(int $layoutId = null): Block
+    public function setLayoutId(?string $layoutId = null): Block
     {
         if ($layoutId < 1) {
             $layoutId = null;

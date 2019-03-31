@@ -26,13 +26,13 @@ class LoginAttempt implements IStringerEntity
     /**
      * LoginAttempt constructor.
      *
-     * @param             $id
+     * @param string      $id
      * @param string      $ipHash
      * @param string      $username
      * @param string|null $ipAddress
      */
     public function __construct(
-        $id,
+        string $id,
         string $ipHash,
         string $username,
         ?string $ipAddress = null
@@ -44,7 +44,7 @@ class LoginAttempt implements IStringerEntity
     }
 
     /**
-     * @return int
+     * @return string
      */
     public function getId()
     {
@@ -52,7 +52,7 @@ class LoginAttempt implements IStringerEntity
     }
 
     /**
-     * @param int $id
+     * @param string $id
      */
     public function setId($id)
     {

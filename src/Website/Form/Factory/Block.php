@@ -169,17 +169,17 @@ class Block extends Base
 
     /**
      * @param BlockLayout[] $allLayouts
-     * @param int|null      $layoutId
+     * @param string|null   $layoutId
      *
      * @return Option[]
      */
-    protected function createLayoutIdOptions(array $allLayouts, ?int $layoutId): array
+    protected function createLayoutIdOptions(array $allLayouts, ?string $layoutId): array
     {
         $options   = [];
         $options[] = new Option('', 'form:none', false);
         foreach ($allLayouts as $layout) {
-            $isSelected = (int)$layout->getId() === $layoutId;
-            $options[]  = new Option((string)$layout->getId(), $layout->getIdentifier(), $isSelected);
+            $isSelected = $layout->getId() === $layoutId;
+            $options[]  = new Option($layout->getId(), $layout->getIdentifier(), $isSelected);
         }
 
         return $options;

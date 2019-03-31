@@ -27,6 +27,7 @@ class BlockLayoutSqlDataMapper extends SqlDataMapper implements IBlockLayoutData
             ->insert(
                 'block_layouts',
                 [
+                    'id'         => $entity->getId(),
                     'identifier' => $entity->getIdentifier(),
                     'body'       => $entity->getBody(),
                 ]
@@ -35,8 +36,6 @@ class BlockLayoutSqlDataMapper extends SqlDataMapper implements IBlockLayoutData
         $statement = $this->writeConnection->prepare($query->getSql());
         $statement->bindValues($query->getParameters());
         $statement->execute();
-
-        $entity->setId($this->writeConnection->lastInsertId());
     }
 
     /**
@@ -51,7 +50,7 @@ class BlockLayoutSqlDataMapper extends SqlDataMapper implements IBlockLayoutData
         $query = (new QueryBuilder())
             ->update('block_layouts', 'block_layouts', ['deleted' => [1, \PDO::PARAM_INT]])
             ->where('id = ?')
-            ->addUnnamedPlaceholderValue($entity->getId(), \PDO::PARAM_INT);
+            ->addUnnamedPlaceholderValue($entity->getId(), \PDO::PARAM_STR);
 
         $statement = $this->writeConnection->prepare($query->getSql());
         $statement->bindValues($query->getParameters());
@@ -109,7 +108,7 @@ class BlockLayoutSqlDataMapper extends SqlDataMapper implements IBlockLayoutData
         $query = $this->getBaseQuery()->andWhere('block_layouts.id = :layout_id');
 
         $parameters = [
-            'layout_id' => [$id, \PDO::PARAM_INT],
+            'layout_id' => [$id, \PDO::PARAM_STR],
         ];
 
         return $this->read($query->getSql(), $parameters, self::VALUE_TYPE_ENTITY, true);
@@ -152,7 +151,7 @@ class BlockLayoutSqlDataMapper extends SqlDataMapper implements IBlockLayoutData
             )
             ->where('id = ?')
             ->andWhere('deleted = 0')
-            ->addUnnamedPlaceholderValue($entity->getId(), \PDO::PARAM_INT);
+            ->addUnnamedPlaceholderValue($entity->getId(), \PDO::PARAM_STR);
 
         $statement = $this->writeConnection->prepare($query->getSql());
         $statement->bindValues($query->getParameters());
@@ -167,7 +166,7 @@ class BlockLayoutSqlDataMapper extends SqlDataMapper implements IBlockLayoutData
     protected function loadEntity(array $hash)
     {
         return new Entity(
-            (int)$hash['id'],
+            $hash['id'],
             $hash['identifier'],
             $hash['body']
         );

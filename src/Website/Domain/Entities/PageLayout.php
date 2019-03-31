@@ -12,7 +12,7 @@ use AbterPhp\Website\Domain\Entities\PageLayout\Assets;
  */
 class PageLayout implements IStringerEntity
 {
-    /** @var int */
+    /** @var string */
     protected $id;
 
     /** @var string */
@@ -27,12 +27,12 @@ class PageLayout implements IStringerEntity
     /**
      * Page constructor.
      *
-     * @param int|null $id
-     * @param string   $identifier
-     * @param string   $body
-     * @param Assets|null   $assets
+     * @param string      $id
+     * @param string      $identifier
+     * @param string      $body
+     * @param Assets|null $assets
      */
-    public function __construct($id, string $identifier, string $body, ?Assets $assets)
+    public function __construct(string $id, string $identifier, string $body, ?Assets $assets)
     {
         $this->id         = $id;
         $this->identifier = $identifier;
@@ -41,7 +41,7 @@ class PageLayout implements IStringerEntity
     }
 
     /**
-     * @return int
+     * @return string
      */
     public function getId()
     {
@@ -49,7 +49,7 @@ class PageLayout implements IStringerEntity
     }
 
     /**
-     * @param int $id
+     * @param string $id
      */
     public function setId($id)
     {

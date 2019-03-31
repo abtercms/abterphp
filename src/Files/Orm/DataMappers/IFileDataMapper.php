@@ -10,11 +10,11 @@ use Opulence\Orm\DataMappers\IDataMapper;
 interface IFileDataMapper extends IDataMapper
 {
     /**
-     * @param int $userId
+     * @param string $userId
      *
      * @return Entity[]
      */
-    public function getByUserId(int $userId): array;
+    public function getByUserId(string $userId): array;
 
     /**
      * @param string $filesystemName

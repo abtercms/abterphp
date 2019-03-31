@@ -26,12 +26,13 @@ class BlockSqlDataMapper extends SqlDataMapper implements IBlockDataMapper
 
         $layoutIdType = \PDO::PARAM_NULL;
         if ($entity->getLayoutId()) {
-            $layoutIdType = \PDO::PARAM_INT;
+            $layoutIdType = \PDO::PARAM_STR;
         }
         $query = (new QueryBuilder())
             ->insert(
                 'blocks',
                 [
+                    'id'         => [$entity->getId(), \PDO::PARAM_STR],
                     'identifier' => [$entity->getIdentifier(), \PDO::PARAM_STR],
                     'title'      => [$entity->getTitle(), \PDO::PARAM_STR],
                     'body'       => [$entity->getBody(), \PDO::PARAM_STR],
@@ -43,8 +44,6 @@ class BlockSqlDataMapper extends SqlDataMapper implements IBlockDataMapper
         $statement = $this->writeConnection->prepare($query->getSql());
         $statement->bindValues($query->getParameters());
         $statement->execute();
-
-        $entity->setId($this->writeConnection->lastInsertId());
     }
 
     /**
@@ -59,7 +58,7 @@ class BlockSqlDataMapper extends SqlDataMapper implements IBlockDataMapper
         $query = (new QueryBuilder())
             ->update('blocks', 'blocks', ['deleted' => [1, \PDO::PARAM_INT]])
             ->where('id = ?')
-            ->addUnnamedPlaceholderValue($entity->getId(), \PDO::PARAM_INT);
+            ->addUnnamedPlaceholderValue($entity->getId(), \PDO::PARAM_STR);
 
         $statement = $this->writeConnection->prepare($query->getSql());
         $statement->bindValues($query->getParameters());
@@ -117,7 +116,7 @@ class BlockSqlDataMapper extends SqlDataMapper implements IBlockDataMapper
         $query = $this->getBaseQuery()->andWhere('blocks.id = :block_id');
 
         $parameters = [
-            'block_id' => [$id, \PDO::PARAM_INT],
+            'block_id' => [$id, \PDO::PARAM_STR],
         ];
 
         $sql = $query->getSql();
@@ -170,7 +169,7 @@ class BlockSqlDataMapper extends SqlDataMapper implements IBlockDataMapper
 
         $layoutIdType = \PDO::PARAM_NULL;
         if ($entity->getLayoutId()) {
-            $layoutIdType = \PDO::PARAM_INT;
+            $layoutIdType = \PDO::PARAM_STR;
         }
 
         $query = (new QueryBuilder())
@@ -187,7 +186,7 @@ class BlockSqlDataMapper extends SqlDataMapper implements IBlockDataMapper
             )
             ->where('id = ?')
             ->andWhere('deleted = 0')
-            ->addUnnamedPlaceholderValue($entity->getId(), \PDO::PARAM_INT);
+            ->addUnnamedPlaceholderValue($entity->getId(), \PDO::PARAM_STR);
 
         $statement = $this->writeConnection->prepare($query->getSql());
         $statement->bindValues($query->getParameters());
@@ -203,11 +202,11 @@ class BlockSqlDataMapper extends SqlDataMapper implements IBlockDataMapper
     {
         $layoutId = null;
         if ($hash['layout_id']) {
-            $layoutId = (int)$hash['layout_id'];
+            $layoutId = $hash['layout_id'];
         }
 
         return new Entity(
-            (int)$hash['id'],
+            $hash['id'],
             $hash['identifier'],
             $hash['title'],
             $hash['body'],

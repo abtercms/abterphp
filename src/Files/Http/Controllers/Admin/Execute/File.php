@@ -36,7 +36,7 @@ class File extends ExecuteAbstract
         UrlGenerator $urlGenerator,
         RepoService $repoService,
         ISession $session,
-        Logger $logger
+        LoggerInterface $logger
     ) {
         parent::__construct(
             $flashService,

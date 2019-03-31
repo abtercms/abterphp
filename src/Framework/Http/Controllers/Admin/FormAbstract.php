@@ -88,7 +88,7 @@ abstract class FormAbstract extends AdminAbstract
      */
     public function new(): Response
     {
-        $entity = $this->createEntity();
+        $entity = $this->createEntity('');
 
         $url   = $this->urlGenerator->createFromName(sprintf(static::URL_NEW, static::ENTITY_PLURAL));
         $title = $this->translator->translate(static::TITLE_NEW, static::ENTITY_TITLE_SINGULAR);
@@ -108,14 +108,14 @@ abstract class FormAbstract extends AdminAbstract
     }
 
     /**
-     * @param int $entityId
+     * @param string $entityId
      *
      * @return Response
      * @throws CasbinException
      * @throws URLException
      * @throws \Throwable
      */
-    public function edit(int $entityId): Response
+    public function edit(string $entityId): Response
     {
         $entity = $this->retrieveEntity($entityId);
 
@@ -137,11 +137,11 @@ abstract class FormAbstract extends AdminAbstract
     }
 
     /**
-     * @param int|null $entityId
+     * @param string $entityId
      *
      * @return IStringerEntity
      */
-    public function retrieveEntity(int $entityId = null): IStringerEntity
+    public function retrieveEntity(string $entityId): IStringerEntity
     {
         /** @var FlashService $flashService */
         $flashService = $this->flashService;
@@ -161,9 +161,9 @@ abstract class FormAbstract extends AdminAbstract
     }
 
     /**
-     * @param int|null $entityEntityId
+     * @param string $entityEntityId
      *
      * @return IStringerEntity
      */
-    abstract protected function createEntity(int $entityEntityId = null): IStringerEntity;
+    abstract protected function createEntity(string $entityEntityId): IStringerEntity;
 }

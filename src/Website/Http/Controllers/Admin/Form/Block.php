@@ -63,13 +63,13 @@ class Block extends FormAbstract
     }
 
     /**
-     * @param int|null $entityId
+     * @param string $entityId
      *
      * @return Entity
      */
-    protected function createEntity(int $entityId = null): IStringerEntity
+    protected function createEntity(string $entityId): IStringerEntity
     {
-        return new Entity((int)$entityId, '', '', '', '', null);
+        return new Entity($entityId, '', '', '', '', null);
     }
 
     /**

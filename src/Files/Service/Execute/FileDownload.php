@@ -44,17 +44,17 @@ class FileDownload extends RepoServiceAbstract
     }
 
     /**
-     * @param int|null $entityId
+     * @param string $entityId
      *
      * @return Entity
      */
-    public function createEntity(int $entityId = null): IStringerEntity
+    public function createEntity(string $entityId): IStringerEntity
     {
-        $file         = new File(0, '', '', '');
-        $userLanguage = new UserLanguage(0, '', '');
-        $user         = new User(0, '', '', '', false, false, $userLanguage);
+        $file         = new File('', '', '', '');
+        $userLanguage = new UserLanguage('', '', '');
+        $user         = new User('', '', '', '', false, false, $userLanguage);
 
-        return new Entity(0, $file, $user, new \DateTime());
+        return new Entity('', $file, $user, new \DateTime());
     }
 
     /**

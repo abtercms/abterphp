@@ -11,7 +11,7 @@ use AbterPhp\Framework\Domain\Entities\IStringerEntity;
  */
 class UserLanguage implements IStringerEntity
 {
-    /** @var int */
+    /** @var string */
     protected $id;
 
     /** @var string */
@@ -23,11 +23,11 @@ class UserLanguage implements IStringerEntity
     /**
      * Page constructor.
      *
-     * @param int|null $id
-     * @param string   $identifier
-     * @param string   $name
+     * @param string $id
+     * @param string $identifier
+     * @param string $name
      */
-    public function __construct($id, string $identifier, string $name)
+    public function __construct(string $id, string $identifier, string $name)
     {
         $this->id         = $id;
         $this->identifier = $identifier;
@@ -35,7 +35,7 @@ class UserLanguage implements IStringerEntity
     }
 
     /**
-     * @return int
+     * @return string
      */
     public function getId()
     {
@@ -43,7 +43,7 @@ class UserLanguage implements IStringerEntity
     }
 
     /**
-     * @param int $id
+     * @param string $id
      */
     public function setId($id)
     {

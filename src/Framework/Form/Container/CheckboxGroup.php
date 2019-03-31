@@ -9,15 +9,16 @@ use AbterPhp\Framework\Form\Element\Input;
 use AbterPhp\Framework\Form\Label\Label;
 use AbterPhp\Framework\Html\Component;
 use AbterPhp\Framework\Html\Helper\StringHelper;
+use AbterPhp\Framework\Html\IComponent;
 use AbterPhp\Framework\Html\INode;
 use AbterPhp\Framework\Html\INodeContainer;
 
-class ToggleGroup extends FormGroup
+class CheckboxGroup extends FormGroup
 {
-    const SPAN_INTENT = 'toggle-span';
+    const SPAN_INTENT = 'checkbox-span';
 
-    /** @var Component */
-    protected $toggleSpan;
+    /** @var IComponent */
+    protected $checkboxSpan;
 
     /**
      * ToggleGroup constructor.
@@ -41,7 +42,7 @@ class ToggleGroup extends FormGroup
 
         parent::__construct($input, $label, $help, $intents, $attributes, $tag);
 
-        $this->toggleSpan = new Component(null, [static::SPAN_INTENT], [], Html5::TAG_SPAN);
+        $this->checkboxSpan = new Component(null, [static::SPAN_INTENT], [], Html5::TAG_SPAN);
     }
 
     /**
@@ -49,7 +50,7 @@ class ToggleGroup extends FormGroup
      */
     public function getNodes(): array
     {
-        $nodes = [$this->label, $this->input, $this->toggleSpan];
+        $nodes = [$this->label, $this->input, $this->checkboxSpan];
         if ($this->help) {
             $nodes[] = $this->help;
         }
@@ -58,17 +59,24 @@ class ToggleGroup extends FormGroup
     }
 
     /**
+     * @return Component
+     */
+    public function getCheckboxSpan(): Component
+    {
+        return $this->checkboxSpan;
+    }
+
+    /**
      * @return string
      */
     public function __toString(): string
     {
-        $this->label->setContent([$this->input, $this->toggleSpan]);
-
         $help = $this->help ?: '';
+        $this->checkboxSpan->setContent($help);
 
-        $content = (string)$this->label . (string)$help;
+        $this->label->setContent([$this->input, $this->checkboxSpan]);
 
-        $content = StringHelper::wrapInTag($content, $this->tag, $this->attributes);
+        $content = StringHelper::wrapInTag((string)$this->label, $this->tag, $this->attributes);
 
         return $content;
     }

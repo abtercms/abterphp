@@ -18,7 +18,7 @@ class BlockLayout extends ValidatorFactory
 
         $validator
             ->field('id')
-            ->integer();
+            ->uuid();
 
         $validator
             ->field('identifier')

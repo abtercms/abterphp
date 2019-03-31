@@ -23,14 +23,12 @@ class PageLayoutSqlDataMapper extends SqlDataMapper implements IPageLayoutDataMa
             throw new \InvalidArgumentException(__CLASS__ . ':' . __FUNCTION__ . ' expects a Page Layout entity.');
         }
 
-        $data  = $this->getColumnNamesToValues($entity);
+        $data  = $this->getColumnNamesToValues($entity, true);
         $query = (new QueryBuilder())->insert('page_layouts', $data);
 
         $statement = $this->writeConnection->prepare($query->getSql());
         $statement->bindValues($query->getParameters());
         $statement->execute();
-
-        $entity->setId($this->writeConnection->lastInsertId());
     }
 
     /**
@@ -45,7 +43,7 @@ class PageLayoutSqlDataMapper extends SqlDataMapper implements IPageLayoutDataMa
         $query = (new QueryBuilder())
             ->update('page_layouts', 'page_layouts', ['deleted' => [1, \PDO::PARAM_INT]])
             ->where('id = ?')
-            ->addUnnamedPlaceholderValue($entity->getId(), \PDO::PARAM_INT);
+            ->addUnnamedPlaceholderValue($entity->getId(), \PDO::PARAM_STR);
 
         $statement = $this->writeConnection->prepare($query->getSql());
         $statement->bindValues($query->getParameters());
@@ -103,7 +101,7 @@ class PageLayoutSqlDataMapper extends SqlDataMapper implements IPageLayoutDataMa
         $query = $this->getBaseQuery()->andWhere('page_layouts.id = :layout_id');
 
         $parameters = [
-            'layout_id' => [$id, \PDO::PARAM_INT],
+            'layout_id' => [$id, \PDO::PARAM_STR],
         ];
 
         return $this->read($query->getSql(), $parameters, self::VALUE_TYPE_ENTITY, true);
@@ -135,13 +133,13 @@ class PageLayoutSqlDataMapper extends SqlDataMapper implements IPageLayoutDataMa
             throw new \InvalidArgumentException(__CLASS__ . ':' . __FUNCTION__ . ' expects a Page Layout entity.');
         }
 
-        $columnNamesToValues = $this->getColumnNamesToValues($entity);
+        $columnNamesToValues = $this->getColumnNamesToValues($entity, false);
 
         $query = (new QueryBuilder())
             ->update('page_layouts', 'page_layouts', $columnNamesToValues)
             ->where('id = ?')
             ->andWhere('deleted = 0')
-            ->addUnnamedPlaceholderValue($entity->getId(), \PDO::PARAM_INT);
+            ->addUnnamedPlaceholderValue($entity->getId(), \PDO::PARAM_STR);
 
         $statement = $this->writeConnection->prepare($query->getSql());
         $statement->bindValues($query->getParameters());
@@ -150,15 +148,20 @@ class PageLayoutSqlDataMapper extends SqlDataMapper implements IPageLayoutDataMa
 
     /**
      * @param Entity $entity
+     * @param bool   $create
      *
      * @return array
      */
-    protected function getColumnNamesToValues(Entity $entity): array
+    protected function getColumnNamesToValues(Entity $entity, bool $create): array
     {
         $columnNamesToValues = [
             'identifier' => [$entity->getIdentifier(), \PDO::PARAM_STR],
             'body'       => [$entity->getBody(), \PDO::PARAM_STR],
         ];
+
+        if ($create) {
+            $columnNamesToValues = array_merge(['id' => [$entity->getId(), \PDO::PARAM_STR]], $columnNamesToValues);
+        }
 
         $columnNamesToValues = $this->populateWithAssets($entity, $columnNamesToValues);
 
@@ -199,7 +202,7 @@ class PageLayoutSqlDataMapper extends SqlDataMapper implements IPageLayoutDataMa
         $assets = $this->loadAssets($hash);
 
         return new Entity(
-            (int)$hash['id'],
+            $hash['id'],
             $hash['identifier'],
             $hash['body'],
             $assets

@@ -27,6 +27,7 @@ class AdminResourceSqlDataMapper extends SqlDataMapper implements IAdminResource
             ->insert(
                 'admin_resources',
                 [
+                    'id'         => $entity->getId(),
                     'identifier' => $entity->getIdentifier(),
                 ]
             );
@@ -34,8 +35,6 @@ class AdminResourceSqlDataMapper extends SqlDataMapper implements IAdminResource
         $statement = $this->writeConnection->prepare($query->getSql());
         $statement->bindValues($query->getParameters());
         $statement->execute();
-
-        $entity->setId($this->writeConnection->lastInsertId());
     }
 
     /**
@@ -50,7 +49,7 @@ class AdminResourceSqlDataMapper extends SqlDataMapper implements IAdminResource
         $query = (new QueryBuilder())
             ->update('admin_resources', 'admin_resources', ['deleted' => [1, \PDO::PARAM_INT]])
             ->where('id = ?')
-            ->addUnnamedPlaceholderValue($entity->getId(), \PDO::PARAM_INT);
+            ->addUnnamedPlaceholderValue($entity->getId(), \PDO::PARAM_STR);
 
         $statement = $this->writeConnection->prepare($query->getSql());
         $statement->bindValues($query->getParameters());
@@ -77,7 +76,7 @@ class AdminResourceSqlDataMapper extends SqlDataMapper implements IAdminResource
         $query = $this->getBaseQuery()->andWhere('admin_resources.id = :admin_resource_id');
 
         $parameters = [
-            'admin_resource_id' => [$id, \PDO::PARAM_INT],
+            'admin_resource_id' => [$id, \PDO::PARAM_STR],
         ];
 
         return $this->read($query->getSql(), $parameters, self::VALUE_TYPE_ENTITY, true);
@@ -118,7 +117,7 @@ class AdminResourceSqlDataMapper extends SqlDataMapper implements IAdminResource
             )
             ->where('id = ?')
             ->andWhere('deleted = 0')
-            ->addUnnamedPlaceholderValue($entity->getId(), \PDO::PARAM_INT);
+            ->addUnnamedPlaceholderValue($entity->getId(), \PDO::PARAM_STR);
 
         $statement = $this->writeConnection->prepare($query->getSql());
         $statement->bindValues($query->getParameters());
@@ -133,7 +132,7 @@ class AdminResourceSqlDataMapper extends SqlDataMapper implements IAdminResource
     protected function loadEntity(array $hash)
     {
         return new Entity(
-            (int)$hash['id'],
+            $hash['id'],
             $hash['identifier']
         );
     }

@@ -6,7 +6,10 @@ namespace AbterPhp\Admin\Orm\DataMappers;
 
 use AbterPhp\Admin\Domain\Entities\AdminResource;
 use AbterPhp\Admin\Domain\Entities\UserGroup as Entity;
+use AbterPhp\Framework\Orm\DataMappers\IdGeneratorUserTrait;
 use Opulence\Orm\DataMappers\SqlDataMapper;
+use Opulence\Orm\Ids\Generators\IIdGenerator;
+use Opulence\Orm\Ids\Generators\UuidV4Generator;
 use Opulence\QueryBuilders\MySql\QueryBuilder;
 use Opulence\QueryBuilders\MySql\SelectQuery;
 
@@ -16,6 +19,8 @@ use Opulence\QueryBuilders\MySql\SelectQuery;
 class UserGroupSqlDataMapper extends SqlDataMapper implements IUserGroupDataMapper
 {
     const ADMIN_RESOURCE_IDS = 'admin_resource_ids';
+
+    use IdGeneratorUserTrait;
 
     /**
      * @param Entity $entity
@@ -30,16 +35,15 @@ class UserGroupSqlDataMapper extends SqlDataMapper implements IUserGroupDataMapp
             ->insert(
                 'user_groups',
                 [
-                    'identifier' => $entity->getIdentifier(),
-                    'name'       => $entity->getName(),
+                    'id'         => [$entity->getId(), \PDO::PARAM_STR],
+                    'identifier' => [$entity->getIdentifier(), \PDO::PARAM_STR],
+                    'name'       => [$entity->getName(), \PDO::PARAM_STR],
                 ]
             );
 
         $statement = $this->writeConnection->prepare($query->getSql());
         $statement->bindValues($query->getParameters());
         $statement->execute();
-
-        $entity->setId($this->writeConnection->lastInsertId());
 
         $this->addAdminResources($entity);
     }
@@ -58,7 +62,7 @@ class UserGroupSqlDataMapper extends SqlDataMapper implements IUserGroupDataMapp
         $query = (new QueryBuilder())
             ->update('user_groups', 'user_groups', ['deleted' => [1, \PDO::PARAM_INT]])
             ->where('id = ?')
-            ->addUnnamedPlaceholderValue($entity->getId(), \PDO::PARAM_INT);
+            ->addUnnamedPlaceholderValue($entity->getId(), \PDO::PARAM_STR);
 
         $statement = $this->writeConnection->prepare($query->getSql());
         $statement->bindValues($query->getParameters());
@@ -116,7 +120,7 @@ class UserGroupSqlDataMapper extends SqlDataMapper implements IUserGroupDataMapp
         $query = $this->getBaseQuery()->andWhere('ug.id = :user_group_id');
 
         $parameters = [
-            'user_group_id' => [$id, \PDO::PARAM_INT],
+            'user_group_id' => [$id, \PDO::PARAM_STR],
         ];
 
         return $this->read($query->getSql(), $parameters, self::VALUE_TYPE_ENTITY, true);
@@ -158,7 +162,7 @@ class UserGroupSqlDataMapper extends SqlDataMapper implements IUserGroupDataMapp
             )
             ->where('id = ?')
             ->andWhere('deleted = 0')
-            ->addUnnamedPlaceholderValue($entity->getId(), \PDO::PARAM_INT);
+            ->addUnnamedPlaceholderValue($entity->getId(), \PDO::PARAM_STR);
 
         $statement = $this->writeConnection->prepare($query->getSql());
         $statement->bindValues($query->getParameters());
@@ -178,7 +182,7 @@ class UserGroupSqlDataMapper extends SqlDataMapper implements IUserGroupDataMapp
         $adminResources = $this->getAdminResources($hash);
 
         return new Entity(
-            (int)$hash['id'],
+            $hash['id'],
             $hash['identifier'],
             $hash['name'],
             $adminResources
@@ -202,7 +206,7 @@ class UserGroupSqlDataMapper extends SqlDataMapper implements IUserGroupDataMapp
 
         $adminResources = [];
         foreach (explode(',', $hash[static::ADMIN_RESOURCE_IDS]) as $id) {
-            $adminResources[] = new AdminResource((int)$id, '');
+            $adminResources[] = new AdminResource($id, '');
         }
 
         return $adminResources;
@@ -237,7 +241,7 @@ class UserGroupSqlDataMapper extends SqlDataMapper implements IUserGroupDataMapp
         $query = (new QueryBuilder())
             ->delete('user_groups_admin_resources')
             ->where('user_group_id = ?')
-            ->addUnnamedPlaceholderValue($entity->getId(), \PDO::PARAM_INT);
+            ->addUnnamedPlaceholderValue($entity->getId(), \PDO::PARAM_STR);
 
         $statement = $this->writeConnection->prepare($query->getSql());
         $statement->bindValues($query->getParameters());
@@ -249,17 +253,22 @@ class UserGroupSqlDataMapper extends SqlDataMapper implements IUserGroupDataMapp
      */
     protected function addAdminResources(Entity $entity)
     {
+        $idGenerator = $this->getIdGenerator();
+
         foreach ($entity->getAdminResources() as $adminResource) {
             $query = (new QueryBuilder())
                 ->insert(
                     'user_groups_admin_resources',
                     [
-                        'user_group_id'     => [$entity->getId(), \PDO::PARAM_INT],
-                        'admin_resource_id' => [$adminResource->getId(), \PDO::PARAM_INT],
+                        'id'                => [$idGenerator->generate($entity), \PDO::PARAM_STR],
+                        'user_group_id'     => [$entity->getId(), \PDO::PARAM_STR],
+                        'admin_resource_id' => [$adminResource->getId(), \PDO::PARAM_STR],
                     ]
                 );
 
-            $statement = $this->writeConnection->prepare($query->getSql());
+            $sql = $query->getSql();
+
+            $statement = $this->writeConnection->prepare($sql);
             $statement->bindValues($query->getParameters());
             $statement->execute();
         }

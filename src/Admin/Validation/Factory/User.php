@@ -18,7 +18,7 @@ class User extends ValidatorFactory
 
         $validator
             ->field('id')
-            ->integer();
+            ->uuid();
 
         $validator
             ->field('username')
@@ -35,6 +35,7 @@ class User extends ValidatorFactory
 
         $validator
             ->field('user_language_id')
+            ->uuid()
             ->required();
 
         $validator

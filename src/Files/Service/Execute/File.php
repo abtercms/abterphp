@@ -62,12 +62,12 @@ class File extends RepoServiceAbstract
      * @param string[]       $postData
      * @param UploadedFile[] $fileData
      *
-     * @return int
+     * @return string
      * @throws OrmException
      */
-    public function create(array $postData, array $fileData): int
+    public function create(array $postData, array $fileData): string
     {
-        $entity = $this->fillEntity($this->createEntity(), $postData);
+        $entity = $this->fillEntity($this->createEntity(''), $postData);
 
         $this->uploadFile($entity, $fileData);
 
@@ -75,18 +75,18 @@ class File extends RepoServiceAbstract
 
         $this->commitCreate($entity);
 
-        return (int)$entity->getId();
+        return $entity->getId();
     }
 
     /**
-     * @param int            $entityId
+     * @param string         $entityId
      * @param string[]       $postData
      * @param UploadedFile[] $fileData
      *
      * @return bool
      * @throws OrmException
      */
-    public function update(int $entityId, array $postData, array $fileData): bool
+    public function update(string $entityId, array $postData, array $fileData): bool
     {
         /** @var Entity $entity */
         $entity = $this->retrieveEntity($entityId);
@@ -104,12 +104,12 @@ class File extends RepoServiceAbstract
     }
 
     /**
-     * @param int $entityId
+     * @param string $entityId
      *
      * @return bool
      * @throws OrmException
      */
-    public function delete(int $entityId): bool
+    public function delete(string $entityId): bool
     {
         /** @var Entity $entity */
         $entity = $this->retrieveEntity($entityId);
@@ -148,15 +148,15 @@ class File extends RepoServiceAbstract
     }
 
     /**
-     * @param int|null $entityId
+     * @param string $entityId
      *
      * @return Entity
      */
-    protected function createEntity(int $entityId = null): IStringerEntity
+    protected function createEntity(string $entityId): IStringerEntity
     {
-        $fileCategory = new FileCategory(0, '', '', false, []);
+        $fileCategory = new FileCategory('', '', '', false, []);
 
-        return new Entity((int)$entityId, '', '', '', $fileCategory, null);
+        return new Entity($entityId, '', '', '', $fileCategory, null);
     }
 
     /**

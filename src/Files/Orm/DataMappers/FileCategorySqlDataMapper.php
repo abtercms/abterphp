@@ -6,6 +6,7 @@ namespace AbterPhp\Files\Orm\DataMappers;
 
 use AbterPhp\Admin\Domain\Entities\UserGroup;
 use AbterPhp\Files\Domain\Entities\FileCategory as Entity;
+use AbterPhp\Framework\Orm\DataMappers\IdGeneratorUserTrait;
 use Opulence\Orm\DataMappers\SqlDataMapper;
 use Opulence\QueryBuilders\MySql\QueryBuilder;
 use Opulence\QueryBuilders\Mysql\SelectQuery;
@@ -16,6 +17,8 @@ use Opulence\QueryBuilders\Mysql\SelectQuery;
 class FileCategorySqlDataMapper extends SqlDataMapper implements IFileCategoryDataMapper
 {
     const USER_GROUP_IDS = 'user_group_ids';
+
+    use IdGeneratorUserTrait;
 
     /**
      * @param Entity $entity
@@ -30,6 +33,7 @@ class FileCategorySqlDataMapper extends SqlDataMapper implements IFileCategoryDa
             ->insert(
                 'file_categories',
                 [
+                    'id'         => [$entity->getId(), \PDO::PARAM_STR],
                     'identifier' => [$entity->getIdentifier(), \PDO::PARAM_STR],
                     'name'       => [$entity->getName(), \PDO::PARAM_STR],
                     'is_public'  => [$entity->isPublic(), \PDO::PARAM_BOOL],
@@ -41,8 +45,6 @@ class FileCategorySqlDataMapper extends SqlDataMapper implements IFileCategoryDa
         $statement = $this->writeConnection->prepare($sql);
         $statement->bindValues($query->getParameters());
         $statement->execute();
-
-        $entity->setId($this->writeConnection->lastInsertId());
 
         $this->addUserGroups($entity);
     }
@@ -59,7 +61,7 @@ class FileCategorySqlDataMapper extends SqlDataMapper implements IFileCategoryDa
         $query = (new QueryBuilder())
             ->update('file_categories', 'file_categories', ['deleted' => [1, \PDO::PARAM_INT]])
             ->where('id = ?')
-            ->addUnnamedPlaceholderValue($entity->getId(), \PDO::PARAM_INT);
+            ->addUnnamedPlaceholderValue($entity->getId(), \PDO::PARAM_STR);
 
         $sql = $query->getSql();
 
@@ -123,7 +125,7 @@ class FileCategorySqlDataMapper extends SqlDataMapper implements IFileCategoryDa
         $query = $this->getBaseQuery()->andWhere('fc.id = :file_category_id');
 
         $parameters = [
-            'file_category_id' => [$id, \PDO::PARAM_INT],
+            'file_category_id' => [$id, \PDO::PARAM_STR],
         ];
 
         $sql = $query->getSql();
@@ -132,17 +134,17 @@ class FileCategorySqlDataMapper extends SqlDataMapper implements IFileCategoryDa
     }
 
     /**
-     * @param int $userGroupId
+     * @param string $userGroupId
      *
      * @return Entity[]
      */
-    public function getByUserGroupId(int $userGroupId): array
+    public function getByUserGroupId(string $userGroupId): array
     {
         $query = $this->getBaseQuery();
         $query = $this->joinUserGroups($query);
         $query = $query->andWhere('ugfc2.user_group_id = :user_group_id');
 
-        $parameters = ['ugfc2.user_group_id' => [$userGroupId, \PDO::PARAM_INT]];
+        $parameters = ['ugfc2.user_group_id' => [$userGroupId, \PDO::PARAM_STR]];
 
         $sql = $query->getSql();
 
@@ -170,7 +172,7 @@ class FileCategorySqlDataMapper extends SqlDataMapper implements IFileCategoryDa
             )
             ->where('id = ?')
             ->andWhere('deleted = 0')
-            ->addUnnamedPlaceholderValue($entity->getId(), \PDO::PARAM_INT);
+            ->addUnnamedPlaceholderValue($entity->getId(), \PDO::PARAM_STR);
 
         $sql = $query->getSql();
 
@@ -190,7 +192,7 @@ class FileCategorySqlDataMapper extends SqlDataMapper implements IFileCategoryDa
         $query = (new QueryBuilder())
             ->delete('user_groups_file_categories')
             ->where('file_category_id = ?')
-            ->addUnnamedPlaceholderValue($entity->getId(), \PDO::PARAM_INT);
+            ->addUnnamedPlaceholderValue($entity->getId(), \PDO::PARAM_STR);
 
         $sql = $query->getSql();
 
@@ -204,13 +206,16 @@ class FileCategorySqlDataMapper extends SqlDataMapper implements IFileCategoryDa
      */
     protected function addUserGroups(Entity $entity)
     {
+        $idGenerator = $this->getIdGenerator();
+
         foreach ($entity->getUserGroups() as $userGroup) {
             $query = (new QueryBuilder())
                 ->insert(
                     'user_groups_file_categories',
                     [
-                        'user_group_id'    => [$userGroup->getId(), \PDO::PARAM_INT],
-                        'file_category_id' => [$entity->getId(), \PDO::PARAM_INT],
+                        'id'               => [$idGenerator->generate($userGroup), \PDO::PARAM_STR],
+                        'user_group_id'    => [$userGroup->getId(), \PDO::PARAM_STR],
+                        'file_category_id' => [$entity->getId(), \PDO::PARAM_STR],
                     ]
                 );
 
@@ -232,7 +237,7 @@ class FileCategorySqlDataMapper extends SqlDataMapper implements IFileCategoryDa
         $userGroups = $this->getUserGroups($hash);
 
         return new Entity(
-            (int)$hash['id'],
+            $hash['id'],
             $hash['identifier'],
             $hash['name'],
             (bool)$hash['is_public'],
@@ -257,7 +262,7 @@ class FileCategorySqlDataMapper extends SqlDataMapper implements IFileCategoryDa
 
         $userGroups = [];
         foreach (explode(',', $hash[static::USER_GROUP_IDS]) as $id) {
-            $userGroups[] = new UserGroup((int)$id, '', '');
+            $userGroups[] = new UserGroup((string)$id, '', '');
         }
 
         return $userGroups;

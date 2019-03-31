@@ -27,15 +27,16 @@ class BlockSqlDataMapperTest extends SqlDataMapperTest
 
     public function testAddWithoutLayoutId()
     {
-        $nextId     = '123';
+        $nextId     = '9d160dd2-bd83-48f6-a3b0-e15d2f26e76c';
         $identifier = 'foo';
         $title      = 'bar';
         $body       = 'baz';
         $layout     = 'qux';
         $layoutId   = null;
 
-        $sql    = 'INSERT INTO blocks (identifier, title, body, layout, layout_id) VALUES (?, ?, ?, ?, ?)'; // phpcs:ignore
+        $sql    = 'INSERT INTO blocks (id, identifier, title, body, layout, layout_id) VALUES (?, ?, ?, ?, ?, ?)'; // phpcs:ignore
         $values = [
+            [$nextId, \PDO::PARAM_STR],
             [$identifier, \PDO::PARAM_STR],
             [$title, \PDO::PARAM_STR],
             [$body, \PDO::PARAM_STR],
@@ -43,9 +44,8 @@ class BlockSqlDataMapperTest extends SqlDataMapperTest
             [$layoutId, \PDO::PARAM_NULL],
         ];
 
-        $this->lastInsertId($nextId);
         $this->prepare($sql, $this->createWriteStatement($values));
-        $entity = new Block(0, $identifier, $title, $body, $layout, $layoutId);
+        $entity = new Block($nextId, $identifier, $title, $body, $layout, $layoutId);
 
         $this->sut->add($entity);
 
@@ -54,25 +54,25 @@ class BlockSqlDataMapperTest extends SqlDataMapperTest
 
     public function testAddWithLayoutId()
     {
-        $nextId     = '123';
+        $nextId     = '5b6c9874-bb65-4a6f-a5f1-78445434db84';
         $identifier = 'foo';
         $title      = 'bar';
         $body       = 'baz';
         $layout     = '';
-        $layoutId   = 66;
+        $layoutId   = 'ae749110-e1f9-4f76-9391-5fe3b28a0b0d';
 
-        $sql    = 'INSERT INTO blocks (identifier, title, body, layout, layout_id) VALUES (?, ?, ?, ?, ?)'; // phpcs:ignore
+        $sql    = 'INSERT INTO blocks (id, identifier, title, body, layout, layout_id) VALUES (?, ?, ?, ?, ?, ?)'; // phpcs:ignore
         $values = [
+            [$nextId, \PDO::PARAM_STR],
             [$identifier, \PDO::PARAM_STR],
             [$title, \PDO::PARAM_STR],
             [$body, \PDO::PARAM_STR],
             [$layout, \PDO::PARAM_STR],
-            [$layoutId, \PDO::PARAM_INT],
+            [$layoutId, \PDO::PARAM_STR],
         ];
 
-        $this->lastInsertId($nextId);
         $this->prepare($sql, $this->createWriteStatement($values));
-        $entity = new Block(0, $identifier, $title, $body, $layout, $layoutId);
+        $entity = new Block($nextId, $identifier, $title, $body, $layout, $layoutId);
 
         $this->sut->add($entity);
 
@@ -81,7 +81,7 @@ class BlockSqlDataMapperTest extends SqlDataMapperTest
 
     public function testDelete()
     {
-        $id         = '123';
+        $id         = 'f95ffd21-eff5-4b10-a423-e222fb7fe56f';
         $identifier = 'foo';
         $title      = 'bar';
         $body       = 'baz';
@@ -89,7 +89,7 @@ class BlockSqlDataMapperTest extends SqlDataMapperTest
         $layoutId   = null;
 
         $sql    = 'UPDATE blocks AS blocks SET deleted = ? WHERE (id = ?)'; // phpcs:ignore
-        $values = [[1, \PDO::PARAM_INT], [$id, \PDO::PARAM_INT]];
+        $values = [[1, \PDO::PARAM_INT], [$id, \PDO::PARAM_STR]];
 
         $this->prepare($sql, $this->createWriteStatement($values));
         $entity = new Block($id, $identifier, $title, $body, $layout, $layoutId);
@@ -99,7 +99,7 @@ class BlockSqlDataMapperTest extends SqlDataMapperTest
 
     public function testGetAll()
     {
-        $id         = '123';
+        $id         = '8da63e49-5c76-4520-9280-30c125305239';
         $identifier = 'foo';
         $title      = 'bar';
         $body       = 'baz';
@@ -128,7 +128,7 @@ class BlockSqlDataMapperTest extends SqlDataMapperTest
 
     public function testGetById()
     {
-        $id         = '123';
+        $id         = 'da406cd9-4a65-4384-b1dd-454c4d26c196';
         $identifier = 'foo';
         $title      = 'bar';
         $body       = 'baz';
@@ -136,7 +136,7 @@ class BlockSqlDataMapperTest extends SqlDataMapperTest
         $layoutId   = null;
 
         $sql          = 'SELECT blocks.id, blocks.identifier, blocks.title, blocks.body, blocks.layout_id, blocks.layout FROM blocks WHERE (blocks.deleted = 0) AND (blocks.id = :block_id)'; // phpcs:ignore
-        $values       = ['block_id' => [$id, \PDO::PARAM_INT]];
+        $values       = ['block_id' => [$id, \PDO::PARAM_STR]];
         $expectedData = [
             [
                 'id'         => $id,
@@ -157,7 +157,7 @@ class BlockSqlDataMapperTest extends SqlDataMapperTest
 
     public function testGetByIdentifier()
     {
-        $id         = '123';
+        $id         = '42f019b3-5d49-4ee0-b785-63ef245a1ee0';
         $identifier = 'foo';
         $title      = 'bar';
         $body       = 'baz';
@@ -186,7 +186,7 @@ class BlockSqlDataMapperTest extends SqlDataMapperTest
 
     public function testGetWithLayoutByIdentifiers()
     {
-        $id         = '123';
+        $id         = '76815a32-359e-4898-996a-ef9695f875bb';
         $identifier = 'foo';
         $title      = 'bar';
         $body       = 'baz';
@@ -215,7 +215,7 @@ class BlockSqlDataMapperTest extends SqlDataMapperTest
 
     public function testUpdateWithoutLayoutId()
     {
-        $id         = 123;
+        $id         = 'f7cdde13-7f39-493e-9c7a-ddeab4adb8eb';
         $identifier = 'foo';
         $title      = 'bar';
         $body       = 'baz';
@@ -229,7 +229,7 @@ class BlockSqlDataMapperTest extends SqlDataMapperTest
             [$body, \PDO::PARAM_STR],
             [$layout, \PDO::PARAM_STR],
             [$layoutId, \PDO::PARAM_NULL],
-            [$id, \PDO::PARAM_INT],
+            [$id, \PDO::PARAM_STR],
         ];
 
         $this->prepare($sql, $this->createWriteStatement($values));
@@ -240,12 +240,12 @@ class BlockSqlDataMapperTest extends SqlDataMapperTest
 
     public function testUpdateWithLayoutId()
     {
-        $id         = 123;
+        $id         = 'e0075c90-80ff-40dd-aafe-a8d866a42bcd';
         $identifier = 'foo';
         $title      = 'bar';
         $body       = 'baz';
         $layout     = '';
-        $layoutId   = 66;
+        $layoutId   = 'd7a7bcad-71bc-40a1-8a0d-dc2b28a54811';
 
         $sql    = 'UPDATE blocks AS blocks SET identifier = ?, title = ?, body = ?, layout = ?, layout_id = ? WHERE (id = ?) AND (deleted = 0)'; // phpcs:ignore
         $values = [
@@ -253,8 +253,8 @@ class BlockSqlDataMapperTest extends SqlDataMapperTest
             [$title, \PDO::PARAM_STR],
             [$body, \PDO::PARAM_STR],
             [$layout, \PDO::PARAM_STR],
-            [$layoutId, \PDO::PARAM_INT],
-            [$id, \PDO::PARAM_INT],
+            [$layoutId, \PDO::PARAM_STR],
+            [$id, \PDO::PARAM_STR],
         ];
 
         $this->prepare($sql, $this->createWriteStatement($values));
@@ -270,7 +270,7 @@ class BlockSqlDataMapperTest extends SqlDataMapperTest
     protected function assertEntity(array $expectedData, $entity)
     {
         $this->assertInstanceOf(Block::class, $entity);
-        $this->assertEquals($expectedData['id'], $entity->getId());
+        $this->assertSame($expectedData['id'], $entity->getId());
         $this->assertSame($expectedData['identifier'], $entity->getIdentifier());
         $this->assertSame($expectedData['title'], $entity->getTitle());
         $this->assertSame($expectedData['body'], $entity->getBody());

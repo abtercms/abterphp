@@ -11,7 +11,7 @@ use AbterPhp\Framework\Domain\Entities\IStringerEntity;
  */
 class AdminResource implements IStringerEntity
 {
-    /** @var int */
+    /** @var string */
     protected $id;
 
     /** @var string */
@@ -20,19 +20,17 @@ class AdminResource implements IStringerEntity
     /**
      * Block constructor.
      *
-     * @param int    $id
+     * @param string $id
      * @param string $identifier
      */
-    public function __construct(
-        $id,
-        string $identifier
-    ) {
+    public function __construct(string $id, string $identifier)
+    {
         $this->id         = $id;
         $this->identifier = $identifier;
     }
 
     /**
-     * @return int
+     * @return string
      */
     public function getId()
     {
@@ -40,7 +38,7 @@ class AdminResource implements IStringerEntity
     }
 
     /**
-     * @param int $id
+     * @param string $id
      */
     public function setId($id)
     {
@@ -60,7 +58,7 @@ class AdminResource implements IStringerEntity
      *
      * @return $this
      */
-    public function setIdentifier(string $identifier): Block
+    public function setIdentifier(string $identifier): AdminResource
     {
         $this->identifier = $identifier;
 

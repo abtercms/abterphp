@@ -40,7 +40,7 @@ class BlockLoaderTest extends \PHPUnit\Framework\TestCase
     {
         $blockIdentifier = 'block-1';
 
-        $block = new Block(0, $blockIdentifier, '', '', '');
+        $block = new Block('', $blockIdentifier, '', '', '');
 
         $this->blockRepo
             ->expects($this->any())

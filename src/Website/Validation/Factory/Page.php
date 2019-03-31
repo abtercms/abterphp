@@ -18,7 +18,7 @@ class Page extends ValidatorFactory
 
         $validator
             ->field('id')
-            ->integer();
+            ->uuid();
 
         $validator
             ->field('identifier');
@@ -34,7 +34,7 @@ class Page extends ValidatorFactory
 
         $validator
             ->field('layout_id')
-            ->integer()
+            ->uuid()
             ->atLeastOne('layout');
 
         $validator

@@ -41,13 +41,13 @@ class UserGroup extends RepoServiceAbstract
     }
 
     /**
-     * @param int|null $entityId
+     * @param string $entityId
      *
      * @return Entity
      */
-    protected function createEntity(int $entityId = null): IStringerEntity
+    protected function createEntity(string $entityId): IStringerEntity
     {
-        return new Entity((int)$entityId, '', '');
+        return new Entity($entityId, '', '');
     }
 
     /**
@@ -69,7 +69,7 @@ class UserGroup extends RepoServiceAbstract
         $adminResources = [];
         if (array_key_exists('admin_resource_ids', $data)) {
             foreach ($data['admin_resource_ids'] as $id) {
-                $adminResources[] = new AdminResource((int)$id, '');
+                $adminResources[] = new AdminResource((string)$id, '');
             }
         }
 

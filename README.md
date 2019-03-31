@@ -148,6 +148,7 @@ AbterPHP is based on [Opulence](https://www.opulencephp.com/), but uses a few mo
  - [js-sha3](https://github.com/emn178/js-sha3) for browser-side encryption (Admin module)
  - [Trumbowyg](https://alex-d.github.io/Trumbowyg/documentation/) as a wysiwyg solution (Admin module)
  - [zxcvbn](https://github.com/dropbox/zxcvbn) from Dropbox for password strength estimations (Admin module)
+ - [php-ulid](https://github.com/robinvdvleuten/php-ulid) for ID generation
  
 If you want to contribute code you'll also need to get familiar with these tools:
  - [PhpUnit](https://phpunit.de/) for unit tests
@@ -172,16 +173,13 @@ before the first stable version.
 1. Improve security implementing related headers as recommended:
    - https://medium.freecodecamp.org/secure-your-web-application-with-these-http-headers-fd66e0367628
    - https://medium.freecodecamp.org/web-security-hardening-http-cookies-be8d8d8016e1
-1. Improve validation
-   - Review validation factories
-   - Create new validation rules where needed
 1. 70%+ of PHP source code unit tested, except for bootstrappers
 1. Verify that `localhost_router.php` works as expected or remove it if too hard to fix
 1. Modular asset management
 1. Complete test automation and automatic reviews set up
 1. ~~Refactor module manager~~
 1. Ensure that user creation enforces good passwords in CLI.
-1. Ulid IDS
+1. ~~Uuid ids~~
 1. ~~Remove $value in Select constructor~~
 1. ~~Switch `$attribute` and `$tag` order~~
 1. Test AbterPHP on OSX and Windows 10.
@@ -202,6 +200,9 @@ before the first stable version.
 1. Ensure identifiers do not contain a comma (explode issue)
 1. 70%+ of JS source code unit tested
 1. Enable `Generic.Commenting.DocComment` phpcs rules
+1. Improve validation
+   - Review validation factories
+   - Create new validation rules where needed
 
 ### 1.0 musts:
 
@@ -217,6 +218,7 @@ before the first stable version.
 1. Documentation complete
 1. 12-factor compliance clearly stated
 1. More useful dashboard (community input?)
+1. Enable `ONLY_FULL_GROUP_BY` in `mysql.conf`
 
 ## Ideas
 
@@ -237,6 +239,9 @@ before the first stable version.
  - Simple blog module
  - Pick new frontend framework for backend system and implement it
  - Actions to extend Cell
+ - `binary(16)` ids instead of `char(36)`
+   - Needs MySQL 8.0 `BIN_TO_UUID` and `UUID_TO_BIN` support
+   - Needs query builder support (although not a must)
 
 ### Ideas for 1.1:
  - WYSIWYG file selector

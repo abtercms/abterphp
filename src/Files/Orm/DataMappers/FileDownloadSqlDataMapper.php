@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace AbterPhp\Files\Orm\DataMappers;
 
 use AbterPhp\Admin\Domain\Entities\User;
-use AbterPhp\Admin\Domain\Entities\UserGroup;
 use AbterPhp\Admin\Domain\Entities\UserLanguage;
 use AbterPhp\Files\Domain\Entities\File;
 use AbterPhp\Files\Domain\Entities\FileDownload as Entity;
@@ -31,8 +30,9 @@ class FileDownloadSqlDataMapper extends SqlDataMapper implements IFileDownloadDa
             ->insert(
                 'file_downloads',
                 [
-                    'file_id'       => [$entity->getFile()->getId(), \PDO::PARAM_INT],
-                    'user_id'       => [$entity->getUser()->getId(), \PDO::PARAM_INT],
+                    'id'            => [$entity->getId(), \PDO::PARAM_STR],
+                    'file_id'       => [$entity->getFile()->getId(), \PDO::PARAM_STR],
+                    'user_id'       => [$entity->getUser()->getId(), \PDO::PARAM_STR],
                     'downloaded_at' => [$entity->getDownloadedAt()->format(Entity::DATE_FORMAT), \PDO::PARAM_STR],
                 ]
             );
@@ -40,8 +40,6 @@ class FileDownloadSqlDataMapper extends SqlDataMapper implements IFileDownloadDa
         $statement = $this->writeConnection->prepare($query->getSql());
         $statement->bindValues($query->getParameters());
         $statement->execute();
-
-        $entity->setId($this->writeConnection->lastInsertId());
     }
 
     /**
@@ -56,7 +54,7 @@ class FileDownloadSqlDataMapper extends SqlDataMapper implements IFileDownloadDa
         $query = (new QueryBuilder())
             ->update('file_downloads', 'file_downloads', ['deleted' => [1, \PDO::PARAM_INT]])
             ->where('id = ?')
-            ->addUnnamedPlaceholderValue($entity->getId(), \PDO::PARAM_INT);
+            ->addUnnamedPlaceholderValue($entity->getId(), \PDO::PARAM_STR);
 
         $statement = $this->writeConnection->prepare($query->getSql());
         $statement->bindValues($query->getParameters());
@@ -114,38 +112,38 @@ class FileDownloadSqlDataMapper extends SqlDataMapper implements IFileDownloadDa
         $query = $this->getBaseQuery()->andWhere('file_downloads.id = :file_download_id');
 
         $parameters = [
-            'file_download_id' => [$id, \PDO::PARAM_INT],
+            'file_download_id' => [$id, \PDO::PARAM_STR],
         ];
 
         return $this->read($query->getSql(), $parameters, self::VALUE_TYPE_ENTITY, true);
     }
 
     /**
-     * @param int $userId
+     * @param string $userId
      *
      * @return Entity[]
      */
-    public function getByUserId(int $userId): array
+    public function getByUserId(string $userId): array
     {
         $query      = $this->getBaseQuery()->andWhere('user_id = :user_id');
         $parameters = [
-            'user_id' => [$userId, \PDO::PARAM_INT],
+            'user_id' => [$userId, \PDO::PARAM_STR],
         ];
 
         return $this->read($query->getSql(), $parameters, self::VALUE_TYPE_ARRAY);
     }
 
     /**
-     * @param int $fileId
+     * @param string $fileId
      *
      * @return Entity[]
      */
-    public function getByFileId(int $fileId): array
+    public function getByFileId(string $fileId): array
     {
         $query = $this->getBaseQuery()->andWhere('file_id = :file_id');
 
         $parameters = [
-            'file_id' => [$fileId, \PDO::PARAM_INT],
+            'file_id' => [$fileId, \PDO::PARAM_STR],
         ];
 
         return $this->read($query->getSql(), $parameters, self::VALUE_TYPE_ARRAY);
@@ -165,13 +163,13 @@ class FileDownloadSqlDataMapper extends SqlDataMapper implements IFileDownloadDa
                 'file_downloads',
                 'file_downloads',
                 [
-                    'file_id'       => [$entity->getFile()->getId(), \PDO::PARAM_INT],
-                    'user_id'       => [$entity->getUser()->getId(), \PDO::PARAM_INT],
+                    'file_id'       => [$entity->getFile()->getId(), \PDO::PARAM_STR],
+                    'user_id'       => [$entity->getUser()->getId(), \PDO::PARAM_STR],
                     'downloaded_at' => [$entity->getDownloadedAt()->format(Entity::DATE_FORMAT), \PDO::PARAM_STR],
                 ]
             )
             ->where('id = ?')
-            ->addUnnamedPlaceholderValue($entity->getId(), \PDO::PARAM_INT);
+            ->addUnnamedPlaceholderValue($entity->getId(), \PDO::PARAM_STR);
 
         $statement = $this->writeConnection->prepare($query->getSql());
         $statement->bindValues($query->getParameters());
@@ -185,10 +183,10 @@ class FileDownloadSqlDataMapper extends SqlDataMapper implements IFileDownloadDa
      */
     protected function loadEntity(array $hash)
     {
-        $file         = new File((int)$hash['file_id'], $hash['filesystem_name'], $hash['public_name'], '');
-        $userLanguage = new UserLanguage(0, '', '');
+        $file         = new File($hash['file_id'], $hash['filesystem_name'], $hash['public_name'], '');
+        $userLanguage = new UserLanguage('', '', '');
         $user         = new User(
-            (int)$hash['user_id'],
+            $hash['user_id'],
             $hash['username'],
             '',
             '',
@@ -198,10 +196,10 @@ class FileDownloadSqlDataMapper extends SqlDataMapper implements IFileDownloadDa
         );
 
         return new Entity(
-            (int)$hash['id'],
+            $hash['id'],
             $file,
             $user,
-            new \DateTime((string)$hash['downloaded_at'])
+            new \DateTime($hash['downloaded_at'])
         );
     }
 

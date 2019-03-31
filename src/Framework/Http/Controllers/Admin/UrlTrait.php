@@ -36,12 +36,12 @@ trait UrlTrait
     }
 
     /**
-     * @param int $id
+     * @param string $id
      *
      * @return string
      * @throws URLException
      */
-    protected function getEditUrl(int $id): string
+    protected function getEditUrl(string $id): string
     {
         /** @var UrlGenerator $urlGenerator */
         $urlGenerator = $this->urlGenerator;

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace AbterPhp\Files\Domain\Entities;
 
+use AbterPhp\Admin\Domain\Entities\UserGroup;
 use AbterPhp\Framework\Domain\Entities\IStringerEntity;
 
 /**
@@ -11,7 +12,7 @@ use AbterPhp\Framework\Domain\Entities\IStringerEntity;
  */
 class FileCategory implements IStringerEntity
 {
-    /** @var int */
+    /** @var string */
     protected $id;
 
     /** @var string */
@@ -27,13 +28,13 @@ class FileCategory implements IStringerEntity
     protected $userGroups;
 
     /**
-     * @param int    $id
+     * @param string $id
      * @param string $identifier
      * @param string $name
      * @param bool   $isPublic
      * @param array  $userGroups
      */
-    public function __construct(int $id, string $identifier, string $name, bool $isPublic, array $userGroups = [])
+    public function __construct(string $id, string $identifier, string $name, bool $isPublic, array $userGroups = [])
     {
         $this->id         = $id;
         $this->identifier = $identifier;
@@ -43,7 +44,7 @@ class FileCategory implements IStringerEntity
     }
 
     /**
-     * @return int
+     * @return string
      */
     public function getId()
     {
@@ -51,7 +52,7 @@ class FileCategory implements IStringerEntity
     }
 
     /**
-     * @param int $id
+     * @param string $id
      */
     public function setId($id)
     {

@@ -7,6 +7,7 @@ namespace AbterPhp\Files\Bootstrappers\Validation;
 use AbterPhp\Framework\Constant\Env;
 use AbterPhp\Files\Validation\Factory\File;
 use AbterPhp\Files\Validation\Factory\FileCategory;
+use AbterPhp\Framework\Validation\Rules\Uuid;
 use InvalidArgumentException;
 use Opulence\Framework\Configuration\Config;
 use Opulence\Framework\Validation\Bootstrappers\ValidatorBootstrapper as BaseBootstrapper;
@@ -79,5 +80,6 @@ class ValidatorBootstrapper extends BaseBootstrapper
      */
     protected function registerRuleExtensions(RuleExtensionRegistry $ruleExtensionRegistry)
     {
+        $ruleExtensionRegistry->registerRuleExtension(new Uuid());
     }
 }

@@ -18,7 +18,7 @@ class UserGroup extends ValidatorFactory
 
         $validator
             ->field('id')
-            ->integer()
+            ->uuid()
         ;
 
         $validator

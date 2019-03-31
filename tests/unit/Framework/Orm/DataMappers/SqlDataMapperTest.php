@@ -52,19 +52,6 @@ abstract class SqlDataMapperTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @param string|int $nextId
-     * @param int        $at
-     */
-    protected function lastInsertId($nextId, int $at = self::EXPECTATION_ONCE)
-    {
-        $this->connection
-            ->expects($this->getExpectation($at))
-            ->method('lastInsertId')
-            ->willReturn($nextId)
-        ;
-    }
-
-    /**
      * @param array $expectedData
      * @param array $collection
      */

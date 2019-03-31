@@ -9,7 +9,7 @@ return [
     'user'                  => 'User',
     'userId'                => 'Id',
     'userIdentifier'        => 'Identifier',
-    'userIsGravatarAllowed' => 'Gravatar Allowed',
+    'userIsGravatarAllowed' => 'Is gravatar allowed?',
     'userCanLogin'          => 'Can user log in?',
     'userConfirmPassword'   => 'Confirm Password',
     'userEmail'             => 'Email',

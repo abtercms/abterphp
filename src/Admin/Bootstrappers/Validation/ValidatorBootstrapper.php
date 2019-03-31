@@ -7,11 +7,13 @@ namespace AbterPhp\Admin\Bootstrappers\Validation;
 use AbterPhp\Framework\Constant\Env;
 use AbterPhp\Admin\Validation\Factory\User;
 use AbterPhp\Admin\Validation\Factory\UserGroup;
+use AbterPhp\Framework\Validation\Rules\Uuid;
 use InvalidArgumentException;
 use Opulence\Framework\Configuration\Config;
 use Opulence\Framework\Validation\Bootstrappers\ValidatorBootstrapper as BaseBootstrapper;
 use Opulence\Ioc\IContainer;
 use Opulence\Validation\Rules\Errors\ErrorTemplateRegistry;
+use Opulence\Validation\Rules\RuleExtensionRegistry;
 
 /**
  * Defines the validator bootstrapper
@@ -66,5 +68,17 @@ class ValidatorBootstrapper extends BaseBootstrapper
         );
 
         $errorTemplateRegistry->registerErrorTemplatesFromConfig($config);
+    }
+
+    /**
+     * @SuppressWarnings(PHPMD.LongVariable)
+     *
+     * Registers any custom rule extensions
+     *
+     * @param RuleExtensionRegistry $ruleExtensionRegistry The registry to register rules to
+     */
+    protected function registerRuleExtensions(RuleExtensionRegistry $ruleExtensionRegistry)
+    {
+        $ruleExtensionRegistry->registerRuleExtension(new Uuid());
     }
 }

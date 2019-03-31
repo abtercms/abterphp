@@ -13,7 +13,7 @@ use AbterPhp\Website\Domain\Entities\Page\Meta;
  */
 class Page implements IStringerEntity
 {
-    /** @var int */
+    /** @var string */
     protected $id;
 
     /** @var string */
@@ -40,22 +40,22 @@ class Page implements IStringerEntity
     /**
      * Page constructor.
      *
-     * @param               $id
-     * @param string        $identifier
-     * @param string        $title
-     * @param string        $body
-     * @param string        $layout
-     * @param int|null      $layoutId
-     * @param Meta|null     $meta
-     * @param Assets|null   $assets
+     * @param string      $id
+     * @param string      $identifier
+     * @param string      $title
+     * @param string      $body
+     * @param string      $layout
+     * @param string|null $layoutId
+     * @param Meta|null   $meta
+     * @param Assets|null $assets
      */
     public function __construct(
-        $id,
+        string $id,
         string $identifier,
         string $title,
         string $body,
         string $layout,
-        int $layoutId = null,
+        ?string $layoutId = null,
         ?Meta $meta = null,
         ?Assets $assets = null
     ) {
@@ -64,13 +64,13 @@ class Page implements IStringerEntity
         $this->title      = $title;
         $this->body       = $body;
         $this->layout     = $layout;
-        $this->layoutId   = $layoutId > 0 ? $layoutId : null;
+        $this->layoutId   = $layoutId ? $layoutId : null;
         $this->assets     = $assets;
         $this->meta       = $meta ?: new Meta('', '', '', '', '', '', '', '');
     }
 
     /**
-     * @return int
+     * @return string
      */
     public function getId()
     {
@@ -78,7 +78,7 @@ class Page implements IStringerEntity
     }
 
     /**
-     * @param int $id
+     * @param string $id
      */
     public function setId($id)
     {
@@ -166,9 +166,9 @@ class Page implements IStringerEntity
     }
 
     /**
-     * @return int|null
+     * @return string|null
      */
-    public function getLayoutId(): ?int
+    public function getLayoutId(): ?string
     {
         return $this->layoutId;
     }
@@ -178,9 +178,9 @@ class Page implements IStringerEntity
      *
      * @return $this
      */
-    public function setLayoutId(int $layoutId = null): Page
+    public function setLayoutId(?string $layoutId = null): Page
     {
-        if ($layoutId < 1) {
+        if ($layoutId === '') {
             $layoutId = null;
         }
 

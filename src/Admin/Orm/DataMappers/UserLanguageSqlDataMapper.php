@@ -27,6 +27,7 @@ class UserLanguageSqlDataMapper extends SqlDataMapper implements IUserLanguageDa
             ->insert(
                 'user_languages',
                 [
+                    'id'         => $entity->getId(),
                     'identifier' => $entity->getIdentifier(),
                     'name'       => $entity->getName(),
                 ]
@@ -35,8 +36,6 @@ class UserLanguageSqlDataMapper extends SqlDataMapper implements IUserLanguageDa
         $statement = $this->writeConnection->prepare($query->getSql());
         $statement->bindValues($query->getParameters());
         $statement->execute();
-
-        $entity->setId($this->writeConnection->lastInsertId());
     }
 
     /**
@@ -51,7 +50,7 @@ class UserLanguageSqlDataMapper extends SqlDataMapper implements IUserLanguageDa
         $query = (new QueryBuilder())
             ->update('user_languages', 'user_languages', ['deleted' => [1, \PDO::PARAM_INT]])
             ->where('id = ?')
-            ->addUnnamedPlaceholderValue($entity->getId(), \PDO::PARAM_INT);
+            ->addUnnamedPlaceholderValue($entity->getId(), \PDO::PARAM_STR);
 
         $statement = $this->writeConnection->prepare($query->getSql());
         $statement->bindValues($query->getParameters());
@@ -102,7 +101,7 @@ class UserLanguageSqlDataMapper extends SqlDataMapper implements IUserLanguageDa
     }
 
     /**
-     * @param int|string $id
+     * @param string $id
      *
      * @return Entity|null
      */
@@ -112,7 +111,7 @@ class UserLanguageSqlDataMapper extends SqlDataMapper implements IUserLanguageDa
 
         $sql    = $query->getSql();
         $params = [
-            'user_language_id' => [$id, \PDO::PARAM_INT],
+            'user_language_id' => [$id, \PDO::PARAM_STR],
         ];
 
         return $this->read($sql, $params, self::VALUE_TYPE_ENTITY, true);
@@ -156,7 +155,7 @@ class UserLanguageSqlDataMapper extends SqlDataMapper implements IUserLanguageDa
             )
             ->where('id = ?')
             ->andWhere('deleted = 0')
-            ->addUnnamedPlaceholderValue($entity->getId(), \PDO::PARAM_INT);
+            ->addUnnamedPlaceholderValue($entity->getId(), \PDO::PARAM_STR);
 
         $sql    = $query->getSql();
         $params = $query->getParameters();
@@ -174,7 +173,7 @@ class UserLanguageSqlDataMapper extends SqlDataMapper implements IUserLanguageDa
     protected function loadEntity(array $hash)
     {
         return new Entity(
-            (int)$hash['id'],
+            $hash['id'],
             $hash['identifier'],
             $hash['name']
         );

@@ -51,14 +51,14 @@ class File extends FormAbstract
     }
 
     /**
-     * @param int|null $entityId
+     * @param string $entityId
      *
      * @return Entity
      */
-    protected function createEntity(int $entityId = null): IStringerEntity
+    protected function createEntity(string $entityId): IStringerEntity
     {
-        $fileCategory = new FileCategory(0, '', '', false, []);
+        $fileCategory = new FileCategory('', '', '', false, []);
 
-        return new Entity((int)$entityId, '', '', '', $fileCategory, null);
+        return new Entity($entityId, '', '', '', $fileCategory, null);
     }
 }

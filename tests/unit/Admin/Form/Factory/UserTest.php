@@ -68,26 +68,26 @@ class UserTest extends TestCase
         $action            = 'foo';
         $method            = RequestMethods::POST;
         $showUrl           = 'bar';
-        $entityId          = 36;
+        $entityId          = '96368723-292f-4943-9903-83ad552fc118';
         $username          = 'zorro79';
         $email             = 'zorro79@example.com';
         $canLogin          = true;
         $isGravatarAllowed = true;
         $allUserGroups     = [
-            new UserGroup(22, 'ug-22', 'UG 22'),
-            new UserGroup(73, 'ug-73', 'UG 73'),
-            new UserGroup(112, 'ug-112', 'UG 112'),
-            new UserGroup(432, 'ug-432', 'UG 432'),
+            new UserGroup('dc2abea5-8021-4228-882a-31b91fe3687a', 'ug-22', 'UG 22'),
+            new UserGroup('75ccb863-ce02-4b2d-b655-af4c92f2dbe6', 'ug-73', 'UG 73'),
+            new UserGroup('aff15988-2170-4b10-9aad-4ed2ea19f73e', 'ug-112', 'UG 112'),
+            new UserGroup('143522ce-5e0e-4abb-8c4b-67d88ba90d9d', 'ug-432', 'UG 432'),
         ];
         $userGroups        = [
             $allUserGroups[0],
             $allUserGroups[2],
         ];
         $allUserLanguages  = [
-            new UserLanguage(52, 'ul-52', 'UL 52'),
-            new UserLanguage(77, 'ul-77', 'UL 77'),
-            new UserLanguage(93, 'ul-93', 'UL 93'),
-            new UserLanguage(94, 'ul-94', 'UL 94'),
+            new UserLanguage('5027689a-39da-4810-b0b6-2ae42e387698', 'ul-52', 'UL 52'),
+            new UserLanguage('afb423cc-6272-4ff4-8a62-e28cac6cb1d1', 'ul-77', 'UL 77'),
+            new UserLanguage('38030970-10be-4b6b-9dc6-38d6a74310ca', 'ul-93', 'UL 93'),
+            new UserLanguage('15c3f8ef-d5ff-4210-a5a2-3732f4073a1b', 'ul-94', 'UL 94'),
         ];
         $userLanguage      = $allUserLanguages[1];
 

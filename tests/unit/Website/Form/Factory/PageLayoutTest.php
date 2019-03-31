@@ -53,7 +53,7 @@ class PageLayoutTest extends TestCase
         $action     = 'foo';
         $method     = RequestMethods::POST;
         $showUrl    = 'bar';
-        $entityId   = 36;
+        $entityId   = 'c5098ee4-ab53-4d96-9d23-bde122f8f09b';
         $identifier = 'blah';
         $body       = 'mah';
 

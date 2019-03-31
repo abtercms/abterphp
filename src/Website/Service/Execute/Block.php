@@ -40,13 +40,13 @@ class Block extends RepoServiceAbstract
     }
 
     /**
-     * @param int|null $entityId
+     * @param string $entityId
      *
      * @return Entity
      */
-    protected function createEntity(int $entityId = null): IStringerEntity
+    protected function createEntity(string $entityId): IStringerEntity
     {
-        return new Entity((int)$entityId, '', '', '', '', null);
+        return new Entity($entityId, '', '', '', '', null);
     }
 
     /**
@@ -69,7 +69,7 @@ class Block extends RepoServiceAbstract
         $layoutId = null;
         $layout   = (string)$data['layout'];
         if (!$layout) {
-            $layoutId = (int)$data['layout_id'];
+            $layoutId = (string)$data['layout_id'];
         }
 
         $entity

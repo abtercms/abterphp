@@ -106,7 +106,7 @@ class File extends Base
     protected function addFileCategory(Entity $entity): File
     {
         $allFileCategories = $this->getAllFileCategories();
-        $fileCategoryId    = (int)$entity->getCategory()->getId();
+        $fileCategoryId    = $entity->getCategory()->getId();
 
         $options = $this->createFileCategoryOptions($allFileCategories, $fileCategoryId);
 
@@ -129,16 +129,16 @@ class File extends Base
 
     /**
      * @param FileCategory[] $allFileCategories
-     * @param int            $fileCategoryId
+     * @param string         $fileCategoryId
      *
      * @return array
      */
-    protected function createFileCategoryOptions(array $allFileCategories, int $fileCategoryId): array
+    protected function createFileCategoryOptions(array $allFileCategories, string $fileCategoryId): array
     {
         $options = [];
         foreach ($allFileCategories as $fileCategory) {
             $isSelected = $fileCategory->getId() === $fileCategoryId;
-            $options[]  = new Option((string)$fileCategory->getId(), $fileCategory->getName(), $isSelected);
+            $options[]  = new Option($fileCategory->getId(), $fileCategory->getName(), $isSelected);
         }
 
         return $options;

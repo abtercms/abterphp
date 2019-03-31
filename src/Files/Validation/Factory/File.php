@@ -18,7 +18,7 @@ class File extends ValidatorFactory
 
         $validator
             ->field('id')
-            ->integer();
+            ->uuid();
 
         $validator
             ->field('description')
@@ -26,7 +26,7 @@ class File extends ValidatorFactory
 
         $validator
             ->field('category_id')
-            ->integer()
+            ->uuid()
             ->required();
 
         return $validator;

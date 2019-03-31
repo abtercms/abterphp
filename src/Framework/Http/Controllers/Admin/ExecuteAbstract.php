@@ -114,13 +114,15 @@ abstract class ExecuteAbstract extends AdminAbstract
                 sprintf(static::LOG_MSG_CREATE_FAILURE, static::ENTITY_SINGULAR),
                 $this->getExceptionContext($e)
             );
+
+            return $this->redirectToList();
         }
 
         return $this->redirectToList($entityId);
     }
 
     /**
-     * @param int $entityId
+     * @param string $entityId
      *
      * @return Response
      * @throws CasbinException
@@ -128,7 +130,7 @@ abstract class ExecuteAbstract extends AdminAbstract
      * @throws URLException
      * @throws \Throwable
      */
-    public function update(int $entityId): Response
+    public function update(string $entityId): Response
     {
         $postData = $this->getPostData();
         $fileData = $this->getFileData();
@@ -170,7 +172,7 @@ abstract class ExecuteAbstract extends AdminAbstract
     }
 
     /**
-     * @param int $entityId
+     * @param string $entityId
      *
      * @return Response
      * @throws CasbinException
@@ -178,7 +180,7 @@ abstract class ExecuteAbstract extends AdminAbstract
      * @throws URLException
      * @throws \Throwable
      */
-    public function delete(int $entityId): Response
+    public function delete(string $entityId): Response
     {
         try {
             $this->repoService->delete($entityId);
@@ -216,12 +218,12 @@ abstract class ExecuteAbstract extends AdminAbstract
     }
 
     /**
-     * @param int|null $entityId
+     * @param string|null $entityId
      *
      * @return Response
      * @throws URLException
      */
-    protected function redirectToList(int $entityId = null): Response
+    protected function redirectToList(?string $entityId = null): Response
     {
         $continue = (bool)$this->request->getInput(static::INPUT_CONTINUE);
 
@@ -234,13 +236,13 @@ abstract class ExecuteAbstract extends AdminAbstract
     }
 
     /**
-     * @param bool     $continue
-     * @param int|null $entityId
+     * @param bool        $continue
+     * @param string|null $entityId
      *
      * @return string
      * @throws URLException
      */
-    protected function getUrl(bool $continue, int $entityId = null)
+    protected function getUrl(bool $continue, string $entityId = null)
     {
         if (!$continue) {
             return $this->getShowUrl();

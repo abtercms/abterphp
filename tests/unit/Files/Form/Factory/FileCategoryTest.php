@@ -53,18 +53,18 @@ class FileCategoryTest extends TestCase
         $action        = 'foo';
         $method        = RequestMethods::POST;
         $showUrl       = 'bar';
-        $entityId      = 36;
+        $entityId      = '99a5c8ae-cf2c-4c21-8a4f-2a47f9eb6dcb';
         $name          = 'Blah!';
         $identifier    = 'blah';
         $allUserGroups = [
-            new UserGroup(22, 'ug-22', 'UG 22', []),
-            new UserGroup(73, 'ug-73', 'UG 73', []),
-            new UserGroup(112, 'ug-112', 'UG 112', []),
-            new UserGroup(432, 'ug-432', 'UG 432', []),
+            new UserGroup('c6f1db1f-7f6c-408a-b8ba-4ad6ea0b08e1', 'ug-22', 'UG 22', []),
+            new UserGroup('a26bee22-4b9e-4db6-be61-e3b3434218b7', 'ug-73', 'UG 73', []),
+            new UserGroup('31bc7d78-834d-4cb9-9d94-263ce5e2bfc0', 'ug-112', 'UG 112', []),
+            new UserGroup('221fef6e-ebf6-4531-9029-178c024b4bb2', 'ug-432', 'UG 432', []),
         ];
         $userGroups    = [
-            new UserGroup(73, 'ug-73', 'UG 73', []),
-            new UserGroup(112, 'ug-112', 'UG 112', []),
+            new UserGroup('a26bee22-4b9e-4db6-be61-e3b3434218b7', 'ug-73', 'UG 73', []),
+            new UserGroup('31bc7d78-834d-4cb9-9d94-263ce5e2bfc0', 'ug-112', 'UG 112', []),
         ];
 
         $this->userGroupRepoMock->expects($this->any())->method('getAll')->willReturn($allUserGroups);

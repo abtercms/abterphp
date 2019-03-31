@@ -93,19 +93,19 @@ class User extends FormAbstract
     }
 
     /**
-     * @param int|null $entityId
+     * @param string $entityId
      *
      * @return Entity
      */
-    public function createEntity(int $entityId = null): IStringerEntity
+    public function createEntity(string $entityId): IStringerEntity
     {
         $userLanguage = new UserLanguage(
-            0,
+            '',
             '',
             ''
         );
         $entity       = new Entity(
-            (int)$entityId,
+            (string)$entityId,
             '',
             '',
             '',

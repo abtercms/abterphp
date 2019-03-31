@@ -11,7 +11,7 @@ use AbterPhp\Framework\Domain\Entities\IStringerEntity;
  */
 class BlockLayout implements IStringerEntity
 {
-    /** @var int */
+    /** @var string */
     protected $id;
 
     /** @var string */
@@ -23,11 +23,11 @@ class BlockLayout implements IStringerEntity
     /**
      * Page constructor.
      *
-     * @param int|null $id
-     * @param string   $identifier
-     * @param string   $body
+     * @param string $id
+     * @param string $identifier
+     * @param string $body
      */
-    public function __construct($id, string $identifier, string $body)
+    public function __construct(string $id, string $identifier, string $body)
     {
         $this->id         = $id;
         $this->identifier = $identifier;
@@ -35,7 +35,7 @@ class BlockLayout implements IStringerEntity
     }
 
     /**
-     * @return int
+     * @return string
      */
     public function getId()
     {
@@ -43,7 +43,7 @@ class BlockLayout implements IStringerEntity
     }
 
     /**
-     * @param int $id
+     * @param string $id
      */
     public function setId($id)
     {

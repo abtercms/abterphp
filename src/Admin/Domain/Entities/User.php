@@ -11,7 +11,7 @@ use AbterPhp\Framework\Domain\Entities\IStringerEntity;
  */
 class User implements IStringerEntity
 {
-    /** @var int */
+    /** @var string */
     protected $id;
 
     /** @var string */
@@ -38,7 +38,7 @@ class User implements IStringerEntity
     /**
      * User constructor.
      *
-     * @param int          $id
+     * @param string       $id
      * @param string       $username
      * @param string       $email
      * @param string       $password
@@ -48,7 +48,7 @@ class User implements IStringerEntity
      * @param array        $userGroups
      */
     public function __construct(
-        int $id,
+        string $id,
         string $username,
         string $email,
         string $password,
@@ -69,7 +69,7 @@ class User implements IStringerEntity
     }
 
     /**
-     * @return int
+     * @return string
      */
     public function getId()
     {
@@ -77,7 +77,7 @@ class User implements IStringerEntity
     }
 
     /**
-     * @param int $id
+     * @param string $id
      */
     public function setId($id)
     {

@@ -103,16 +103,16 @@ class BlockTest extends TestCase
         $action     = 'foo';
         $method     = RequestMethods::POST;
         $showUrl    = 'bar';
-        $entityId   = 36;
+        $entityId   = '4571f468-8d7a-4680-81b5-fb747abaf580';
         $identifier = 'blah';
         $title      = 'Blah!';
         $body       = "Blah!\n\n...and more blah...";
-        $layoutId   = 0;
+        $layoutId   = 'f1a8ba52-680c-4dc3-b399-84d77b6cdf18';
         $layout     = 'abc {{ var/body }} cba';
 
         $layouts = [
-            new BlockLayout(126, 'bl-126', 'BL 126'),
-            new BlockLayout(129, 'bl-129', 'BL 129'),
+            new BlockLayout('5f480eb5-1a54-4f5c-8303-59ae466ada68', 'bl-126', 'BL 126'),
+            new BlockLayout('11325e40-1b6b-4820-8d4b-548a572acd02', 'bl-129', 'BL 129'),
         ];
 
         $this->enforcerMock->expects($this->at(0))->method('enforce')->willReturn($advancedAllowed);

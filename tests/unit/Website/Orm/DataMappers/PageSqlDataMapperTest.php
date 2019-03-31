@@ -25,12 +25,12 @@ class PageSqlDataMapperTest extends SqlDataMapperTest
     }
 
     /**
-     * @param int      $id
-     * @param int|null $layoutId
+     * @param string      $id
+     * @param string|null $layoutId
      *
      * @return Page
      */
-    protected function getEntity(int $id = 0, ?int $layoutId = null): Page
+    protected function getEntity(string $id = '', ?string $layoutId = null): Page
     {
         $meta   = new Page\Meta('m1', 'm2', 'm3', 'm4', 'm5', 'm6', 'm7', 'm8');
         $assets = new Page\Assets('foo', 'baz', 'yak', ['zar'], ['boi'], null);
@@ -40,14 +40,15 @@ class PageSqlDataMapperTest extends SqlDataMapperTest
 
     public function testAddWithoutLayoutId()
     {
-        $nextId = '123';
+        $nextId = 'fee8891b-2c31-49db-9a44-3e6179865c1f';
 
-        $entity = $this->getEntity();
+        $entity = $this->getEntity($nextId);
         $meta   = $entity->getMeta();
         $assets = $entity->getAssets();
 
-        $sql    = 'INSERT INTO pages (identifier, title, body, layout, layout_id, meta_description, meta_robots, meta_author, meta_copyright, meta_keywords, meta_og_title, meta_og_image, meta_og_description, header, footer, css_files, js_files) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'; // phpcs:ignore
+        $sql    = 'INSERT INTO pages (id, identifier, title, body, layout, layout_id, meta_description, meta_robots, meta_author, meta_copyright, meta_keywords, meta_og_title, meta_og_image, meta_og_description, header, footer, css_files, js_files) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'; // phpcs:ignore
         $values = [
+            [$entity->getId(), \PDO::PARAM_STR],
             [$entity->getIdentifier(), \PDO::PARAM_STR],
             [$entity->getTitle(), \PDO::PARAM_STR],
             [$entity->getBody(), \PDO::PARAM_STR],
@@ -67,7 +68,6 @@ class PageSqlDataMapperTest extends SqlDataMapperTest
             [implode("\r\n", $assets->getJsFiles()), \PDO::PARAM_STR],
         ];
 
-        $this->lastInsertId($nextId);
         $this->prepare($sql, $this->createWriteStatement($values));
 
         $this->sut->add($entity);
@@ -77,20 +77,21 @@ class PageSqlDataMapperTest extends SqlDataMapperTest
 
     public function testAddWithLayoutId()
     {
-        $nextId   = '123';
-        $layoutId = 66;
+        $nextId   = '9340c9ec-f1cd-4a85-bc71-15c13c31a22e';
+        $layoutId = 'f1be9cd6-e7cb-40c1-b584-f265259bd8de';
 
-        $entity = $this->getEntity(0, $layoutId);
+        $entity = $this->getEntity($nextId, $layoutId);
         $meta   = $entity->getMeta();
         $assets = $entity->getAssets();
 
-        $sql    = 'INSERT INTO pages (identifier, title, body, layout, layout_id, meta_description, meta_robots, meta_author, meta_copyright, meta_keywords, meta_og_title, meta_og_image, meta_og_description, header, footer, css_files, js_files) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'; // phpcs:ignore
+        $sql    = 'INSERT INTO pages (id, identifier, title, body, layout, layout_id, meta_description, meta_robots, meta_author, meta_copyright, meta_keywords, meta_og_title, meta_og_image, meta_og_description, header, footer, css_files, js_files) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'; // phpcs:ignore
         $values = [
+            [$entity->getId(), \PDO::PARAM_STR],
             [$entity->getIdentifier(), \PDO::PARAM_STR],
             [$entity->getTitle(), \PDO::PARAM_STR],
             [$entity->getBody(), \PDO::PARAM_STR],
             [$entity->getLayout(), \PDO::PARAM_STR],
-            [$entity->getLayoutId(), \PDO::PARAM_INT],
+            [$entity->getLayoutId(), \PDO::PARAM_STR],
             [$meta->getDescription(), \PDO::PARAM_STR],
             [$meta->getRobots(), \PDO::PARAM_STR],
             [$meta->getAuthor(), \PDO::PARAM_STR],
@@ -105,21 +106,20 @@ class PageSqlDataMapperTest extends SqlDataMapperTest
             [implode("\r\n", $assets->getJsFiles()), \PDO::PARAM_STR],
         ];
 
-        $this->lastInsertId($nextId);
         $this->prepare($sql, $this->createWriteStatement($values));
 
         $this->sut->add($entity);
 
-        $this->assertSame($nextId, (string)$entity->getId());
+        $this->assertSame($nextId, $entity->getId());
     }
 
     public function testDelete()
     {
-        $id     = 123;
+        $id     = '2fdfb4aa-b199-40d6-86bd-06eed25bff43';
         $entity = $this->getEntity($id);
 
         $sql    = 'UPDATE pages AS pages SET deleted = ? WHERE (id = ?)'; // phpcs:ignore
-        $values = [[1, \PDO::PARAM_INT], [$entity->getId(), \PDO::PARAM_INT]];
+        $values = [[1, \PDO::PARAM_INT], [$entity->getId(), \PDO::PARAM_STR]];
 
         $this->prepare($sql, $this->createWriteStatement($values));
 
@@ -128,7 +128,7 @@ class PageSqlDataMapperTest extends SqlDataMapperTest
 
     public function testGetAll()
     {
-        $id       = 123;
+        $id       = '63111dd1-4ea8-4152-83fa-59463d1d92fb';
         $entity   = $this->getEntity($id);
         $layoutId = null;
 
@@ -152,13 +152,13 @@ class PageSqlDataMapperTest extends SqlDataMapperTest
 
     public function testGetById()
     {
-        $id     = 66;
+        $id     = '24ce60d4-95a6-441b-9c95-fe578ef1e23c';
         $entity = $this->getEntity($id);
         $meta   = $entity->getMeta();
         $assets = $entity->getAssets();
 
         $sql          = 'SELECT pages.id, pages.identifier, pages.title, pages.body, pages.layout_id, pages.layout, pages.meta_description, pages.meta_robots, pages.meta_author, pages.meta_copyright, pages.meta_keywords, pages.meta_og_title, pages.meta_og_image, pages.meta_og_description, pages.header, pages.footer, pages.css_files, pages.js_files FROM pages WHERE (pages.deleted = 0) AND (pages.id = :page_id)'; // phpcs:ignore
-        $values       = ['page_id' => [$id, \PDO::PARAM_INT]];
+        $values       = ['page_id' => [$id, \PDO::PARAM_STR]];
         $expectedData = [
             [
                 'id'                  => $entity->getId(),
@@ -191,7 +191,7 @@ class PageSqlDataMapperTest extends SqlDataMapperTest
 
     public function testGetByIdentifier()
     {
-        $id     = 66;
+        $id     = '08cf6a6b-5d86-405b-b573-fa4a6f4c6122';
         $entity = $this->getEntity($id);
         $meta   = $entity->getMeta();
         $assets = $entity->getAssets();
@@ -230,7 +230,7 @@ class PageSqlDataMapperTest extends SqlDataMapperTest
 
     public function testUpdateWithoutLayoutId()
     {
-        $id     = 66;
+        $id     = 'ea075f20-95de-4ce4-9dfb-13bae781031d';
         $entity = $this->getEntity($id);
         $meta   = $entity->getMeta();
         $assets = $entity->getAssets();
@@ -254,7 +254,7 @@ class PageSqlDataMapperTest extends SqlDataMapperTest
             [$assets->getFooter(), \PDO::PARAM_STR],
             [implode("\r\n", $assets->getCssFiles()), \PDO::PARAM_STR],
             [implode("\r\n", $assets->getJsFiles()), \PDO::PARAM_STR],
-            [$entity->getId(), \PDO::PARAM_INT],
+            [$entity->getId(), \PDO::PARAM_STR],
         ];
 
         $this->prepare($sql, $this->createWriteStatement($values));
@@ -264,11 +264,11 @@ class PageSqlDataMapperTest extends SqlDataMapperTest
 
     public function testUpdateWithLayoutId()
     {
-        $id       = 66;
-        $layoutId = 97;
+        $id       = 'd90e6027-75ef-4121-8fda-7f38f7cd39e6';
+        $layoutId = 'ffe0bd1c-8b9a-4cb4-8255-86444e37223a';
         $entity   = $this->getEntity($id, $layoutId);
         $meta     = $entity->getMeta();
-        $assets = $entity->getAssets();
+        $assets   = $entity->getAssets();
 
         $sql    = 'UPDATE pages AS pages SET identifier = ?, title = ?, body = ?, layout = ?, layout_id = ?, meta_description = ?, meta_robots = ?, meta_author = ?, meta_copyright = ?, meta_keywords = ?, meta_og_title = ?, meta_og_image = ?, meta_og_description = ?, header = ?, footer = ?, css_files = ?, js_files = ? WHERE (id = ?) AND (deleted = 0)'; // phpcs:ignore
         $values = [
@@ -276,7 +276,7 @@ class PageSqlDataMapperTest extends SqlDataMapperTest
             [$entity->getTitle(), \PDO::PARAM_STR],
             [$entity->getBody(), \PDO::PARAM_STR],
             [$entity->getLayout(), \PDO::PARAM_STR],
-            [$entity->getLayoutId(), \PDO::PARAM_INT],
+            [$entity->getLayoutId(), \PDO::PARAM_STR],
             [$meta->getDescription(), \PDO::PARAM_STR],
             [$meta->getRobots(), \PDO::PARAM_STR],
             [$meta->getAuthor(), \PDO::PARAM_STR],
@@ -289,7 +289,7 @@ class PageSqlDataMapperTest extends SqlDataMapperTest
             [$assets->getFooter(), \PDO::PARAM_STR],
             [implode("\r\n", $assets->getCssFiles()), \PDO::PARAM_STR],
             [implode("\r\n", $assets->getJsFiles()), \PDO::PARAM_STR],
-            [$entity->getId(), \PDO::PARAM_INT],
+            [$entity->getId(), \PDO::PARAM_STR],
         ];
 
         $this->prepare($sql, $this->createWriteStatement($values));
@@ -304,7 +304,7 @@ class PageSqlDataMapperTest extends SqlDataMapperTest
     protected function assertEntity(array $expectedData, $entity)
     {
         $this->assertInstanceOf(Page::class, $entity);
-        $this->assertEquals($expectedData['id'], $entity->getId());
+        $this->assertSame($expectedData['id'], $entity->getId());
         $this->assertSame($expectedData['identifier'], $entity->getIdentifier());
         $this->assertSame($expectedData['title'], $entity->getTitle());
         $this->assertSame($expectedData['layout_id'], $entity->getLayoutId());

@@ -15,7 +15,7 @@ class FileDownload implements IStringerEntity
 {
     const DATE_FORMAT = 'Y-m-d H:i:s';
 
-    /** @var int */
+    /** @var string */
     protected $id;
 
     /** @var File */
@@ -28,12 +28,12 @@ class FileDownload implements IStringerEntity
     protected $downloadedAt;
 
     /**
-     * @param int      $id
+     * @param string   $id
      * @param File     $file
      * @param User     $user
      * @param DateTime $downloadedAt
      */
-    public function __construct(int $id, File $file, User $user, DateTime $downloadedAt = null)
+    public function __construct(string $id, File $file, User $user, DateTime $downloadedAt = null)
     {
         $this->id           = $id;
         $this->file         = $file;
@@ -42,7 +42,7 @@ class FileDownload implements IStringerEntity
     }
 
     /**
-     * @return int
+     * @return string
      */
     public function getId()
     {
@@ -50,7 +50,7 @@ class FileDownload implements IStringerEntity
     }
 
     /**
-     * @param int $id
+     * @param string $id
      */
     public function setId($id)
     {

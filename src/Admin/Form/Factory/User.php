@@ -11,7 +11,7 @@ use AbterPhp\Admin\Orm\UserLanguageRepo;
 use AbterPhp\Framework\Constant\Html5;
 use AbterPhp\Framework\Form\Component\Option;
 use AbterPhp\Framework\Form\Container\FormGroup;
-use AbterPhp\Framework\Form\Container\ToggleGroup;
+use AbterPhp\Framework\Form\Container\CheckboxGroup;
 use AbterPhp\Framework\Form\Element\Input;
 use AbterPhp\Framework\Form\Element\MultiSelect;
 use AbterPhp\Framework\Form\Element\Select;
@@ -20,6 +20,7 @@ use AbterPhp\Framework\Form\Factory\IFormFactory;
 use AbterPhp\Framework\Form\IForm;
 use AbterPhp\Framework\Form\Label\Label;
 use AbterPhp\Framework\Html\Component;
+use AbterPhp\Framework\Html\Node;
 use AbterPhp\Framework\I18n\ITranslator;
 use Opulence\Orm\IEntity;
 use Opulence\Sessions\ISession;
@@ -139,7 +140,7 @@ class User extends Base
             'email',
             $entity->getEmail(),
             [],
-            [Html5::ATTR_NAME => [Input::AUTOCOMPLETE_OFF]]
+            [Html5::ATTR_AUTOCOMPLETE => Input::AUTOCOMPLETE_OFF]
         );
         $label = new Label('email', 'admin:userEmail');
 
@@ -158,7 +159,7 @@ class User extends Base
             'password',
             '',
             [],
-            [Html5::ATTR_NAME => [Input::TYPE_HIDDEN]]
+            [Html5::ATTR_TYPE => Input::TYPE_HIDDEN]
         );
 
         return $this;
@@ -174,7 +175,7 @@ class User extends Base
             'password_confirmed',
             '',
             [],
-            [Html5::ATTR_NAME => [Input::TYPE_HIDDEN]]
+            [Html5::ATTR_TYPE => Input::TYPE_HIDDEN]
         );
 
         return $this;
@@ -237,8 +238,9 @@ class User extends Base
             $attributes
         );
         $label = new Label('can_login', 'admin:userCanLogin');
+        $help = new Node('admin:userCanLogin');
 
-        $this->form[] = new ToggleGroup($input, $label);
+        $this->form[] = new CheckboxGroup($input, $label, $help);
 
         return $this;
     }
@@ -265,8 +267,9 @@ class User extends Base
             'is_gravatar_allowed',
             'admin:userIsGravatarAllowed'
         );
+        $help = new Node('admin:userIsGravatarAllowed');
 
-        $this->form[] = new ToggleGroup($input, $label);
+        $this->form[] = new CheckboxGroup($input, $label, $help);
 
         return $this;
     }
@@ -282,7 +285,7 @@ class User extends Base
 
         $userGroupIds = [];
         foreach ($entity->getUserGroups() as $userGroup) {
-            $userGroupIds[] = (int)$userGroup->getId();
+            $userGroupIds[] = $userGroup->getId();
         }
 
         $options = $this->createUserGroupOptions($allUserGroups, $userGroupIds);
@@ -313,8 +316,8 @@ class User extends Base
     {
         $options = [];
         foreach ($allUserGroups as $userGroup) {
-            $isSelected = in_array((int)$userGroup->getId(), $userGroupIds, true);
-            $options[]  = new Option((string)$userGroup->getId(), $userGroup->getName(), $isSelected);
+            $isSelected = in_array($userGroup->getId(), $userGroupIds, true);
+            $options[]  = new Option($userGroup->getId(), $userGroup->getName(), $isSelected);
         }
 
         return $options;
@@ -360,7 +363,7 @@ class User extends Base
     protected function addUserLanguages(Entity $entity): User
     {
         $allUserGroups = $this->getAllUserLanguages();
-        $userGroupId   = (int)$entity->getUserLanguage()->getId();
+        $userGroupId   = $entity->getUserLanguage()->getId();
 
         $options = $this->createUserLanguageOptions($allUserGroups, $userGroupId);
 
@@ -382,16 +385,16 @@ class User extends Base
 
     /**
      * @param UserLanguage[] $allUserLanguages
-     * @param int            $userLanguageId
+     * @param string         $userLanguageId
      *
      * @return array
      */
-    protected function createUserLanguageOptions(array $allUserLanguages, int $userLanguageId): array
+    protected function createUserLanguageOptions(array $allUserLanguages, string $userLanguageId): array
     {
         $options = [];
         foreach ($allUserLanguages as $userLanguage) {
-            $isSelected = $userLanguageId === (int)$userLanguage->getId();
-            $options[]  = new Option((string)$userLanguage->getId(), $userLanguage->getName(), $isSelected);
+            $isSelected = $userLanguageId === $userLanguage->getId();
+            $options[]  = new Option($userLanguage->getId(), $userLanguage->getName(), $isSelected);
         }
 
         return $options;

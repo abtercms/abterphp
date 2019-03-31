@@ -53,14 +53,14 @@ class UserGroupTest extends TestCase
         $action            = 'foo';
         $method            = RequestMethods::POST;
         $showUrl           = 'bar';
-        $entityId          = 36;
+        $entityId          = '26f69be3-fa57-4ad1-8c58-5f4631040ece';
         $identifier        = 'blah';
         $name              = 'zorros';
         $allAdminResources = [
-            new AdminResource(21, 'ar-21'),
-            new AdminResource(47, 'ar-47'),
-            new AdminResource(64, 'ar-64'),
-            new AdminResource(187, 'ar-187'),
+            new AdminResource('8a42e773-975d-41bd-9061-57ee6c381e68', 'ar-21'),
+            new AdminResource('5180d59e-3b79-4c3b-8877-7df8086a8879', 'ar-47'),
+            new AdminResource('08e82847-9342-42ae-8563-ef2bae335c7a', 'ar-64'),
+            new AdminResource('c2d3f41c-15ba-4664-8393-8024bf650d21', 'ar-187'),
         ];
         $adminResources    = [$allAdminResources[1], $allAdminResources[3]];
 

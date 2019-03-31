@@ -14,7 +14,7 @@ class File implements IStringerEntity
 {
     const DATE_FORMAT = 'Y-m-d';
 
-    /** @var int */
+    /** @var string */
     protected $id;
 
     /** @var string */
@@ -41,7 +41,7 @@ class File implements IStringerEntity
     /**
      * File constructor.
      *
-     * @param int               $id
+     * @param string            $id
      * @param string            $filesystemName
      * @param string            $publicName
      * @param string            $description
@@ -52,7 +52,7 @@ class File implements IStringerEntity
      * @throws \Exception
      */
     public function __construct(
-        int $id,
+        string $id,
         string $filesystemName,
         string $publicName,
         string $description,
@@ -71,7 +71,7 @@ class File implements IStringerEntity
     }
 
     /**
-     * @return int
+     * @return string
      */
     public function getId()
     {
@@ -79,7 +79,7 @@ class File implements IStringerEntity
     }
 
     /**
-     * @param int $id
+     * @param string $id
      */
     public function setId($id)
     {

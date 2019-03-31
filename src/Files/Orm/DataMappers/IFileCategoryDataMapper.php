@@ -10,11 +10,11 @@ use Opulence\Orm\DataMappers\IDataMapper;
 interface IFileCategoryDataMapper extends IDataMapper
 {
     /**
-     * @param int $userGroupId
+     * @param string $userGroupId
      *
      * @return Entity[]
      */
-    public function getByUserGroupId(int $userGroupId): array;
+    public function getByUserGroupId(string $userGroupId): array;
 
     /**
      * @param int      $limitFrom

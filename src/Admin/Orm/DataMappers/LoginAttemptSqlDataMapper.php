@@ -27,6 +27,7 @@ class LoginAttemptSqlDataMapper extends SqlDataMapper implements ILoginAttemptDa
             ->insert(
                 'login_attempts',
                 [
+                    'id'         => $entity->getId(),
                     'ip_hash'    => $entity->getIpHash(),
                     'username'   => $entity->getUsername(),
                     'ip_address' => $entity->getIpAddress(),
@@ -39,8 +40,6 @@ class LoginAttemptSqlDataMapper extends SqlDataMapper implements ILoginAttemptDa
         $statement = $this->writeConnection->prepare($sql);
         $statement->bindValues($params);
         $statement->execute();
-
-        $entity->setId($this->writeConnection->lastInsertId());
     }
 
     /**
@@ -55,7 +54,7 @@ class LoginAttemptSqlDataMapper extends SqlDataMapper implements ILoginAttemptDa
         $query = (new QueryBuilder())
             ->delete('login_attempts', 'login_attempts')
             ->where('id = ?')
-            ->addUnnamedPlaceholderValue($entity->getId(), \PDO::PARAM_INT);
+            ->addUnnamedPlaceholderValue($entity->getId(), \PDO::PARAM_STR);
 
         $sql    = $query->getSql();
         $params = $query->getParameters();
@@ -88,7 +87,7 @@ class LoginAttemptSqlDataMapper extends SqlDataMapper implements ILoginAttemptDa
 
         $sql    = $query->getSql();
         $params = [
-            'login_attempt_id' => [$id, \PDO::PARAM_INT],
+            'login_attempt_id' => [$id, \PDO::PARAM_STR],
         ];
 
         return $this->read($sql, $params, self::VALUE_TYPE_ENTITY, true);
@@ -114,7 +113,7 @@ class LoginAttemptSqlDataMapper extends SqlDataMapper implements ILoginAttemptDa
                 ]
             )
             ->where('id = ?')
-            ->addUnnamedPlaceholderValue($entity->getId(), \PDO::PARAM_INT);
+            ->addUnnamedPlaceholderValue($entity->getId(), \PDO::PARAM_STR);
 
         $sql    = $query->getSql();
         $params = $query->getParameters();
@@ -132,7 +131,7 @@ class LoginAttemptSqlDataMapper extends SqlDataMapper implements ILoginAttemptDa
     protected function loadEntity(array $hash)
     {
         return new Entity(
-            (int)$hash['id'],
+            $hash['id'],
             $hash['ip_hash'],
             $hash['username'],
             $hash['ip_address']
