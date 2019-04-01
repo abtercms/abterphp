@@ -99,6 +99,7 @@ class ButtonFactory
      * @param string|null $tag
      *
      * @return Button
+     * @throws URLException
      */
     public function createFromName(
         string $text,
@@ -111,11 +112,7 @@ class ButtonFactory
         $attribs = [],
         ?string $tag = Html5::TAG_A
     ): Button {
-        try {
-            $url = $this->urlGenerator->createFromName($urlName, ...$urlArgs);
-        } catch (UrlException $e) {
-            $url = '';
-        }
+        $url = $this->urlGenerator->createFromName($urlName, ...$urlArgs);
 
         $attribs[Html5::ATTR_HREF] = [$url];
 

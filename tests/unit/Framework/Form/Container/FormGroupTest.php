@@ -101,7 +101,7 @@ class FormGroupTest extends \PHPUnit\Framework\TestCase
         return $formGroup;
     }
 
-    public function testGetAllNodesIncludesInputLabelAndHelp()
+    public function testGetExtendedNodesIncludesInputLabelAndHelp()
     {
         $input = new Input('foo', 'foo');
         $label = new Label('foo', 'Foo');
@@ -109,7 +109,7 @@ class FormGroupTest extends \PHPUnit\Framework\TestCase
 
         $sut = new FormGroup($input, $label, $help);
 
-        $actualResult = $sut->getAllNodes();
+        $actualResult = $sut->getExtendedNodes();
 
         $this->assertContains($input, $actualResult);
         $this->assertContains($label, $actualResult);

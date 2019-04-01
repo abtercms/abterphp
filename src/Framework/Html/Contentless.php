@@ -60,14 +60,24 @@ final class Contentless extends Component
     }
 
     /**
+     * @param INode[]|INode|string|null $content
+     *
+     * @return $this
+     */
+    public function setContent($content = null): INode
+    {
+        if (null === $content) {
+            return $this;
+        }
+        
+        throw new \LogicException(static::ERROR_NO_CONTENT);
+    }
+
+    /**
      * @return string
      */
     public function __toString(): string
     {
-        if ($this->nodes) {
-            throw new \LogicException(static::ERROR_NO_CONTENT);
-        }
-
         $content = StringHelper::createTag($this->tag, $this->attributes);
 
         return $content;

@@ -85,9 +85,9 @@ class Hideable extends Component implements ITemplater
     /**
      * @return INode[]
      */
-    public function getNodes(): array
+    public function getExtendedNodes(): array
     {
-        return array_merge([$this->hiderBtn], parent::getNodes());
+        return array_merge([$this->hiderBtn], $this->getNodes());
     }
 
     /**

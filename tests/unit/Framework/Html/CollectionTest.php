@@ -6,11 +6,6 @@ namespace AbterPhp\Framework\Html;
 
 class CollectionTest extends NodeTestCase
 {
-    public function testToStringIsEmptyByDefault()
-    {
-        parent::testToStringIsEmptyByDefault();
-    }
-
     /**
      * @return array
      */
@@ -35,17 +30,6 @@ class CollectionTest extends NodeTestCase
             'INode'   => [new Node('foo'), $translations, 'bar'],
             'INode[]' => [[new Node('foo')], $translations, 'bar'],
         ];
-    }
-
-    /**
-     * @dataProvider toStringCanReturnTranslatedContentProvider
-     *
-     * @param string $rawContent
-     * @param string $expectedResult
-     */
-    public function testToStringCanReturnTranslatedContent($rawContent, array $translations, string $expectedResult)
-    {
-        parent::testToStringCanReturnTranslatedContent($rawContent, $translations, $expectedResult);
     }
 
     public function testCountWithoutOffset()
@@ -153,7 +137,7 @@ class CollectionTest extends NodeTestCase
         $sut[3] = $node1;
         $sut[]  = $node1;
 
-        $this->assertEquals($expectedNodes, $sut->getNodes());
+        $this->assertEquals($expectedNodes, $sut->getExtendedNodes());
     }
 
     /**
@@ -229,6 +213,21 @@ class CollectionTest extends NodeTestCase
         $sut = $this->createNode();
 
         $sut[] = $item;
+    }
+
+    public function testArrayAccessUnset()
+    {
+        $node1 = new Node('1');
+
+        $sut = $this->createNode();
+
+        $sut[] = $node1;
+
+        $this->assertTrue($sut->offsetExists(0));
+
+        unset($sut[0]);
+
+        $this->assertfalse($sut->offsetExists(0));
     }
 
     public function testSetContent()

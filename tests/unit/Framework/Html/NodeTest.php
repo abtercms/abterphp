@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace AbterPhp\Framework\Html;
 
+use AbterPhp\Framework\I18n\MockTranslatorFactory;
+
 class NodeTest extends NodeTestCase
 {
     public function testGetRawContent()
@@ -30,5 +32,20 @@ class NodeTest extends NodeTestCase
             'fail-INode-foo-and-baz-intent' => [INode::class, ['foo', 'baz'], false],
             'Node-foo-intent'               => [Node::class, ['foo'], true],
         ];
+    }
+
+    public function testGetRawContentReturnsNonTranslatedContent()
+    {
+        $rawContent        = 'foo';
+        $translatedContent = 'bar';
+        $expectedResult    = $rawContent;
+        $translations      = [$rawContent => $translatedContent];
+        $translatorMock    = MockTranslatorFactory::createSimpleTranslator($this, $translations);
+
+        $sut = $this->createNode($rawContent);
+
+        $sut->setTranslator($translatorMock);
+
+        $this->assertContains($expectedResult, $sut->getRawContent());
     }
 }

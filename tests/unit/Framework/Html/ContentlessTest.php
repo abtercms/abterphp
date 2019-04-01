@@ -299,6 +299,16 @@ class ContentlessTest extends TestCase
     }
 
     /**
+     * @expectedException \LogicException
+     */
+    public function testSetContent()
+    {
+        $sut = $this->createNode();
+
+        $sut->setContent(12);
+    }
+
+    /**
      * @return Contentless
      */
     protected function createNode(): INode

@@ -188,23 +188,6 @@ class Collection implements ICollection
     }
 
     /**
-     * @param ITranslator|null $translator
-     *
-     * @return $this
-     */
-    public function setTranslator(?ITranslator $translator): INode
-    {
-        $this->translator = $translator;
-
-        $nodes = $this->getNodes();
-        foreach ($nodes as $node) {
-            $node->setTranslator($translator);
-        }
-
-        return $this;
-    }
-
-    /**
      * @return ITranslator|null
      */
     public function getTranslator(): ?ITranslator
@@ -257,11 +240,17 @@ class Collection implements ICollection
         switch ($this->nodeClass) {
             case INode::class:
                 return new Node($content);
-            case ICollection::class:
-                return new Collection($content);
             default:
                 return new $this->nodeClass($content);
         }
+    }
+
+    /**
+     * @return INode[]
+     */
+    public function getExtendedNodes(): array
+    {
+        return $this->getNodes();
     }
 
     /**

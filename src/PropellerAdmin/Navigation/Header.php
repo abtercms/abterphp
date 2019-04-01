@@ -68,9 +68,9 @@ class Header extends Item
     /**
      * @return array
      */
-    public function getNodes(): array
+    public function getExtendedNodes(): array
     {
-        return array_merge([$this->brandBtn, $this->hamburgerBtn], parent::getNodes());
+        return array_merge([$this->brandBtn, $this->hamburgerBtn], $this->getNodes());
     }
 
     /**

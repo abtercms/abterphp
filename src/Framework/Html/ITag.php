@@ -48,6 +48,16 @@ interface ITag extends INode
     public function unsetAttribute(string $key): INode;
 
     /**
+     * Removes a single attribute value
+     *
+     * @param string $key
+     * @param string $value
+     *
+     * @return $this
+     */
+    public function unsetAttributeValue(string $key, string $value): INode;
+
+    /**
      * Unsets all existing attributes and replaces them with the newly provided attributes
      * Use addAttributes if you want to keep all existing attributes but the ones provided
      *

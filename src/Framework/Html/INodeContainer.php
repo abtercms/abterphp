@@ -9,6 +9,11 @@ interface INodeContainer
     /**
      * @return INode[]
      */
+    public function getExtendedNodes(): array;
+
+    /**
+     * @return INode[]
+     */
     public function getNodes(): array;
 
     /**
@@ -16,5 +21,12 @@ interface INodeContainer
      *
      * @return INode[]
      */
-    public function getAllNodes(int $depth = -1): array;
+    public function getExtendedDescendantNodes(int $depth = -1): array;
+
+    /**
+     * @param int $depth
+     *
+     * @return INode[]
+     */
+    public function getDescendantNodes(int $depth = -1): array;
 }

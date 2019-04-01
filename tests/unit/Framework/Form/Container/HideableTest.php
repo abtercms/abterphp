@@ -32,13 +32,13 @@ class HideableTest extends \PHPUnit\Framework\TestCase
         $this->assertContains((string)$sut->getHiderBtn(), $actualResult);
     }
 
-    public function testGetAllNodesIncludesHiderBtn()
+    public function testGetExtendedNodesIncludesHiderBtn()
     {
         $expectedResult = 'foo';
 
         $sut = new Hideable($expectedResult);
 
-        $actualResult = $sut->getAllNodes();
+        $actualResult = $sut->getExtendedNodes();
 
         $this->assertContains($sut->getHiderBtn(), $actualResult);
     }

@@ -4,8 +4,44 @@ declare(strict_types=1);
 
 namespace AbterPhp\Framework\Html;
 
+use AbterPhp\Framework\I18n\MockTranslatorFactory;
+
 class ComponentTest extends CollectionTest
 {
+    public function testDefaultToString()
+    {
+        $sut = $this->createNode();
+
+        $this->assertSame('<span></span>', (string)$sut);
+    }
+
+    /**
+     * @return array
+     */
+    public function toStringWithTranslationProvider(): array
+    {
+        return [
+            ['AAA', ['AAA' => 'BBB'], '<span>BBB</span>'],
+        ];
+    }
+
+    /**
+     * @dataProvider toStringWithTranslationProvider
+     *
+     * @param        $content
+     * @param array  $translations
+     * @param string $expectedResult
+     */
+    public function testToStringWithTranslation($content, array $translations, string $expectedResult)
+    {
+        $translator = MockTranslatorFactory::createSimpleTranslator($this, $translations);
+
+        $sut = $this->createNode($content);
+        $sut->setTranslator($translator);
+
+        $this->assertSame($expectedResult, (string)$sut);
+    }
+
     /**
      * @return array
      */
@@ -30,18 +66,6 @@ class ComponentTest extends CollectionTest
             'INode'   => [new Node('foo'), $translations, '<span>bar</span>'],
             'INode[]' => [[new Node('foo')], $translations, '<span>bar</span>'],
         ];
-    }
-
-
-    /**
-     * @dataProvider toStringCanReturnTranslatedContentProvider
-     *
-     * @param string $rawContent
-     * @param string $expectedResult
-     */
-    public function testToStringCanReturnTranslatedContent($rawContent, array $translations, string $expectedResult)
-    {
-        parent::testToStringCanReturnTranslatedContent($rawContent, $translations, $expectedResult);
     }
 
     public function testSetIntentsCanOverwriteExistingIntents()
@@ -351,18 +375,18 @@ class ComponentTest extends CollectionTest
     public function collectProvider(): array
     {
         $node0   = new Node('0');
-        $comp1   = (new Component('1'))->setIntent('foo');
-        $comp2   = (new Component('2'))->setIntent('bar');
-        $comp3   = (new Component('3'))->setIntent('foo', 'bar');
-        $coll1   = new Collection([$comp1, $node0, $comp2]);
-        $coll2   = new Collection([$comp3, $node0, $coll1, $comp1]);
-        $content = [$comp1, $node0, $comp2, $coll2, $comp3];
+        $node1   = new Node('1', ['foo']);
+        $node2   = new Node('2', ['bar']);
+        $node3   = new Node('3', ['foo', 'bar']);
+        $coll1   = new Collection([$node1, $node2]);
+        $coll2   = new Collection([$node3, $node0, $coll1, $node1]);
+        $content = [$node1, $node0, $node2, $coll2, $node3];
 
-        $level0Expected     = [$comp1, $comp2, $comp3];
-        $level1Expected     = [$comp1, $comp2, $comp3, $comp1, $comp3];
-        $defaultExpected    = [$comp1, $comp2, $comp3, $comp1, $comp2, $comp1, $comp3];
-        $fooOnlyExpected    = [$comp1, $comp3, $comp1, $comp1, $comp3];
-        $fooBarOnlyExpected = [$comp3, $comp3];
+        $level0Expected     = [$node1, $node0, $node2, $coll2, $node3];
+        $level1Expected     = [$node1, $node0, $node2, $coll2, $node3, $node0, $coll1, $node1, $node3];
+        $defaultExpected    = [$node1, $node0, $node2, $coll2, $node3, $node0, $coll1, $node1, $node2, $node1, $node3];
+        $fooOnlyExpected    = [$node1, $node3, $node1, $node1, $node3];
+        $fooBarOnlyExpected = [$node3, $node3];
 
         return [
             '0-depth'       => [$content, null, 0, [], $level0Expected],

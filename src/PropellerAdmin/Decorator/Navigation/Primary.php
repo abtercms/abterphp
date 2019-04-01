@@ -8,6 +8,8 @@ use AbterPhp\Framework\Constant\Html5;
 use AbterPhp\Framework\Decorator\Decorator;
 use AbterPhp\Framework\Decorator\Rule;
 use AbterPhp\Framework\Html\Component;
+use AbterPhp\Framework\Html\ICollection;
+use AbterPhp\Framework\Html\ITag;
 use AbterPhp\Framework\Html\Tag;
 use AbterPhp\Framework\Navigation\Dropdown;
 use AbterPhp\Framework\Navigation\Item;
@@ -87,7 +89,21 @@ class Primary extends Decorator
         ];
         $navigation->setWrapper(new Component(null, [], $wrapperAttribs, Html5::TAG_ASIDE));
 
+        $this->handleButtons(...$navigation->getNodes());
         $this->handleUserGroup(...$navigation->getNodes());
+    }
+
+    /**
+     * @param Item ...$items
+     */
+    protected function handleButtons(Item ...$items)
+    {
+        foreach ($items as $item) {
+            /** @var Component\Button $button */
+            foreach ($item->collect(Component\Button::class) as $button) {
+                $button->unsetAttributeValue(Html5::ATTR_CLASS, 'btn');
+            }
+        }
     }
 
     /**
@@ -122,11 +138,27 @@ class Primary extends Decorator
             ->setAttribute(static::ATTR_DATA_SIDEBAR, static::USER_BLOCK_DATA_SIDEBAR)
             ->setAttribute(static::ATTR_DATA_TOGGLE, static::USER_BLOCK_DATA_TOGGLE);
 
-        $userBlock->getMediaLeft()->appendToClass(static::USER_BLOCK_MEDIA_LEFT_CLASS);
-        $userBlock->getMediaBody()->appendToClass(static::USER_BLOCK_MEDIA_BODY_CLASS);
-        $right = $userBlock->getMediaRight()->appendToClass(static::USER_BLOCK_MEDIA_RIGHT_CLASS);
+        $left  = $userBlock->getMediaLeft();
+        $body  = $userBlock->getMediaBody();
+        $right = $userBlock->getMediaRight();
 
-        $right[] = new Tag(null, [], [Html5::ATTR_CLASS => static::USER_BLOCK_MEDIA_RIGHT_ICON_CLASS], Html5::TAG_I);
+        if ($left instanceof ITag) {
+            $left->appendToClass(static::USER_BLOCK_MEDIA_LEFT_CLASS);
+        }
+        if ($body instanceof ITag) {
+            $body->appendToClass(static::USER_BLOCK_MEDIA_BODY_CLASS);
+        }
+        if ($right instanceof ITag) {
+            $right->appendToClass(static::USER_BLOCK_MEDIA_RIGHT_CLASS);
+            if ($right instanceof ICollection) {
+                $right[] = new Tag(
+                    null,
+                    [],
+                    [Html5::ATTR_CLASS => static::USER_BLOCK_MEDIA_RIGHT_ICON_CLASS],
+                    Html5::TAG_I
+                );
+            }
+        }
     }
 
     /**

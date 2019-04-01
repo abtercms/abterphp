@@ -271,9 +271,17 @@ class Pagination extends Tag implements IPagination, ITemplater
     /**
      * @return INode[]
      */
+    public function getExtendedNodes(): array
+    {
+        return array_merge([$this->numbers, $this->sizeOptions], $this->getNodes());
+    }
+
+    /**
+     * @return INode[]
+     */
     public function getNodes(): array
     {
-        return [$this->numbers, $this->sizeOptions];
+        return [];
     }
 
     /**

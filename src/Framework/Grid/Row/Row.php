@@ -96,30 +96,21 @@ class Row extends Tag implements IRow
     /**
      * @return INode[]
      */
-    public function getNodes(): array
+    public function getExtendedNodes(): array
     {
         if ($this->actionCell) {
             return [$this->cells, $this->actionCell];
         }
 
-        return [$this->cells];
+        return array_merge([$this->cells], $this->getNodes());
     }
 
     /**
-     * @param ITranslator|null $translator
-     *
-     * @return $this
+     * @return INode[]
      */
-    public function setTranslator(?ITranslator $translator): INode
+    public function getNodes(): array
     {
-        $this->translator = $translator;
-
-        $nodes = $this->getNodes();
-        foreach ($nodes as $node) {
-            $node->setTranslator($translator);
-        }
-
-        return $this;
+        return [];
     }
 
     /**

@@ -35,7 +35,7 @@ class FormDecorator
     {
         $form = $event->getForm();
 
-        $nodes = array_merge([$form], $form->getAllNodes());
+        $nodes = array_merge([$form], $form->getExtendedDescendantNodes());
 
         $this->generalDecorator->init()->decorate($nodes);
         $this->formDecorator->init()->decorate($nodes);

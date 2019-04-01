@@ -47,7 +47,7 @@ class Navigation extends Tag implements INodeContainer
     protected $itemsByWeight = [];
 
     /** @var Item[] */
-    protected $nodes;
+    protected $nodes = [];
 
     /**
      * Navigation constructor.
@@ -76,18 +76,22 @@ class Navigation extends Tag implements INodeContainer
      * @param int    $weight
      * @param string $resource
      * @param string $role
+     *
+     * @return $this
      */
     public function addItem(
         Item $component,
         int $weight = PHP_INT_MAX,
         string $resource = '',
         string $role = Role::READ
-    ) {
+    ): Navigation {
         if (!$this->isAllowed($resource, $role)) {
-            return;
+            return $this;
         }
 
         $this->itemsByWeight[$weight][] = $component;
+
+        return $this;
     }
 
     /**
@@ -196,9 +200,30 @@ class Navigation extends Tag implements INodeContainer
     /**
      * @return INode[]
      */
+    public function getExtendedNodes(): array
+    {
+        $nodes = [];
+        if ($this->prefix) {
+            $nodes[] = $this->prefix;
+        }
+        if ($this->postfix) {
+            $nodes[] = $this->postfix;
+        }
+        if ($this->wrapper) {
+            $nodes[] = $this->wrapper;
+        }
+
+        return array_merge($nodes, $this->getNodes());
+    }
+
+    /**
+     * @return INode[]
+     */
     public function getNodes(): array
     {
-        return $this->getAllNodes(0);
+        $this->resort();
+
+        return $this->nodes;
     }
 
     /**
@@ -206,24 +231,55 @@ class Navigation extends Tag implements INodeContainer
      *
      * @return INode[]
      */
-    public function getAllNodes(int $depth = -1): array
+    public function getDescendantNodes(int $depth = -1): array
     {
         $nodes = [];
-        foreach ($this->itemsByWeight as $nodesByWeight) {
-            $nodes = array_merge($nodes, $nodesByWeight);
+        foreach ($this->getNodes() as $node) {
+            $nodes[] = $node;
 
-            if ($depth === 0) {
-                continue;
-            }
-
-            foreach ($nodesByWeight as $node) {
-                if (!($node instanceof INodeContainer)) {
-                    $nodes = array_merge($nodes, $node->getAllNodes($depth - 1));
-                }
+            if ($depth !== 0 && $node instanceof INodeContainer) {
+                $nodes = array_merge($nodes, $node->getDescendantNodes($depth - 1));
             }
         }
 
         return $nodes;
+    }
+
+    /**
+     * @param int $depth
+     *
+     * @return INode[]
+     */
+    public function getExtendedDescendantNodes(int $depth = -1): array
+    {
+        $nodes = [];
+        foreach ($this->getExtendedNodes() as $node) {
+            $nodes[] = $node;
+
+            if ($depth !== 0 && $node instanceof INodeContainer) {
+                $nodes = array_merge($nodes, $node->getExtendedDescendantNodes($depth - 1));
+            }
+        }
+
+        return $nodes;
+    }
+
+    /**
+     * @param ITranslator|null $translator
+     *
+     * @return $this
+     */
+    public function setTranslator(?ITranslator $translator): INode
+    {
+        $this->translator = $translator;
+
+        $nodes = $this->getExtendedNodes();
+        /** @var INode $node */
+        foreach ($nodes as $node) {
+            $node->setTranslator($translator);
+        }
+
+        return $this;
     }
 
     /**
@@ -243,30 +299,11 @@ class Navigation extends Tag implements INodeContainer
     }
 
     /**
-     * @param ITranslator|null $translator
-     *
-     * @return $this
-     */
-    public function setTranslator(?ITranslator $translator): INode
-    {
-        $this->translator = $translator;
-
-        $nodes = $this->getNodes();
-        foreach ($nodes as $node) {
-            $node->setTranslator($translator);
-        }
-
-        return $this;
-    }
-
-    /**
      * @return string
      */
     public function __toString(): string
     {
         $this->resort();
-
-        $prefix = $this->prefix ? (string)$this->prefix : '';
 
         $itemContentList = [];
         foreach ($this->nodes as $node) {
@@ -279,6 +316,7 @@ class Navigation extends Tag implements INodeContainer
             $content = (string)$this->wrapper->setContent($content);
         }
 
+        $prefix  = $this->prefix ? (string)$this->prefix : '';
         $postfix = $this->postfix ? (string)$this->postfix : '';
 
         return $prefix . $content . $postfix;

@@ -23,6 +23,8 @@ abstract class NodeTestCase extends TestCase
      * @dataProvider setContentFailureProvider
      *
      * @expectedException \InvalidArgumentException
+     *
+     * @param mixed $content
      */
     public function testCreateFailure($content)
     {
@@ -33,6 +35,8 @@ abstract class NodeTestCase extends TestCase
      * @dataProvider setContentFailureProvider
      *
      * @expectedException \InvalidArgumentException
+     *
+     * @param mixed $content
      */
     public function testSetContentFailure($content)
     {
@@ -41,11 +45,11 @@ abstract class NodeTestCase extends TestCase
         $sut->setContent($content);
     }
 
-    public function testToStringIsEmptyByDefault()
+    public function testDefaultToString()
     {
         $sut = $this->createNode();
 
-        $this->assertContains('', (string)$sut);
+        $this->assertSame('', (string)$sut);
     }
 
     /**
@@ -86,7 +90,7 @@ abstract class NodeTestCase extends TestCase
     /**
      * @dataProvider toStringCanReturnTranslatedContentProvider
      *
-     * @param string $rawContent
+     * @param mixed $rawContent
      * @param string $expectedResult
      */
     public function testToStringCanReturnTranslatedContent($rawContent, array $translations, string $expectedResult)
@@ -98,25 +102,6 @@ abstract class NodeTestCase extends TestCase
         $sut->setTranslator($translatorMock);
 
         $this->assertContains($expectedResult, (string)$sut);
-    }
-
-    public function testGetRawContentReturnsNonTranslatedContent()
-    {
-        $rawContent        = 'foo';
-        $translatedContent = 'bar';
-        $expectedResult    = $rawContent;
-        $translations      = [$rawContent => $translatedContent];
-        $translatorMock    = MockTranslatorFactory::createSimpleTranslator($this, $translations);
-
-        $sut = $this->createNode($rawContent);
-
-        $sut->setTranslator($translatorMock);
-
-        if (method_exists($sut, 'getRawContent')) {
-            $this->assertContains($expectedResult, $sut->getRawContent());
-        } else {
-            $this->assertTrue(true, 'No need to test getRawContent');
-        }
     }
 
     /**
@@ -154,6 +139,19 @@ abstract class NodeTestCase extends TestCase
         $intents = $sut->getIntents();
 
         $this->assertSame([$intent0, $intent1], $intents);
+    }
+
+    public function testHasIntent()
+    {
+        $intent0 = 'foo';
+        $intent1 = 'bar';
+
+        $sut = $this->createNode();
+
+        $sut->addIntent($intent0);
+        $sut->addIntent($intent1);
+
+        $this->assertTrue($sut->hasIntent($intent0));
     }
 
     /**

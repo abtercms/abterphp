@@ -168,9 +168,9 @@ abstract class Filter extends Component implements IFilter, ITemplater
     /**
      * @return INode[]
      */
-    public function getNodes(): array
+    public function getExtendedNodes(): array
     {
-        return array_merge([$this->wrapper, $this->label, $this->helpBlock], parent::getNodes());
+        return array_merge([$this->wrapper, $this->label, $this->helpBlock], $this->getNodes());
     }
 
     /**

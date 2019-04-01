@@ -203,9 +203,9 @@ class Sortable extends Cell implements ICell, ITemplater
     /**
      * @return INode[]
      */
-    public function getNodes(): array
+    public function getExtendedNodes(): array
     {
-        return array_merge([$this->sortBtn], parent::getNodes());
+        return array_merge([$this->sortBtn], $this->getNodes());
     }
 
     /**

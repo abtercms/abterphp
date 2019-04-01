@@ -127,20 +127,17 @@ class FormGroup extends Tag implements ITemplater
     }
 
     /**
-     * @param ITranslator|null $translator
-     *
-     * @return $this
+     * @return INode[]
      */
-    public function setTranslator(?ITranslator $translator): INode
+    public function getExtendedNodes(): array
     {
-        $this->translator = $translator;
+        $nodes = [$this->label, $this->input];
 
-        $nodes = $this->getNodes();
-        foreach ($nodes as $node) {
-            $node->setTranslator($translator);
+        if ($this->help) {
+            $nodes[] = $this->help;
         }
 
-        return $this;
+        return array_merge($nodes, $this->getNodes());
     }
 
     /**
@@ -148,13 +145,7 @@ class FormGroup extends Tag implements ITemplater
      */
     public function getNodes(): array
     {
-        $nodes = [$this->label, $this->input];
-
-        if ($this->help instanceof INodeContainer) {
-            $nodes = array_merge($nodes, [$this->help]);
-        }
-
-        return $nodes;
+        return [];
     }
 
     /**

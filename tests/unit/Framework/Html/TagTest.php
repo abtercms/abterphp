@@ -6,6 +6,23 @@ namespace AbterPhp\Framework\Html;
 
 class TagTest extends NodeTestCase
 {
+    public function testDefaultToString()
+    {
+        $sut = $this->createNode();
+
+        $this->assertSame('<div></div>', (string)$sut);
+    }
+
+    /**
+     * @return array
+     */
+    public function toStringWithTranslationProvider(): array
+    {
+        return [
+            ['AAA', ['AAA' => 'BBB'], '<div>BBB</div>'],
+        ];
+    }
+
     /**
      * @return array
      */
@@ -28,7 +45,7 @@ class TagTest extends NodeTestCase
     /**
      * @param INode[]|INode|string|null $content
      *
-     * @return Component
+     * @return Tag
      */
     protected function createNode($content = null): INode
     {

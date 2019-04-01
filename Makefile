@@ -10,6 +10,6 @@ precommit:
 	./vendor/bin/phpcs -p --colors --cache --standard=PSR12 tests
 
 coverage:
-	./vendor/bin/phpunit
+	./vendor/bin/phpunit --testsuite=unit
 
 .PHONY: build

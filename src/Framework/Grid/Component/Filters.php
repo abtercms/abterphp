@@ -144,9 +144,9 @@ EOT;
     /**
      * @return INode[]
      */
-    public function getNodes(): array
+    public function getExtendedNodes(): array
     {
-        return array_merge([$this->hiderBtn, $this->filterBtn, $this->resetBtn], parent::getNodes());
+        return array_merge([$this->hiderBtn, $this->filterBtn, $this->resetBtn], $this->getNodes());
     }
 
     /**

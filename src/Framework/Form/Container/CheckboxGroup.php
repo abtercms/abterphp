@@ -48,14 +48,14 @@ class CheckboxGroup extends FormGroup
     /**
      * @return INode[]
      */
-    public function getNodes(): array
+    public function getExtendedNodes(): array
     {
         $nodes = [$this->label, $this->input, $this->checkboxSpan];
         if ($this->help) {
             $nodes[] = $this->help;
         }
 
-        return array_merge($nodes, parent::getNodes());
+        return array_merge($nodes, $this->getNodes());
     }
 
     /**

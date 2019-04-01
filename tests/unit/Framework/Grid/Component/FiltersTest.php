@@ -212,18 +212,18 @@ class FiltersTest extends \PHPUnit\Framework\TestCase
         $sut->setTranslator($mockTranslator);
     }
 
-    public function testGetAllNodesIncludesButtons()
+    public function testGetExtendedNodesIncludesButtons()
     {
         $sut = new Filters();
 
-        $allNodes = $sut->getAllNodes();
+        $allNodes = $sut->getExtendedNodes();
 
         $this->assertContains($sut->getHiderBtn(), $allNodes);
         $this->assertContains($sut->getFilterBtn(), $allNodes);
         $this->assertContains($sut->getResetBtn(), $allNodes);
     }
 
-    public function testGetAllNodesReturnsFilters()
+    public function testGetExtendedNodesReturnsFilters()
     {
         $filterCount = 2;
 
@@ -236,7 +236,7 @@ class FiltersTest extends \PHPUnit\Framework\TestCase
             $sut[] = $filter;
         }
 
-        $allNodes = $sut->getAllNodes();
+        $allNodes = $sut->getExtendedNodes();
 
         $this->assertCount($filterCount, $sut);
         for ($i = 0; $i < $filterCount; $i++) {

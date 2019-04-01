@@ -76,6 +76,40 @@ class ArrayHelperTest extends TestCase
     /**
      * @return array
      */
+    public function unsafeMergeAttributesProvider(): array
+    {
+        $foo     = ['attr1' => ['foo' => 'foo']];
+        $bar     = ['attr2' => ['bar' => 'bar']];
+        $foo2    = ['attr1' => ['baz' => 'baz']];
+        $fooBar  = ['attr1' => ['foo' => 'foo'], 'attr2' => ['bar' => 'bar']];
+        $fooFoo2 = ['attr1' => ['foo' => 'foo', 'baz' => 'baz']];
+
+        return [
+            'empty'     => [[], [], []],
+            'foo-empty' => [$foo, [], $foo],
+            'empty-foo' => [[], $foo, $foo],
+            'foo-bar'   => [$foo, $bar, $fooBar],
+            'foo-foo2'  => [$foo, $foo2, $fooFoo2],
+        ];
+    }
+
+    /**
+     * @dataProvider unsafeMergeAttributesProvider
+     *
+     * @param array $existingAttributes
+     * @param array $newAttributes
+     * @param array $expectedResult
+     */
+    public function testUnsafeMergeAttributes(array $existingAttributes, array $newAttributes, array $expectedResult)
+    {
+        $actualResult = ArrayHelper::unsafeMergeAttributes($existingAttributes, $newAttributes);
+
+        $this->assertEquals($expectedResult, $actualResult);
+    }
+
+    /**
+     * @return array
+     */
     public function mergeAttributesProvider(): array
     {
         $simple         = ['foo' => ['bar']];
@@ -141,6 +175,8 @@ class ArrayHelperTest extends TestCase
     {
         return [
             'null'               => [null, null],
+            'empty-string'       => ['', null],
+            'false'              => [false, null],
             'word'               => ['foo', ['foo' => 'foo']],
             'word-wrapped'       => [['foo'], ['foo' => 'foo']],
             'string'             => ['foo bar', ['foo' => 'foo', 'bar' => 'bar']],
@@ -164,6 +200,29 @@ class ArrayHelperTest extends TestCase
         $actualResult = ArrayHelper::formatAttribute($value);
 
         $this->assertEquals($expectedResult, $actualResult);
+    }
+
+    /**
+     * @return array
+     */
+    public function formatAttributeFailureProvider(): array
+    {
+        return [
+            'object'           => [new \stdClass()],
+            'array-of-objects' => [[new \stdClass()]],
+        ];
+    }
+
+    /**
+     * @dataProvider formatAttributeFailureProvider
+     *
+     * @expectedException \InvalidArgumentException
+     *
+     * @param mixed $value
+     */
+    public function testFormatAttributeFailure($value)
+    {
+        ArrayHelper::formatAttribute($value);
     }
 
     /**

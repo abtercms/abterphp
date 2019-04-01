@@ -86,10 +86,33 @@ trait TagTrait
     public function unsetAttribute(string $key): INode
     {
         if (!array_key_exists($key, $this->attributes)) {
-            throw new \RuntimeException('attribute does not exist');
+            return $this;
         }
 
         unset($this->attributes[$key]);
+
+        return $this;
+    }
+
+    /**
+     * Removes a single attribute value
+     *
+     * @param string $key
+     * @param string $value
+     *
+     * @return $this
+     */
+    public function unsetAttributeValue(string $key, string $value): INode
+    {
+        if (!array_key_exists($key, $this->attributes)) {
+            return $this;
+        }
+
+        if (!array_key_exists($value, $this->attributes[$key])) {
+            return $this;
+        }
+
+        unset($this->attributes[$key][$value]);
 
         return $this;
     }

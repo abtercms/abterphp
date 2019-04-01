@@ -74,9 +74,9 @@ class Countable extends Label implements ITemplater
     /**
      * @return INode[]
      */
-    public function getNodes(): array
+    public function getExtendedNodes(): array
     {
-        return array_merge([$this->counter], parent::getNodes());
+        return array_merge([$this->counter], $this->getNodes());
     }
 
     /**

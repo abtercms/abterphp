@@ -75,14 +75,14 @@ class Body extends Component
     /**
      * @return INode[]
      */
-    public function getNodes(): array
+    public function getExtendedNodes(): array
     {
         $nodes = [];
         if ($this->actions) {
             $nodes[] = $this->actions;
         }
 
-        return array_merge($nodes, parent::getNodes());
+        return array_merge($nodes, $this->getNodes());
     }
 
     /**

@@ -162,7 +162,7 @@ class CellsTest extends CollectionTest
         $sut[3] = $node1;
         $sut[]  = $node1;
 
-        $this->assertEquals($expectedNodes, $sut->getNodes());
+        $this->assertEquals($expectedNodes, $sut->getExtendedNodes());
     }
 
     /**
@@ -259,7 +259,7 @@ class CellsTest extends CollectionTest
 
         $sut->setContent($expectedNodes[0]);
 
-        $this->assertEquals($expectedNodes, $sut->getNodes());
+        $this->assertEquals($expectedNodes, $sut->getExtendedNodes());
     }
 
     public function testGetNodes()
@@ -278,7 +278,7 @@ class CellsTest extends CollectionTest
         $sut[3] = $node1;
         $sut[]  = $node1;
 
-        $this->assertEquals($expectedNodes, $sut->getNodes());
+        $this->assertEquals($expectedNodes, $sut->getExtendedNodes());
     }
 
     public function testIterator()
@@ -482,6 +482,21 @@ class CellsTest extends CollectionTest
                 [$cell2],
             ],
         ];
+    }
+
+    public function testArrayAccessUnset()
+    {
+        $node1 = new Cell('1', 'A');
+
+        $sut = $this->createNode();
+
+        $sut[] = $node1;
+
+        $this->assertTrue($sut->offsetExists(0));
+
+        unset($sut[0]);
+
+        $this->assertfalse($sut->offsetExists(0));
     }
 
     /**

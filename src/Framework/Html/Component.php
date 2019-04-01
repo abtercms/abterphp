@@ -85,48 +85,15 @@ class Component extends Collection implements IComponent
      */
     public function collect(?string $className = null, array $intents = [], int $depth = -1): array
     {
-        $components = [];
+        $matches = [];
 
-        foreach ($this->nodes as $node) {
-            if ($node instanceof IComponent) {
-                if (!$node->isMatch($className, ...$intents)) {
-                    continue;
-                }
-
-                $components[] = $node;
-            }
-
-            if ($depth !== 0 && $node instanceof ICollection) {
-                $childrenComponents = $this->getChildComponents($node, $depth - 1);
-                foreach ($childrenComponents as $childComponent) {
-                    if ($childComponent->isMatch($className, ...$intents)) {
-                        $components[] = $childComponent;
-                    }
-                    $components = array_merge($components, $childComponent->collect($className, $intents, 0));
-                }
+        foreach ($this->getDescendantNodes($depth) as $node) {
+            if ($node->isMatch($className, ...$intents)) {
+                $matches[] = $node;
             }
         }
 
-        return $components;
-    }
-
-    /**
-     * @param ICollection $collection
-     * @param int         $depth
-     *
-     * @return IComponent[]
-     */
-    protected function getChildComponents(ICollection $collection, int $depth): array
-    {
-        $childComponents = [];
-        $allNodes        = $collection->getAllNodes($depth);
-        foreach ($allNodes as $node) {
-            if ($node instanceof IComponent) {
-                $childComponents[] = $node;
-            }
-        }
-
-        return $childComponents;
+        return $matches;
     }
 
     /**
@@ -136,24 +103,8 @@ class Component extends Collection implements IComponent
     {
         $content = parent::__toString();
 
-        $content = $this->translate($content);
-
         $content = StringHelper::wrapInTag($content, $this->tag, $this->attributes);
 
         return $content;
-    }
-
-    /**
-     * @param mixed $content
-     *
-     * @return string
-     */
-    protected function translate($content): string
-    {
-        if (is_string($content) && $this->translator && $this->translator->canTranslate($content)) {
-            return $this->translator->translate($content);
-        }
-
-        return (string)$content;
     }
 }

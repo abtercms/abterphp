@@ -146,11 +146,11 @@ class SortableTest extends ComponentTest
         $this->assertSame($expectedResult, $actualResult2);
     }
 
-    public function testGetAllNodesReturnsSortBtn()
+    public function testGetExtendedNodesReturnsSortBtn()
     {
         $sut = new Sortable('ABC', 'g', 'i', 'f');
 
-        $allNodes = $sut->getAllNodes();
+        $allNodes = $sut->getExtendedNodes();
 
         $this->assertCount(2, $allNodes);
         $this->assertContains($sut->getSortBtn(), $allNodes);

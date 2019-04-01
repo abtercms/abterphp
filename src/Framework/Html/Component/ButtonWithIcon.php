@@ -67,9 +67,9 @@ class ButtonWithIcon extends Button implements ITemplater
     /**
      * @return INode[]
      */
-    public function getNodes(): array
+    public function getExtendedNodes(): array
     {
-        return array_merge([$this->text, $this->icon], parent::getNodes());
+        return array_merge([$this->text, $this->icon], $this->getNodes());
     }
 
     /**

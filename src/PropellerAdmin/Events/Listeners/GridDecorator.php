@@ -35,7 +35,7 @@ class GridDecorator
     {
         $grid = $event->getGrid();
 
-        $nodes = array_merge([$grid], $grid->getAllNodes());
+        $nodes = array_merge([$grid], $grid->getExtendedDescendantNodes());
 
         $this->generalDecorator->init()->decorate($nodes);
         $this->gridDecorator->init()->decorate($nodes);

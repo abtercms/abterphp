@@ -67,6 +67,33 @@ class ButtonWithIconTest extends TestCase
     }
 
     /**
+     * @dataProvider renderProvider
+     *
+     * @param IComponent  $text
+     * @param IComponent  $icon
+     * @param array       $intents
+     * @param array       $attributes
+     * @param array|null  $translations
+     * @param string|null $tag
+     * @param string      $expectedResult
+     */
+    public function testSetTemplateChangesToString()
+    {
+        $template = '--||--';
+
+        $text = new Component('A', [], [], Html5::TAG_B);
+        $icon = new Component('B', [], [], Html5::TAG_I);
+
+        $sut = new ButtonWithIcon($text, $icon);
+
+        $sut->setTemplate($template);
+
+        $actualResult = (string)$sut;
+
+        $this->assertContains($template, $actualResult);
+    }
+
+    /**
      * @param IComponent  $text
      * @param IComponent  $icon
      * @param array       $intents

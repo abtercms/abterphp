@@ -23,11 +23,11 @@ class DateHelper
     }
 
     /**
-     * @param \DateTime $dateTime
+     * @param \DateTime|null $dateTime
      *
      * @return string
      */
-    public static function formatDateTime(\DateTime $dateTime): string
+    public static function formatDateTime(?\DateTime $dateTime): string
     {
         if (!$dateTime) {
             return '';

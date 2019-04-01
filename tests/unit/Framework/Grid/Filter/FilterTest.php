@@ -27,11 +27,11 @@ abstract class FilterTest extends \PHPUnit\Framework\TestCase
         $this->assertContains($actualResult, $repeatedResult);
     }
 
-    public function testGetAllNodesContainsLabelAndWrapper()
+    public function testGetExtendedNodesContainsLabelAndWrapper()
     {
         $sut = $this->createFilter();
 
-        $actualResult = $sut->getAllNodes(-1);
+        $actualResult = $sut->getExtendedNodes(-1);
 
         $this->assertContains($sut->getLabel(), $actualResult);
         $this->assertContains($sut->getWrapper(), $actualResult);

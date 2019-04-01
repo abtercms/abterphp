@@ -10,6 +10,23 @@ use AbterPhp\Framework\Html\Node;
 
 class ItemTest extends ComponentTest
 {
+    public function testDefaultToString()
+    {
+        $sut = $this->createNode();
+
+        $this->assertSame('<li></li>', (string)$sut);
+    }
+
+    /**
+     * @return array
+     */
+    public function toStringWithTranslationProvider(): array
+    {
+        return [
+            ['AAA', ['AAA' => 'BBB'], '<li>BBB</li>'],
+        ];
+    }
+
     /**
      * @return array
      */

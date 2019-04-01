@@ -9,10 +9,9 @@ use AbterPhp\Framework\Events\NavigationReady;
 use AbterPhp\Framework\Html\Component\ButtonFactory;
 use AbterPhp\Framework\Navigation\Dropdown;
 use AbterPhp\Framework\Navigation\Item;
-use AbterPhp\Framework\Navigation\UserBlock;
-use Opulence\Routing\Urls\UrlGenerator;
-use Opulence\Sessions\ISession;
 use AbterPhp\Framework\Navigation\Navigation;
+use AbterPhp\Framework\Navigation\UserBlock;
+use Opulence\Sessions\ISession;
 
 class NavigationBuilder
 {
@@ -21,23 +20,18 @@ class NavigationBuilder
     /** @var ISession */
     protected $session;
 
-    /** @var UrlGenerator */
-    protected $urlGenerator;
-
     /** @var ButtonFactory */
     protected $buttonFactory;
 
     /**
      * NavigationRegistrar constructor.
      *
-     * @param ISession     $session
-     * @param UrlGenerator $urlGenerator
+     * @param ISession      $session
      * @param ButtonFactory $buttonFactory
      */
-    public function __construct(ISession $session, UrlGenerator $urlGenerator, ButtonFactory $buttonFactory)
+    public function __construct(ISession $session, ButtonFactory $buttonFactory)
     {
-        $this->session      = $session;
-        $this->urlGenerator = $urlGenerator;
+        $this->session       = $session;
         $this->buttonFactory = $buttonFactory;
     }
 
@@ -73,7 +67,7 @@ class NavigationBuilder
      */
     protected function createUserBlock(): UserBlock
     {
-        return new UserBlock($this->session, $this->urlGenerator);
+        return new UserBlock($this->session);
     }
 
     /**
@@ -83,7 +77,7 @@ class NavigationBuilder
     {
         $text = 'framework:logout';
 
-        $button   = $this->buttonFactory->createFromName($text, Routes::ROUTE_LOGOUT, []);
+        $button = $this->buttonFactory->createFromName($text, Routes::ROUTE_LOGOUT, []);
 
         return new Dropdown(new Item($button));
     }

@@ -92,15 +92,15 @@ class Dropdown extends Component
     /**
      * @return INode[]
      */
-    public function getNodes(): array
+    public function getExtendedNodes(): array
     {
         $nodes = [$this->prefix, $this->postfix];
 
         if ($this->wrapper) {
-            $nodes = [$this->wrapper, $this->prefix, $this->postfix];
+            $nodes[] = $this->wrapper;
         }
 
-        return array_merge($nodes, parent::getNodes());
+        return array_merge($nodes, $this->getNodes());
     }
 
     /**

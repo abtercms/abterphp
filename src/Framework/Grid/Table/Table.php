@@ -102,9 +102,9 @@ class Table extends Component implements ITable, ITemplater
     /**
      * @return INode[]
      */
-    public function getNodes(): array
+    public function getExtendedNodes(): array
     {
-        return array_merge([$this->header, $this->body], parent::getNodes());
+        return array_merge([$this->header, $this->body], $this->getNodes());
     }
 
     /**

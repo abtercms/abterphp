@@ -44,7 +44,7 @@ class NavigationBuilder
     {
         $navigation = $event->getNavigation();
 
-        $nodes = array_merge([$navigation], $navigation->getAllNodes());
+        $nodes = array_merge([$navigation], $navigation->getExtendedDescendantNodes());
 
         $this->generalDecorator->init()->decorate($nodes);
 
