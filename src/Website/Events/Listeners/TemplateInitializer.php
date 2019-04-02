@@ -30,6 +30,6 @@ class TemplateInitializer
      */
     public function handle(TemplateEngineReady $event)
     {
-        $event->getTemplateEngine()->addLoader(static::TEMPLATE_TYPE, $this->loader);
+        $event->getEngine()->getRenderer()->addLoader(static::TEMPLATE_TYPE, $this->loader);
     }
 }

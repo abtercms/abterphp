@@ -89,19 +89,6 @@ class FlashService
     }
 
     /**
-     * @param string   $key
-     * @param string[] $value
-     */
-    public function mergeFlashMessages(string $key, array $value)
-    {
-        $currentValue = (array)$this->session->get($key);
-
-        $newValue = array_merge($currentValue, $value);
-
-        $this->session->flash($key, $newValue);
-    }
-
-    /**
      * @return array
      */
     public function retrieveSuccessMessages()
@@ -115,15 +102,5 @@ class FlashService
     public function retrieveErrorMessages()
     {
         return (array)$this->session->get(static::ERROR);
-    }
-
-    /**
-     * @param string $key
-     *
-     * @return array
-     */
-    public function retrieveFlashMessages(string $key)
-    {
-        return (array)$this->session->get($key);
     }
 }

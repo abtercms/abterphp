@@ -7,14 +7,14 @@ namespace AbterPhp\Framework\Bootstrappers\Template;
 use AbterPhp\Framework\Constant\Event;
 use AbterPhp\Framework\Events\TemplateEngineReady;
 use AbterPhp\Framework\Template\CacheManager;
-use AbterPhp\Framework\Template\TemplateEngine;
-use AbterPhp\Framework\Template\TemplateFactory;
+use AbterPhp\Framework\Template\Engine;
+use AbterPhp\Framework\Template\Renderer;
 use Opulence\Events\Dispatchers\IEventDispatcher;
 use Opulence\Ioc\Bootstrappers\Bootstrapper;
 use Opulence\Ioc\Bootstrappers\ILazyBootstrapper;
 use Opulence\Ioc\IContainer;
 
-class TemplateEngineBootstrapper extends Bootstrapper implements ILazyBootstrapper
+class EngineBootstrapper extends Bootstrapper implements ILazyBootstrapper
 {
     /**
      * @return array
@@ -22,7 +22,7 @@ class TemplateEngineBootstrapper extends Bootstrapper implements ILazyBootstrapp
     public function getBindings(): array
     {
         return [
-            TemplateEngine::class,
+            Engine::class,
         ];
     }
 
@@ -36,15 +36,15 @@ class TemplateEngineBootstrapper extends Bootstrapper implements ILazyBootstrapp
         /** @var IEventDispatcher $eventDispatcher */
         $eventDispatcher = $container->resolve(IEventDispatcher::class);
 
-        /** @var TemplateFactory $templateFactory */
-        $templateFactory = $container->resolve(TemplateFactory::class);
-
         /** @var CacheManager $cacheManager */
         $cacheManager = $container->resolve(CacheManager::class);
 
-        $templateEngine = new TemplateEngine($templateFactory, $cacheManager);
+        /** @var Renderer $renderer */
+        $renderer = $container->resolve(Renderer::class);
+
+        $templateEngine = new Engine($renderer, $cacheManager);
         $eventDispatcher->dispatch(Event::TEMPLATE_ENGINE_READY, new TemplateEngineReady($templateEngine));
 
-        $container->bindInstance(TemplateEngine::class, $templateEngine);
+        $container->bindInstance(Engine::class, $templateEngine);
     }
 }

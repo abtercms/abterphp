@@ -69,14 +69,6 @@ class Template
     }
 
     /**
-     * @return array
-     */
-    public function getSubTemplates(): array
-    {
-        return array_keys($this->subTemplates);
-    }
-
-    /**
      * @return string[][]
      */
     public function parse(): array
@@ -85,9 +77,7 @@ class Template
             return [];
         }
 
-        if (!$this->replaceVars()) {
-            return [];
-        }
+        $this->replaceVars();
 
         $this->subTemplates = $this->parseTemplates();
 
@@ -97,35 +87,22 @@ class Template
     }
 
     /**
-     * @return bool
+     * Replaces is {{var/xxx}} occurances in the content
      */
-    private function replaceVars(): bool
+    private function replaceVars()
     {
         $matches = [];
-        $result  = preg_match_all('/\{\{\s*var\/([\w-]+)\s*\}\}/', $this->rawContent, $matches);
-        if ($result === false) {
-            return false;
-        }
-
-        if (count($matches) < 2) {
-            return count($matches) == 0;
-        }
+        preg_match_all('/\{\{\s*var\/([\w-]+)\s*\}\}/', $this->rawContent, $matches);
 
         foreach ($matches[1] as $idx => $varName) {
-            if (!array_key_exists($idx, $matches[0])) {
-                return false;
-            }
-
-            $search  = $matches[0][$idx];
-            $replace = '';
+            $search      = $matches[0][$idx];
+            $replaceWith = '';
             if (array_key_exists($varName, $this->vars)) {
-                $replace = $this->vars[$varName];
+                $replaceWith = $this->vars[$varName];
             }
 
-            $this->rawContent = str_replace($search, $replace, $this->rawContent);
+            $this->rawContent = str_replace($search, $replaceWith, $this->rawContent);
         }
-
-        return true;
     }
 
     /**
@@ -135,24 +112,15 @@ class Template
     {
         $matches = [];
         $pattern = sprintf('/\{\{\s*(%s)\/([\w-]+)\s*\}\}/', implode('|', $this->types));
-        $result  = preg_match_all($pattern, $this->rawContent, $matches);
-        if ($result === false) {
-            return [];
-        }
+        preg_match_all($pattern, $this->rawContent, $matches);
 
         $subTemplates = [];
         foreach ($matches[0] as $idx => $occurrence) {
-            if (!isset($matches[1][$idx]) || !isset($matches[2][$idx])) {
-                return [];
-            }
-
             $type       = $matches[1][$idx];
             $templateId = $matches[2][$idx];
 
-            if (!isset($this->subTemplates[$templateId])) {
-                $subTemplates[$type][$templateId] = [$occurrence];
-
-                continue;
+            if (!isset($subTemplates[$type][$templateId])) {
+                $subTemplates[$type][$templateId] = [];
             }
 
             $subTemplates[$type][$templateId][] = $occurrence;
@@ -197,22 +165,22 @@ class Template
     }
 
     /**
-     * @param string[][] $subTemplates
+     * @param string[][] $subTemplateValues
      *
      * @return string
      */
-    public function render(array $subTemplates): string
+    public function render(array $subTemplateValues): string
     {
         $content = $this->rawContent;
 
         foreach ($this->subTemplates as $type => $typeTemplates) {
-            if (!array_key_exists($type, $subTemplates)) {
-                $subTemplates[$type] = [];
+            if (!array_key_exists($type, $subTemplateValues)) {
+                $subTemplateValues[$type] = [];
             }
             foreach ($typeTemplates as $templateId => $occurrences) {
                 $replace = '';
-                if (array_key_exists($templateId, $subTemplates[$type])) {
-                    $replace = $subTemplates[$type][$templateId];
+                if (array_key_exists($templateId, $subTemplateValues[$type])) {
+                    $replace = $subTemplateValues[$type][$templateId];
                 }
 
                 $content = str_replace($occurrences, $replace, $content);

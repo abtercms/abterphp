@@ -20,6 +20,14 @@ class TemplateTest extends \PHPUnit\Framework\TestCase
     public function parsingSuccessProvider(): array
     {
         return [
+            'empty' => [
+                '',
+                [],
+            ],
+            'fail' => [
+                '',
+                [],
+            ],
             'content-only-1' => [
                 '{{block/content-one-1}}',
                 ['block' => ['content-one-1']],
@@ -80,6 +88,18 @@ class TemplateTest extends \PHPUnit\Framework\TestCase
                 [],
                 '0  abc 1bcd2',
             ],
+            'content-with-repeated-vars'   => [
+                '0  {{var/variable-one-1}} {{var/variable-one-1}} 1',
+                ['variable-one-1' => 'abc'],
+                [],
+                '0  abc abc 1',
+            ],
+            'content-with-modified-repeated-vars'   => [
+                '0  {{var/variable-one-1}} {{ var/variable-one-1 }} 1',
+                ['variable-one-1' => 'abc'],
+                [],
+                '0  abc abc 1',
+            ],
             'content-with-blocks-only-1' => [
                 '0  {{block/one-1}} 1',
                 [],
@@ -98,11 +118,35 @@ class TemplateTest extends \PHPUnit\Framework\TestCase
                 ['block' => ['one-1' => 'abc', 'two-2-two' => 'bcd']],
                 '0  abc 1bcd2',
             ],
+            'content-with-repeated-blocks' => [
+                '0  {{block/one-1}} {{block/one-1}} 1{{block/two-2-two}}2',
+                [],
+                ['block' => ['one-1' => 'abc', 'two-2-two' => 'bcd']],
+                '0  abc abc 1bcd2',
+            ],
+            'content-with-modified-repeated-blocks' => [
+                '0  {{block/one-1}} {{ block/one-1 }} 1{{block/two-2-two}}2',
+                [],
+                ['block' => ['one-1' => 'abc', 'two-2-two' => 'bcd']],
+                '0  abc abc 1bcd2',
+            ],
             'complex-1'                  => [
-                '0  {{block/one-1}}  {{var/3-threeThree}} 1{{block/two-2-two}}2{{gallery/event-1}}',
+                '0  {{block/one-1}} {{ block/one-1 }}  {{var/3-threeThree}} 1{{block/two-2-two}}2{{gallery/event-1}} {{ block/two-2-two }}', // nolint
                 ['3-threeThree' => 'cde'],
                 ['block' => ['one-1' => 'abc', 'two-2-two' => 'bcd'], 'gallery' => ['event-1' => 'fgh']],
-                '0  abc  cde 1bcd2fgh',
+                '0  abc abc  cde 1bcd2fgh bcd',
+            ],
+            'complex-without-subtemplate-value'                  => [
+                '0  {{block/one-1}} {{ block/one-1 }}  {{var/3-threeThree}} 1{{block/two-2-two}}2{{gallery/event-1}} {{ block/two-2-two }}', // nolint
+                ['3-threeThree' => 'cde'],
+                ['block' => ['one-1' => 'abc'], 'gallery' => ['event-1' => 'fgh']],
+                '0  abc abc  cde 12fgh ',
+            ],
+            'complex-without-subtemplate-type'                  => [
+                '0  {{block/one-1}} {{ block/one-1 }}  {{var/3-threeThree}} 1{{block/two-2-two}}2{{gallery/event-1}} {{ block/two-2-two }}', // nolint
+                ['3-threeThree' => 'cde'],
+                ['block' => ['one-1' => 'abc', 'two-2-two' => 'bcd']],
+                '0  abc abc  cde 1bcd2 bcd',
             ],
         ];
     }

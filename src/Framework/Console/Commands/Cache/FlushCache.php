@@ -6,7 +6,7 @@ namespace AbterPhp\Framework\Console\Commands\Cache;
 
 use AbterPhp\Framework\Assets\Command\FlushCache as AssetsFlushCacheCommand;
 use AbterPhp\Framework\Authorization\Command\FlushCache as AuthorizationFlushCacheCommand;
-use AbterPhp\Framework\Template\Command\FlushCache as TemplateFlushCacheCommand;
+use AbterPhp\Framework\Console\Commands\Template\FlushCache as TemplateFlushCacheCommand;
 use Opulence\Console\Commands\Command;
 use Opulence\Console\Responses\IResponse;
 use Opulence\Framework\Console\Commands\FlushFrameworkCacheCommand;

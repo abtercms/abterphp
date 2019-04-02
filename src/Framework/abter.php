@@ -22,7 +22,7 @@ return [
         Bootstrappers\Http\ViewBootstrapper::class,
         Bootstrappers\Session\FlashServiceBootstrapper::class,
         Bootstrappers\Template\CacheManagerBootstrapper::class,
-        Bootstrappers\Template\TemplateEngineBootstrapper::class,
+        Bootstrappers\Template\EngineBootstrapper::class,
     ],
     Module::CLI_BOOTSTRAPPERS  => [
         Bootstrappers\Console\Commands\Cache\FlushCacheBootstrapper::class,
@@ -44,7 +44,7 @@ return [
         Authorization\Command\FlushCache::class,
         Console\Commands\Cache\FlushCache::class,
         Console\Commands\Security\SecretGenerator::class,
-        Template\Command\FlushCache::class,
+        Console\Commands\Template\FlushCache::class,
     ],
     Module::EVENTS             => [
         Event::NAVIGATION_READY => [

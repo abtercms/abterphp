@@ -4,27 +4,27 @@ declare(strict_types=1);
 
 namespace AbterPhp\Framework\Events;
 
-use AbterPhp\Framework\Template\TemplateEngine;
+use AbterPhp\Framework\Template\Engine;
 
 class TemplateEngineReady
 {
-    /** @var TemplateEngine */
+    /** @var Engine */
     private $engine;
 
     /**
      * TemplateEngineReady constructor.
      *
-     * @param TemplateEngine $adapter
+     * @param Engine $adapter
      */
-    public function __construct(TemplateEngine $engine)
+    public function __construct(Engine $engine)
     {
         $this->engine = $engine;
     }
 
     /**
-     * @return TemplateEngine
+     * @return Engine
      */
-    public function getTemplateEngine(): TemplateEngine
+    public function getEngine(): Engine
     {
         return $this->engine;
     }

@@ -7,7 +7,7 @@ namespace AbterPhp\Website\Http\Controllers\Website;
 use AbterPhp\Admin\Http\Controllers\ControllerAbstract;
 use AbterPhp\Framework\Assets\AssetManager;
 use AbterPhp\Framework\Session\FlashService;
-use AbterPhp\Framework\Template\TemplateEngine;
+use AbterPhp\Framework\Template\Engine;
 use AbterPhp\Website\Constant\Routes;
 use AbterPhp\Website\Domain\Entities\Page\Assets;
 use AbterPhp\Website\Domain\Entities\Page\Meta;
@@ -23,7 +23,7 @@ use Opulence\Routing\Urls\UrlGenerator;
  */
 class Index extends ControllerAbstract
 {
-    /** @var TemplateEngine */
+    /** @var Engine */
     protected $templateEngine;
 
     /** @var PageRepo */
@@ -44,17 +44,17 @@ class Index extends ControllerAbstract
     /**
      * Index constructor.
      *
-     * @param FlashService   $flashService
-     * @param TemplateEngine $templateEngine
-     * @param PageRepo       $pageRepo
-     * @param UrlGenerator   $urlGenerator
-     * @param AssetManager   $assetManager
-     * @param string|null    $baseUrl
-     * @param string         $siteTitle
+     * @param FlashService $flashService
+     * @param Engine       $templateEngine
+     * @param PageRepo     $pageRepo
+     * @param UrlGenerator $urlGenerator
+     * @param AssetManager $assetManager
+     * @param string|null  $baseUrl
+     * @param string       $siteTitle
      */
     public function __construct(
         FlashService $flashService,
-        TemplateEngine $templateEngine,
+        Engine $templateEngine,
         PageRepo $pageRepo,
         UrlGenerator $urlGenerator,
         AssetManager $assetManager,
@@ -103,7 +103,7 @@ class Index extends ControllerAbstract
             'layout' => $page->getLayout(),
         ];
 
-        $body = $this->templateEngine->render('page', $page->getIdentifier(), $templates, $vars);
+        $body = $this->templateEngine->run('page', $page->getIdentifier(), $templates, $vars);
 
         $pageUrl     = $this->urlGenerator->createFromName(Routes::ROUTE_PAGE_OTHER, $identifier);
         $homepageUrl = $this->urlGenerator->createFromName(Routes::ROUTE_HOME);

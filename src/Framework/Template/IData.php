@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace AbterPhp\Framework\Template;
 
-interface ITemplateData
+interface IData
 {
     /**
      * @return string

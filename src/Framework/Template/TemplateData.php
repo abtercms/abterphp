@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace AbterPhp\Framework\Template;
 
-class TemplateData implements ITemplateData
+class TemplateData implements IData
 {
     /**
      * @var string

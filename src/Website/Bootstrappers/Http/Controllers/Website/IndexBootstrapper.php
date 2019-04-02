@@ -6,7 +6,7 @@ namespace AbterPhp\Website\Bootstrappers\Http\Controllers\Website;
 
 use AbterPhp\Framework\Assets\AssetManager;
 use AbterPhp\Framework\Session\FlashService;
-use AbterPhp\Framework\Template\TemplateEngine;
+use AbterPhp\Framework\Template\Engine;
 use AbterPhp\Website\Constant\Env;
 use AbterPhp\Website\Http\Controllers\Website\Index;
 use AbterPhp\Website\Orm\PageRepo;
@@ -33,7 +33,7 @@ class IndexBootstrapper extends Bootstrapper implements ILazyBootstrapper
     public function registerBindings(IContainer $container)
     {
         $flashService   = $container->resolve(FlashService::class);
-        $templateEngine = $container->resolve(TemplateEngine::class);
+        $templateEngine = $container->resolve(Engine::class);
         $pageRepo       = $container->resolve(PageRepo::class);
         $urlGenerator   = $container->resolve(UrlGenerator::class);
         $assetManager   = $container->resolve(AssetManager::class);

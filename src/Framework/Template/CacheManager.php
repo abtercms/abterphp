@@ -11,10 +11,6 @@ class CacheManager
     const CACHE_KEY_TEMPLATES = 'templates_%s';
     const CACHE_KEY_DOCUMENT  = 'document_%s';
 
-    const ASTERIX = '*';
-
-    const FORMAT_JSON = 'json';
-
     /** @var ICacheBridge */
     protected $cacheBridge;
 
@@ -31,21 +27,37 @@ class CacheManager
     /**
      * @param string $cacheId
      *
-     * @return SubTemplateCacheData|null
+     * @return CacheData|null
      */
-    public function getSubTemplateCacheData(string $cacheId): ?SubTemplateCacheData
+    public function getCacheData(string $cacheId): ?CacheData
     {
-        $key     = $this->getSubTemplateCacheKey($cacheId);
+        $key = $this->getCacheKey($cacheId);
         try {
             $payload = $this->cacheBridge->get($key);
         } catch (\Exception $e) {
             return null;
         }
+
         if (empty($payload) || !is_string($payload)) {
             return null;
         }
 
-        return SubTemplateCacheData::fromPayload($payload);
+        $data = json_decode($payload, true);
+        if (!is_array($data)) {
+            return null;
+        }
+
+        $cacheData = new CacheData();
+
+        if (array_key_exists(CacheData::PAYLOAD_KEY_DATE, $data)) {
+            $cacheData->setDate($data[CacheData::PAYLOAD_KEY_DATE]);
+        }
+
+        if (array_key_exists(CacheData::PAYLOAD_KEY_SUBTEMPLATES, $data)) {
+            $cacheData->setSubTemplates($data[CacheData::PAYLOAD_KEY_SUBTEMPLATES]);
+        }
+
+        return $cacheData;
     }
 
     /**
@@ -54,13 +66,18 @@ class CacheManager
      *
      * @return bool
      */
-    public function storeSubTemplateCacheData(string $cacheId, array $blocks): bool
+    public function storeCacheData(string $cacheId, array $blocks): bool
     {
-        $cacheData = (new SubTemplateCacheData())->setSubTemplates($blocks);
+        $cacheData = (new CacheData())->setSubTemplates($blocks);
 
-        $payload = $cacheData->toPayload();
+        $payload = json_encode(
+            [
+                CacheData::PAYLOAD_KEY_DATE         => $cacheData->getDate(),
+                CacheData::PAYLOAD_KEY_SUBTEMPLATES => $cacheData->getSubTemplates(),
+            ]
+        );
 
-        $key = $this->getSubTemplateCacheKey($cacheId);
+        $key = $this->getCacheKey($cacheId);
 
         $this->cacheBridge->set($key, $payload, PHP_INT_MAX);
 
@@ -108,7 +125,7 @@ class CacheManager
      *
      * @return string
      */
-    private function getSubTemplateCacheKey(string $cacheId): string
+    private function getCacheKey(string $cacheId): string
     {
         return sprintf(static::CACHE_KEY_TEMPLATES, $cacheId);
     }

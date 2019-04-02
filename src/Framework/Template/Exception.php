@@ -4,6 +4,6 @@ declare(strict_types=1);
 
 namespace AbterPhp\Framework\Template;
 
-class TemplateException extends \RuntimeException
+class Exception extends \RuntimeException
 {
 }

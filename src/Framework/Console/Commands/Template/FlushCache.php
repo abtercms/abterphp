@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AbterPhp\Framework\Template\Command;
+namespace AbterPhp\Framework\Console\Commands\Template;
 
 use AbterPhp\Framework\Template\CacheManager;
 use Opulence\Console\Commands\Command;

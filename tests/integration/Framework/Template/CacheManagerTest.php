@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Integration\Framework\Template;
 
+use AbterPhp\Framework\Template\CacheData;
 use AbterPhp\Framework\Template\CacheManager;
-use AbterPhp\Framework\Template\SubTemplateCacheData;
 use Opulence\Cache\ICacheBridge;
 use PHPUnit_Framework_MockObject_MockObject as MockObject;
 
@@ -32,40 +32,54 @@ class CacheManagerTest extends \PHPUnit\Framework\TestCase
 
     public function testGetSubTemplateCacheDataReturnsNullIfCacheDoesNotExist()
     {
-        $result = $this->sut->getSubTemplateCacheData(static::CACHED_ID);
+        $result = $this->sut->getCacheData(static::CACHED_ID);
 
         $this->assertNull($result);
     }
 
     public function testGetSubTemplateCacheDataReturnsDataIfFound()
     {
-        $expectedResult = (new SubTemplateCacheData())->setSubTemplates(['block' => ['one-1', 'two-2']]);
+        $expectedResult = (new CacheData())->setSubTemplates(['block' => ['one-1', 'two-2']]);
+
+        $payload = json_encode(
+            [
+                CacheData::PAYLOAD_KEY_DATE         => $expectedResult->getDate(),
+                CacheData::PAYLOAD_KEY_SUBTEMPLATES => $expectedResult->getSubTemplates(),
+            ]
+        );
 
         $this->client
             ->expects($this->any())
             ->method('get')
             ->with(static::CACHE_KEY)
-            ->willReturn($expectedResult->toPayload());
+            ->willReturn($payload);
 
-        $actualResult = $this->sut->getSubTemplateCacheData(static::CACHED_ID);
+        $actualResult = $this->sut->getCacheData(static::CACHED_ID);
 
         $this->assertEquals($expectedResult, $actualResult);
     }
 
     public function testSubTemplateCacheData()
     {
-        $expectedResult = (new SubTemplateCacheData())->setSubTemplates(['block' => ['one-1', 'two-2']]);
+        $expectedResult = (new CacheData())->setSubTemplates(['block' => ['one-1', 'two-2']]);
+
+        $payload = json_encode(
+            [
+                CacheData::PAYLOAD_KEY_DATE         => $expectedResult->getDate(),
+                CacheData::PAYLOAD_KEY_SUBTEMPLATES => $expectedResult->getSubTemplates(),
+            ]
+        );
 
         $this->client
             ->expects($this->any())
             ->method('get')
             ->with(static::CACHE_KEY)
-            ->willReturn($expectedResult->toPayload());
+            ->willReturn($payload);
 
-        $actualResult = $this->sut->getSubTemplateCacheData(static::CACHED_ID);
+        $actualResult = $this->sut->getCacheData(static::CACHED_ID);
 
         $this->assertNotNull($actualResult);
-        $this->assertInstanceOf(SubTemplateCacheData::class, $actualResult);
+        $this->assertInstanceOf(CacheData::class, $actualResult);
         $this->assertEquals($expectedResult, $actualResult);
     }
 }

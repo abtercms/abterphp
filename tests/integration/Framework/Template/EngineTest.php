@@ -3,8 +3,9 @@
 namespace Integration\Framework\Template;
 
 use AbterPhp\Framework\Template\CacheManager;
-use AbterPhp\Framework\Template\TemplateEngine;
-use AbterPhp\Framework\Template\TemplateFactory;
+use AbterPhp\Framework\Template\Engine;
+use AbterPhp\Framework\Template\Factory;
+use AbterPhp\Framework\Template\Renderer;
 use AbterPhp\Website\Databases\Queries\BlockCache;
 use AbterPhp\Website\Domain\Entities\Block;
 use AbterPhp\Website\Domain\Entities\Page;
@@ -14,11 +15,14 @@ use PHPUnit\Framework\MockObject\MockObject;
 
 class EngineTest extends \PHPUnit\Framework\TestCase
 {
-    /** @var TemplateEngine */
+    /** @var Engine */
     protected $sut;
 
-    /** @var TemplateFactory */
+    /** @var Factory */
     protected $templateFactory;
+
+    /** @var Renderer */
+    protected $renderer;
 
     /** @var BlockRepo|MockObject */
     protected $blockRepo;
@@ -31,7 +35,9 @@ class EngineTest extends \PHPUnit\Framework\TestCase
 
     public function setUp()
     {
-        $this->templateFactory = new TemplateFactory();
+        $this->templateFactory = new Factory();
+
+        $this->renderer = new Renderer($this->templateFactory);
 
         $this->blockRepo = $this->getMockBuilder(BlockRepo::class)
             ->disableOriginalConstructor()
@@ -47,22 +53,22 @@ class EngineTest extends \PHPUnit\Framework\TestCase
             ->disableOriginalConstructor()
             ->setMethods(
                 [
-                    'getSubTemplateCacheData',
-                    'storeSubTemplateCacheData',
+                    'getCacheData',
+                    'storeCacheData',
                     'getDocument',
                     'storeDocument',
                 ]
             )
             ->getMock();
 
-        $this->cacheManager->expects($this->any())->method('storeSubTemplateCacheData')->willReturn(true);
+        $this->cacheManager->expects($this->any())->method('storeCacheData')->willReturn(true);
         $this->cacheManager->expects($this->any())->method('storeDocument')->willReturn(true);
 
         $blockLoader = new BlockLoader($this->blockRepo, $this->blockCache);
 
-        $this->sut = new TemplateEngine($this->templateFactory, $this->cacheManager);
+        $this->sut = new Engine($this->renderer, $this->cacheManager);
 
-        $this->sut->addLoader('block', $blockLoader);
+        $this->renderer->addLoader('block', $blockLoader);
     }
 
     public function testRenderNoBlocks()
@@ -71,7 +77,7 @@ class EngineTest extends \PHPUnit\Framework\TestCase
 
         $page = new Page(0, 'abc', 'd', 'abc', '{{var/body}}-{{var/title}}');
 
-        $actualResult = $this->sut->render(
+        $actualResult = $this->sut->run(
             'page',
             $page->getIdentifier(),
             ['body' => $page->getBody(), 'layout' => $page->getLayout()],
@@ -95,7 +101,7 @@ class EngineTest extends \PHPUnit\Framework\TestCase
             ->with(['footer', 'header'])
             ->willReturn([$block1, $block2]);
 
-        $actualResult = $this->sut->render(
+        $actualResult = $this->sut->run(
             'page',
             $page->getIdentifier(),
             ['body' => $page->getBody(), 'layout' => $page->getLayout()],
@@ -145,7 +151,7 @@ class EngineTest extends \PHPUnit\Framework\TestCase
             ->with(['footer-sub-sub-1'])
             ->willReturn([$footerSubSub1]);
 
-        $actualResult = $this->sut->render(
+        $actualResult = $this->sut->run(
             'page',
             $page->getIdentifier(),
             ['body' => $page->getBody(), 'headerLayout' => $page->getLayout()],
