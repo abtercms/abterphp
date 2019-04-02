@@ -174,7 +174,7 @@ before the first stable version.
 1. Improve security implementing related headers as recommended:
    - https://medium.freecodecamp.org/secure-your-web-application-with-these-http-headers-fd66e0367628
    - https://medium.freecodecamp.org/web-security-hardening-http-cookies-be8d8d8016e1
-1. 70%+ of PHP source code unit tested, except for bootstrappers
+1. 70%+ of PHP source code unit tested, except for bootstrappers and console commands
 1. Verify that `localhost_router.php` works as expected or remove it if too hard to fix
 1. Modular asset management
 1. Complete test automation and automatic reviews set up

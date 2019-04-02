@@ -25,6 +25,7 @@
             <directory suffix=".php">./src</directory>
             <exclude>
                 <directory suffix=".php">./src/*/Bootstrappers</directory>
+                <directory suffix=".php">./src/*/Console/Commands</directory>
                 <directory suffix="routes.php">./src/*</directory>
             </exclude>
         </whitelist>

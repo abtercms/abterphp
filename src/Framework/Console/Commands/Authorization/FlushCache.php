@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AbterPhp\Framework\Authorization\Command;
+namespace AbterPhp\Framework\Console\Commands\Authorization;
 
 use AbterPhp\Framework\Authorization\CacheManager;
 use Opulence\Console\Commands\Command;

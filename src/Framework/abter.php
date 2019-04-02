@@ -40,8 +40,8 @@ return [
         Bootstrappers\Views\ViewFunctionsBootstrapper::class,
     ],
     Module::COMMANDS           => [
-        Assets\Command\FlushCache::class,
-        Authorization\Command\FlushCache::class,
+        Console\Commands\Assets\FlushCache::class,
+        Console\Commands\Authorization\FlushCache::class,
         Console\Commands\Cache\FlushCache::class,
         Console\Commands\Security\SecretGenerator::class,
         Console\Commands\Template\FlushCache::class,
