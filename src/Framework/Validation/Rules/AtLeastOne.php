@@ -40,12 +40,12 @@ class AtLeastOne implements IRuleWithArgs, IRuleWithErrorPlaceholders
      */
     public function passes($value, array $allValues = []): bool
     {
-        if ($value) {
+        if (is_string($value) && $value) {
             return true;
         }
 
         foreach ($this->fieldNames as $fieldName) {
-            if ($allValues[$fieldName]) {
+            if (isset($allValues[$fieldName]) && is_string($allValues[$fieldName]) && $allValues[$fieldName]) {
                 return true;
             }
         }
