@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace AbterPhp\Admin\Databases\Queries;
+namespace AbterPhp\Framework\Databases\Queries;
 
-interface AuthLoader
+interface IAuthLoader
 {
     /**
      * @return array|bool

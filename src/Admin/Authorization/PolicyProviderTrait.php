@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace AbterPhp\Admin\Authorization;
 
-use AbterPhp\Framework\Databases\Queries\AuthLoader;
+use AbterPhp\Framework\Databases\Queries\IAuthLoader;
 use Casbin\Model\Model;
 
 trait PolicyProviderTrait
 {
-    /** @var AuthLoader */
+    /** @var IAuthLoader */
     protected $authQueries;
 
     /** @var string */

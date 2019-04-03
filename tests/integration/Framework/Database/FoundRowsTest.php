@@ -1,8 +1,9 @@
 <?php
 
 
-namespace AbterPhp\Framework\Databases\Queries;
+namespace Integration\AbterPhp\Framework\Databases\Queries;
 
+use AbterPhp\Framework\Databases\Queries\FoundRows;
 use Integration\Framework\Console\IntegrationTestCase;
 use Opulence\Databases\ConnectionPools\ConnectionPool;
 

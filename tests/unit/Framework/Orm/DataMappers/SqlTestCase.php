@@ -150,24 +150,26 @@ abstract class SqlTestCase extends \PHPUnit\Framework\TestCase
 
     /**
      * @param array $valuesToBind
-     * @param mixed $column
+     * @param mixed $returnValue
      * @param int   $atBindValues
      * @param int   $atExecute
      * @param int   $atFetchAll
+     * @param bool  $executeResult
      *
      * @return IStatement|MockObject
      */
     protected function createReadColumnStatement(
         array $valuesToBind,
-        $column,
+        $returnValue,
         int $atBindValues = self::EXPECTATION_ONCE,
         int $atExecute = self::EXPECTATION_ONCE,
-        int $atFetchAll = self::EXPECTATION_ONCE
+        int $atFetchAll = self::EXPECTATION_ONCE,
+        bool $executeResult = true
     ) {
         $statement = $this->createStatement();
         $statement->expects($this->getExpectation($atBindValues))->method('bindValues')->with($valuesToBind);
-        $statement->expects($this->getExpectation($atExecute))->method('execute')->willReturn(true);
-        $statement->expects($this->getExpectation($atFetchAll))->method('fetchColumn')->willReturn($column);
+        $statement->expects($this->getExpectation($atExecute))->method('execute')->willReturn($executeResult);
+        $statement->expects($this->getExpectation($atFetchAll))->method('fetchColumn')->willReturn($returnValue);
 
         return $statement;
     }

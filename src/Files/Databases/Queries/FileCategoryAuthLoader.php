@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace AbterPhp\Files\Databases\Queries;
 
-use AbterPhp\Framework\Databases\Queries\AuthLoader;
+use AbterPhp\Framework\Databases\Queries\IAuthLoader;
 use Opulence\Databases\ConnectionPools\ConnectionPool;
 use Opulence\QueryBuilders\MySql\QueryBuilder;
 
-class FileCategoryAuthLoader implements AuthLoader
+class FileCategoryAuthLoader implements IAuthLoader
 {
     /** @var ConnectionPool */
     protected $connectionPool;
