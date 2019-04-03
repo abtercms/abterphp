@@ -10,6 +10,8 @@ use Opulence\Cryptography\Hashing\IHasher;
 
 class Crypto
 {
+    const ERROR_INVALID_SECRET = 'packed password must be a valid SHA3-512 hash';
+
     const SECRET_HASH_LENGTH = 128;
 
     /** @var IHasher */
@@ -26,6 +28,9 @@ class Crypto
 
     /** @var string */
     protected $salt = '';
+
+    /** @var string */
+    protected $rawSecretRegexp;
 
     /**
      * Authenticator constructor.
@@ -48,6 +53,8 @@ class Crypto
         $this->pepper      = $pepper;
         $this->hashOptions = $hashOptions;
         $this->salt        = $salt;
+
+        $this->rawSecretRegexp = sprintf('/^[0-9a-f]{%s}$/', static::SECRET_HASH_LENGTH);
     }
 
     /**
@@ -63,20 +70,22 @@ class Crypto
     }
 
     /**
-     * @param string $secret SHA3-512 encoded secret in hexadecimal
+     * @param string $rawSecret SHA3-512 encoded secret in hexadecimal
      *
      * @return string secret hashed and encrypted
-     * @throws \Exception
+     * @throws SecurityException
      */
-    public function hashCrypt(string $secret): string
+    public function hashCrypt(string $rawSecret): string
     {
-        if (\mb_strlen($secret) !== static::SECRET_HASH_LENGTH) {
-            throw new SecurityException('packed password must be a valid SHA3-512 hash');
+        $this->assertRawSecret($rawSecret);
+
+        try {
+            $hashedSecret = $this->hasher->hash($rawSecret, $this->hashOptions, $this->pepper);
+
+            $hashCryptedSecret = $this->encrypter->encrypt($hashedSecret);
+        } catch (\Exception $e) {
+            throw new SecurityException($e->getMessage(), $e->getCode(), $e);
         }
-
-        $hashedSecret = $this->hasher->hash($secret, $this->hashOptions, $this->pepper);
-
-        $hashCryptedSecret = $this->encrypter->encrypt($hashedSecret);
 
         return $hashCryptedSecret;
     }
@@ -86,15 +95,32 @@ class Crypto
      * @param string $storedSecret hashed and encrypted secret to compare $secret against
      *
      * @return bool
+     * @throws SecurityException
      */
     public function verifySecret(string $secret, string $storedSecret): bool
     {
         try {
             $hashedSecret = $this->encrypter->decrypt($storedSecret);
+
+            $verified = $this->hasher->verify($hashedSecret, $secret, $this->pepper);
         } catch (\Exception $e) {
-            $hashedSecret = '';
+            throw new SecurityException($e->getMessage(), $e->getCode(), $e);
         }
 
-        return $this->hasher->verify($hashedSecret, $secret, $this->pepper);
+        return $verified;
+    }
+
+    /**
+     * @param string $secret
+     */
+    protected function assertRawSecret(string $secret)
+    {
+        if (\mb_strlen($secret) !== static::SECRET_HASH_LENGTH) {
+            throw new SecurityException(static::ERROR_INVALID_SECRET);
+        }
+
+        if (!preg_match($this->rawSecretRegexp, $secret)) {
+            throw new SecurityException(static::ERROR_INVALID_SECRET);
+        }
     }
 }
