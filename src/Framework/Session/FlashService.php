@@ -45,47 +45,16 @@ class FlashService
 
     /**
      * @param array  $messages
-     * @param string $translationPrefix
      */
-    public function mergeErrorMessages(array $messages, string $translationPrefix = '')
+    public function mergeErrorMessages(array $messages)
     {
         $messages = ArrayHelper::flatten($messages);
-
-        if ($translationPrefix) {
-            $messages = $this->translateMessages($messages, $translationPrefix);
-        }
 
         $currentMessages = (array)$this->session->get(static::ERROR);
 
         $newMessages = array_merge($currentMessages, $messages);
 
         $this->session->flash(static::ERROR, $newMessages);
-    }
-
-    /**
-     * @param array  $messages
-     * @param string $translationPrefix
-     *
-     * @return array
-     */
-    protected function translateMessages(array $messages, string $translationPrefix = '')
-    {
-        if ($translationPrefix === '') {
-            return $messages;
-        }
-
-        $translatedMessages = [];
-        foreach ($messages as $fieldName => $fieldMessages) {
-            if (!$this->translator->canTranslate($translationPrefix . $fieldName)) {
-                continue;
-            }
-            $t = $this->translator->translate($translationPrefix . $fieldName);
-            foreach ($fieldMessages as $idx => $message) {
-                $translatedMessages[$fieldName][$idx] = str_replace("\"$fieldName\"", "\"$t\"", $message);
-            }
-        }
-
-        return $translatedMessages;
     }
 
     /**
