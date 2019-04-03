@@ -59,7 +59,7 @@ class SenderTest extends TestCase
         $replyTo = ['no-reply@example.com'];
         $subject = 'foo';
         $body    = 'bar';
-        
+
         $this->sut->send($subject, $body, $this->recipients, $senders, $replyTo);
     }
 }
