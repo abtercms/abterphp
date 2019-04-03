@@ -204,6 +204,7 @@ before the first stable version.
 1. Improve validation
    - Review validation factories
    - Create new validation rules where needed
+1. Cached translations
 
 ### 1.0 musts:
 

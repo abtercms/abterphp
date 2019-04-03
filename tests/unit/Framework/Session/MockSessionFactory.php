@@ -6,28 +6,30 @@ namespace AbterPhp\Framework\Session;
 
 use Opulence\Sessions\ISession;
 use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
 
-trait ISessionMockTrait
+class MockSessionFactory
 {
     /**
+     * @param TestCase $testCase
      * @param array|null $sessionData
-     * @param string     $name
+     * @param string $name
      * @param string|int $id
      *
      * @return ISession|MockObject|null
      */
-    protected function getSessionMock(array $sessionData = null, string $name = 'foo', $sessionId = 'bar'): ?ISession
-    {
+    public static function create(
+        TestCase $testCase,
+        array $sessionData = null,
+        string $name = 'foo',
+        $sessionId = 'bar'
+    ): ?ISession {
         if ($sessionData) {
             return null;
         }
 
-        if (!($this instanceof \PHPUnit\Framework\TestCase)) {
-            return null;
-        }
-
         /** @var ISession|MockObject $sessionMock */
-        $sessionMock = $this->getMockBuilder(ISession::class)
+        $sessionMock = $testCase->getMockBuilder(ISession::class)
             ->setMethods(
                 [
                     'ageFlashData',
@@ -56,7 +58,7 @@ trait ISessionMockTrait
             ->getMock();
 
         $sessionMock
-            ->expects($this->any())
+            ->expects($testCase->any())
             ->method('get')
             ->willReturnCallback(
                 function ($key, $defaultValue = null) use ($sessionData) {
@@ -69,7 +71,7 @@ trait ISessionMockTrait
             );
 
         $sessionMock
-            ->expects($this->any())
+            ->expects($testCase->any())
             ->method('has')
             ->willReturnCallback(
                 function ($key) use ($sessionData) {
@@ -82,27 +84,27 @@ trait ISessionMockTrait
             );
 
         $sessionMock
-            ->expects($this->any())
+            ->expects($testCase->any())
             ->method('hasStarted')
             ->willReturn(true);
 
         $sessionMock
-            ->expects($this->any())
+            ->expects($testCase->any())
             ->method('getAll')
             ->willReturn($sessionData);
 
         $sessionMock
-            ->expects($this->any())
+            ->expects($testCase->any())
             ->method('getId')
             ->willReturn($sessionId);
 
         $sessionMock
-            ->expects($this->any())
+            ->expects($testCase->any())
             ->method('getName')
             ->willReturn($name);
 
         $sessionMock
-            ->expects($this->any())
+            ->expects($testCase->any())
             ->method('start')
             ->willReturn(true);
 

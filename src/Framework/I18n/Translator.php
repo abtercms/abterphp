@@ -12,84 +12,22 @@ class Translator implements ITranslator
     /** @var array */
     protected $translations = [];
 
-    /** @var ISession */
-    protected $session;
-
-    /** @var string */
-    protected $translationsDir;
-
-    /** @var string */
-    protected $defaultLang;
-
-    /** @var string */
-    protected $lang;
-
-    /** @var bool */
-    protected $isInitialized = false;
-
     /**
      * Translator constructor.
      *
-     * @param ISession $session
-     * @param string   $translationsDir
-     * @param string   $defaultLang
+     * @param array $translations
      */
-    public function __construct(ISession $session, string $translationsDir, string $defaultLang)
+    public function __construct(array $translations)
     {
-        $this->session         = $session;
-        $this->translationsDir = $translationsDir;
-        $this->defaultLang     = $defaultLang;
-    }
-
-    /**
-     * @return string
-     */
-    private function getLang(): string
-    {
-        if ($this->lang) {
-            return $this->lang;
-        }
-
-        $this->lang = $this->defaultLang;
-
-        if ($this->session->has(Session::LANGUAGE_IDENTIFIER)) {
-            $this->lang = (string)$this->session->get(Session::LANGUAGE_IDENTIFIER);
-        }
-
-        return $this->lang;
-    }
-
-    public function initialize()
-    {
-        $lang = $this->getLang();
-        $dir  = sprintf('%s/%s/', $this->translationsDir, $lang);
-
-        foreach (scandir($dir) as $file) {
-            if (strlen($file) < 4 || substr($file, -4) !== '.php') {
-                continue;
-            }
-
-            $content = require $dir . $file;
-            $this->setTranslations($content, substr($file, 0, -4), $lang);
-        }
-
-        $this->isInitialized = true;
+        $this->setTranslations($translations);
     }
 
     /**
      * @param array  $translations
-     * @param string $key
-     * @param string $lang
      */
-    public function setTranslations(array $translations, string $key = '', string $lang = 'en')
+    public function setTranslations(array $translations)
     {
-        if ('' === $key) {
-            $this->translations[$lang] = $translations;
-
-            return;
-        }
-
-        $this->translations[$lang][$key] = $translations;
+        $this->translations = $translations;
     }
 
     /**
@@ -100,10 +38,6 @@ class Translator implements ITranslator
      */
     public function translate(string $key, ...$args): string
     {
-        if (!$this->isInitialized) {
-            $this->initialize();
-        }
-
         return $this->translateByArgs($key, $args);
     }
 
@@ -115,10 +49,6 @@ class Translator implements ITranslator
      */
     public function canTranslate(string $key, ...$args): bool
     {
-        if (!$this->isInitialized) {
-            $this->initialize();
-        }
-
         $res = $this->translateByArgs($key, $args);
 
         if (strpos($res, '{{translation ') !== 0) {
@@ -134,17 +64,13 @@ class Translator implements ITranslator
      *
      * @return string
      */
-    public function translateByArgs(string $key, array $args = []): string
+    protected function translateByArgs(string $key, array $args = []): string
     {
-        if (!$this->isInitialized) {
-            $this->initialize();
-        }
-
         $pathParts = explode(':', $key);
 
-        $translations = &$this->translations[$this->lang];
+        $translations = &$this->translations;
         foreach ($pathParts as $pathPart) {
-            if (!array_key_exists($pathPart, $translations)) {
+            if (!is_array($translations) || !array_key_exists($pathPart, $translations)) {
                 return "{{translation missing: $key}}";
             }
 

@@ -4,50 +4,80 @@ declare(strict_types=1);
 
 namespace AbterPhp\Framework\I18n;
 
-use AbterPhp\Framework\Session\ISessionMockTrait;
-use Opulence\Sessions\ISession;
 use PHPUnit\Framework\TestCase;
 
 class TranslatorTest extends TestCase
 {
-    use ISessionMockTrait;
-
     /** @var Translator */
     protected $sut;
 
-    /** @var ISession */
-    protected $sessionMock;
-
-    /** @var string */
-    protected $translationsDir = 'foo';
-
-    /** @var string */
-    protected $defaultLang = 'en';
+    /**
+     * @var array
+     */
+    protected $translationData = [
+        'foo' => [
+            'bar' => 'baz',
+            'replacable' => 'baz %2$s %1$s',
+        ],
+    ];
 
     public function setUp()
     {
-        $this->sessionMock = $this->getSessionMock();
-
-        $this->sut = new Translator($this->sessionMock, $this->translationsDir, $this->defaultLang);
+        $this->sut = new Translator($this->translationData);
     }
 
-    public function testTranslateByArgs()
+    /**
+     * @return array
+     */
+    public function translateProvider(): array
     {
-        $this->markTestIncomplete();
+        return [
+            ['foo:bar', [], 'baz'],
+            ['foo:replacable', ['second', 'first'], 'baz first second'],
+            ['foo:replacable', ['foo:bar', 'first'], 'baz first baz'],
+        ];
     }
 
-    public function testSetTranslations()
+    /**
+     * @dataProvider translateProvider
+     *
+     * @param string $expression
+     * @param array  $args
+     * @param string $expectedResult
+     */
+    public function testTranslate(string $expression, array $args, string $expectedResult)
     {
-        $this->markTestIncomplete();
+        $actualResult = $this->sut->translate($expression, ...$args);
+
+        $this->assertEquals($expectedResult, $actualResult);
     }
 
-    public function testTranslate()
+
+    /**
+     * @return array
+     */
+    public function canTranslateProvider(): array
     {
-        $this->markTestIncomplete();
+        return [
+            ['foo:bar', [], true],
+            ['foo', [], false],
+            ['foo:bar:baz', [], false],
+            ['foo:replacable', ['second', 'first'], true],
+            ['foo:replacable', ['foo:bar', 'first'], true],
+        ];
     }
 
-    public function testCanTranslate()
+    /**
+     * @dataProvider canTranslateProvider
+     *
+     * @param string $expression
+     * @param array  $args
+     * @param bool   $expectedResult
+     */
+    public function testCanTranslate(string $expression, array $args, bool $expectedResult)
     {
-        $this->markTestIncomplete();
+        $actualResult = $this->sut->canTranslate($expression, ...$args);
+
+        $this->assertEquals($expectedResult, $actualResult);
     }
 }

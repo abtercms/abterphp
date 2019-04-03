@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace AbterPhp\Framework\Bootstrappers\I18n;
 
 use AbterPhp\Framework\Constant\Env;
+use AbterPhp\Framework\Constant\Session;
 use AbterPhp\Framework\I18n\ITranslator;
 use AbterPhp\Framework\I18n\Translator;
 use Opulence\Framework\Configuration\Config;
@@ -29,15 +30,57 @@ class I18nBootstrapper extends Bootstrapper
      */
     private function registerTranslator(IContainer $container)
     {
-        $session = $container->resolve(ISession::class);
+        $translations = $this->getTranslations($container);
 
-        $translationsDir = Config::get('paths', 'resources.lang');
-        $defaultLang     = getenv(Env::DEFAULT_LANGUAGE);
-
-        $translator = new Translator($session, $translationsDir, $defaultLang);
+        $translator = new Translator($translations);
 
         $container->bindInstance(Translator::class, $translator);
         $container->bindInstance(ITranslator::class, $translator);
+    }
+
+    /**
+     * @param IContainer $container
+     *
+     * @return array
+     * @throws \Opulence\Ioc\IocException
+     */
+    protected function getTranslations(IContainer $container): array
+    {
+        $path = Config::get('paths', 'resources.lang');
+        $lang = $this->getLang($container);
+        $dir  = sprintf('%s/%s/', $path, $lang);
+
+        $translations = [];
+        foreach (scandir($dir) as $file) {
+            if (strlen($file) < 4 || substr($file, -4) !== '.php') {
+                continue;
+            }
+
+            $key   = substr($file, 0, -4);
+            $value = require $dir . $file;
+
+            $translations[$key] = $value;
+        }
+
+        return $translations;
+    }
+
+    /**
+     * @param IContainer $container
+     *
+     * @return string
+     * @throws \Opulence\Ioc\IocException
+     */
+    protected function getLang(IContainer $container): string
+    {
+        /** @var ISession $session */
+        $session = $container->resolve(ISession::class);
+
+        if ($session->has(Session::LANGUAGE_IDENTIFIER)) {
+            return (string)$session->get(Session::LANGUAGE_IDENTIFIER);
+        }
+
+        return (string)getenv(Env::DEFAULT_LANGUAGE);
     }
 
     /**
@@ -53,7 +96,7 @@ class I18nBootstrapper extends Bootstrapper
         $transpiler->registerViewFunction(
             'tr',
             function (string $key, ...$args) use ($translator) {
-                return $translator->translateByArgs($key, $args);
+                return $translator->translate($key, ...$args);
             }
         );
     }
