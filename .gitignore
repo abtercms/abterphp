@@ -3,10 +3,8 @@
 composer.phar
 nbproject/
 phpunit.phar
-vendor/
-public/tmp
 .env.*.php
 !config/environment/.env.example.php
-private/
-dumps/
+/dumps/
+/vendor/
 NOTES.md

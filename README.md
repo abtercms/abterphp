@@ -46,7 +46,7 @@ documentation might assume that all developers use `docker` for development. If 
 ensure that you have the right version of PHP, with the neccessary modules and that you have at least a supported version
 of MySQL (or later PostgreSQL). While having Redis or Memcached is great, those are not mandatory.
 
-#### Pre-requisite: Install [mkcert](https://mkcert.com/)
+#### Pre-requisite: Install [mkcert](https://mkcert.dev/)
 
 Since security is a top priority, pure http is not supported out of the box, therefore you'll need to install a certificate. 
 The recommended way is using `mkcert`. While it is not necessarily mandatory, some of the

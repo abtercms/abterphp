@@ -58,13 +58,12 @@
     ],
     "post-create-project-cmd": [
       "php apex encryption:generatekey",
-      "php -r \"echo 'Important: make ' . __DIR__ . '/tmp writable\n';\"",
-      "php -r \"echo 'Important: make ' . __DIR__ . '/public/tmp writable\n';\""
+      "php -r \"shell_exec(chmod -R 0777 ./tmp ./public/tmp);\"",
+      "php apex abterphp:flushcache"
     ],
     "post-install-cmd": [
       "php -r \"shell_exec((file_exists(getcwd() . '/composer.phar') ? PHP_BINARY . ' composer.phar' : 'composer') . ' dump-autoload -o');\"",
-      "php -r \"file_exists('config/environment/.env.app.php') || copy('config/environment/.env.example.php', 'config/environment/.env.app.php');\"",
-      "php apex abterphp:flushcache"
+      "php -r \"file_exists('config/environment/.env.app.php') || copy('config/environment/.env.example.php', 'config/environment/.env.app.php');\""
     ],
     "post-update-cmd": [
       "php -r \"shell_exec((file_exists(getcwd() . '/composer.phar') ? PHP_BINARY . ' composer.phar' : 'composer') . ' dump-autoload -o');\"",
