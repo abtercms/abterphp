@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace AbterPhp\Website\Service\Execute;
 
 use AbterPhp\Framework\Domain\Entities\IStringerEntity;
-use AbterPhp\Framework\Service\Execute\RepoServiceAbstract;
+use AbterPhp\Framework\Http\Service\Execute\RepoServiceAbstract;
 use AbterPhp\Website\Domain\Entities\BlockLayout as Entity;
 use AbterPhp\Website\Orm\BlockLayoutRepo as GridRepo;
 use AbterPhp\Website\Validation\Factory\BlockLayout as ValidatorFactory;

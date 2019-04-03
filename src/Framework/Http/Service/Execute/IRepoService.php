@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AbterPhp\Framework\Service\Execute;
+namespace AbterPhp\Framework\Http\Service\Execute;
 
 use Opulence\Http\Requests\UploadedFile;
 

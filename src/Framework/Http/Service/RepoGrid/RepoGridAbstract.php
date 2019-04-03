@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace AbterPhp\Framework\Service\RepoGrid;
+namespace AbterPhp\Framework\Http\Service\RepoGrid;
 
+use AbterPhp\Framework\Databases\Queries\FoundRows;
 use AbterPhp\Framework\Grid\Factory\IBase as GridFactory;
 use AbterPhp\Framework\Grid\IGrid;
 use AbterPhp\Framework\I18n\ITranslator;
-use Casbin\Enforcer;
-use AbterPhp\Framework\Databases\Queries\FoundRows;
 use AbterPhp\Framework\Orm\IGridRepo;
+use Casbin\Enforcer;
 use Opulence\Http\Collection;
 
 abstract class RepoGridAbstract implements IRepoGrid

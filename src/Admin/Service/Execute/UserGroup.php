@@ -9,7 +9,7 @@ use AbterPhp\Admin\Domain\Entities\UserGroup as Entity;
 use AbterPhp\Admin\Orm\UserGroupRepo as GridRepo;
 use AbterPhp\Admin\Validation\Factory\UserGroup as ValidatorFactory;
 use AbterPhp\Framework\Domain\Entities\IStringerEntity;
-use AbterPhp\Framework\Service\Execute\RepoServiceAbstract;
+use AbterPhp\Framework\Http\Service\Execute\RepoServiceAbstract;
 use Cocur\Slugify\Slugify;
 use Opulence\Events\Dispatchers\IEventDispatcher;
 use Opulence\Orm\IUnitOfWork;

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AbterPhp\Framework\Service\RepoGrid;
+namespace AbterPhp\Framework\Http\Service\RepoGrid;
 
 use AbterPhp\Framework\Grid\IGrid;
 use Opulence\Http\Collection;
