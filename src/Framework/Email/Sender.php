@@ -6,24 +6,28 @@ namespace AbterPhp\Framework\Email;
 
 use Swift_Mailer;
 use Swift_Message;
-use Swift_Transport;
 
-class Service
+class Sender
 {
     /** @var Swift_Mailer */
     protected $mailer;
+
+    /** @var MessageFactory */
+    protected $messageFactory;
 
     /** @var array */
     protected $failedRecipients = [];
 
     /**
-     * Contact constructor.
+     * Sender constructor.
      *
-     * @param Swift_Transport $transport
+     * @param Swift_Mailer   $mailer
+     * @param MessageFactory $messageFactory
      */
-    public function __construct(Swift_Transport $transport)
+    public function __construct(Swift_Mailer $mailer, MessageFactory $messageFactory)
     {
-        $this->mailer = new Swift_Mailer($transport);
+        $this->mailer         = $mailer;
+        $this->messageFactory = $messageFactory;
     }
 
     /**
@@ -37,22 +41,19 @@ class Service
      */
     public function send(string $subject, string $body, array $recipients, array $senders, array $replyTo): int
     {
-        $message = (new Swift_Message($subject))->setBody($body)->setFrom($senders)->setReplyTo($replyTo);
+        $message = $this->messageFactory->create($subject)->setBody($body)->setFrom($senders)->setReplyTo($replyTo);
 
         $this->failedRecipients = [];
 
-        $numSent = 0;
-        foreach ($recipients as $address => $name) {
-            if (is_int($address)) {
-                $message->setTo($name);
+        foreach ($recipients as $key => $value) {
+            if (is_int($key)) {
+                $message->addTo($value);
             } else {
-                $message->setTo([$address => $name]);
+                $message->addTo($key, $value);
             }
-
-            $numSent += $this->mailer->send($message, $this->failedRecipients);
         }
 
-        return $numSent;
+        return $this->mailer->send($message, $this->failedRecipients);
     }
 
     /**

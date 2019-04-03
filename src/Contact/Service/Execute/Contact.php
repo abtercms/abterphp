@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace AbterPhp\Contact\Service\Execute;
 
 use AbterPhp\Contact\Validation\Factory\Contact as ValidatorFactory;
-use AbterPhp\Framework\Email\Service;
+use AbterPhp\Framework\Email\Sender;
 use Opulence\Validation\IValidator;
 
 class Contact
@@ -13,7 +13,7 @@ class Contact
     /** @var ValidatorFactory */
     protected $validatorFactory;
 
-    /** @var Service */
+    /** @var Sender */
     protected $mailer;
 
     /** @var string[] */
@@ -29,11 +29,11 @@ class Contact
      * Contact constructor
      *
      * @param ValidatorFactory $validatorFactory
-     * @param Service          $mailer
+     * @param Sender           $mailer
      * @param string[]         $recipients
      * @param string[]         $senders
      */
-    public function __construct(ValidatorFactory $validatorFactory, Service $mailer, array $recipients, array $senders)
+    public function __construct(ValidatorFactory $validatorFactory, Sender $mailer, array $recipients, array $senders)
     {
         $this->validatorFactory = $validatorFactory;
         $this->mailer           = $mailer;

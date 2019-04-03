@@ -8,7 +8,7 @@ use AbterPhp\Contact\Constant\Env;
 use AbterPhp\Contact\Http\Controllers\Website\Contact as ContactController;
 use AbterPhp\Contact\Service\Execute\Contact as ContactService;
 use AbterPhp\Contact\Validation\Factory\Contact as ValidatorFactory;
-use AbterPhp\Framework\Email\Service;
+use AbterPhp\Framework\Email\Sender;
 use AbterPhp\Framework\Exception\Config;
 use Opulence\Ioc\Bootstrappers\Bootstrapper;
 use Opulence\Ioc\Bootstrappers\ILazyBootstrapper;
@@ -69,8 +69,8 @@ class ContactBootstrapper extends Bootstrapper implements ILazyBootstrapper
             );
         }
 
-        /** @var Service $mailer */
-        $mailer = $container->resolve(Service::class);
+        /** @var Sender $mailer */
+        $mailer = $container->resolve(Sender::class);
 
         /** @var ValidatorFactory $validatorFactory */
         $validatorFactory = $container->resolve(ValidatorFactory::class);
