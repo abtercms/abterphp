@@ -1,6 +1,6 @@
 <?php
 
-namespace AbterPhp\Framework\Filesystem\Uploader;
+namespace AbterPhp\Framework\Filesystem;
 
 use League\Flysystem\FileNotFoundException;
 use League\Flysystem\Filesystem;
@@ -14,7 +14,7 @@ class Uploader
     const DEFAULT_KEY = 'file';
 
     /** @var Filesystem */
-    protected $storedFileManager;
+    protected $filesystem;
 
     /** @var string */
     protected $fileManagerPath;
@@ -28,13 +28,13 @@ class Uploader
     /**
      * Uploader constructor.
      *
-     * @param Filesystem  $storedFileManager
+     * @param Filesystem  $filesystem
      * @param string|null $fileManagerPath
      */
-    public function __construct(Filesystem $storedFileManager, ?string $fileManagerPath)
+    public function __construct(Filesystem $filesystem, ?string $fileManagerPath = null)
     {
-        $this->storedFileManager = $storedFileManager;
-        $this->fileManagerPath   = $fileManagerPath
+        $this->filesystem      = $filesystem;
+        $this->fileManagerPath = $fileManagerPath
             ? rtrim($fileManagerPath, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR
             : static::DEFAULT_ROOT;
     }
@@ -117,13 +117,13 @@ class Uploader
      */
     public function delete(string $path): bool
     {
-        if (!$this->storedFileManager->has($path)) {
+        if (!$this->filesystem->has($path)) {
             return false;
         }
 
         // phpcs:disable Generic.CodeAnalysis.EmptyStatement
         try {
-            return $this->storedFileManager->delete($path);
+            return $this->filesystem->delete($path);
         } catch (FileNotFoundException $e) {
         }
         // phpcs:enable Generic.CodeAnalysis.EmptyStatement
@@ -138,13 +138,13 @@ class Uploader
      */
     public function getContent(string $path): ?string
     {
-        if (!$this->storedFileManager->has($path)) {
+        if (!$this->filesystem->has($path)) {
             return null;
         }
 
         // phpcs:disable Generic.CodeAnalysis.EmptyStatement
         try {
-            return $this->storedFileManager->read($path);
+            return $this->filesystem->read($path);
         } catch (FileNotFoundException $e) {
         }
         // phpcs:enable Generic.CodeAnalysis.EmptyStatement
@@ -159,13 +159,13 @@ class Uploader
      */
     public function getStream(string $path)
     {
-        if (!$this->storedFileManager->has($path)) {
+        if (!$this->filesystem->has($path)) {
             return false;
         }
 
         // phpcs:disable Generic.CodeAnalysis.EmptyStatement
         try {
-            return $this->storedFileManager->readStream($path);
+            return $this->filesystem->readStream($path);
         } catch (FileNotFoundException $e) {
         }
         // phpcs:enable Generic.CodeAnalysis.EmptyStatement
@@ -180,13 +180,13 @@ class Uploader
      */
     public function getSize(string $path): ?int
     {
-        if (!$this->storedFileManager->has($path)) {
+        if (!$this->filesystem->has($path)) {
             return null;
         }
 
         // phpcs:disable Generic.CodeAnalysis.EmptyStatement
         try {
-            $size = $this->storedFileManager->getSize($path);
+            $size = $this->filesystem->getSize($path);
             if (is_numeric($size)) {
                 return (int)$size;
             }

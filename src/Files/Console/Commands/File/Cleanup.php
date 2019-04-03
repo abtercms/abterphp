@@ -6,7 +6,7 @@ namespace AbterPhp\Files\Console\Commands\File;
 
 use AbterPhp\Files\Domain\Entities\File as Entity;
 use AbterPhp\Files\Orm\FileRepo;
-use AbterPhp\Framework\Filesystem\Uploader\Uploader;
+use AbterPhp\Framework\Filesystem\Uploader;
 use FilesystemIterator;
 use Opulence\Console\Commands\Command;
 use Opulence\Console\Requests\Option;

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace AbterPhp\Files\Service\File;
 
 use AbterPhp\Files\Domain\Entities\File as Entity;
-use AbterPhp\Framework\Filesystem\Uploader\Uploader;
+use AbterPhp\Framework\Filesystem\Uploader;
 
 class CsvCreator
 {

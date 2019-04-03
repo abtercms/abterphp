@@ -10,7 +10,7 @@ use AbterPhp\Files\Orm\FileCategoryRepo;
 use AbterPhp\Files\Orm\FileRepo as GridRepo;
 use AbterPhp\Files\Validation\Factory\File as ValidatorFactory;
 use AbterPhp\Framework\Domain\Entities\IStringerEntity;
-use AbterPhp\Framework\Filesystem\Uploader\Uploader;
+use AbterPhp\Framework\Filesystem\Uploader;
 use AbterPhp\Framework\Http\Service\Execute\RepoServiceAbstract;
 use Cocur\Slugify\Slugify;
 use Opulence\Events\Dispatchers\IEventDispatcher;

@@ -3,7 +3,7 @@
 namespace AbterPhp\Framework\Bootstrappers\Filesystem;
 
 use AbterPhp\Framework\Constant\Env;
-use AbterPhp\Framework\Filesystem\Uploader\Uploader;
+use AbterPhp\Framework\Filesystem\Uploader;
 use League\Flysystem\Adapter\Local;
 use League\Flysystem\Filesystem;
 use Opulence\Ioc\Bootstrappers\Bootstrapper;

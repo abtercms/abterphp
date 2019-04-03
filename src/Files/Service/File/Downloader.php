@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace AbterPhp\Files\Service\File;
 
-use AbterPhp\Framework\Authorization\Constant\Role;
-use AbterPhp\Framework\Filesystem\Uploader\Uploader;
+use AbterPhp\Admin\Domain\Entities\User;
 use AbterPhp\Files\Authorization\FileCategoryProvider;
-use Casbin\Enforcer;
-use Casbin\Exceptions\CasbinException;
 use AbterPhp\Files\Domain\Entities\File;
 use AbterPhp\Files\Domain\Entities\FileDownload;
-use AbterPhp\Admin\Domain\Entities\User;
 use AbterPhp\Files\Orm\FileDownloadRepo;
 use AbterPhp\Files\Orm\FileRepo as Repo;
+use AbterPhp\Framework\Authorization\Constant\Role;
+use AbterPhp\Framework\Filesystem\Uploader;
+use Casbin\Enforcer;
+use Casbin\Exceptions\CasbinException;
 use League\Flysystem\FileNotFoundException;
 use Opulence\Orm\IUnitOfWork;
 use Opulence\Orm\OrmException;
