@@ -48,7 +48,7 @@ class CacheManager
             return null;
         }
 
-        if (empty($payload) || !is_string($payload)) {
+        if (!is_string($payload) || $payload === '') {
             return null;
         }
 

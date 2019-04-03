@@ -16,7 +16,7 @@ class CombinedAdapter implements CasbinAdapter
     protected $cacheManager;
 
     /** @var CasbinAdapter[] */
-    protected $registeredAdapters;
+    protected $registeredAdapters = [];
 
     /**
      * PolicyAdapter constructor.
@@ -24,7 +24,7 @@ class CombinedAdapter implements CasbinAdapter
      * @param CasbinAdapter     $defaultAdapter
      * @param CacheManager|null $cacheManager
      */
-    public function __construct(CasbinAdapter $defaultAdapter, CacheManager $cacheManager = null)
+    public function __construct(CasbinAdapter $defaultAdapter, ?CacheManager $cacheManager = null)
     {
         $this->defaultAdapter = $defaultAdapter;
         $this->cacheManager   = $cacheManager;
@@ -61,7 +61,7 @@ class CombinedAdapter implements CasbinAdapter
      *
      * @return bool
      */
-    public function loadCachedPolicy($model): bool
+    protected function loadCachedPolicy($model): bool
     {
         if (!$this->cacheManager) {
             return false;
@@ -89,7 +89,7 @@ class CombinedAdapter implements CasbinAdapter
      *
      * @return bool
      */
-    public function storeLoadedPolicies($model): bool
+    protected function storeLoadedPolicies($model): bool
     {
         if (!$this->cacheManager) {
             return false;
@@ -108,7 +108,7 @@ class CombinedAdapter implements CasbinAdapter
      *
      * @return bool
      */
-    public function loadAdapterPolicies($model): bool
+    protected function loadAdapterPolicies($model): bool
     {
         $this->defaultAdapter->loadPolicy($model);
 
@@ -165,6 +165,6 @@ class CombinedAdapter implements CasbinAdapter
     {
         $args = array_merge([$sec, $ptype, $fieldIndex], $fieldValues);
 
-        return call_user_func_array([$this->defaultAdapter, 'removeFilterPolicy'], $args);
+        return call_user_func_array([$this->defaultAdapter, 'removeFilteredPolicy'], $args);
     }
 }
