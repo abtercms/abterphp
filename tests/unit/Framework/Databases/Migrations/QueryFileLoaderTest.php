@@ -9,32 +9,42 @@ use PHPUnit\Framework\TestCase;
 
 class QueryFileLoaderTest extends TestCase
 {
-    protected $migrationsPath = '/migrations';
-
     public function testDown()
     {
-        $driver = 'foo';
+        $migrationsPath = __DIR__ . '/fixtures';
+        $driver         = 'foo';
+        $filename       = 'test.sql';
+        $expectedResult = 'SELECT -1;';
 
-        $sut = $this->createSut($this->migrationsPath, $driver);
+        $sut = $this->createSut($migrationsPath, $driver);
 
-        $this->markTestIncomplete();
+        $actualResult = $sut->down($filename);
+
+        $this->assertSame($expectedResult, $actualResult);
     }
 
     public function testUp()
     {
-        $driver = 'foo';
+        $migrationsPath = __DIR__ . '/fixtures';
+        $driver         = 'foo';
+        $filename       = 'test.sql';
+        $expectedResult = 'SELECT 1;';
 
-        $sut = $this->createSut($this->migrationsPath, $driver);
+        $sut = $this->createSut($migrationsPath, $driver);
 
-        $this->markTestIncomplete();
+        $actualResult = $sut->up($filename);
+
+        $this->assertSame($expectedResult, $actualResult);
     }
 
     /**
      * @param string $migrationsPath
      * @param string $driver
+     *
+     * @return QueryFileLoader
      */
-    protected function createSut(string $migrationsPath, string $driver)
+    protected function createSut(string $migrationsPath, string $driver): QueryFileLoader
     {
-        $this->sut = new QueryFileLoader($migrationsPath, $driver);
+        return new QueryFileLoader($migrationsPath, $driver);
     }
 }
