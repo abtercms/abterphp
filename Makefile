@@ -12,7 +12,7 @@ build:
 	./vendor/bin/phpunit --no-coverage
 	./vendor/bin/phpcs
 	./vendor/bin/phpcs -p --colors --cache --standard=PSR12 tests
-	./vendor/bin/phpmd src text codesize,unusedcode,naming,design
+	./vendor/bin/phpmd src text .phpmd.xml
 
 precommit:
 	./vendor/bin/phpunit --no-coverage

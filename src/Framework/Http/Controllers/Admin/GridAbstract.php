@@ -19,9 +19,6 @@ use Opulence\Events\Dispatchers\IEventDispatcher;
 use Opulence\Http\Responses\Response;
 use Opulence\Routing\Urls\UrlGenerator;
 
-/**
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
- */
 abstract class GridAbstract extends AdminAbstract
 {
     const ENTITY_PLURAL       = '';

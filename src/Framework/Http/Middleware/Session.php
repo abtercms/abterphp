@@ -15,7 +15,6 @@ use Opulence\Http\Responses\Response;
 class Session extends BaseSession
 {
     /**
-     * @SuppressWarnings(PHPMD.ShortMethodName)
      * @SuppressWarnings(PHPMD.StaticAccess)
      *
      * Runs garbage collection, if necessary

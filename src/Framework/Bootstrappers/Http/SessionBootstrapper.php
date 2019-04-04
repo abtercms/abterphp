@@ -24,7 +24,6 @@ use Opulence\Sessions\Session;
 use SessionHandlerInterface;
 
 /**
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  * @SuppressWarnings(PHPMD.StaticAccess)
  *
  * Defines the session bootstrapper

@@ -20,9 +20,6 @@ use Opulence\Routing\Urls\URLException;
 use Opulence\Routing\Urls\UrlGenerator;
 use Opulence\Sessions\ISession;
 
-/**
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
- */
 abstract class FormAbstract extends AdminAbstract
 {
     use UrlTrait;

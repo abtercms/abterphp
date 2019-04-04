@@ -23,9 +23,6 @@ use Opulence\Ioc\IContainer;
 use Opulence\Sessions\ISession;
 use Opulence\Views\Compilers\Fortune\ITranspiler;
 
-/**
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
- */
 class EnforcerBootstrapper extends Bootstrapper implements ILazyBootstrapper
 {
     /**

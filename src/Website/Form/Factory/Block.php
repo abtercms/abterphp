@@ -25,9 +25,6 @@ use Casbin\Enforcer;
 use Opulence\Orm\IEntity;
 use Opulence\Sessions\ISession;
 
-/**
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
- */
 class Block extends Base
 {
     /** @var BlockLayoutRepo */

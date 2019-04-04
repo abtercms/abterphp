@@ -21,10 +21,6 @@ use Opulence\Orm\OrmException;
 use Opulence\Routing\Urls\UrlGenerator;
 use Opulence\Sessions\ISession;
 
-/**
- * @SuppressWarnings(PHPMD.ShortVariable)
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
- */
 class User extends FormAbstract
 {
     const ENTITY_PLURAL   = 'users';

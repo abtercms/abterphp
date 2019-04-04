@@ -21,9 +21,6 @@ use AbterPhp\Framework\I18n\ITranslator;
 use Opulence\Orm\IEntity;
 use Opulence\Sessions\ISession;
 
-/**
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
- */
 class UserGroup extends Base
 {
     /** @var AdminResourceRepo */

@@ -18,9 +18,6 @@ use League\Flysystem\FileNotFoundException;
 use Opulence\Orm\IUnitOfWork;
 use Opulence\Orm\OrmException;
 
-/**
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
- */
 class Downloader
 {
     const READ_LENGTH = 8192;

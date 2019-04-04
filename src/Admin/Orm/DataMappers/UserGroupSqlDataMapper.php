@@ -11,9 +11,6 @@ use Opulence\Orm\DataMappers\SqlDataMapper;
 use Opulence\QueryBuilders\MySql\QueryBuilder;
 use Opulence\QueryBuilders\MySql\SelectQuery;
 
-/**
- * @SuppressWarnings(PHPMD.ShortVariable)
- */
 class UserGroupSqlDataMapper extends SqlDataMapper implements IUserGroupDataMapper
 {
     const ADMIN_RESOURCE_IDS = 'admin_resource_ids';

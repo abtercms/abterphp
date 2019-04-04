@@ -11,9 +11,6 @@ use Opulence\Orm\DataMappers\SqlDataMapper;
 use Opulence\QueryBuilders\MySql\QueryBuilder;
 use Opulence\QueryBuilders\MySql\SelectQuery;
 
-/**
- * @SuppressWarnings(PHPMD.ShortVariable)
- */
 class FileCategorySqlDataMapper extends SqlDataMapper implements IFileCategoryDataMapper
 {
     const USER_GROUP_IDS = 'user_group_ids';

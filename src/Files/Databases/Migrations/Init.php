@@ -9,9 +9,6 @@ use DateTime;
 use Opulence\Databases\IConnection;
 use Opulence\Databases\Migrations\Migration;
 
-/**
- * @SuppressWarnings(PHPMD.ShortMethodName)
- */
 class Init extends Migration
 {
     /**

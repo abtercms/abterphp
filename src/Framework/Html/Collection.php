@@ -9,6 +9,7 @@ use InvalidArgumentException;
 
 /**
  * @SuppressWarnings(PHPMD.TooManyPublicMethods)
+ * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
  */
 class Collection implements ICollection
 {

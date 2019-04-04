@@ -11,9 +11,6 @@ use Opulence\QueryBuilders\Conditions\ConditionFactory;
 use Opulence\QueryBuilders\MySql\QueryBuilder;
 use Opulence\QueryBuilders\MySql\SelectQuery;
 
-/**
- * @SuppressWarnings(PHPMD.ShortVariable)
- */
 class FileSqlDataMapper extends SqlDataMapper implements IFileDataMapper
 {
     /**

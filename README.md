@@ -193,7 +193,7 @@ before the first stable version.
 1. Documentation page exists
 1. Highlight form fields with validation errors
 1. 12-factor compliance reviewed and improvements planned
-1. Existing phpmd ignore cases reviewed
+1. ~~Existing phpmd ignore cases reviewed~~
 1. Review and refactor global `$abterModuleManager` usage
 1. Must-accept-cookie module
 1. Test loading entities that don't exist or faulty
@@ -221,6 +221,10 @@ before the first stable version.
 1. 12-factor compliance clearly stated
 1. More useful dashboard (community input?)
 1. Enable `ONLY_FULL_GROUP_BY` in `mysql.conf`
+1. Refactor
+   - `AbterPhp\Framework\Html\Collection`
+   - `AbterPhp\Framework\Html\Helper\ArrayHelper::formatAttribute`
+   - Classes with CouplingBetweenObjects over a 15-20 (TBD)
 
 ## Ideas
 

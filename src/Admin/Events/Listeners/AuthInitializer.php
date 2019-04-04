@@ -8,9 +8,6 @@ use AbterPhp\Framework\Events\AuthReady;
 use AbterPhp\Admin\Authorization\AdminResourceProvider;
 use AbterPhp\Admin\Authorization\UserProvider;
 
-/**
- * @SuppressWarnings(PHPMD.LongVariable)
- */
 class AuthInitializer
 {
     /** @var UserProvider */

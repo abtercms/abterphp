@@ -13,9 +13,6 @@ use AbterPhp\Framework\Html\ITemplater;
 use AbterPhp\Framework\Html\NodeContainerTrait;
 use AbterPhp\Framework\Html\Tag;
 
-/**
- * @SuppressWarnings(PHPMD.ShortVariable)
- */
 class Pagination extends Tag implements IPagination, ITemplater
 {
     const DEFAULT_TAG = Html5::TAG_DIV;

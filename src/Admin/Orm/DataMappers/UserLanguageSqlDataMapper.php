@@ -9,9 +9,6 @@ use Opulence\Orm\DataMappers\SqlDataMapper;
 use Opulence\QueryBuilders\MySql\QueryBuilder;
 use Opulence\QueryBuilders\MySql\SelectQuery;
 
-/**
- * @SuppressWarnings(PHPMD.ShortVariable)
- */
 class UserLanguageSqlDataMapper extends SqlDataMapper implements IUserLanguageDataMapper
 {
     /**

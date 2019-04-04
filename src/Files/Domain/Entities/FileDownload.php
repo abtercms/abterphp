@@ -8,9 +8,6 @@ use AbterPhp\Admin\Domain\Entities\User;
 use AbterPhp\Framework\Domain\Entities\IStringerEntity;
 use DateTime;
 
-/**
- * @SuppressWarnings(PHPMD.ShortVariable)
- */
 class FileDownload implements IStringerEntity
 {
     const DATE_FORMAT = 'Y-m-d H:i:s';

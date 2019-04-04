@@ -16,9 +16,6 @@ use AbterPhp\Framework\Html\Component\Button;
 use Opulence\Framework\Http\CsrfTokenChecker;
 use Opulence\Orm\IEntity;
 
-/**
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
- */
 class Contact extends Base
 {
     /**

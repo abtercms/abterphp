@@ -17,9 +17,6 @@ use Opulence\Orm\OrmException;
 use Opulence\Routing\Urls\UrlGenerator;
 use Opulence\Sessions\ISession;
 
-/**
- * @SuppressWarnings(PHPMD.ShortVariable)
- */
 class Page extends FormAbstract
 {
     const ENTITY_PLURAL   = 'pages';

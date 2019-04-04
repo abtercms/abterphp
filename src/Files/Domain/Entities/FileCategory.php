@@ -7,9 +7,6 @@ namespace AbterPhp\Files\Domain\Entities;
 use AbterPhp\Admin\Domain\Entities\UserGroup;
 use AbterPhp\Framework\Domain\Entities\IStringerEntity;
 
-/**
- * @SuppressWarnings(PHPMD.ShortVariable)
- */
 class FileCategory implements IStringerEntity
 {
     /** @var string */
