@@ -19,9 +19,6 @@ use Opulence\Console\Responses\IResponse;
 use Opulence\Orm\IUnitOfWork;
 use ZxcvbnPhp\Zxcvbn;
 
-/**
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
- */
 class Create extends Command
 {
     const COMMAND_NAME            = 'user:create';

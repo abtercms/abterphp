@@ -50,7 +50,6 @@ class ValidatorBootstrapper extends BaseBootstrapper
     }
 
     /**
-     * @SuppressWarnings(PHPMD.LongVariable)
      * @SuppressWarnings(PHPMD.StaticAccess)
      *
      * Registers the error templates
@@ -71,7 +70,6 @@ class ValidatorBootstrapper extends BaseBootstrapper
     }
 
     /**
-     * @SuppressWarnings(PHPMD.LongVariable)
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      *
      * Registers any custom rule extensions

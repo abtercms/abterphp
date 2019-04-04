@@ -1,5 +1,7 @@
 # AbterPHP
 
+[![Build Status](https://travis-ci.com/abtercms/abterphp.svg?branch=master)](https://travis-ci.com/abtercms/abterphp)
+
 AbterPHP is the first and currently the only implementation of AbterCMS, providing backend, frontend and a REST API for it.
 It does not require much JavaScript knowledge as it uses jQuery instead of some nodejs based solution, therefore many might
 find it easier to learn, maintain or deploy.
@@ -46,7 +48,7 @@ documentation might assume that all developers use `docker` for development. If 
 ensure that you have the right version of PHP, with the neccessary modules and that you have at least a supported version
 of MySQL (or later PostgreSQL). While having Redis or Memcached is great, those are not mandatory.
 
-#### Pre-requisite: Install [mkcert](https://mkcert.com/)
+#### Pre-requisite: Install [mkcert](https://mkcert.dev/)
 
 Since security is a top priority, pure http is not supported out of the box, therefore you'll need to install a certificate. 
 The recommended way is using `mkcert`. While it is not necessarily mandatory, some of the
@@ -193,7 +195,7 @@ before the first stable version.
 1. Documentation page exists
 1. Highlight form fields with validation errors
 1. 12-factor compliance reviewed and improvements planned
-1. Existing phpmd ignore cases reviewed
+1. ~~Existing phpmd ignore cases reviewed~~
 1. Review and refactor global `$abterModuleManager` usage
 1. Must-accept-cookie module
 1. Test loading entities that don't exist or faulty
@@ -221,6 +223,10 @@ before the first stable version.
 1. 12-factor compliance clearly stated
 1. More useful dashboard (community input?)
 1. Enable `ONLY_FULL_GROUP_BY` in `mysql.conf`
+1. Refactor
+   - `AbterPhp\Framework\Html\Collection`
+   - `AbterPhp\Framework\Html\Helper\ArrayHelper::formatAttribute`
+   - Classes with CouplingBetweenObjects over a 15-20 (TBD)
 
 ## Ideas
 

@@ -18,9 +18,6 @@ use Opulence\Http\Responses\ResponseHeaders;
 use Opulence\Orm\OrmException;
 use Opulence\Routing\Urls\UrlGenerator;
 
-/**
- * @SuppressWarnings(PHPMD.ShortVariable)
- */
 class Index extends ControllerAbstract
 {
     /** @var Engine */

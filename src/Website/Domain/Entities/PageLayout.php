@@ -7,9 +7,6 @@ namespace AbterPhp\Website\Domain\Entities;
 use AbterPhp\Framework\Domain\Entities\IStringerEntity;
 use AbterPhp\Website\Domain\Entities\PageLayout\Assets;
 
-/**
- * @SuppressWarnings(PHPMD.ShortVariable)
- */
 class PageLayout implements IStringerEntity
 {
     /** @var string */

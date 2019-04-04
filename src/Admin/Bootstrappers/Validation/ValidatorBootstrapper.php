@@ -50,7 +50,6 @@ class ValidatorBootstrapper extends BaseBootstrapper
     }
 
     /**
-     * @SuppressWarnings(PHPMD.LongVariable)
      * @SuppressWarnings(PHPMD.StaticAccess)
      *
      * Registers the error templates
@@ -71,8 +70,6 @@ class ValidatorBootstrapper extends BaseBootstrapper
     }
 
     /**
-     * @SuppressWarnings(PHPMD.LongVariable)
-     *
      * Registers any custom rule extensions
      *
      * @param RuleExtensionRegistry $ruleExtensionRegistry The registry to register rules to

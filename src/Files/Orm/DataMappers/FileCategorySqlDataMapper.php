@@ -9,11 +9,8 @@ use AbterPhp\Files\Domain\Entities\FileCategory as Entity;
 use AbterPhp\Framework\Orm\DataMappers\IdGeneratorUserTrait;
 use Opulence\Orm\DataMappers\SqlDataMapper;
 use Opulence\QueryBuilders\MySql\QueryBuilder;
-use Opulence\QueryBuilders\Mysql\SelectQuery;
+use Opulence\QueryBuilders\MySql\SelectQuery;
 
-/**
- * @SuppressWarnings(PHPMD.ShortVariable)
- */
 class FileCategorySqlDataMapper extends SqlDataMapper implements IFileCategoryDataMapper
 {
     const USER_GROUP_IDS = 'user_group_ids';

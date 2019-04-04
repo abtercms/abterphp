@@ -6,9 +6,6 @@ namespace AbterPhp\Website\Domain\Entities;
 
 use AbterPhp\Framework\Domain\Entities\IStringerEntity;
 
-/**
- * @SuppressWarnings(PHPMD.ShortVariable)
- */
 class BlockLayout implements IStringerEntity
 {
     /** @var string */

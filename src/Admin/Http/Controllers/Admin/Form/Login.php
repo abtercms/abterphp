@@ -13,9 +13,6 @@ use Opulence\Routing\Urls\URLException;
 use Opulence\Routing\Urls\UrlGenerator;
 use Opulence\Sessions\ISession;
 
-/**
- * @SuppressWarnings(PHPMD.ShortVariable)
- */
 class Login extends AdminAbstract
 {
     const POST_USERNAME = 'username';

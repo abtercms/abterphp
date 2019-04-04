@@ -7,9 +7,6 @@ namespace AbterPhp\Files\Domain\Entities;
 use AbterPhp\Framework\Domain\Entities\IStringerEntity;
 use DateTime;
 
-/**
- * @SuppressWarnings(PHPMD.ShortVariable)
- */
 class File implements IStringerEntity
 {
     const DATE_FORMAT = 'Y-m-d';

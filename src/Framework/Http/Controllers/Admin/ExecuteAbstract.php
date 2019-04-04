@@ -16,10 +16,6 @@ use Opulence\Routing\Urls\UrlGenerator;
 use Opulence\Sessions\ISession;
 use Psr\Log\LoggerInterface;
 
-/**
- * @SuppressWarnings(PHPMD.ShortVariable)
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
- */
 abstract class ExecuteAbstract extends AdminAbstract
 {
     use UrlTrait;

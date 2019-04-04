@@ -96,6 +96,9 @@ class ArrayHelper
     }
 
     /**
+     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+     * @SuppressWarnings(PHPMD.NPathComplexity)
+     *
      * Formats an attribute so that it's either null or an array of strings where:
      *  - keys and values are the same
      *  - keys (or values) must not have spaces

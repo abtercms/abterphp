@@ -6,9 +6,6 @@ namespace AbterPhp\Admin\Domain\Entities;
 
 use AbterPhp\Framework\Domain\Entities\IStringerEntity;
 
-/**
- * @SuppressWarnings(PHPMD.ShortVariable)
- */
 class UserLanguage implements IStringerEntity
 {
     /** @var string */

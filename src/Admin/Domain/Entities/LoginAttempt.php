@@ -6,9 +6,6 @@ namespace AbterPhp\Admin\Domain\Entities;
 
 use AbterPhp\Framework\Domain\Entities\IStringerEntity;
 
-/**
- * @SuppressWarnings(PHPMD.ShortVariable)
- */
 class LoginAttempt implements IStringerEntity
 {
     /** @var int */

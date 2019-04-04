@@ -37,8 +37,6 @@ use Opulence\Orm\UnitOfWork;
 use RuntimeException;
 
 /**
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
- *
  * Defines the ORM bootstrapper
  */
 class OrmBootstrapper extends Bootstrapper implements ILazyBootstrapper

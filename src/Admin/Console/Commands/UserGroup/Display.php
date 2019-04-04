@@ -9,9 +9,6 @@ use AbterPhp\Admin\Orm\UserGroupRepo;
 use Opulence\Console\Commands\Command;
 use Opulence\Console\Responses\IResponse;
 
-/**
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
- */
 class Display extends Command
 {
     const COMMAND_NAME        = 'usergroup:list';

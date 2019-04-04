@@ -9,9 +9,6 @@ use Opulence\Routing\Urls\URLException;
 use Opulence\Routing\Urls\UrlGenerator;
 use Opulence\Sessions\ISession;
 
-/**
- * @SuppressWarnings(PHPMD.ShortVariable)
- */
 trait UrlTrait
 {
     /**

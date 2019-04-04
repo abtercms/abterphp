@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace AbterPhp\Website\Domain\Entities\Page;
 
-/**
- * @SuppressWarnings(PHPMD.ShortVariable)
- */
 class Meta
 {
     /** @var string */

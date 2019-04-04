@@ -1,0 +1,18 @@
+language: go
+
+services:
+  - docker
+
+before_install:
+  - curl -L --output mkcert https://github.com/FiloSottile/mkcert/releases/download/v1.3.0/mkcert-v1.3.0-linux-amd64
+  - chmod +x mkcert
+  - ./mkcert abtercms.test "*.abtercms.test"
+  - mv abtercms.test+1* ./docker/nginx/certs/
+  - docker-compose pull
+  - docker-compose up -d
+
+install:
+  - docker-compose exec php make install
+
+script:
+  - docker-compose exec php make build

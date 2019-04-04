@@ -15,9 +15,6 @@ use Opulence\Events\Dispatchers\IEventDispatcher;
 use Opulence\Routing\Urls\UrlGenerator;
 use Opulence\Sessions\ISession;
 
-/**
- * @SuppressWarnings(PHPMD.ShortVariable)
- */
 class UserGroup extends FormAbstract
 {
     const ENTITY_PLURAL   = 'userGroups';

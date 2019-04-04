@@ -6,9 +6,6 @@ namespace AbterPhp\Framework\Http\Controllers\Admin;
 
 use AbterPhp\Framework\I18n\ITranslator;
 
-/**
- * @SuppressWarnings(PHPMD.ShortVariable)
- */
 trait MessageTrait
 {
     /**

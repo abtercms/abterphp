@@ -8,9 +8,6 @@ use AbterPhp\Framework\Session\FlashService;
 use Opulence\Http\Responses\Response;
 use Opulence\Routing\Controller;
 
-/**
- * @SuppressWarnings(PHPMD.ShortVariable)
- */
 abstract class ControllerAbstract extends Controller
 {
     const VAR_TITLE       = 'title';

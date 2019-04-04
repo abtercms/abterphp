@@ -1,6 +1,6 @@
 <?php
 use Opulence\Cache\FileBridge;
-use Opulence\Databases\Adapters\Pdo\Mysql\Driver;
+use Opulence\Databases\Adapters\Pdo\MySql\Driver;
 use Opulence\Environments\Environment;
 use Opulence\Sessions\Handlers\FileSessionHandler;
 use Opulence\Views\Caching\FileCache;
