@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace AbterPhp\Contact\Template;
 
+use AbterPhp\Contact\Constant\Routes;
 use AbterPhp\Contact\Form\Factory\Contact as FormFactory;
 use AbterPhp\Framework\Template\ILoader;
 use AbterPhp\Framework\Template\TemplateData;
@@ -37,7 +38,7 @@ class ContactLoader implements ILoader
      */
     public function load(array $identifiers): array
     {
-        $url  = $this->urlGenerator->createFromName(ROUTE_CONTACT);
+        $url  = $this->urlGenerator->createFromName(Routes::ROUTE_CONTACT);
         $form = (string)$this->formFactory->create($url, RequestMethods::POST, '');
 
         $templateData = [];

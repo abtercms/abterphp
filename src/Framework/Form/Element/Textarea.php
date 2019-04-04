@@ -5,9 +5,8 @@ declare(strict_types=1);
 namespace AbterPhp\Framework\Form\Element;
 
 use AbterPhp\Framework\Constant\Html5;
-use AbterPhp\Framework\Html\INode;
-use AbterPhp\Framework\Html\Tag;
 use AbterPhp\Framework\Html\Helper\StringHelper;
+use AbterPhp\Framework\Html\Tag;
 
 class Textarea extends Tag implements IElement
 {
@@ -60,7 +59,12 @@ class Textarea extends Tag implements IElement
             return '';
         }
 
-        return $this->getAttribute(Html5::ATTR_NAME);
+        $value = $this->getAttribute(Html5::ATTR_NAME);
+        if (null === $value) {
+            return '';
+        }
+
+        return $value;
     }
 
     /**

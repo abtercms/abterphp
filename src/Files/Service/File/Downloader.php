@@ -64,11 +64,11 @@ class Downloader
      * @param string    $filesystemName
      * @param User|null $user
      *
-     * @return File
+     * @return File|null
      * @throws CasbinException
      * @throws OrmException
      */
-    public function getUserFile(string $filesystemName, ?User $user = null): File
+    public function getUserFile(string $filesystemName, ?User $user = null): ?File
     {
         /** @var File $entity */
         $entity = $this->repo->getByFilesystemName($filesystemName);

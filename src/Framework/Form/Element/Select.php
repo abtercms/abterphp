@@ -13,10 +13,10 @@ class Select extends Component implements IElement
     const DEFAULT_TAG = Html5::TAG_SELECT;
 
     /** @var Option[] */
-    protected $components = [];
+    protected $nodes = [];
 
     /** @var string */
-    protected $componentClass = Option::class;
+    protected $nodeClass = Option::class;
 
     /**
      * Select constructor.

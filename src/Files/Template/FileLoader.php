@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace AbterPhp\Files\Template;
 
+use AbterPhp\Files\Constant\Routes;
 use AbterPhp\Framework\Html\Helper\StringHelper;
 use AbterPhp\Framework\Template\ILoader;
 use AbterPhp\Framework\Template\TemplateData;
@@ -72,7 +73,7 @@ class FileLoader implements ILoader
     /**
      * @param Entity[][] $files
      *
-     * @return Entity[]
+     * @return TemplateData[]
      */
     protected function getTemplateData(array $files): array
     {
@@ -98,7 +99,7 @@ class FileLoader implements ILoader
     {
         $html = [];
         foreach ($files as $file) {
-            $url  = $this->urlGenerator->createFromName(ROUTE_PUBLIC_FILE, $file->getFilesystemName());
+            $url  = $this->urlGenerator->createFromName(Routes::ROUTE_PUBLIC_FILE, $file->getFilesystemName());
             $link = StringHelper::wrapInTag(
                 $file->getPublicName(),
                 static::TAG_A,

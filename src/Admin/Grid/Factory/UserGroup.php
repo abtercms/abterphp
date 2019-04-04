@@ -11,7 +11,6 @@ use AbterPhp\Framework\Grid\Component\Actions;
 use AbterPhp\Framework\Grid\Factory\BaseFactory;
 use AbterPhp\Framework\Grid\Factory\GridFactory;
 use AbterPhp\Framework\Grid\Factory\PaginationFactory as PaginationFactory;
-use AbterPhp\Framework\I18n\ITranslator;
 use AbterPhp\Admin\Grid\Factory\Table\UserGroup as Table;
 use AbterPhp\Admin\Grid\Filters\UserGroup as Filters;
 use Opulence\Routing\Urls\UrlGenerator;
@@ -37,7 +36,6 @@ class UserGroup extends BaseFactory
      * @param PaginationFactory $paginationFactory
      * @param Table             $tableFactory
      * @param GridFactory       $gridFactory
-     * @param ITranslator       $translator
      * @param Filters           $filters
      */
     public function __construct(
@@ -45,10 +43,9 @@ class UserGroup extends BaseFactory
         PaginationFactory $paginationFactory,
         Table $tableFactory,
         GridFactory $gridFactory,
-        ITranslator $translator,
         Filters $filters
     ) {
-        parent::__construct($urlGenerator, $paginationFactory, $tableFactory, $gridFactory, $translator, $filters);
+        parent::__construct($urlGenerator, $paginationFactory, $tableFactory, $gridFactory, $filters);
     }
 
     /**

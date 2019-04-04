@@ -19,10 +19,10 @@ use Opulence\Orm\IEntity;
 class Contact extends Base
 {
     /**
-     * @param string $action
-     * @param string $method
-     * @param string $showUrl
-     * @param ?Entity $entity
+     * @param string       $action
+     * @param string       $method
+     * @param string       $showUrl
+     * @param IEntity|null $entity
      *
      * @return Form
      */
@@ -106,7 +106,7 @@ class Contact extends Base
      */
     protected function addBody(): Contact
     {
-        $input = new Textarea('body', 'body', '', null, [Html5::ATTR_ROWS => '15']);
+        $input = new Textarea('body', 'body', '', [], [Html5::ATTR_ROWS => '15']);
         $label = new Label('body', 'contact:body');
 
         $this->form[] = new FormGroup($input, $label);

@@ -140,7 +140,11 @@ class Uploader
         }
 
         try {
-            return $this->filesystem->read($path);
+            $content = $this->filesystem->read($path);
+            if (false === $content) {
+                return null;
+            }
+            return (string)$content;
         } catch (FileNotFoundException $e) {
             return null;
         }

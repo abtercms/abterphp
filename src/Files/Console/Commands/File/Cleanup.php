@@ -231,7 +231,7 @@ class Cleanup extends Command
      */
     protected function deleteFilesFromDatabase(IResponse $response, array $fsOnly)
     {
-        if ($fsOnly) {
+        if (count($fsOnly) > 0) {
             $response->writeln(sprintf('<info>%s</info>', static::DELETING_ENTITIES));
         }
 
@@ -254,7 +254,7 @@ class Cleanup extends Command
      */
     protected function deleteFilesFromFilesystem(IResponse $response, array $dbOnly)
     {
-        if ($dbOnly) {
+        if (count($dbOnly) > 0) {
             $response->writeln(sprintf('<info>%s</info>', static::DELETING_FILES));
         }
 

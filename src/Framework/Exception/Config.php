@@ -9,7 +9,7 @@ use Throwable;
 class Config extends \LogicException
 {
     const ERROR_MSG        = 'Insufficient configs found while dependency: %s';
-    const REQUIRED_CONFIGS = '(Related environment variables: %s)';
+    const REQUIRED_CONFIGS = ' (Related environment variables: %s)';
 
     /**
      * Config constructor.
@@ -25,10 +25,10 @@ class Config extends \LogicException
         int $code = 0,
         Throwable $previous = null
     ) {
-        $message = sprintf(static::ERROR_MSG, $className, $relatedEnvVars);
+        $message = sprintf(static::ERROR_MSG, $className);
 
-        if ($relatedEnvVars) {
-            $message .= ' ' . sprintf(static::REQUIRED_CONFIGS, implode(', ', $relatedEnvVars));
+        if (!empty($relatedEnvVars)) {
+            $message .= sprintf(static::REQUIRED_CONFIGS, implode(', ', $relatedEnvVars));
         }
 
         parent::__construct($message, $code, $previous);

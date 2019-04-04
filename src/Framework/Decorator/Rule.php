@@ -69,7 +69,7 @@ class Rule
     }
 
     /**
-     * @return \string[][]
+     * @return string[]
      */
     public function getIntentClassMap(): array
     {

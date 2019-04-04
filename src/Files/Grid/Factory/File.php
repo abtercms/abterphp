@@ -16,7 +16,6 @@ use AbterPhp\Framework\Grid\Factory\GridFactory;
 use AbterPhp\Framework\Grid\Factory\PaginationFactory as PaginationFactory;
 use AbterPhp\Framework\Helper\DateHelper;
 use AbterPhp\Framework\Html\Component;
-use AbterPhp\Framework\I18n\ITranslator;
 use Opulence\Routing\Urls\UrlGenerator;
 
 class File extends BaseFactory
@@ -41,7 +40,6 @@ class File extends BaseFactory
      * @param PaginationFactory $paginationFactory
      * @param Table             $tableFactory
      * @param GridFactory       $gridFactory
-     * @param ITranslator       $translator
      * @param Filters           $filters
      */
     public function __construct(
@@ -49,10 +47,9 @@ class File extends BaseFactory
         PaginationFactory $paginationFactory,
         Table $tableFactory,
         GridFactory $gridFactory,
-        ITranslator $translator,
         Filters $filters
     ) {
-        parent::__construct($urlGenerator, $paginationFactory, $tableFactory, $gridFactory, $translator, $filters);
+        parent::__construct($urlGenerator, $paginationFactory, $tableFactory, $gridFactory, $filters);
     }
 
     /**
@@ -125,7 +122,7 @@ class File extends BaseFactory
     }
 
     /**
-     * @return \Closure
+     * @return callable[]
      */
     protected function getAttributeCallbacks(): array
     {
@@ -139,7 +136,7 @@ class File extends BaseFactory
     }
 
     /**
-     * @return \Closure
+     * @return callable[]
      */
     protected function getDownloadCallbacks(): array
     {

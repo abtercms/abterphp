@@ -93,7 +93,7 @@ class File extends RepoServiceAbstract
 
         $this->fillEntity($entity, $postData);
 
-        if ($fileData) {
+        if (!empty($fileData)) {
             $this->deleteFile($entity);
             $this->uploadFile($entity, $fileData);
         }

@@ -12,7 +12,6 @@ use AbterPhp\Framework\Grid\Factory\GridFactory as GridFactory;
 use AbterPhp\Framework\Grid\Factory\PaginationFactory as PaginationFactory;
 use AbterPhp\Framework\Grid\Factory\TableFactory as TableFactory;
 use AbterPhp\Framework\Grid\IGrid;
-use AbterPhp\Framework\I18n\ITranslator;
 use Opulence\Orm\IEntity;
 use Opulence\Routing\Urls\UrlGenerator;
 
@@ -58,7 +57,6 @@ abstract class BaseFactory implements IBase
      * @param PaginationFactory $paginationFactory
      * @param TableFactory      $tableFactory
      * @param GridFactory       $gridFactory
-     * @param ITranslator       $translator
      * @param Filters|null      $filters
      */
     public function __construct(
@@ -66,14 +64,12 @@ abstract class BaseFactory implements IBase
         PaginationFactory $paginationFactory,
         TableFactory $tableFactory,
         GridFactory $gridFactory,
-        ITranslator $translator,
         Filters $filters = null
     ) {
         $this->urlGenerator      = $urlGenerator;
         $this->paginationFactory = $paginationFactory;
         $this->tableFactory      = $tableFactory;
         $this->gridFactory       = $gridFactory;
-        $this->translator        = $translator;
         $this->filters           = $filters ?: new Filters();
     }
 

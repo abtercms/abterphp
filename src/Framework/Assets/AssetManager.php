@@ -28,6 +28,12 @@ class AssetManager
     /** @var string */
     protected $dirCacheCss;
 
+    /** @var string */
+    protected $pathCacheJs;
+
+    /** @var string */
+    protected $pathCacheCss;
+
     /** @var bool */
     protected $isCacheAllowed;
 

@@ -17,48 +17,43 @@ class BaseFactoryTest extends \PHPUnit\Framework\TestCase
     protected $sut;
 
     /** @var UrlGenerator|MockObject */
-    protected $urlGenerator;
+    protected $urlGeneratorMock;
 
     /** @var PaginationFactory|MockObject */
-    protected $paginationFactory;
+    protected $paginationFactoryMock;
 
     /** @var TableFactory|MockObject */
-    protected $tableFactory;
+    protected $tableFactoryMock;
 
     /** @var GridFactory|MockObject */
-    protected $gridFactory;
-
-    /** @var ITranslator|MockObject */
-    protected $translator;
+    protected $gridFactoryMock;
 
     /** @var Filters|MockObject */
-    protected $filters;
+    protected $filtersMock;
 
     public function setUp()
     {
-        $this->urlGenerator = $this->getMockBuilder(UrlGenerator::class)
+        $this->urlGeneratorMock = $this->getMockBuilder(UrlGenerator::class)
             ->disableOriginalConstructor()
             ->setMethods(['createFromName'])
             ->getMock();
 
-        $this->paginationFactory = $this->getMockBuilder(PaginationFactory::class)
+        $this->paginationFactoryMock = $this->getMockBuilder(PaginationFactory::class)
             ->disableOriginalConstructor()
             ->setMethods(['create'])
             ->getMock();
 
-        $this->tableFactory = $this->getMockBuilder(TableFactory::class)
+        $this->tableFactoryMock = $this->getMockBuilder(TableFactory::class)
             ->disableOriginalConstructor()
             ->setMethods(['create'])
             ->getMock();
 
-        $this->gridFactory = $this->getMockBuilder(GridFactory::class)
+        $this->gridFactoryMock = $this->getMockBuilder(GridFactory::class)
             ->disableOriginalConstructor()
             ->setMethods(['create'])
             ->getMock();
 
-        $this->translator = MockTranslatorFactory::createSimpleTranslator($this, []);
-
-        $this->filters = $this->getMockBuilder(Filters::class)
+        $this->filtersMock = $this->getMockBuilder(Filters::class)
             ->disableOriginalConstructor()
             ->setMethods(['setParams', 'getUrl'])
             ->getMock();
@@ -67,12 +62,11 @@ class BaseFactoryTest extends \PHPUnit\Framework\TestCase
         $this->sut = $this->getMockForAbstractClass(
             BaseFactory::class,
             [
-                $this->urlGenerator,
-                $this->paginationFactory,
-                $this->tableFactory,
-                $this->gridFactory,
-                $this->translator,
-                $this->filters
+                $this->urlGeneratorMock,
+                $this->paginationFactoryMock,
+                $this->tableFactoryMock,
+                $this->gridFactoryMock,
+                $this->filtersMock
             ]
         );
     }
@@ -82,11 +76,11 @@ class BaseFactoryTest extends \PHPUnit\Framework\TestCase
         $params  = ['foo' => 'Foo'];
         $baseUrl = '/foo?';
 
-        $this->paginationFactory->expects($this->once())->method('create');
-        $this->tableFactory->expects($this->once())->method('create');
-        $this->gridFactory->expects($this->once())->method('create');
-        $this->filters->expects($this->once())->method('setParams');
-        $this->filters->expects($this->once())->method('getUrl');
+        $this->paginationFactoryMock->expects($this->once())->method('create');
+        $this->tableFactoryMock->expects($this->once())->method('create');
+        $this->gridFactoryMock->expects($this->once())->method('create');
+        $this->filtersMock->expects($this->once())->method('setParams');
+        $this->filtersMock->expects($this->once())->method('getUrl');
 
         $grid = $this->sut->createGrid($params, $baseUrl);
 

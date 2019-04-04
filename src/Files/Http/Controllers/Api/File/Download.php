@@ -59,9 +59,15 @@ class Download extends Controller
     public function download(string $filesystemName): Response
     {
         $user = $this->getUser();
+        if (null === $user) {
+            return new Response('', ResponseHeaders::HTTP_NOT_FOUND);
+        }
 
         try {
             $entity = $this->downloadService->getUserFile($filesystemName, $user);
+            if (null === $entity) {
+                return new Response('', ResponseHeaders::HTTP_NOT_FOUND);
+            }
 
             $streamCallable = $this->downloadService->getStream($entity);
 

@@ -48,6 +48,11 @@ class Option extends Component
             return '';
         }
 
-        return $this->getAttribute(Html5::ATTR_VALUE);
+        $value = $this->getAttribute(Html5::ATTR_VALUE);
+        if (null === $value) {
+            return '';
+        }
+
+        return (string)$value;
     }
 }

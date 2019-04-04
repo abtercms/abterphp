@@ -59,9 +59,9 @@ class CheckboxGroup extends FormGroup
     }
 
     /**
-     * @return Component
+     * @return IComponent
      */
-    public function getCheckboxSpan(): Component
+    public function getCheckboxSpan(): IComponent
     {
         return $this->checkboxSpan;
     }

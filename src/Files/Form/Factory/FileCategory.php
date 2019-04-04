@@ -46,7 +46,7 @@ class FileCategory extends Base
      * @param string       $showUrl
      * @param IEntity|null $entity
      *
-     * @return $this
+     * @return IForm
      */
     public function create(string $action, string $method, string $showUrl, ?IEntity $entity = null): IForm
     {

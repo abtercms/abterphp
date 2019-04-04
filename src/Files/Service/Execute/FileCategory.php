@@ -41,11 +41,11 @@ class FileCategory extends RepoServiceAbstract
     }
 
     /**
-     * @param string|null $entityId
+     * @param string $entityId
      *
      * @return Entity
      */
-    public function createEntity(string $entityId = null): IStringerEntity
+    public function createEntity(string $entityId): IStringerEntity
     {
         $entity = new Entity($entityId, '', '', false);
 

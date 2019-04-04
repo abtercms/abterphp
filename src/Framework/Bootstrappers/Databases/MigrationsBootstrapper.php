@@ -22,9 +22,11 @@ class MigrationsBootstrapper extends OpulenceMigrationsBootstrapper
 
         $paths = Config::get('paths', 'database.migrations');
 
+        $globalPaths = $paths ?: [];
+
         $abterPaths = $abterModuleManager->getMigrationPaths();
 
-        $paths = array_merge($paths, $abterPaths);
+        $paths = array_merge($globalPaths, $abterPaths);
 
         $container->bindFactory(
             IMigrator::class,
