@@ -136,7 +136,7 @@ abstract class BaseFactory implements IBase
     }
 
     /**
-     * @return \Closure
+     * @return callable[]
      */
     protected function getAttributeCallbacks(): array
     {

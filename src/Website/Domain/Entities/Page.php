@@ -25,7 +25,7 @@ class Page implements IStringerEntity
     /** @var string|null */
     protected $layout;
 
-    /** @var int|null */
+    /** @var string|null */
     protected $layoutId;
 
     /** @var Meta|null */
@@ -175,7 +175,7 @@ class Page implements IStringerEntity
      *
      * @return $this
      */
-    public function setLayoutId(?string $layoutId = null): Page
+    public function setLayoutId(?string $layoutId): Page
     {
         if ($layoutId === '') {
             $layoutId = null;

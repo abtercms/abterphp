@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace AbterPhp\Framework\Template;
 
-class TemplateData implements IData
+class Data implements IData
 {
     /**
      * @var string
@@ -53,9 +53,9 @@ class TemplateData implements IData
     /**
      * @param string $identifier
      *
-     * @return TemplateData
+     * @return Data
      */
-    public function setIdentifier(string $identifier): TemplateData
+    public function setIdentifier(string $identifier): Data
     {
         $this->identifier = $identifier;
 
@@ -73,9 +73,9 @@ class TemplateData implements IData
     /**
      * @param array $templates
      *
-     * @return TemplateData
+     * @return Data
      */
-    public function setTemplates(array $templates): TemplateData
+    public function setTemplates(array $templates): Data
     {
         $this->templates = $templates;
 
@@ -93,9 +93,9 @@ class TemplateData implements IData
     /**
      * @param array $vars
      *
-     * @return TemplateData
+     * @return Data
      */
-    public function setVars(array $vars): TemplateData
+    public function setVars(array $vars): Data
     {
         $this->vars = $vars;
 

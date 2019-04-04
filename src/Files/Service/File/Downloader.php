@@ -87,10 +87,10 @@ class Downloader
     /**
      * @param string $filesystemName
      *
-     * @return File
+     * @return File|null
      * @throws OrmException
      */
-    public function getPublicFile(string $filesystemName): File
+    public function getPublicFile(string $filesystemName): ?File
     {
         /** @var File $entity */
         $entity = $this->repo->getPublicByFilesystemName($filesystemName);

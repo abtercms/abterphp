@@ -9,7 +9,7 @@ class ArrayHelper
     /**
      * @param \DateTime $dateTime
      *
-     * @return string
+     * @return array
      */
     public static function flatten(array $errors): array
     {

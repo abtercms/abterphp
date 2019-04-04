@@ -84,6 +84,11 @@ class Select extends Component implements IElement
             return '';
         }
 
-        return $this->getAttribute(Html5::ATTR_NAME);
+        $value = $this->getAttribute(Html5::ATTR_NAME);
+        if (null === $value) {
+            return '';
+        }
+
+        return $value;
     }
 }

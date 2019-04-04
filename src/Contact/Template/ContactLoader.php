@@ -6,8 +6,9 @@ namespace AbterPhp\Contact\Template;
 
 use AbterPhp\Contact\Constant\Routes;
 use AbterPhp\Contact\Form\Factory\Contact as FormFactory;
+use AbterPhp\Framework\Template\IData;
 use AbterPhp\Framework\Template\ILoader;
-use AbterPhp\Framework\Template\TemplateData;
+use AbterPhp\Framework\Template\Data;
 use Opulence\Http\Requests\RequestMethods;
 use Opulence\Routing\Urls\UrlGenerator;
 
@@ -34,7 +35,7 @@ class ContactLoader implements ILoader
     /**
      * @param string[] $identifiers
      *
-     * @return TemplateData[]
+     * @return IData[]
      */
     public function load(array $identifiers): array
     {
@@ -43,7 +44,7 @@ class ContactLoader implements ILoader
 
         $templateData = [];
         foreach ($identifiers as $identifier) {
-            $templateData[] = new TemplateData(
+            $templateData[] = new Data(
                 $identifier,
                 [],
                 [$form]

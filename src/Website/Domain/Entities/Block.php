@@ -23,7 +23,7 @@ class Block implements IStringerEntity
     /** @var string */
     protected $layout;
 
-    /** @var int|null */
+    /** @var string|null */
     protected $layoutId;
 
     /**
@@ -161,7 +161,7 @@ class Block implements IStringerEntity
      *
      * @return $this
      */
-    public function setLayoutId(?string $layoutId = null): Block
+    public function setLayoutId(?string $layoutId): Block
     {
         if ($layoutId < 1) {
             $layoutId = null;

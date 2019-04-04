@@ -92,7 +92,7 @@ abstract class ExecuteAbstract extends AdminAbstract
 
         $errors = $this->repoService->validateForm(array_merge($postData, $fileData));
 
-        if ($errors) {
+        if (count($errors) > 0) {
             $this->flashService->mergeErrorMessages($errors);
             $this->logger->info(sprintf(static::LOG_MSG_CREATE_FAILURE, static::ENTITY_SINGULAR), $errors);
 
@@ -133,7 +133,7 @@ abstract class ExecuteAbstract extends AdminAbstract
 
         $errors = $this->repoService->validateForm(array_merge($postData, $fileData));
 
-        if ($errors) {
+        if (count($errors) > 0) {
             $this->logger->info(sprintf(static::LOG_MSG_UPDATE_FAILURE, static::ENTITY_SINGULAR, $entityId), $errors);
             $this->flashService->mergeErrorMessages($errors);
 

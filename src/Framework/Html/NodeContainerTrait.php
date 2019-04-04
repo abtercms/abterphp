@@ -8,6 +8,17 @@ use AbterPhp\Framework\I18n\ITranslator;
 
 trait NodeContainerTrait
 {
+
+    /**
+     * @return INode[]
+     */
+    abstract public function getNodes(): array;
+
+    /**
+     * @return INode[]
+     */
+    abstract public function getExtendedNodes(): array;
+
     /**
      * @param int $depth
      *

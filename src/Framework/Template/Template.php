@@ -9,10 +9,10 @@ class Template
     /** @var string */
     protected $rawContent = '';
 
-    /** @var []string */
+    /** @var array */
     protected $subTemplates = [];
 
-    /** @var []string */
+    /** @var string[] */
     protected $vars = [];
 
     /** @var array */

@@ -6,8 +6,9 @@ namespace AbterPhp\Files\Template;
 
 use AbterPhp\Files\Constant\Routes;
 use AbterPhp\Framework\Html\Helper\StringHelper;
+use AbterPhp\Framework\Template\IData;
 use AbterPhp\Framework\Template\ILoader;
-use AbterPhp\Framework\Template\TemplateData;
+use AbterPhp\Framework\Template\Data;
 use AbterPhp\Files\Domain\Entities\File as Entity;
 use AbterPhp\Files\Orm\FileRepo;
 use Opulence\Routing\Urls\UrlGenerator;
@@ -44,7 +45,7 @@ class FileLoader implements ILoader
     /**
      * @param string[] $identifiers
      *
-     * @return TemplateData[]
+     * @return IData[]
      */
     public function load(array $identifiers): array
     {
@@ -73,13 +74,13 @@ class FileLoader implements ILoader
     /**
      * @param Entity[][] $files
      *
-     * @return TemplateData[]
+     * @return IData[]
      */
     protected function getTemplateData(array $files): array
     {
         $templateData = [];
         foreach ($files as $categoryIdentifier => $categoryFiles) {
-            $templateData[] = new TemplateData(
+            $templateData[] = new Data(
                 $categoryIdentifier,
                 [],
                 ['body' => $this->getCategoryHtml($categoryFiles, $categoryIdentifier)]

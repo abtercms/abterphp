@@ -16,7 +16,7 @@ class NavigationBuilder
     protected $primaryDecorator;
 
     /** @var Navbar */
-    protected $buttonFactory;
+    protected $navbarDecorator;
 
     /** @var General */
     protected $generalDecorator;

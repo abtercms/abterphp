@@ -9,7 +9,7 @@ interface ILoader
     /**
      * @param string[] $identifiers
      *
-     * @return []ITemplateData
+     * @return IData[]
      */
     public function load(array $identifiers): array;
 

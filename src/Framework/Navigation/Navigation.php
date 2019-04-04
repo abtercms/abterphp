@@ -31,10 +31,10 @@ class Navigation extends Tag implements INodeContainer
     /** @var string */
     protected $username;
 
-    /** @var INode|null lazy creation on getPrefix */
+    /** @var Collection */
     protected $prefix;
 
-    /** @var INode|null lazy creation on getPostfix */
+    /** @var Collection */
     protected $postfix;
 
     /** @var IComponent|null */
@@ -69,6 +69,9 @@ class Navigation extends Tag implements INodeContainer
         $this->enforcer = $enforcer;
 
         parent::__construct(null, $intents, $attributes, $tag);
+
+        $this->prefix  = new Collection();
+        $this->postfix = new Collection();
     }
 
     /**
@@ -134,10 +137,6 @@ class Navigation extends Tag implements INodeContainer
      */
     public function getPrefix(): Collection
     {
-        if (null === $this->prefix) {
-            $this->prefix = new Collection();
-        }
-
         return $this->prefix;
     }
 
@@ -158,10 +157,6 @@ class Navigation extends Tag implements INodeContainer
      */
     public function getPostfix(): Collection
     {
-        if (null === $this->postfix) {
-            $this->postfix = new Collection();
-        }
-
         return $this->postfix;
     }
 
@@ -202,13 +197,7 @@ class Navigation extends Tag implements INodeContainer
      */
     public function getExtendedNodes(): array
     {
-        $nodes = [];
-        if ($this->prefix) {
-            $nodes[] = $this->prefix;
-        }
-        if ($this->postfix) {
-            $nodes[] = $this->postfix;
-        }
+        $nodes = [$this->prefix, $this->postfix];
         if ($this->wrapper) {
             $nodes[] = $this->wrapper;
         }
@@ -283,11 +272,11 @@ class Navigation extends Tag implements INodeContainer
     }
 
     /**
-     * @deprecated
-     *
      * @param string|INode
      *
      * @return $this
+     * @deprecated
+     *
      */
     public function setContent($content): INode
     {

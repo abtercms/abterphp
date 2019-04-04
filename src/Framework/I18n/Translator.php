@@ -45,7 +45,7 @@ class Translator implements ITranslator
      * @param string $key
      * @param array  ...$args
      *
-     * @return string
+     * @return bool
      */
     public function canTranslate(string $key, ...$args): bool
     {

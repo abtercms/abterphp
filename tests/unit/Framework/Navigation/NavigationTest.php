@@ -35,9 +35,11 @@ class NavigationTest extends TestCase
     {
         $sut = new Navigation();
 
+        $expectedResult = [$sut->getPrefix(), $sut->getPostfix()];
+
         $actualResult = $sut->getExtendedNodes();
 
-        $this->assertSame([], $actualResult);
+        $this->assertSame($expectedResult, $actualResult);
     }
 
     public function testGetExtendedWithOptionalsReplaced()

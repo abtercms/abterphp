@@ -76,7 +76,7 @@ class Renderer
     }
 
     /**
-     * @param string[] $subTemplateIds
+     * @param string[][] $subTemplateIds
      *
      * @return string[]
      */
@@ -92,7 +92,7 @@ class Renderer
 
             $loader = $this->loaders[$type];
 
-            /** @var TemplateData[] $entities */
+            /** @var Data[] $entities */
             $entities = $loader->load($identifiers);
 
             $templates = $this->populateTemplates($type, $entities, $templates);
@@ -102,9 +102,9 @@ class Renderer
     }
 
     /**
-     * @param string         $type
-     * @param TemplateData[] $entities
-     * @param array          $templates
+     * @param string $type
+     * @param Data[] $entities
+     * @param array  $templates
      *
      * @return array
      */

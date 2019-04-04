@@ -48,9 +48,10 @@ class Manager
         // phpcs:disable Generic.CodeAnalysis.EmptyStatement
         try {
             if ($this->cacheBridge && $this->cacheBridge->has($cacheKey)) {
-                return $this->cacheBridge->get($cacheKey);
+                return (array)$this->cacheBridge->get($cacheKey);
             }
         } catch (\Exception $e) {
+            // It's always safe to skip reading the cache
         }
         // phpcs:enable Generic.CodeAnalysis.EmptyStatement
 
@@ -64,6 +65,7 @@ class Manager
                 $this->cacheBridge->set($cacheKey, $bootstrappers, PHP_INT_MAX);
             }
         } catch (\Exception $e) {
+            // It's always safe to skip writing the cache
         }
         // phpcs:enable Generic.CodeAnalysis.EmptyStatement
 

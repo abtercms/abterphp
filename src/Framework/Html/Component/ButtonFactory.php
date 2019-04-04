@@ -158,7 +158,7 @@ class ButtonFactory
         array $iconAttribs,
         array $intents,
         $attributes,
-        string $tag
+        ?string $tag
     ): ButtonWithIcon {
         $iconAttribs = ArrayHelper::unsafeMergeAttributes($this->iconAttributes, $iconAttribs);
         $textAttribs = ArrayHelper::unsafeMergeAttributes($this->textAttributes, $textAttribs);

@@ -15,6 +15,9 @@ class Loader
     /** @var string[] */
     protected $sourceRoots;
 
+    /** @var string */
+    protected $moduleFileName;
+
     /**
      * Loader constructor.
      *
@@ -23,9 +26,9 @@ class Loader
      */
     public function __construct(array $sourceRoots, $moduleFileName = '')
     {
-        $this->moduleFileName = $moduleFileName ?: static::MODULE_FILE_NAME;
-
         $this->sourceRoots = $sourceRoots;
+
+        $this->moduleFileName = $moduleFileName ?: static::MODULE_FILE_NAME;
     }
 
     /**

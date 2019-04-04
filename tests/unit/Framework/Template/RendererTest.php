@@ -126,17 +126,17 @@ class RendererTest extends \PHPUnit\Framework\TestCase
             ],
             'empty-subtemplates'          => [
                 ['rendered' => ['foo' => ['foo0']]],
-                ['foo' => [new TemplateData(), new TemplateData()]],
+                ['foo' => [new Data(), new Data()]],
                 'rendered',
             ],
             'subtemplates-with-vars'      => [
                 ['rendered' => ['foo' => ['foo0']]],
-                ['foo' => [new TemplateData('bar', ['bar0' => 'hello']), new TemplateData()]],
+                ['foo' => [new Data('bar', ['bar0' => 'hello']), new Data()]],
                 'rendered',
             ],
             'subtemplates-with-templates' => [
                 ['rendered' => ['foo' => ['foo0']]],
-                ['foo' => [new TemplateData('bar', [], ['bar0' => 'hello']), new TemplateData()]],
+                ['foo' => [new Data('bar', [], ['bar0' => 'hello']), new Data()]],
                 'rendered',
             ],
         ];

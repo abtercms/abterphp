@@ -449,23 +449,23 @@ class Collection implements ICollection
     }
 
     /**
-     * @param INode $node
+     * @param mixed $content
      *
      * @throws InvalidArgumentException
      */
-    protected function verifyArgument($node)
+    protected function verifyArgument($content)
     {
-        if ($node instanceof $this->nodeClass) {
+        if ($content instanceof $this->nodeClass) {
             return;
         }
 
-        $type = gettype($node);
+        $type = gettype($content);
         if ($type !== 'object') {
             throw new InvalidArgumentException(sprintf(static::ERROR_INVALID_TYPE_ARG, $this->nodeClass, $type));
         }
 
         throw new InvalidArgumentException(
-            sprintf(static::ERROR_INVALID_INSTANCE_ARG, $this->nodeClass, get_class($node))
+            sprintf(static::ERROR_INVALID_INSTANCE_ARG, $this->nodeClass, get_class($content))
         );
     }
 }

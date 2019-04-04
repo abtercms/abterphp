@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace AbterPhp\Website\Template;
 
+use AbterPhp\Framework\Template\IData;
 use AbterPhp\Framework\Template\ILoader;
-use AbterPhp\Framework\Template\TemplateData;
+use AbterPhp\Framework\Template\Data;
 use AbterPhp\Website\Databases\Queries\BlockCache;
 use AbterPhp\Website\Orm\BlockRepo;
 
@@ -36,7 +37,7 @@ class BlockLoader implements ILoader
     /**
      * @param string[] $identifiers
      *
-     * @return TemplateData[]
+     * @return IData[]
      */
     public function load(array $identifiers): array
     {
@@ -44,7 +45,7 @@ class BlockLoader implements ILoader
 
         $templateData = [];
         foreach ($blocks as $block) {
-            $templateData[] = new TemplateData(
+            $templateData[] = new Data(
                 $block->getIdentifier(),
                 ['title' => $block->getTitle()],
                 ['body' => $block->getBody(), 'layout' => $block->getLayout()]

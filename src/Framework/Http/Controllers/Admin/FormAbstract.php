@@ -151,7 +151,7 @@ abstract class FormAbstract extends AdminAbstract
 
             $flashService->mergeErrorMessages([$errorMessage]);
 
-            return $this->createEntity();
+            return $this->createEntity('');
         }
 
         return $entity;

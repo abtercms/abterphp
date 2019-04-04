@@ -56,8 +56,6 @@ class Numbers extends Actions
      */
     public function populate(int $currentPage, array $pageNumbers, int $lastPage)
     {
-        $this->buttons = new Actions();
-
         $lastNumber = $pageNumbers[count($pageNumbers) - 1];
 
         $isFirst        = ($currentPage === 1);
