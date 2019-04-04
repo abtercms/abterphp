@@ -204,6 +204,7 @@ class Create extends Command
     /**
      * @return User
      * @throws \Opulence\Orm\OrmException
+     * @throws \RuntimeException
      */
     protected function getEntity(): User
     {
@@ -219,6 +220,10 @@ class Create extends Command
             $userGroups[] = $this->userGroupRepo->getByIdentifier($ugIdentifier);
         }
         $userLanguage = $this->userLanguageRepo->getByIdentifier($ulIdentifier);
+
+        if (!$userLanguage) {
+            throw new \RuntimeException('Language not found');
+        }
 
         return new User(
             '',

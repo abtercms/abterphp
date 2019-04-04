@@ -60,7 +60,9 @@ class AdminResourceSqlDataMapper extends SqlDataMapper implements IAdminResource
     {
         $query = $this->getBaseQuery();
 
-        return $this->read($query->getSql(), [], self::VALUE_TYPE_ARRAY);
+        $sql = $query->getSql();
+
+        return $this->read($sql, [], self::VALUE_TYPE_ARRAY);
     }
 
     /**

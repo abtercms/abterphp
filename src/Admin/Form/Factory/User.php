@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace AbterPhp\Admin\Form\Factory;
 
 use AbterPhp\Admin\Domain\Entities\User as Entity;
+use AbterPhp\Admin\Domain\Entities\UserGroup;
 use AbterPhp\Admin\Domain\Entities\UserLanguage;
 use AbterPhp\Admin\Orm\UserGroupRepo;
 use AbterPhp\Admin\Orm\UserLanguageRepo;
 use AbterPhp\Framework\Constant\Html5;
 use AbterPhp\Framework\Form\Component\Option;
-use AbterPhp\Framework\Form\Container\FormGroup;
 use AbterPhp\Framework\Form\Container\CheckboxGroup;
+use AbterPhp\Framework\Form\Container\FormGroup;
 use AbterPhp\Framework\Form\Element\Input;
 use AbterPhp\Framework\Form\Element\MultiSelect;
 use AbterPhp\Framework\Form\Element\Select;
@@ -59,7 +60,7 @@ class User extends Base
      * @param string       $showUrl
      * @param IEntity|null $entity
      *
-     * @return $this
+     * @return IForm
      */
     public function create(string $action, string $method, string $showUrl, ?IEntity $entity = null): IForm
     {
@@ -235,7 +236,7 @@ class User extends Base
             $attributes
         );
         $label = new Label('can_login', 'admin:userCanLogin');
-        $help = new Node('admin:userCanLogin');
+        $help  = new Node('admin:userCanLogin');
 
         $this->form[] = new CheckboxGroup($input, $label, $help);
 
@@ -264,7 +265,7 @@ class User extends Base
             'is_gravatar_allowed',
             'admin:userIsGravatarAllowed'
         );
-        $help = new Node('admin:userIsGravatarAllowed');
+        $help  = new Node('admin:userIsGravatarAllowed');
 
         $this->form[] = new CheckboxGroup($input, $label, $help);
 

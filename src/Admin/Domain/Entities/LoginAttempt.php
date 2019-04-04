@@ -8,7 +8,7 @@ use AbterPhp\Framework\Domain\Entities\IStringerEntity;
 
 class LoginAttempt implements IStringerEntity
 {
-    /** @var int */
+    /** @var string */
     protected $id;
 
     /** @var string */

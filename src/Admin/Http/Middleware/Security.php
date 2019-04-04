@@ -39,10 +39,11 @@ class Security implements IMiddleware
 
         // phpcs:disable Generic.CodeAnalysis.EmptyStatement
         try {
-            if ($this->cacheBridge->get(static::KEY)) {
+            if ($this->cacheBridge->has(static::KEY)) {
                 return $next($request);
             }
         } catch (\Exception $e) {
+            // It's always safe to check the security checks, it just makes the response slightly slower
         }
         // phpcs:enable Generic.CodeAnalysis.EmptyStatement
 
