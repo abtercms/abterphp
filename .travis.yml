@@ -20,5 +20,5 @@ script:
   - docker-compose exec php make build
 
 after_success:
-  - make coverage
+  - docker-compose exec php make coverage
   - travis_retry php-coveralls.phar
