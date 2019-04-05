@@ -21,4 +21,4 @@ script:
 
 after_success:
   - docker-compose exec php make coverage
-  - travis_retry php-coveralls.phar
+  - travis_retry php-coveralls.phar --coverage_clover=clover.xml --json_path=./tmp/report/coveralls-upload.json
