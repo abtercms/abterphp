@@ -166,6 +166,7 @@ class UserBlock extends Tag implements INodeContainer
      */
     public function __toString(): string
     {
+        $content   = [];
         $content[] = (string)$this->mediaLeft;
         $content[] = (string)$this->mediaBody;
         $content[] = (string)$this->mediaRight;

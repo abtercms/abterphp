@@ -43,6 +43,7 @@ class Security implements IMiddleware
                 return $next($request);
             }
         } catch (\Exception $e) {
+            // It's always safe to check potential security risks, only makes the response slightly slower
         }
         // phpcs:enable Generic.CodeAnalysis.EmptyStatement
 

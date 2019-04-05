@@ -51,7 +51,7 @@ class Contact extends Base
         $name  = CsrfTokenChecker::TOKEN_INPUT_NAME;
         $value = (string)$this->session->get($name);
 
-        $attributes[Html5::ATTR_TYPE] = Input::TYPE_HIDDEN;
+        $attributes = [Html5::ATTR_TYPE => Input::TYPE_HIDDEN];
 
         $this->form[] = new Input($name, $name, $value, [], $attributes);
 
