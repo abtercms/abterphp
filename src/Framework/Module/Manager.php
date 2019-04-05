@@ -248,7 +248,7 @@ class Manager
     }
 
     /**
-     * @return array
+     * @return $this
      */
     protected function init(): Manager
     {

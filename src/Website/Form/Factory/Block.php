@@ -210,7 +210,7 @@ class Block extends Base
      * @param Entity $entity
      * @param bool   $advancedAllowed
      *
-     * @return Page
+     * @return $this
      */
     protected function addLayout(Entity $entity, bool $advancedAllowed): Block
     {

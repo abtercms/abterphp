@@ -29,7 +29,7 @@ class BlockRepo extends Repository implements IGridRepo
     /**
      * @param string $identifier
      *
-     * @return Entity
+     * @return Entity|null
      */
     public function getByIdentifier(string $identifier): ?Entity
     {

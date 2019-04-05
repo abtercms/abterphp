@@ -8,6 +8,7 @@ use AbterPhp\Framework\Authorization\Constant\Role;
 use AbterPhp\Framework\Constant\Html5;
 use AbterPhp\Framework\Html\Collection;
 use AbterPhp\Framework\Html\Helper\StringHelper;
+use AbterPhp\Framework\Html\ICollection;
 use AbterPhp\Framework\Html\IComponent;
 use AbterPhp\Framework\Html\INode;
 use AbterPhp\Framework\Html\INodeContainer;
@@ -31,10 +32,10 @@ class Navigation extends Tag implements INodeContainer
     /** @var string */
     protected $username;
 
-    /** @var Collection */
+    /** @var ICollection */
     protected $prefix;
 
-    /** @var Collection */
+    /** @var ICollection */
     protected $postfix;
 
     /** @var IComponent|null */
@@ -133,19 +134,19 @@ class Navigation extends Tag implements INodeContainer
     }
 
     /**
-     * @return Collection
+     * @return ICollection
      */
-    public function getPrefix(): Collection
+    public function getPrefix(): ICollection
     {
         return $this->prefix;
     }
 
     /**
-     * @param IComponent $prefix
+     * @param ICollection $prefix
      *
      * @return $this
      */
-    public function setPrefix(IComponent $prefix): Navigation
+    public function setPrefix(ICollection $prefix): Navigation
     {
         $this->prefix = $prefix;
 
@@ -153,19 +154,19 @@ class Navigation extends Tag implements INodeContainer
     }
 
     /**
-     * @return Collection
+     * @return ICollection
      */
-    public function getPostfix(): Collection
+    public function getPostfix(): ICollection
     {
         return $this->postfix;
     }
 
     /**
-     * @param Collection $postfix
+     * @param ICollection $postfix
      *
      * @return $this
      */
-    public function setPostfix(Collection $postfix): Navigation
+    public function setPostfix(ICollection $postfix): Navigation
     {
         $this->postfix = $postfix;
 

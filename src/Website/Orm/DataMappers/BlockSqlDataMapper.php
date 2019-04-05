@@ -145,7 +145,7 @@ class BlockSqlDataMapper extends SqlDataMapper implements IBlockDataMapper
     public function getWithLayoutByIdentifiers(array $identifiers): array
     {
         if (count($identifiers) === 0) {
-            return null;
+            return [];
         }
 
         $conditions = new ConditionFactory();

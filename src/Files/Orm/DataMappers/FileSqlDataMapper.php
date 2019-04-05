@@ -192,7 +192,7 @@ class FileSqlDataMapper extends SqlDataMapper implements IFileDataMapper
     public function getPublicByCategoryIdentifiers(array $identifiers): array
     {
         if (count($identifiers) === 0) {
-            return null;
+            return [];
         }
 
         $conditions = new ConditionFactory();

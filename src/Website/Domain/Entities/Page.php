@@ -22,7 +22,7 @@ class Page implements IStringerEntity
     /** @var string */
     protected $body;
 
-    /** @var string|null */
+    /** @var string */
     protected $layout;
 
     /** @var string|null */
@@ -151,7 +151,7 @@ class Page implements IStringerEntity
     }
 
     /**
-     * @param string|null $layout
+     * @param string $layout
      *
      * @return $this
      */
