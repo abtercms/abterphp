@@ -176,22 +176,26 @@ before the first stable version.
    - ~~Advanced settings access role for pages~~
    - ~~Multiple user group for one user~~
    - ~~New user roles: file uploader, layout designer, page writer~~
-1. Improve security implementing related headers as recommended:
+1. Improved security implementing related headers as recommended:
    - https://medium.freecodecamp.org/secure-your-web-application-with-these-http-headers-fd66e0367628
    - https://medium.freecodecamp.org/web-security-hardening-http-cookies-be8d8d8016e1
 1. 70%+ of PHP source code unit tested, except for bootstrappers and console commands
-1. Verify that `localhost_router.php` works as expected or remove it if too hard to fix
+1. Verified that `localhost_router.php` works as expected or remove it if too hard to fix
 1. Modular asset management
-1. ~~Complete test automation and automatic reviews set up~~
-1. ~~Refactor module manager~~
-1. ~~Ensure that user creation enforces good passwords in CLI.~~
+1. ~~Completed test automation and automatic reviews set up~~
+1. ~~Refactored module manager~~
+1. ~~Ensured that user creation enforces good passwords in CLI.~~
 1. ~~Uuid ids~~
-1. ~~Remove $value in Select constructor~~
+1. ~~Removed $value in Select constructor~~
 1. ~~Switch `$attribute` and `$tag` order~~
-1. Test AbterPHP on OSX and Windows 10.
+1. Tested project on OSX and Windows 10.
+1. Initial API defined and published
+1. Documentation page exists
+1. 1 nice website module
 
 ### First beta musts:
 
+1. API fully defined
 1. API implemented
 1. 1 grid is covered with acceptance tests (filters, pagination included)
 1. 1 form is covered with acceptance tests (displaying with new and existing entity and saving included)
@@ -199,7 +203,7 @@ before the first stable version.
 1. Highlight form fields with validation errors
 1. 12-factor compliance reviewed and improvements planned
 1. ~~Existing phpmd ignore cases reviewed~~
-1. Review and refactor global `$abterModuleManager` usage
+1. Reviewed and refactored global `$abterModuleManager` usage
 1. Must-accept-cookie module
 1. Test loading entities that don't exist or faulty
 1. Fix empty exceptions (\LogicException, \RuntimeException, \InvalidArgumentException)
@@ -210,18 +214,22 @@ before the first stable version.
    - Review validation factories
    - Create new validation rules where needed
 1. Cached translations
+1. Documentation covers getting started and main design goals
+1. 3 nice website modules
 
 ### 1.0 musts:
 
-1. At least 1 use cases for each module is implemented in acceptance tests
+1. API designed finalized (community input?)
+1. API implemented
+1. API test complete
+1. Acceptance tests for main use cases of each module
 1. All grids, paginations, filters covered with acceptance tests
 1. Displaying and saving of all forms and proper returns covered with acceptance tests
-1. API test complete
-1. Refactor helpers
+1. Refactored helpers
 1. AbterPhp\Framework\Form\Factory\Base::getMultiSelectSize -> move to helper or Select
-1. Refactor configs
-1. Refactor bootstrappers (again)
-1. Review all constants
+1. Refactored configs
+1. Refactored bootstrappers (again)
+1. All constants reviewed
 1. Documentation complete
 1. 12-factor compliance clearly stated
 1. More useful dashboard (community input?)
