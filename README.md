@@ -1,6 +1,9 @@
 # AbterPHP
 
 [![Build Status](https://travis-ci.com/abtercms/abterphp.svg?branch=master)](https://travis-ci.com/abtercms/abterphp)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/abtercms/abterphp/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/abtercms/abterphp/?branch=master)
+[![Build Status](https://scrutinizer-ci.com/g/abtercms/abterphp/badges/build.png?b=master)](https://scrutinizer-ci.com/g/abtercms/abterphp/build-status/master)
+[![Coverage Status](https://coveralls.io/repos/github/abtercms/abterphp/badge.svg)](https://coveralls.io/github/abtercms/abterphp)
 
 AbterPHP is the first and currently the only implementation of AbterCMS, providing backend, frontend and a REST API for it.
 It does not require much JavaScript knowledge as it uses jQuery instead of some nodejs based solution, therefore many might
@@ -179,7 +182,7 @@ before the first stable version.
 1. 70%+ of PHP source code unit tested, except for bootstrappers and console commands
 1. Verify that `localhost_router.php` works as expected or remove it if too hard to fix
 1. Modular asset management
-1. Complete test automation and automatic reviews set up
+1. ~~Complete test automation and automatic reviews set up~~
 1. ~~Refactor module manager~~
 1. ~~Ensure that user creation enforces good passwords in CLI.~~
 1. ~~Uuid ids~~
@@ -250,6 +253,7 @@ before the first stable version.
  - `binary(16)` ids instead of `char(36)`
    - Needs MySQL 8.0 `BIN_TO_UUID` and `UUID_TO_BIN` support
    - Needs query builder support (although not a must)
+ - Setup [codeclimate.com](https://codeclimate.com/) properly
 
 ### Ideas for 1.1:
  - WYSIWYG file selector
