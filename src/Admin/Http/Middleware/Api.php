@@ -4,25 +4,28 @@ declare(strict_types=1);
 
 namespace AbterPhp\Admin\Http\Middleware;
 
+use AbterPhp\Admin\Service\Login as LoginService;
+use AbterPhp\Website\Constant\Routes;
 use Closure;
 use Opulence\Http\Requests\Request;
 use Opulence\Http\Responses\RedirectResponse;
 use Opulence\Http\Responses\Response;
 use Opulence\Http\Responses\ResponseHeaders;
 use Opulence\Routing\Middleware\IMiddleware;
-use AbterPhp\Admin\Auth\Authenticator;
 
 class Api implements IMiddleware
 {
-    /** @var Authenticator */
-    protected $authenticator;
+    const REMOTE_ADDR = 'REMOTE_ADDR';
+
+    /** @var LoginService */
+    protected $loginService;
 
     /**
-     * @param Authenticator $authenticator The session used by the application
+     * @param LoginService $loginService The session used by the application
      */
-    public function __construct(Authenticator $authenticator)
+    public function __construct(LoginService $loginService)
     {
-        $this->authenticator = $authenticator;
+        $this->loginService = $loginService;
     }
 
     // $next consists of the next middleware in the pipeline
@@ -31,13 +34,24 @@ class Api implements IMiddleware
         $username = $request->getInput('username');
         $password = $request->getInput('password');
 
-        if (is_null($username) || is_null($password)) {
-            return new RedirectResponse(PATH_NOPE, ResponseHeaders::HTTP_TEMPORARY_REDIRECT);
+        if (null === $username || null === $password) {
+            return new RedirectResponse(Routes::PATH_NOPE, ResponseHeaders::HTTP_TEMPORARY_REDIRECT);
         }
 
-        $storedPassword = $this->authenticator->getUserPassword($username);
-        if (!$this->authenticator->canLogin($password, $storedPassword)) {
-            return new RedirectResponse(PATH_NOPE, ResponseHeaders::HTTP_TEMPORARY_REDIRECT);
+        $username  = (string)$username;
+        $password  = (string)$password;
+        $ipAddress = (string)$request->getServer()->get(static::REMOTE_ADDR);
+        try {
+            if (!$this->loginService->isLoginAllowed($username, $ipAddress)) {
+                return new RedirectResponse(Routes::PATH_NOPE, ResponseHeaders::HTTP_TEMPORARY_REDIRECT);
+            }
+
+            $user = $this->loginService->login($username, $password, $ipAddress);
+            if (!$user) {
+                return new RedirectResponse(Routes::PATH_NOPE, ResponseHeaders::HTTP_TEMPORARY_REDIRECT);
+            }
+        } catch (\Exception $e) {
+            return new RedirectResponse(Routes::PATH_NOPE, ResponseHeaders::HTTP_TEMPORARY_REDIRECT);
         }
 
         return $next($request);
