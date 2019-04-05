@@ -8,8 +8,6 @@ before_install:
   - chmod +x mkcert
   - ./mkcert abtercms.test "*.abtercms.test"
   - mv abtercms.test+1* ./docker/nginx/certs/
-  - curl -L --output php-coveralls.phar https://github.com/php-coveralls/php-coveralls/releases/download/v2.1.0/php-coveralls.phar
-  - chmod +x php-coveralls.phar
   - docker-compose pull
   - docker-compose up -d
 
@@ -21,4 +19,7 @@ script:
 
 after_success:
   - docker-compose exec php make coverage
-  - travis_retry php-coveralls.phar --coverage_clover=clover.xml --json_path=./tmp/report/coveralls-upload.json
+  - curl -L --output php-coveralls.phar https://github.com/php-coveralls/php-coveralls/releases/download/v2.1.0/php-coveralls.phar
+  - chmod +x php-coveralls.phar
+  - ls php-coveralls.phar
+  - travis_retry php-coveralls.phar --coverage_clover=./tmp/report/clover.xml --json_path=./tmp/report/coveralls-upload.json
