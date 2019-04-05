@@ -22,7 +22,7 @@ class UserGroupSqlDataMapper extends SqlDataMapper implements IUserGroupDataMapp
      */
     public function add($entity)
     {
-        if (!$entity instanceof Entity) {
+        if (!($entity instanceof Entity)) {
             throw new \InvalidArgumentException(__CLASS__ . ':' . __FUNCTION__ . ' expects a UserGroup entity.');
         }
 
@@ -48,7 +48,7 @@ class UserGroupSqlDataMapper extends SqlDataMapper implements IUserGroupDataMapp
      */
     public function delete($entity)
     {
-        if (!$entity instanceof Entity) {
+        if (!($entity instanceof Entity)) {
             throw new \InvalidArgumentException(__CLASS__ . ':' . __FUNCTION__ . ' expects a UserGroup entity.');
         }
 
@@ -142,7 +142,7 @@ class UserGroupSqlDataMapper extends SqlDataMapper implements IUserGroupDataMapp
      */
     public function update($entity)
     {
-        if (!$entity instanceof Entity) {
+        if (!($entity instanceof Entity)) {
             throw new \InvalidArgumentException(__CLASS__ . ':' . __FUNCTION__ . ' expects a UserGroup entity.');
         }
 

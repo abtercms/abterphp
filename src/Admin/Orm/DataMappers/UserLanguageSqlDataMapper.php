@@ -16,7 +16,7 @@ class UserLanguageSqlDataMapper extends SqlDataMapper implements IUserLanguageDa
      */
     public function add($entity)
     {
-        if (!$entity instanceof Entity) {
+        if (!($entity instanceof Entity)) {
             throw new \InvalidArgumentException(__CLASS__ . ':' . __FUNCTION__ . ' expects a UserLanguage entity.');
         }
 
@@ -40,7 +40,7 @@ class UserLanguageSqlDataMapper extends SqlDataMapper implements IUserLanguageDa
      */
     public function delete($entity)
     {
-        if (!$entity instanceof Entity) {
+        if (!($entity instanceof Entity)) {
             throw new \InvalidArgumentException(__CLASS__ . ':' . __FUNCTION__ . ' expects a UserLanguage entity.');
         }
 
@@ -137,7 +137,7 @@ class UserLanguageSqlDataMapper extends SqlDataMapper implements IUserLanguageDa
      */
     public function update($entity)
     {
-        if (!$entity instanceof Entity) {
+        if (!($entity instanceof Entity)) {
             throw new \InvalidArgumentException(__CLASS__ . ':' . __FUNCTION__ . ' expects a UserLanguage entity.');
         }
 

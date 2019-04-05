@@ -16,7 +16,7 @@ class BlockLayoutSqlDataMapper extends SqlDataMapper implements IBlockLayoutData
      */
     public function add($entity)
     {
-        if (!$entity instanceof Entity) {
+        if (!($entity instanceof Entity)) {
             throw new \InvalidArgumentException(__CLASS__ . ':' . __FUNCTION__ . ' expects a Block Layout entity.');
         }
 
@@ -40,7 +40,7 @@ class BlockLayoutSqlDataMapper extends SqlDataMapper implements IBlockLayoutData
      */
     public function delete($entity)
     {
-        if (!$entity instanceof Entity) {
+        if (!($entity instanceof Entity)) {
             throw new \InvalidArgumentException(__CLASS__ . ':' . __FUNCTION__ . ' expects a Block Layout entity.');
         }
 
@@ -133,7 +133,7 @@ class BlockLayoutSqlDataMapper extends SqlDataMapper implements IBlockLayoutData
      */
     public function update($entity)
     {
-        if (!$entity instanceof Entity) {
+        if (!($entity instanceof Entity)) {
             throw new \InvalidArgumentException(__CLASS__ . ':' . __FUNCTION__ . ' expects a Block Layout entity.');
         }
 

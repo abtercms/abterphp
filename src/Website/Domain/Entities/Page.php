@@ -28,7 +28,7 @@ class Page implements IStringerEntity
     /** @var string|null */
     protected $layoutId;
 
-    /** @var Meta|null */
+    /** @var Meta */
     protected $meta;
 
     /** @var Assets|null */
@@ -62,8 +62,8 @@ class Page implements IStringerEntity
         $this->body       = $body;
         $this->layout     = $layout;
         $this->layoutId   = $layoutId ? $layoutId : null;
-        $this->assets     = $assets;
         $this->meta       = $meta ?: new Meta('', '', '', '', '', '', '', '');
+        $this->assets     = $assets;
     }
 
     /**

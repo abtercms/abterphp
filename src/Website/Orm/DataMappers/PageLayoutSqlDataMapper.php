@@ -16,7 +16,7 @@ class PageLayoutSqlDataMapper extends SqlDataMapper implements IPageLayoutDataMa
      */
     public function add($entity)
     {
-        if (!$entity instanceof Entity) {
+        if (!($entity instanceof Entity)) {
             throw new \InvalidArgumentException(__CLASS__ . ':' . __FUNCTION__ . ' expects a Page Layout entity.');
         }
 
@@ -33,7 +33,7 @@ class PageLayoutSqlDataMapper extends SqlDataMapper implements IPageLayoutDataMa
      */
     public function delete($entity)
     {
-        if (!$entity instanceof Entity) {
+        if (!($entity instanceof Entity)) {
             throw new \InvalidArgumentException(__CLASS__ . ':' . __FUNCTION__ . ' expects a Page Layout entity.');
         }
 
@@ -126,7 +126,7 @@ class PageLayoutSqlDataMapper extends SqlDataMapper implements IPageLayoutDataMa
      */
     public function update($entity)
     {
-        if (!$entity instanceof Entity) {
+        if (!($entity instanceof Entity)) {
             throw new \InvalidArgumentException(__CLASS__ . ':' . __FUNCTION__ . ' expects a Page Layout entity.');
         }
 

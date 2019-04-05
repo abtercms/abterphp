@@ -21,7 +21,7 @@ class UserSqlDataMapper extends SqlDataMapper implements IUserDataMapper
      */
     public function add($entity)
     {
-        if (!$entity instanceof Entity) {
+        if (!($entity instanceof Entity)) {
             throw new \InvalidArgumentException(__CLASS__ . ':' . __FUNCTION__ . ' expects a User entity.');
         }
 
@@ -51,7 +51,7 @@ class UserSqlDataMapper extends SqlDataMapper implements IUserDataMapper
      */
     public function delete($entity)
     {
-        if (!$entity instanceof Entity) {
+        if (!($entity instanceof Entity)) {
             throw new \InvalidArgumentException(__CLASS__ . ':' . __FUNCTION__ . ' expects a User entity.');
         }
 
@@ -185,7 +185,7 @@ class UserSqlDataMapper extends SqlDataMapper implements IUserDataMapper
      */
     public function update($entity)
     {
-        if (!$entity instanceof Entity) {
+        if (!($entity instanceof Entity)) {
             throw new \InvalidArgumentException(__CLASS__ . ':' . __FUNCTION__ . ' expects a User entity.');
         }
 

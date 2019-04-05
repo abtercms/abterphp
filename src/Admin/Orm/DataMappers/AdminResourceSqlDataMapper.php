@@ -16,7 +16,7 @@ class AdminResourceSqlDataMapper extends SqlDataMapper implements IAdminResource
      */
     public function add($entity)
     {
-        if (!$entity instanceof Entity) {
+        if (!($entity instanceof Entity)) {
             throw new \InvalidArgumentException(__CLASS__ . ':' . __FUNCTION__ . ' expects an AdminResource entity.');
         }
 
@@ -39,7 +39,7 @@ class AdminResourceSqlDataMapper extends SqlDataMapper implements IAdminResource
      */
     public function delete($entity)
     {
-        if (!$entity instanceof Entity) {
+        if (!($entity instanceof Entity)) {
             throw new \InvalidArgumentException(__CLASS__ . ':' . __FUNCTION__ . ' expects an AdminResource entity.');
         }
 
@@ -102,7 +102,7 @@ class AdminResourceSqlDataMapper extends SqlDataMapper implements IAdminResource
      */
     public function update($entity)
     {
-        if (!$entity instanceof Entity) {
+        if (!($entity instanceof Entity)) {
             throw new \InvalidArgumentException(__CLASS__ . ':' . __FUNCTION__ . ' expects an AdminResource entity.');
         }
 

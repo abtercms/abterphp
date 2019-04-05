@@ -18,7 +18,7 @@ class FileSqlDataMapper extends SqlDataMapper implements IFileDataMapper
      */
     public function add($entity)
     {
-        if (!$entity instanceof Entity) {
+        if (!($entity instanceof Entity)) {
             throw new \InvalidArgumentException(__CLASS__ . ':' . __FUNCTION__ . ' expects a File entity.');
         }
 
@@ -45,7 +45,7 @@ class FileSqlDataMapper extends SqlDataMapper implements IFileDataMapper
      */
     public function delete($entity)
     {
-        if (!$entity instanceof Entity) {
+        if (!($entity instanceof Entity)) {
             throw new \InvalidArgumentException(__CLASS__ . ':' . __FUNCTION__ . ' expects a File entity.');
         }
 
@@ -233,7 +233,7 @@ class FileSqlDataMapper extends SqlDataMapper implements IFileDataMapper
      */
     public function update($entity)
     {
-        if (!$entity instanceof Entity) {
+        if (!($entity instanceof Entity)) {
             throw new \InvalidArgumentException(__CLASS__ . ':' . __FUNCTION__ . ' expects a File entity.');
         }
 

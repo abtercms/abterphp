@@ -18,7 +18,7 @@ class PageSqlDataMapper extends SqlDataMapper implements IPageDataMapper
      */
     public function add($entity)
     {
-        if (!$entity instanceof Entity) {
+        if (!($entity instanceof Entity)) {
             throw new \InvalidArgumentException(__CLASS__ . ':' . __FUNCTION__ . ' expects a Page entity.');
         }
 
@@ -38,7 +38,7 @@ class PageSqlDataMapper extends SqlDataMapper implements IPageDataMapper
      */
     public function delete($entity)
     {
-        if (!$entity instanceof Entity) {
+        if (!($entity instanceof Entity)) {
             throw new \InvalidArgumentException(__CLASS__ . ':' . __FUNCTION__ . ' expects a Page entity.');
         }
 
@@ -155,7 +155,7 @@ class PageSqlDataMapper extends SqlDataMapper implements IPageDataMapper
      */
     public function update($entity)
     {
-        if (!$entity instanceof Entity) {
+        if (!($entity instanceof Entity)) {
             throw new \InvalidArgumentException(__CLASS__ . ':' . __FUNCTION__ . ' expects a Page entity.');
         }
 
