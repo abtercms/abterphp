@@ -4,6 +4,7 @@ namespace AbterPhp\Admin;
 
 use AbterPhp\Framework\Constant\Event;
 use AbterPhp\Framework\Constant\Module;
+use AbterPhp\Framework\Constant\Priorities;
 
 return [
     Module::IDENTIFIER         => 'AbterPhp\Admin',
@@ -47,18 +48,19 @@ return [
         ],
     ],
     Module::MIDDLEWARE         => [
-        1000 => [
+        Priorities::NORMAL => [
             Http\Middleware\CheckCsrfToken::class,
             Http\Middleware\Security::class,
         ],
     ],
     Module::ROUTE_PATHS        => [
-        1000 => [
-            __DIR__ . '/routes.php',
+        Priorities::NORMAL => [
+            __DIR__ . '/admin-routes.php',
+            __DIR__ . '/login-routes.php',
         ],
     ],
     Module::MIGRATION_PATHS    => [
-        1000 => [
+        Priorities::NORMAL => [
             realpath(__DIR__ . '/Databases/Migrations'),
         ],
     ],

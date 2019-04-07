@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-use AbterPhp\Admin\Constant\Routes;
 use AbterPhp\Admin\Http\Middleware\Authentication;
 use AbterPhp\Admin\Http\Middleware\Authorization;
 use AbterPhp\Admin\Http\Middleware\LastGridPage;
 use AbterPhp\Framework\Authorization\Constant\Role;
+use AbterPhp\Website\Constant\Routes;
 use Opulence\Routing\Router;
 
 /**
@@ -17,15 +17,8 @@ use Opulence\Routing\Router;
  * @var Router $router
  */
 $router->group(
-    ['controllerNamespace' => 'AbterPhp\Admin\\Http\\Controllers'],
+    ['controllerNamespace' => 'AbterPhp\Website\Http\Controllers'],
     function (Router $router) {
-        /** @see \AbterPhp\Admin\Http\Controllers\Admin\Form\Login::display() */
-        $router->get(PATH_LOGIN, 'Admin\Form\Login@display', [OPTION_NAME => Routes::ROUTE_LOGIN]);
-        /** @see \AbterPhp\Admin\Http\Controllers\Admin\Execute\Login::execute() */
-        $router->post(PATH_LOGIN, 'Admin\Execute\Login@execute', [OPTION_NAME => Routes::ROUTE_LOGIN_POST]);
-        /** @see \AbterPhp\Admin\Http\Controllers\Admin\Execute\Logout::execute() */
-        $router->get(Routes::PATH_LOGOUT, 'Admin\Execute\Logout@execute', [OPTION_NAME => Routes::ROUTE_LOGOUT]);
-
         $router->group(
             [
                 'path'       => PATH_ADMIN,
@@ -35,15 +28,18 @@ $router->group(
             ],
             function (Router $router) {
                 $entities = [
-                    'usergroups' => 'UserGroup',
-                    'users'      => 'User',
+                    'pages'        => 'Page',
+                    'pagelayouts'  => 'PageLayout',
+                    'blocks'       => 'Block',
+                    'blocklayouts' => 'BlockLayout',
                 ];
 
                 foreach ($entities as $route => $controllerName) {
                     $path = strtolower($controllerName);
 
-                    /** @see \AbterPhp\Admin\Http\Controllers\Admin\Grid\User::show() */
-                    /** @see \AbterPhp\Admin\Http\Controllers\Admin\Grid\UserGroup::show() */
+                    /** @see \AbterPhp\Website\Http\Controllers\Admin\Grid\Block::show() */
+                    /** @see \AbterPhp\Website\Http\Controllers\Admin\Grid\BlockLayout::show() */
+                    /** @see \AbterPhp\Website\Http\Controllers\Admin\Grid\Page::show() */
                     $router->get(
                         "/${path}",
                         "Admin\Grid\\${controllerName}@show",
@@ -61,8 +57,9 @@ $router->group(
                         ]
                     );
 
-                    /** @see \AbterPhp\Admin\Http\Controllers\Admin\Form\User::new() */
-                    /** @see \AbterPhp\Admin\Http\Controllers\Admin\Form\UserGroup::new() */
+                    /** @see \AbterPhp\Website\Http\Controllers\Admin\Form\Block::new() */
+                    /** @see \AbterPhp\Website\Http\Controllers\Admin\Form\PageLayout::new() */
+                    /** @see \AbterPhp\Website\Http\Controllers\Admin\Form\Page::new() */
                     $router->get(
                         "/${path}/new",
                         "Admin\Form\\${controllerName}@new",
@@ -79,8 +76,9 @@ $router->group(
                         ]
                     );
 
-                    /** @see \AbterPhp\Admin\Http\Controllers\Admin\Form\User::create() */
-                    /** @see \AbterPhp\Admin\Http\Controllers\Admin\Form\UserGroup::create() */
+                    /** @see \AbterPhp\Website\Http\Controllers\Admin\Form\Block::create() */
+                    /** @see \AbterPhp\Website\Http\Controllers\Admin\Form\PageLayout::create() */
+                    /** @see \AbterPhp\Website\Http\Controllers\Admin\Form\Page::create() */
                     $router->post(
                         "/${path}/new",
                         "Admin\Execute\\${controllerName}@create",
@@ -97,8 +95,9 @@ $router->group(
                         ]
                     );
 
-                    /** @see \AbterPhp\Admin\Http\Controllers\Admin\Form\User::edit() */
-                    /** @see \AbterPhp\Admin\Http\Controllers\Admin\Form\UserGroup::edit() */
+                    /** @see \AbterPhp\Website\Http\Controllers\Admin\Form\Block::edit() */
+                    /** @see \AbterPhp\Website\Http\Controllers\Admin\Form\PageLayout::edit() */
+                    /** @see \AbterPhp\Website\Http\Controllers\Admin\Form\Page::edit() */
                     $router->get(
                         "/${path}/:entityId/edit",
                         "Admin\Form\\${controllerName}@edit",
@@ -115,8 +114,9 @@ $router->group(
                         ]
                     );
 
-                    /** @see \AbterPhp\Admin\Http\Controllers\Admin\Execute\User::update() */
-                    /** @see \AbterPhp\Admin\Http\Controllers\Admin\Execute\UserGroup::update() */
+                    /** @see \AbterPhp\Website\Http\Controllers\Admin\Execute\Block::update() */
+                    /** @see \AbterPhp\Website\Http\Controllers\Admin\Execute\BlockLayout::update() */
+                    /** @see \AbterPhp\Website\Http\Controllers\Admin\Execute\Page::update() */
                     $router->put(
                         "/${path}/:entityId/edit",
                         "Admin\Execute\\${controllerName}@update",
@@ -133,8 +133,9 @@ $router->group(
                         ]
                     );
 
-                    /** @see \AbterPhp\Admin\Http\Controllers\Admin\Execute\User::delete() */
-                    /** @see \AbterPhp\Admin\Http\Controllers\Admin\Execute\UserGroup::delete() */
+                    /** @see \AbterPhp\Website\Http\Controllers\Admin\Execute\Block::delete() */
+                    /** @see \AbterPhp\Website\Http\Controllers\Admin\Execute\BlockLayout::delete() */
+                    /** @see \AbterPhp\Website\Http\Controllers\Admin\Execute\Page::delete() */
                     $router->get(
                         "/${path}/:entityId/delete",
                         "Admin\Execute\\${controllerName}@delete",
@@ -151,15 +152,6 @@ $router->group(
                         ]
                     );
                 }
-
-                /** @see \AbterPhp\Admin\Http\Controllers\Admin\Dashboard::showDashboard() */
-                $router->get(
-                    Routes::PATH_DASHBOARD,
-                    'Admin\Dashboard@showDashboard',
-                    [
-                        OPTION_NAME => Routes::ROUTE_DASHBOARD,
-                    ]
-                );
             }
         );
     }

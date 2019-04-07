@@ -8,20 +8,19 @@ use AbterPhp\Framework\Http\Controllers\ControllerAbstract;
 use Opulence\Http\Responses\Response;
 use Opulence\Http\Responses\ResponseHeaders;
 
-class Index extends ControllerAbstract
+class Assets extends ControllerAbstract
 {
-
     /**
      * 404 page
      *
      * @return Response The response
      */
-    public function notFound(): Response
+    public function asset(): Response
     {
-        $this->view = $this->viewFactory->createView('contents/frontend/404');
+        $this->view = $this->viewFactory->createView('contents/frontend/501');
 
-        $response = $this->createResponse('404 Page not Found');
-        $response->setStatusCode(ResponseHeaders::HTTP_NOT_FOUND);
+        $response = $this->createResponse('501 Not Implemented');
+        $response->setStatusCode(ResponseHeaders::HTTP_NOT_IMPLEMENTED);
 
         return $response;
     }

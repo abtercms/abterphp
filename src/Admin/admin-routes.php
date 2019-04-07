@@ -2,11 +2,10 @@
 
 declare(strict_types=1);
 
-use AbterPhp\Admin\Http\Middleware\Api;
+use AbterPhp\Admin\Constant\Routes;
 use AbterPhp\Admin\Http\Middleware\Authentication;
 use AbterPhp\Admin\Http\Middleware\Authorization;
 use AbterPhp\Admin\Http\Middleware\LastGridPage;
-use AbterPhp\Files\Constant\Routes;
 use AbterPhp\Framework\Authorization\Constant\Role;
 use Opulence\Routing\Router;
 
@@ -18,38 +17,8 @@ use Opulence\Routing\Router;
  * @var Router $router
  */
 $router->group(
-    ['controllerNamespace' => 'AbterPhp\Files\Http\Controllers'],
+    ['controllerNamespace' => 'AbterPhp\Admin\\Http\\Controllers'],
     function (Router $router) {
-        $router->group(
-            [
-                'path'       => PATH_API,
-                'middleware' => [
-                    Api::class,
-                ],
-            ],
-            function (Router $router) {
-                /** @see \AbterPhp\Files\Http\Controllers\Api\File\Csv::csv() */
-                $router->get(
-                    Routes::PATH_API_CSV,
-                    'Api\File\Csv@csv',
-                    [OPTION_NAME => Routes::ROUTE_API_CSV]
-                );
-                /** @see \AbterPhp\Files\Http\Controllers\Api\File\Download::download() */
-                $router->get(
-                    Routes::PATH_API_DOWNLOAD,
-                    'Api\File\Download@download',
-                    [OPTION_NAME => Routes::ROUTE_API_DOWNLOAD]
-                );
-            }
-        );
-
-        /** @see \AbterPhp\Files\Http\Controllers\Website\File::download() */
-        $router->get(
-            Routes::PATH_FILE,
-            'Website\File@download',
-            [OPTION_NAME => Routes::ROUTE_PUBLIC_FILE]
-        );
-
         $router->group(
             [
                 'path'       => PATH_ADMIN,
@@ -59,17 +28,15 @@ $router->group(
             ],
             function (Router $router) {
                 $entities = [
-                    'filecategories' => 'FileCategory',
-                    'filedownloads'  => 'FileDownload',
-                    'files'          => 'File',
+                    'usergroups' => 'UserGroup',
+                    'users'      => 'User',
                 ];
 
                 foreach ($entities as $route => $controllerName) {
                     $path = strtolower($controllerName);
 
-                    /** @see \AbterPhp\Files\Http\Controllers\Admin\Grid\File::show() */
-                    /** @see \AbterPhp\Files\Http\Controllers\Admin\Grid\FileCategory::show() */
-                    /** @see \AbterPhp\Files\Http\Controllers\Admin\Grid\FileDownload::show() */
+                    /** @see \AbterPhp\Admin\Http\Controllers\Admin\Grid\User::show() */
+                    /** @see \AbterPhp\Admin\Http\Controllers\Admin\Grid\UserGroup::show() */
                     $router->get(
                         "/${path}",
                         "Admin\Grid\\${controllerName}@show",
@@ -86,9 +53,9 @@ $router->group(
                             ],
                         ]
                     );
-                    /** @see \AbterPhp\Files\Http\Controllers\Admin\Form\File::new() */
-                    /** @see \AbterPhp\Files\Http\Controllers\Admin\Form\FileCategory::new() */
-                    /** @see \AbterPhp\Files\Http\Controllers\Admin\Form\FileDownload::new() */
+
+                    /** @see \AbterPhp\Admin\Http\Controllers\Admin\Form\User::new() */
+                    /** @see \AbterPhp\Admin\Http\Controllers\Admin\Form\UserGroup::new() */
                     $router->get(
                         "/${path}/new",
                         "Admin\Form\\${controllerName}@new",
@@ -104,9 +71,9 @@ $router->group(
                             ],
                         ]
                     );
-                    /** @see \AbterPhp\Files\Http\Controllers\Admin\Execute\File::create() */
-                    /** @see \AbterPhp\Files\Http\Controllers\Admin\Execute\FileCategory::create() */
-                    /** @see \AbterPhp\Files\Http\Controllers\Admin\Execute\FileDownload::create() */
+
+                    /** @see \AbterPhp\Admin\Http\Controllers\Admin\Form\User::create() */
+                    /** @see \AbterPhp\Admin\Http\Controllers\Admin\Form\UserGroup::create() */
                     $router->post(
                         "/${path}/new",
                         "Admin\Execute\\${controllerName}@create",
@@ -122,9 +89,9 @@ $router->group(
                             ],
                         ]
                     );
-                    /** @see \AbterPhp\Files\Http\Controllers\Admin\Form\File::edit() */
-                    /** @see \AbterPhp\Files\Http\Controllers\Admin\Form\FileCategory::edit() */
-                    /** @see \AbterPhp\Files\Http\Controllers\Admin\Form\FileDownload::edit() */
+
+                    /** @see \AbterPhp\Admin\Http\Controllers\Admin\Form\User::edit() */
+                    /** @see \AbterPhp\Admin\Http\Controllers\Admin\Form\UserGroup::edit() */
                     $router->get(
                         "/${path}/:entityId/edit",
                         "Admin\Form\\${controllerName}@edit",
@@ -140,9 +107,9 @@ $router->group(
                             ],
                         ]
                     );
-                    /** @see \AbterPhp\Files\Http\Controllers\Admin\Execute\File::update() */
-                    /** @see \AbterPhp\Files\Http\Controllers\Admin\Execute\FileCategory::update() */
-                    /** @see \AbterPhp\Files\Http\Controllers\Admin\Execute\FileDownload::update() */
+
+                    /** @see \AbterPhp\Admin\Http\Controllers\Admin\Execute\User::update() */
+                    /** @see \AbterPhp\Admin\Http\Controllers\Admin\Execute\UserGroup::update() */
                     $router->put(
                         "/${path}/:entityId/edit",
                         "Admin\Execute\\${controllerName}@update",
@@ -158,9 +125,9 @@ $router->group(
                             ],
                         ]
                     );
-                    /** @see \AbterPhp\Files\Http\Controllers\Admin\Execute\File::delete() */
-                    /** @see \AbterPhp\Files\Http\Controllers\Admin\Execute\FileCategory::delete() */
-                    /** @see \AbterPhp\Files\Http\Controllers\Admin\Execute\FileDownload::delete() */
+
+                    /** @see \AbterPhp\Admin\Http\Controllers\Admin\Execute\User::delete() */
+                    /** @see \AbterPhp\Admin\Http\Controllers\Admin\Execute\UserGroup::delete() */
                     $router->get(
                         "/${path}/:entityId/delete",
                         "Admin\Execute\\${controllerName}@delete",
@@ -178,37 +145,12 @@ $router->group(
                     );
                 }
 
-                /** @see \AbterPhp\Files\Http\Controllers\Api\File\Download::download() */
+                /** @see \AbterPhp\Admin\Http\Controllers\Admin\Dashboard::showDashboard() */
                 $router->get(
-                    Routes::PATH_API_DOWNLOAD,
-                    'Api\File\Download@download',
+                    Routes::PATH_DASHBOARD,
+                    'Admin\Dashboard@showDashboard',
                     [
-                        OPTION_NAME       => Routes::ROUTE_FILES_DOWNLOAD,
-                        OPTION_MIDDLEWARE => [
-                            Authorization::withParameters(
-                                [
-                                    Authorization::RESOURCE => 'files',
-                                    Authorization::ROLE     => Role::READ,
-                                ]
-                            ),
-                        ],
-                    ]
-                );
-
-                /** @see \AbterPhp\Files\Http\Controllers\Api\File\Csv::csv() */
-                $router->get(
-                    Routes::PATH_API_DOWNLOAD,
-                    'Api\File\Download@download',
-                    [
-                        OPTION_NAME       => Routes::ROUTE_FILES_DOWNLOAD,
-                        OPTION_MIDDLEWARE => [
-                            Authorization::withParameters(
-                                [
-                                    Authorization::RESOURCE => 'files',
-                                    Authorization::ROLE     => Role::READ,
-                                ]
-                            ),
-                        ],
+                        OPTION_NAME => Routes::ROUTE_DASHBOARD,
                     ]
                 );
             }

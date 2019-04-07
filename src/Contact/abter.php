@@ -4,6 +4,7 @@ namespace AbterPhp\Contact;
 
 use AbterPhp\Framework\Constant\Event;
 use AbterPhp\Framework\Constant\Module;
+use AbterPhp\Framework\Constant\Priorities;
 
 return [
     Module::IDENTIFIER         => 'AbterPhp\Contact',
@@ -22,12 +23,12 @@ return [
         ],
     ],
     Module::ROUTE_PATHS        => [
-        2000 => [
+        Priorities::NORMAL => [
             __DIR__ . '/routes.php',
         ],
     ],
     Module::MIGRATION_PATHS    => [
-        1000 => [
+        Priorities::NORMAL => [
             realpath(__DIR__ . '/Databases/Migrations'),
         ],
     ],

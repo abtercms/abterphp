@@ -4,6 +4,7 @@ namespace AbterPhp\Framework;
 
 use AbterPhp\Framework\Constant\Event;
 use AbterPhp\Framework\Constant\Module;
+use AbterPhp\Framework\Constant\Priorities;
 
 return [
     Module::IDENTIFIER         => 'AbterPhp\Framework',
@@ -54,15 +55,20 @@ return [
         ],
     ],
     Module::MIDDLEWARE             => [
-        1000 => [
+        Priorities::NORMAL => [
             Http\Middleware\EnvironmentWarning::class,
             Http\Middleware\Session::class,
             Http\Middleware\Security::class,
         ],
     ],
     Module::ROUTE_PATHS        => [
-        2000 => [
-            __DIR__ . '/routes.php',
+        // Fallback routes, should be easy to override
+        Priorities::EXTREME_LOW => [
+            __DIR__ . '/fallback-routes.php',
+        ],
+        // Important routes
+        Priorities::SLIGHTLY_HIGH => [
+            __DIR__ . '/asset-routes.php',
         ],
     ],
 ];

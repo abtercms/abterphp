@@ -493,9 +493,9 @@ class ManagerTest extends \PHPUnit\Framework\TestCase
                     ],
                 ],
                 [
+                    'Module1/routes-late.php',
                     'Module1/routes-early.php',
                     'Module1/routes-early2.php',
-                    'Module1/routes-late.php',
                 ],
             ],
             'two-modules' => [
@@ -526,12 +526,12 @@ class ManagerTest extends \PHPUnit\Framework\TestCase
                     ]
                 ],
                 [
-                    'Module2/routes-really-early.php',
-                    'Module1/routes-early.php',
-                    'Module1/routes-early2.php',
-                    'Module2/routes-early.php',
                     'Module1/routes-late.php',
                     'Module2/routes-late.php',
+                    'Module2/routes-early.php',
+                    'Module1/routes-early.php',
+                    'Module1/routes-early2.php',
+                    'Module2/routes-really-early.php',
                 ],
             ],
         ];

@@ -4,6 +4,7 @@ namespace AbterPhp\Website;
 
 use AbterPhp\Framework\Constant\Event;
 use AbterPhp\Framework\Constant\Module;
+use AbterPhp\Framework\Constant\Priorities;
 
 return [
     Module::IDENTIFIER         => 'AbterPhp\Website',
@@ -35,12 +36,15 @@ return [
         ],
     ],
     Module::ROUTE_PATHS        => [
-        50000 => [
-            __DIR__ . '/routes.php',
+        Priorities::NORMAL => [
+            __DIR__ . '/admin-routes.php',
+        ],
+        Priorities::BELOW_NORMAL => [
+            __DIR__ . '/website-routes.php',
         ],
     ],
     Module::MIGRATION_PATHS    => [
-        1000 => [
+        Priorities::NORMAL => [
             realpath(__DIR__ . '/Databases/Migrations'),
         ],
     ],

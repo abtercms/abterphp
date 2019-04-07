@@ -2,11 +2,12 @@
 
 declare(strict_types=1);
 
+use AbterPhp\Admin\Http\Middleware\Api;
 use AbterPhp\Admin\Http\Middleware\Authentication;
 use AbterPhp\Admin\Http\Middleware\Authorization;
 use AbterPhp\Admin\Http\Middleware\LastGridPage;
+use AbterPhp\Files\Constant\Routes;
 use AbterPhp\Framework\Authorization\Constant\Role;
-use AbterPhp\Website\Constant\Routes;
 use Opulence\Routing\Router;
 
 /**
@@ -17,7 +18,7 @@ use Opulence\Routing\Router;
  * @var Router $router
  */
 $router->group(
-    ['controllerNamespace' => 'AbterPhp\Website\Http\Controllers'],
+    ['controllerNamespace' => 'AbterPhp\Files\Http\Controllers'],
     function (Router $router) {
         $router->group(
             [
@@ -28,18 +29,17 @@ $router->group(
             ],
             function (Router $router) {
                 $entities = [
-                    'pages'        => 'Page',
-                    'pagelayouts'  => 'PageLayout',
-                    'blocks'       => 'Block',
-                    'blocklayouts' => 'BlockLayout',
+                    'filecategories' => 'FileCategory',
+                    'filedownloads'  => 'FileDownload',
+                    'files'          => 'File',
                 ];
 
                 foreach ($entities as $route => $controllerName) {
                     $path = strtolower($controllerName);
 
-                    /** @see \AbterPhp\Website\Http\Controllers\Admin\Grid\Block::show() */
-                    /** @see \AbterPhp\Website\Http\Controllers\Admin\Grid\BlockLayout::show() */
-                    /** @see \AbterPhp\Website\Http\Controllers\Admin\Grid\Page::show() */
+                    /** @see \AbterPhp\Files\Http\Controllers\Admin\Grid\File::show() */
+                    /** @see \AbterPhp\Files\Http\Controllers\Admin\Grid\FileCategory::show() */
+                    /** @see \AbterPhp\Files\Http\Controllers\Admin\Grid\FileDownload::show() */
                     $router->get(
                         "/${path}",
                         "Admin\Grid\\${controllerName}@show",
@@ -56,10 +56,9 @@ $router->group(
                             ],
                         ]
                     );
-
-                    /** @see \AbterPhp\Website\Http\Controllers\Admin\Form\Block::new() */
-                    /** @see \AbterPhp\Website\Http\Controllers\Admin\Form\PageLayout::new() */
-                    /** @see \AbterPhp\Website\Http\Controllers\Admin\Form\Page::new() */
+                    /** @see \AbterPhp\Files\Http\Controllers\Admin\Form\File::new() */
+                    /** @see \AbterPhp\Files\Http\Controllers\Admin\Form\FileCategory::new() */
+                    /** @see \AbterPhp\Files\Http\Controllers\Admin\Form\FileDownload::new() */
                     $router->get(
                         "/${path}/new",
                         "Admin\Form\\${controllerName}@new",
@@ -75,10 +74,9 @@ $router->group(
                             ],
                         ]
                     );
-
-                    /** @see \AbterPhp\Website\Http\Controllers\Admin\Form\Block::create() */
-                    /** @see \AbterPhp\Website\Http\Controllers\Admin\Form\PageLayout::create() */
-                    /** @see \AbterPhp\Website\Http\Controllers\Admin\Form\Page::create() */
+                    /** @see \AbterPhp\Files\Http\Controllers\Admin\Execute\File::create() */
+                    /** @see \AbterPhp\Files\Http\Controllers\Admin\Execute\FileCategory::create() */
+                    /** @see \AbterPhp\Files\Http\Controllers\Admin\Execute\FileDownload::create() */
                     $router->post(
                         "/${path}/new",
                         "Admin\Execute\\${controllerName}@create",
@@ -94,10 +92,9 @@ $router->group(
                             ],
                         ]
                     );
-
-                    /** @see \AbterPhp\Website\Http\Controllers\Admin\Form\Block::edit() */
-                    /** @see \AbterPhp\Website\Http\Controllers\Admin\Form\PageLayout::edit() */
-                    /** @see \AbterPhp\Website\Http\Controllers\Admin\Form\Page::edit() */
+                    /** @see \AbterPhp\Files\Http\Controllers\Admin\Form\File::edit() */
+                    /** @see \AbterPhp\Files\Http\Controllers\Admin\Form\FileCategory::edit() */
+                    /** @see \AbterPhp\Files\Http\Controllers\Admin\Form\FileDownload::edit() */
                     $router->get(
                         "/${path}/:entityId/edit",
                         "Admin\Form\\${controllerName}@edit",
@@ -113,10 +110,9 @@ $router->group(
                             ],
                         ]
                     );
-
-                    /** @see \AbterPhp\Website\Http\Controllers\Admin\Execute\Block::update() */
-                    /** @see \AbterPhp\Website\Http\Controllers\Admin\Execute\BlockLayout::update() */
-                    /** @see \AbterPhp\Website\Http\Controllers\Admin\Execute\Page::update() */
+                    /** @see \AbterPhp\Files\Http\Controllers\Admin\Execute\File::update() */
+                    /** @see \AbterPhp\Files\Http\Controllers\Admin\Execute\FileCategory::update() */
+                    /** @see \AbterPhp\Files\Http\Controllers\Admin\Execute\FileDownload::update() */
                     $router->put(
                         "/${path}/:entityId/edit",
                         "Admin\Execute\\${controllerName}@update",
@@ -132,10 +128,9 @@ $router->group(
                             ],
                         ]
                     );
-
-                    /** @see \AbterPhp\Website\Http\Controllers\Admin\Execute\Block::delete() */
-                    /** @see \AbterPhp\Website\Http\Controllers\Admin\Execute\BlockLayout::delete() */
-                    /** @see \AbterPhp\Website\Http\Controllers\Admin\Execute\Page::delete() */
+                    /** @see \AbterPhp\Files\Http\Controllers\Admin\Execute\File::delete() */
+                    /** @see \AbterPhp\Files\Http\Controllers\Admin\Execute\FileCategory::delete() */
+                    /** @see \AbterPhp\Files\Http\Controllers\Admin\Execute\FileDownload::delete() */
                     $router->get(
                         "/${path}/:entityId/delete",
                         "Admin\Execute\\${controllerName}@delete",
@@ -152,21 +147,41 @@ $router->group(
                         ]
                     );
                 }
+
+                /** @see \AbterPhp\Files\Http\Controllers\Api\File\Download::download() */
+                $router->get(
+                    Routes::PATH_API_DOWNLOAD,
+                    'Api\File\Download@download',
+                    [
+                        OPTION_NAME       => Routes::ROUTE_FILES_DOWNLOAD,
+                        OPTION_MIDDLEWARE => [
+                            Authorization::withParameters(
+                                [
+                                    Authorization::RESOURCE => 'files',
+                                    Authorization::ROLE     => Role::READ,
+                                ]
+                            ),
+                        ],
+                    ]
+                );
+
+                /** @see \AbterPhp\Files\Http\Controllers\Api\File\Csv::csv() */
+                $router->get(
+                    Routes::PATH_API_DOWNLOAD,
+                    'Api\File\Download@download',
+                    [
+                        OPTION_NAME       => Routes::ROUTE_FILES_DOWNLOAD,
+                        OPTION_MIDDLEWARE => [
+                            Authorization::withParameters(
+                                [
+                                    Authorization::RESOURCE => 'files',
+                                    Authorization::ROLE     => Role::READ,
+                                ]
+                            ),
+                        ],
+                    ]
+                );
             }
-        );
-
-        /** @see \AbterPhp\Website\Http\Controllers\Website\Index::homePage() */
-        $router->get(Routes::PATH_HOME, 'Website\Index@homePage', [OPTION_NAME => Routes::ROUTE_HOME]);
-
-
-        /** @see \AbterPhp\Website\Http\Controllers\Website\Index::otherPage() */
-        $router->get(
-            Routes::PATH_PAGE,
-            'Website\Index@otherPage',
-            [
-                OPTION_NAME => Routes::ROUTE_PAGE_OTHER,
-                OPTION_VARS => [Routes::VAR_ANYTHING => '[\w\d\-]+'],
-            ]
         );
     }
 );

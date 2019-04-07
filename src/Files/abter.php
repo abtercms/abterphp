@@ -4,6 +4,7 @@ namespace AbterPhp\Files;
 
 use AbterPhp\Framework\Constant\Event;
 use AbterPhp\Framework\Constant\Module;
+use AbterPhp\Framework\Constant\Priorities;
 
 return [
     Module::IDENTIFIER    => 'AbterPhp\Files',
@@ -14,11 +15,6 @@ return [
     ],
     Module::COMMANDS      => [
         Console\Commands\File\Cleanup::class,
-    ],
-    Module::ROUTE_PATHS        => [
-        800 => [
-            __DIR__ . '/routes.php',
-        ],
     ],
     Module::EVENTS        => [
         Event::AUTH_READY            => [
@@ -38,8 +34,15 @@ return [
             sprintf('%s@handle', Events\Listeners\DashboardBuilder::class),
         ],
     ],
+    Module::ROUTE_PATHS        => [
+        Priorities::BELOW_NORMAL => [
+            __DIR__ . '/admin-routes.php',
+            __DIR__ . '/website-routes.php',
+            __DIR__ . '/api-routes.php',
+        ],
+    ],
     Module::MIGRATION_PATHS    => [
-        1000 => [
+        Priorities::NORMAL => [
             realpath(__DIR__ . '/Databases/Migrations'),
         ],
     ],

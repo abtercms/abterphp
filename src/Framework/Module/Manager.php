@@ -161,7 +161,7 @@ class Manager
     {
         return $this->cacheWrapper(
             static::CACHE_KEY_ROUTE_PATHS,
-            $this->prioritizedOptionsCallback(Module::ROUTE_PATHS)
+            $this->prioritizedOptionsCallback(Module::ROUTE_PATHS, true)
         );
     }
 
@@ -217,12 +217,13 @@ class Manager
      * Result:   [3 => ['a', 'b', 'c'], 10 => ['d', 'b', 'a', 'b'], 12 => ['a'], 14 => ['a']]
      *
      * @param string $option
+     * @param bool   $reversed
      *
      * @return callable
      */
-    protected function prioritizedOptionsCallback(string $option): callable
+    protected function prioritizedOptionsCallback(string $option, bool $reversed = false): callable
     {
-        return function ($modules) use ($option) {
+        return function ($modules) use ($option, $reversed) {
             $merged = [];
             foreach ($modules as $module) {
                 if (!isset($module[$option])) {
@@ -236,7 +237,11 @@ class Manager
                 }
             }
 
-            ksort($merged);
+            if ($reversed) {
+                krsort($merged);
+            } else {
+                ksort($merged);
+            }
 
             $flattened = [];
             foreach ($merged as $priorityPaths) {

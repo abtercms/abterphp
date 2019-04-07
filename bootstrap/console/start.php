@@ -10,6 +10,8 @@ use Opulence\Ioc\Bootstrappers\Dispatchers\BootstrapperDispatcher;
 use Opulence\Ioc\Bootstrappers\Dispatchers\IBootstrapperDispatcher;
 use Opulence\Ioc\Bootstrappers\Factories\CachedBootstrapperRegistryFactory;
 use Opulence\Ioc\Bootstrappers\IBootstrapperRegistry;
+use AbterPhp\Framework\Module\Manager as ModuleManager;
+use AbterPhp\Framework\Module\Loader as ModuleLoader;
 
 /**
  * ----------------------------------------------------------
@@ -46,8 +48,8 @@ $consoleBootstrappers    = require $consoleBootstrapperPath;
  * Retrieve AbterPhp bootstrappers
  * ----------------------------------------------------------
  */
-$abterModuleManager = new \AbterPhp\Framework\Module\Manager(
-    new \AbterPhp\Framework\Module\Loader(
+$abterModuleManager = new ModuleManager(
+    new ModuleLoader(
         [
             Config::get('paths', 'src'),
             Config::get('paths', 'vendor'),
