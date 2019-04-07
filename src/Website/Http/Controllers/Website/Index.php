@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace AbterPhp\Website\Http\Controllers\Website;
 
-use AbterPhp\Admin\Http\Controllers\ControllerAbstract;
 use AbterPhp\Framework\Assets\AssetManager;
+use AbterPhp\Framework\Http\Controllers\ControllerAbstract;
 use AbterPhp\Framework\Session\FlashService;
 use AbterPhp\Framework\Template\Engine;
 use AbterPhp\Website\Constant\Routes;
@@ -213,16 +213,15 @@ class Index extends ControllerAbstract
     }
 
     /**
-     * Shows the homepage
+     * 404 page
      *
      * @return Response The response
      */
-    public function notFound(): Response
+    protected function notFound(): Response
     {
         $this->view = $this->viewFactory->createView('contents/frontend/404');
 
         $response = $this->createResponse('404 Page not Found');
-        //return new Response(static::NOPE, ResponseHeaders::HTTP_NOT_FOUND);
         $response->setStatusCode(ResponseHeaders::HTTP_NOT_FOUND);
 
         return $response;

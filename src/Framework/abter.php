@@ -60,4 +60,9 @@ return [
             Http\Middleware\Security::class,
         ],
     ],
+    Module::ROUTE_PATHS        => [
+        2000 => [
+            __DIR__ . '/routes.php',
+        ],
+    ],
 ];

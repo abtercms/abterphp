@@ -168,15 +168,5 @@ $router->group(
                 OPTION_VARS => [Routes::VAR_ANYTHING => '[\w\d\-]+'],
             ]
         );
-
-        /** @see \AbterPhp\Website\Http\Controllers\Website\Index::notFound() */
-        $router->any(
-            Routes::PATH_404,
-            'Website\Index@notFound',
-            [
-                OPTION_NAME => Routes::ROUTE_404,
-                OPTION_VARS => [Routes::VAR_ANYTHING => '.+'],
-            ]
-        );
     }
 );
