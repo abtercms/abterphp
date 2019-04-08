@@ -9,6 +9,7 @@ use AbterPhp\Framework\Constant\Priorities;
 return [
     Module::IDENTIFIER         => 'AbterPhp\Website',
     Module::DEPENDENCIES       => ['AbterPhp\Admin'],
+    Module::ENABLED            => true,
     Module::BOOTSTRAPPERS      => [
         Bootstrappers\Orm\OrmBootstrapper::class,
         Bootstrappers\Validation\ValidatorBootstrapper::class,
@@ -36,7 +37,7 @@ return [
         ],
     ],
     Module::ROUTE_PATHS        => [
-        Priorities::NORMAL => [
+        Priorities::NORMAL       => [
             __DIR__ . '/admin-routes.php',
         ],
         Priorities::BELOW_NORMAL => [

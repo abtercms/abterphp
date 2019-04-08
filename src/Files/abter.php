@@ -7,16 +7,17 @@ use AbterPhp\Framework\Constant\Module;
 use AbterPhp\Framework\Constant\Priorities;
 
 return [
-    Module::IDENTIFIER    => 'AbterPhp\Files',
-    Module::DEPENDENCIES  => ['AbterPhp\Admin'],
-    Module::BOOTSTRAPPERS => [
+    Module::IDENTIFIER      => 'AbterPhp\Files',
+    Module::DEPENDENCIES    => ['AbterPhp\Admin'],
+    Module::ENABLED         => true,
+    Module::BOOTSTRAPPERS   => [
         Bootstrappers\Orm\OrmBootstrapper::class,
         Bootstrappers\Validation\ValidatorBootstrapper::class,
     ],
-    Module::COMMANDS      => [
+    Module::COMMANDS        => [
         Console\Commands\File\Cleanup::class,
     ],
-    Module::EVENTS        => [
+    Module::EVENTS          => [
         Event::AUTH_READY            => [
             /** @see \AbterPhp\Files\Events\Listeners\AuthInitializer::handle */
             sprintf('%s@handle', Events\Listeners\AuthInitializer::class),
@@ -34,14 +35,14 @@ return [
             sprintf('%s@handle', Events\Listeners\DashboardBuilder::class),
         ],
     ],
-    Module::ROUTE_PATHS        => [
+    Module::ROUTE_PATHS     => [
         Priorities::BELOW_NORMAL => [
             __DIR__ . '/admin-routes.php',
             __DIR__ . '/website-routes.php',
             __DIR__ . '/api-routes.php',
         ],
     ],
-    Module::MIGRATION_PATHS    => [
+    Module::MIGRATION_PATHS => [
         Priorities::NORMAL => [
             realpath(__DIR__ . '/Databases/Migrations'),
         ],

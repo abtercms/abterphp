@@ -28,4 +28,7 @@ integration:
 coverage:
 	./vendor/bin/phpunit --testsuite=unit
 
+flush:
+	./apex abterphp:flushcache
+
 .PHONY: install update build precommit unit integration coverage

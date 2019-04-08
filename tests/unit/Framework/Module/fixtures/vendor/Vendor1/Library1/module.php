@@ -8,6 +8,7 @@ use AbterPhp\Framework\Constant\Module;
 return [
     Module::IDENTIFIER         => 'Vendor1\Library1',
     Module::DEPENDENCIES       => ['Src\Module1'],
+    Module::ENABLED            => true,
     Module::BOOTSTRAPPERS      => [
         'Bootstrappers\Orm\OrmBootstrapper',
         'Bootstrappers\Validation\ValidatorBootstrapper',

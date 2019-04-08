@@ -8,6 +8,7 @@ use AbterPhp\Framework\Constant\Module;
 return [
     Module::IDENTIFIER         => 'Src\Module1',
     Module::DEPENDENCIES       => [],
+    Module::ENABLED            => true,
     Module::BOOTSTRAPPERS      => [
         'Assets\Bootstrappers\AssetManagerBootstrapper',
         'Authorization\Bootstrappers\CacheManagerBootstrapper',

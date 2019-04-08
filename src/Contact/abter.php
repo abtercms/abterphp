@@ -9,6 +9,7 @@ use AbterPhp\Framework\Constant\Priorities;
 return [
     Module::IDENTIFIER         => 'AbterPhp\Contact',
     Module::DEPENDENCIES       => ['AbterPhp\Website'],
+    Module::ENABLED            => true,
     Module::HTTP_BOOTSTRAPPERS => [
         Bootstrappers\Http\Controllers\Website\ContactBootstrapper::class,
     ],

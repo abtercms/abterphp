@@ -9,6 +9,7 @@ use AbterPhp\Framework\Constant\Priorities;
 return [
     Module::IDENTIFIER         => 'AbterPhp\Admin',
     Module::DEPENDENCIES       => ['AbterPhp\Framework'],
+    Module::ENABLED            => true,
     Module::BOOTSTRAPPERS      => [
         Bootstrappers\Orm\OrmBootstrapper::class,
         Bootstrappers\Validation\ValidatorBootstrapper::class,

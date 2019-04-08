@@ -38,7 +38,13 @@ class Loader
     {
         $rawModules = [];
         foreach ($this->findModules() as $path) {
-            $rawModules[] = include $path;
+            $rawModule = include $path;
+
+            if (empty($rawModule[Module::ENABLED])) {
+                continue;
+            }
+
+            $rawModules[] = $rawModule;
         }
 
         if (count($rawModules) === 0) {

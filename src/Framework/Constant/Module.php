@@ -8,6 +8,7 @@ class Module
 {
     const IDENTIFIER         = 'IDENTIFIER';
     const DEPENDENCIES       = 'DEPENDENCIES';
+    const ENABLED            = 'ENABLED';
     const BOOTSTRAPPERS      = 'BOOTSTRAPPERS';
     const CLI_BOOTSTRAPPERS  = 'CLI_BOOTSTRAPPERS';
     const HTTP_BOOTSTRAPPERS = 'HTTP_BOOTSTRAPPERS';

@@ -9,6 +9,7 @@ use AbterPhp\Framework\Constant\Priorities;
 return [
     Module::IDENTIFIER         => 'AbterPhp\Framework',
     Module::DEPENDENCIES       => [],
+    Module::ENABLED            => true,
     Module::BOOTSTRAPPERS      => [
         Bootstrappers\Assets\AssetManagerBootstrapper::class,
         Bootstrappers\Authorization\CacheManagerBootstrapper::class,
@@ -55,7 +56,7 @@ return [
             sprintf('%s@handle', Events\Listeners\NavigationBuilder::class),
         ],
     ],
-    Module::MIDDLEWARE             => [
+    Module::MIDDLEWARE         => [
         Priorities::NORMAL => [
             Http\Middleware\EnvironmentWarning::class,
             Http\Middleware\Session::class,
@@ -64,7 +65,7 @@ return [
     ],
     Module::ROUTE_PATHS        => [
         // Fallback routes, should be easy to override
-        Priorities::EXTREME_LOW => [
+        Priorities::EXTREME_LOW   => [
             __DIR__ . '/fallback-routes.php',
         ],
         // Important routes
