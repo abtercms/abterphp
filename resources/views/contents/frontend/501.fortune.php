@@ -1,4 +1,4 @@
-<% extends("layouts/frontend/empty") %>
+<% extends("layouts/default") %>
 
 <% part("content") %>
 

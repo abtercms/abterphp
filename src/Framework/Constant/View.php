@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AbterPhp\Admin\Constant;
+namespace AbterPhp\Framework\Constant;
 
 class View
 {

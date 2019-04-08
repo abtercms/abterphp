@@ -2,11 +2,9 @@
 
 declare(strict_types=1);
 
-namespace AbterPhp\Website\Http\Views\Builders;
+namespace AbterPhp\Framework\Http\Views\Builders;
 
-use AbterPhp\Admin\Constant\View;
-use AbterPhp\Website\Constant\Event;
-use AbterPhp\Website\Events\WebsiteReady;
+use AbterPhp\Framework\Constant\View;
 use Opulence\Events\Dispatchers\IEventDispatcher;
 use Opulence\Views\Factories\IViewBuilder;
 use Opulence\Views\IView;
@@ -14,7 +12,7 @@ use Opulence\Views\IView;
 /**
  * Defines the master view builder
  */
-class WebsiteBuilder implements IViewBuilder
+class DefaultBuilder implements IViewBuilder
 {
     /** @var IEventDispatcher */
     protected $eventDispatcher;
@@ -56,8 +54,6 @@ class WebsiteBuilder implements IViewBuilder
         $view->setVar(View::PRE_FOOTER, '');
         $view->setVar(View::FOOTER, '');
         $view->setVar(View::POST_FOOTER, '');
-
-        $this->eventDispatcher->dispatch(Event::WEBSITE_READY, new WebsiteReady($view));
 
         return $view;
     }

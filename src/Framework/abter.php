@@ -40,6 +40,7 @@ return [
         Bootstrappers\I18n\I18nBootstrapper::class,
         Bootstrappers\Navigation\NavigationBootstrapper::class,
         Bootstrappers\Views\ViewFunctionsBootstrapper::class,
+        Bootstrappers\Http\Views\BuildersBootstrapper::class,
     ],
     Module::COMMANDS           => [
         Console\Commands\Assets\FlushCache::class,

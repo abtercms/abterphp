@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace AbterPhp\PropellerAdmin\Events\Listeners;
 
-use AbterPhp\Admin\Constant\View;
 use AbterPhp\Admin\Events\AdminReady;
 use AbterPhp\Framework\Assets\AssetManager;
+use AbterPhp\Framework\Constant\View;
 
 class AdminDecorator
 {

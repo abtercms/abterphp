@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace AbterPhp\Website\Http\Views\Builders;
 
-use AbterPhp\Admin\Constant\View;
+use AbterPhp\Framework\Constant\View;
 use AbterPhp\Website\Constant\Event;
 use AbterPhp\Website\Events\WebsiteReady;
 use Opulence\Events\Dispatchers\IEventDispatcher;
