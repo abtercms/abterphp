@@ -21,8 +21,8 @@ class Page extends Filters
     {
         parent::__construct($intents, $attributes, $tag);
 
-        $this->nodes[] = new ExactFilter('identifier', 'pages:pageIdentifier');
+        $this->nodes[] = new ExactFilter('identifier', 'website:pageIdentifier');
 
-        $this->nodes[] = new LikeFilter('title', 'pages:pageTitle');
+        $this->nodes[] = new LikeFilter('title', 'website:pageTitle');
     }
 }

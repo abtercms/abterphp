@@ -69,7 +69,7 @@ class BlockLayout extends Base
             'identifier',
             $entity->getIdentifier()
         );
-        $label = new Label('identifier', 'pages:blockLayoutIdentifier');
+        $label = new Label('identifier', 'website:blockLayoutIdentifier');
 
         $this->form[] = new FormGroup($input, $label);
 
@@ -84,7 +84,7 @@ class BlockLayout extends Base
     protected function addBody(Entity $entity): BlockLayout
     {
         $input = new Textarea('body', 'body', $entity->getBody(), [], [Html5::ATTR_ROWS => '15']);
-        $label = new Label('body', 'pages:blockLayoutBody');
+        $label = new Label('body', 'website:blockLayoutBody');
 
         $this->form[] = new FormGroup($input, $label);
 

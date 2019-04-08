@@ -12,8 +12,8 @@ class BlockLayout extends HeaderFactory
     const GROUP_IDENTIFIER = 'blockLayout-identifier';
     const GROUP_TITLE      = 'blockLayout-title';
 
-    const HEADER_ID         = 'pages:blockLayoutId';
-    const HEADER_IDENTIFIER = 'pages:blockLayoutIdentifier';
+    const HEADER_ID         = 'website:blockLayoutId';
+    const HEADER_IDENTIFIER = 'website:blockLayoutIdentifier';
 
     /** @var array */
     protected $headers = [

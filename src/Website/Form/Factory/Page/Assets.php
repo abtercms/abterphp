@@ -52,8 +52,8 @@ class Assets
         $header = $entity->getAssets() ? $entity->getAssets()->getHeader() : '';
 
         $input = new Textarea('header', 'header', $header);
-        $label = new Label('header', 'pages:pageHeader');
-        $help  = new Help('pages:pageHeaderHelp');
+        $label = new Label('header', 'website:pageHeader');
+        $help  = new Help('website:pageHeaderHelp');
 
         return new FormGroup($input, $label, $help);
     }
@@ -68,8 +68,8 @@ class Assets
         $footer = $entity->getAssets() ? $entity->getAssets()->getFooter() : '';
 
         $input = new Textarea('footer', 'footer', $footer);
-        $label = new Label('footer', 'pages:pageFooter');
-        $help  = new Help('pages:pageHeaderHelp');
+        $label = new Label('footer', 'website:pageFooter');
+        $help  = new Help('website:pageHeaderHelp');
 
         return new FormGroup($input, $label, $help);
     }
@@ -84,8 +84,8 @@ class Assets
         $cssFiles = $entity->getAssets() ? $entity->getAssets()->getCssFiles() : [];
 
         $input = new Textarea('css-files', 'css-files', implode("\r\n", $cssFiles));
-        $label = new Label('css-files', 'pages:pageCssFiles');
-        $help  = new Help('pages:pageCssFilesHelp');
+        $label = new Label('css-files', 'website:pageCssFiles');
+        $help  = new Help('website:pageCssFilesHelp');
 
         return new FormGroup($input, $label, $help);
     }
@@ -100,8 +100,8 @@ class Assets
         $jsFiles = $entity->getAssets() ? $entity->getAssets()->getJsFiles() : [];
 
         $input = new Textarea('js-files', 'js-files', implode("\r\n", $jsFiles));
-        $label = new Label('js-files', 'pages:pageJsFiles');
-        $help  = new Help('pages:pageJsFilesHelp');
+        $label = new Label('js-files', 'website:pageJsFiles');
+        $help  = new Help('website:pageJsFilesHelp');
 
         return new FormGroup($input, $label, $help);
     }

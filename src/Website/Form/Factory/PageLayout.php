@@ -74,7 +74,7 @@ class PageLayout extends Base
     protected function addIdentifier(Entity $entity): PageLayout
     {
         $input = new Input('identifier', 'identifier', $entity->getIdentifier());
-        $label = new Label('identifier', 'pages:pageLayoutIdentifier');
+        $label = new Label('identifier', 'website:pageLayoutIdentifier');
 
         $this->form[] = new FormGroup($input, $label, null);
 
@@ -89,7 +89,7 @@ class PageLayout extends Base
     protected function addBody(Entity $entity): PageLayout
     {
         $input = new Textarea('body', 'body', $entity->getBody(), [], [Html5::ATTR_ROWS => '15']);
-        $label = new Label('body', 'pages:pageLayoutBody');
+        $label = new Label('body', 'website:pageLayoutBody');
 
         $this->form[] = new FormGroup($input, $label);
 
@@ -103,7 +103,7 @@ class PageLayout extends Base
      */
     protected function addAssets(Entity $entity): PageLayout
     {
-        $hideable = new Hideable($this->translator->translate('pages:pageLayoutAssetsBtn'));
+        $hideable = new Hideable($this->translator->translate('website:pageLayoutAssetsBtn'));
         foreach ($this->assetsFactory->create($entity) as $component) {
             $hideable[] = $component;
         }

@@ -17,8 +17,8 @@ class BlockLayout extends ExecuteAbstract
     const ENTITY_SINGULAR = 'blockLayout';
     const ENTITY_PLURAL   = 'blockLayouts';
 
-    const ENTITY_TITLE_SINGULAR = 'pages:blockLayout';
-    const ENTITY_TITLE_PLURAL   = 'pages:blockLayouts';
+    const ENTITY_TITLE_SINGULAR = 'website:blockLayout';
+    const ENTITY_TITLE_PLURAL   = 'website:blockLayouts';
 
     /**
      * BlockLayout constructor.

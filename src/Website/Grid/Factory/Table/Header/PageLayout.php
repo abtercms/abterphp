@@ -12,8 +12,8 @@ class PageLayout extends HeaderFactory
     const GROUP_IDENTIFIER = 'pageLayout-identifier';
     const GROUP_TITLE      = 'pageLayout-title';
 
-    const HEADER_ID         = 'pages:pageLayoutId';
-    const HEADER_IDENTIFIER = 'pages:pageLayoutIdentifier';
+    const HEADER_ID         = 'website:pageLayoutId';
+    const HEADER_IDENTIFIER = 'website:pageLayoutIdentifier';
 
     /** @var array */
     protected $headers = [

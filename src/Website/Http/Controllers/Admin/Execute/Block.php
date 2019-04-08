@@ -17,8 +17,8 @@ class Block extends ExecuteAbstract
     const ENTITY_SINGULAR = 'block';
     const ENTITY_PLURAL   = 'blocks';
 
-    const ENTITY_TITLE_SINGULAR = 'pages:block';
-    const ENTITY_TITLE_PLURAL   = 'pages:blocks';
+    const ENTITY_TITLE_SINGULAR = 'website:block';
+    const ENTITY_TITLE_PLURAL   = 'website:blocks';
 
     /**
      * Block constructor.

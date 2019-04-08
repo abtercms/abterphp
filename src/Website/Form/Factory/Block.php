@@ -98,7 +98,7 @@ class Block extends Base
     protected function addIdentifier(Entity $entity): Block
     {
         $input = new Input('identifier', 'identifier', $entity->getIdentifier());
-        $label = new Label('title', 'pages:blockIdentifier');
+        $label = new Label('title', 'website:blockIdentifier');
 
         $this->form[] = new FormGroup($input, $label);
 
@@ -113,7 +113,7 @@ class Block extends Base
     protected function addTitle(Entity $entity): Block
     {
         $input = new Input('title', 'title', $entity->getTitle());
-        $label = new Label('title', 'pages:blockTitle');
+        $label = new Label('title', 'website:blockTitle');
 
         $this->form[] = new FormGroup($input, $label);
 
@@ -129,7 +129,7 @@ class Block extends Base
     {
         $attribs = [Html5::ATTR_CLASS => Textarea::CLASS_WYSIWYG, Html5::ATTR_ROWS => '15'];
         $input   = new Textarea('body', 'body', $entity->getBody(), [], $attribs);
-        $label   = new Label('body', 'pages:blockBody');
+        $label   = new Label('body', 'website:blockBody');
 
         $this->form[] = new FormGroup($input, $label);
 
@@ -203,7 +203,7 @@ class Block extends Base
      */
     protected function createLayoutIdLabel(): Label
     {
-        return new Label('layout_id', 'pages:blockLayoutIdLabel');
+        return new Label('layout_id', 'website:blockLayoutIdLabel');
     }
 
     /**
@@ -243,7 +243,7 @@ class Block extends Base
     protected function addLayoutTextarea(Entity $entity): Block
     {
         $input   = new Textarea('layout', 'layout', $entity->getLayout(), [], [Html5::ATTR_ROWS => '15']);
-        $label   = new Countable('description', 'pages:blockLayoutLabel', Countable::DEFAULT_SIZE);
+        $label   = new Countable('description', 'website:blockLayoutLabel', Countable::DEFAULT_SIZE);
         $attribs = [Html5::ATTR_ID => 'layout-div', Html5::ATTR_CLASS => FormGroup::CLASS_COUNTABLE];
 
         $this->form[] = new FormGroup($input, $label, null, [], $attribs);

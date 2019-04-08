@@ -16,7 +16,7 @@ class BlockLayout extends GridAbstract
 {
     const ENTITY_PLURAL = 'blockLayouts';
 
-    const ENTITY_TITLE_PLURAL = 'pages:blockLayouts';
+    const ENTITY_TITLE_PLURAL = 'website:blockLayouts';
 
     /** @var string */
     protected $resource = 'block_layouts';

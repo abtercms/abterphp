@@ -50,7 +50,7 @@ class NavigationBuilder
      */
     protected function addPage(Navigation $navigation)
     {
-        $text = 'pages:pages';
+        $text = 'website:pages';
         $icon = 'text_format';
 
         $button   = $this->buttonFactory->createFromName($text, Routes::ROUTE_PAGES, [], $icon);
@@ -64,7 +64,7 @@ class NavigationBuilder
      */
     protected function addPageLayout(Navigation $navigation)
     {
-        $text = 'pages:pageLayouts';
+        $text = 'website:pageLayouts';
         $icon = 'view_quilt';
 
         $button   = $this->buttonFactory->createFromName($text, Routes::ROUTE_PAGE_LAYOUTS, [], $icon);
@@ -78,7 +78,7 @@ class NavigationBuilder
      */
     protected function addBlock(Navigation $navigation)
     {
-        $text = 'pages:blocks';
+        $text = 'website:blocks';
         $icon = 'view_module';
 
         $button   = $this->buttonFactory->createFromName($text, Routes::ROUTE_BLOCKS, [], $icon);
@@ -92,7 +92,7 @@ class NavigationBuilder
      */
     protected function addBlockLayout(Navigation $navigation)
     {
-        $text = 'pages:blockLayouts';
+        $text = 'website:blockLayouts';
         $icon = 'view_quilt';
 
         $button   = $this->buttonFactory->createFromName($text, Routes::ROUTE_BLOCK_LAYOUTS, [], $icon);

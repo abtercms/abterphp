@@ -21,8 +21,8 @@ class Block extends Filters
     {
         parent::__construct($intents, $attributes, $tag);
 
-        $this->nodes[] = new ExactFilter('identifier', 'pages:blockIdentifier');
+        $this->nodes[] = new ExactFilter('identifier', 'website:blockIdentifier');
 
-        $this->nodes[] = new LikeFilter('title', 'pages:blockTitle');
+        $this->nodes[] = new LikeFilter('title', 'website:blockTitle');
     }
 }

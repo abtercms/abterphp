@@ -16,7 +16,7 @@ class Page extends GridAbstract
 {
     const ENTITY_PLURAL = 'pages';
 
-    const ENTITY_TITLE_PLURAL = 'pages:pages';
+    const ENTITY_TITLE_PLURAL = 'website:pages';
 
     /** @var string */
     protected $resource = 'pages';

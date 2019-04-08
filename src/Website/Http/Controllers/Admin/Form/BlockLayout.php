@@ -20,8 +20,8 @@ class BlockLayout extends FormAbstract
     const ENTITY_PLURAL   = 'blockLayouts';
     const ENTITY_SINGULAR = 'blockLayout';
 
-    const ENTITY_TITLE_SINGULAR = 'pages:blockLayout';
-    const ENTITY_TITLE_PLURAL   = 'pages:blockLayouts';
+    const ENTITY_TITLE_SINGULAR = 'website:blockLayout';
+    const ENTITY_TITLE_PLURAL   = 'website:blockLayouts';
 
     /** @var string */
     protected $resource = 'block_layouts';

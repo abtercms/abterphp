@@ -22,8 +22,8 @@ class Page extends FormAbstract
     const ENTITY_PLURAL   = 'pages';
     const ENTITY_SINGULAR = 'page';
 
-    const ENTITY_TITLE_SINGULAR = 'pages:page';
-    const ENTITY_TITLE_PLURAL   = 'pages:pages';
+    const ENTITY_TITLE_SINGULAR = 'website:page';
+    const ENTITY_TITLE_PLURAL   = 'website:pages';
 
     /** @var AssetManager */
     protected $assetManager;

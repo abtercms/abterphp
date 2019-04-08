@@ -17,8 +17,8 @@ class PageLayout extends ExecuteAbstract
     const ENTITY_SINGULAR = 'pageLayout';
     const ENTITY_PLURAL   = 'pageLayouts';
 
-    const ENTITY_TITLE_SINGULAR = 'pages:pageLayout';
-    const ENTITY_TITLE_PLURAL   = 'pages:pageLayouts';
+    const ENTITY_TITLE_SINGULAR = 'website:pageLayout';
+    const ENTITY_TITLE_PLURAL   = 'website:pageLayouts';
 
     /**
      * PageLayout constructor.

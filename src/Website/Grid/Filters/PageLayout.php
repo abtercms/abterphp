@@ -20,6 +20,6 @@ class PageLayout extends Filters
     {
         parent::__construct($intents, $attributes, $tag);
 
-        $this->nodes[] = new ExactFilter('identifier', 'pages:pageLayoutIdentifier');
+        $this->nodes[] = new ExactFilter('identifier', 'website:pageLayoutIdentifier');
     }
 }

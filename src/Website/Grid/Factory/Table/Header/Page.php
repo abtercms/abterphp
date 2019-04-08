@@ -12,9 +12,9 @@ class Page extends HeaderFactory
     const GROUP_IDENTIFIER = 'page-identifier';
     const GROUP_TITLE      = 'page-title';
 
-    const HEADER_ID         = 'pages:pageId';
-    const HEADER_IDENTIFIER = 'pages:pageIdentifier';
-    const HEADER_TITLE      = 'pages:pageTitle';
+    const HEADER_ID         = 'website:pageId';
+    const HEADER_IDENTIFIER = 'website:pageIdentifier';
+    const HEADER_TITLE      = 'website:pageTitle';
 
     /** @var array */
     protected $headers = [

@@ -41,8 +41,8 @@ class Meta
     protected function addOGTitle(Entity $entity): INode
     {
         $input = new Input('og-title', 'og-title', $entity->getMeta()->getOGTitle());
-        $label = new Label('og-title', 'pages:pageOGTitle');
-        $help  = new Help('pages:pageOGTitleHelp');
+        $label = new Label('og-title', 'website:pageOGTitle');
+        $help  = new Help('website:pageOGTitleHelp');
 
         return new FormGroup($input, $label, $help);
     }
@@ -55,8 +55,8 @@ class Meta
     protected function addOGImage(Entity $entity): INode
     {
         $input = new Input('og-image', 'og-image', $entity->getMeta()->getOGImage());
-        $label = new Label('og-image', 'pages:pageOGImage');
-        $help  = new Help('pages:pageOGImageHelp');
+        $label = new Label('og-image', 'website:pageOGImage');
+        $help  = new Help('website:pageOGImageHelp');
 
         return new FormGroup($input, $label, $help);
     }
@@ -71,10 +71,10 @@ class Meta
         $input = new Textarea('og-description', 'og-description', $entity->getMeta()->getOGDescription());
         $label = new Countable(
             'og-description',
-            'pages:pageOGDescription',
+            'website:pageOGDescription',
             Countable::DEFAULT_SIZE
         );
-        $help  = new Help('pages:pageOGDescriptionHelp');
+        $help  = new Help('website:pageOGDescriptionHelp');
 
         return new FormGroup($input, $label, $help);
     }
@@ -87,8 +87,8 @@ class Meta
     protected function addAuthor(Entity $entity): INode
     {
         $input = new Input('author', 'author', $entity->getMeta()->getAuthor());
-        $label = new Label('author', 'pages:pageAuthor');
-        $help  = new Help('pages:pageAuthor');
+        $label = new Label('author', 'website:pageAuthor');
+        $help  = new Help('website:pageAuthor');
 
         return new FormGroup($input, $label, $help);
     }
@@ -101,8 +101,8 @@ class Meta
     protected function addCopyright(Entity $entity): INode
     {
         $input = new Input('copyright', 'copyright', $entity->getMeta()->getAuthor());
-        $label = new Label('copyright', 'pages:pageCopyright');
-        $help  = new Help('pages:pageCopyrightHelp');
+        $label = new Label('copyright', 'website:pageCopyright');
+        $help  = new Help('website:pageCopyrightHelp');
 
         return new FormGroup($input, $label, $help);
     }
@@ -115,8 +115,8 @@ class Meta
     protected function addKeywords(Entity $entity): INode
     {
         $input = new Input('keywords', 'keywords', $entity->getMeta()->getKeywords());
-        $label = new Label('keywords', 'pages:pageKeywords');
-        $help  = new Help('pages:pageKeywordsHelp');
+        $label = new Label('keywords', 'website:pageKeywords');
+        $help  = new Help('website:pageKeywordsHelp');
 
         return new FormGroup($input, $label, $help);
     }
@@ -129,8 +129,8 @@ class Meta
     protected function addRobots(Entity $entity): INode
     {
         $input = new Input('robots', 'robots', $entity->getMeta()->getRobots());
-        $label = new Label('robots', 'pages:pageRobots');
-        $help  = new Help('pages:pageRobotsHelp');
+        $label = new Label('robots', 'website:pageRobots');
+        $help  = new Help('website:pageRobotsHelp');
 
         return new FormGroup($input, $label, $help);
     }

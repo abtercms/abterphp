@@ -117,7 +117,7 @@ class Page extends Base
     protected function addIdentifier(Entity $entity): Page
     {
         $input = new Input('identifier', 'identifier', $entity->getIdentifier());
-        $label = new Label('title', 'pages:pageIdentifier');
+        $label = new Label('title', 'website:pageIdentifier');
 
         $this->form[] = new FormGroup($input, $label);
 
@@ -132,7 +132,7 @@ class Page extends Base
     protected function addTitle(Entity $entity): Page
     {
         $input = new Input('title', 'title', $entity->getTitle());
-        $label = new Label('title', 'pages:pageTitle');
+        $label = new Label('title', 'website:pageTitle');
 
         $this->form[] = new FormGroup($input, $label);
 
@@ -147,8 +147,8 @@ class Page extends Base
     protected function addDescription(Entity $entity): Page
     {
         $input = new Textarea('description', 'description', $entity->getMeta()->getDescription());
-        $label = new Countable('description', 'pages:pageDescription', Countable::DEFAULT_SIZE);
-        $help  = new Help('pages:pageDescriptionHelp');
+        $label = new Countable('description', 'website:pageDescription', Countable::DEFAULT_SIZE);
+        $help  = new Help('website:pageDescriptionHelp');
 
         $this->form[] = new FormGroup(
             $input,
@@ -168,7 +168,7 @@ class Page extends Base
      */
     protected function addMeta(Entity $entity): Page
     {
-        $hideable = new Hideable($this->translator->translate('pages:pageMetaBtn'));
+        $hideable = new Hideable($this->translator->translate('website:pageMetaBtn'));
         foreach ($this->metaFactory->create($entity) as $component) {
             $hideable[] = $component;
         }
@@ -187,7 +187,7 @@ class Page extends Base
     {
         $attribs = [Html5::ATTR_CLASS => 'wysiwyg', Html5::ATTR_ROWS => '15'];
         $input   = new Textarea('body', 'body', $entity->getBody(), [], $attribs);
-        $label   = new Label('body', 'pages:pageBody');
+        $label   = new Label('body', 'website:pageBody');
 
         $this->form[] = new FormGroup($input, $label);
 
@@ -262,7 +262,7 @@ class Page extends Base
      */
     protected function createLayoutIdLabel(): Label
     {
-        return new Label('layout_id', 'pages:pageLayoutIdLabel');
+        return new Label('layout_id', 'website:pageLayoutIdLabel');
     }
 
     /**
@@ -301,7 +301,7 @@ class Page extends Base
     protected function addLayoutTextarea(Entity $entity): Page
     {
         $input = new Textarea('layout', 'layout', $entity->getLayout(), [], [Html5::ATTR_ROWS => '15']);
-        $label = new Label('layout', 'pages:pageLayoutLabel');
+        $label = new Label('layout', 'website:pageLayoutLabel');
 
         $this->form[] = new FormGroup($input, $label, null, [], [Html5::ATTR_ID => 'layout-div']);
 
@@ -320,7 +320,7 @@ class Page extends Base
             return $this;
         }
 
-        $hideable = new Hideable($this->translator->translate('pages:pageAssetsBtn'));
+        $hideable = new Hideable($this->translator->translate('website:pageAssetsBtn'));
 
         $nodes = $this->assetsFactory->create($entity);
         foreach ($nodes as $node) {

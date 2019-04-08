@@ -12,9 +12,9 @@ class Block extends HeaderFactory
     const GROUP_IDENTIFIER = 'block-identifier';
     const GROUP_TITLE      = 'block-title';
 
-    const HEADER_ID         = 'pages:blockId';
-    const HEADER_IDENTIFIER = 'pages:blockIdentifier';
-    const HEADER_TITLE      = 'pages:blockTitle';
+    const HEADER_ID         = 'website:blockId';
+    const HEADER_IDENTIFIER = 'website:blockIdentifier';
+    const HEADER_TITLE      = 'website:blockTitle';
 
     /** @var array */
     protected $headers = [
