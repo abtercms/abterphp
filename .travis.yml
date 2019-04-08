@@ -13,10 +13,10 @@ before_install:
 
 install:
   - docker-compose exec php make install
-  - docker-compose exec php make coverage
 
 script:
   - docker-compose exec php make build
+  - docker-compose exec php make coverage
 
 after_success:
   - curl -L --output php-coveralls.phar https://github.com/php-coveralls/php-coveralls/releases/download/v2.1.0/php-coveralls.phar
