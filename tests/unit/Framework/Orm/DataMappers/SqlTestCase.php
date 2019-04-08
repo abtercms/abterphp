@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AbterPhp\Framework\Orm\DataMapper;
+namespace AbterPhp\Framework\Orm\DataMappers;
 
 use Opulence\Databases\Adapters\Pdo\Connection;
 use Opulence\Databases\Adapters\Pdo\Statement;

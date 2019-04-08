@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AbterPhp\Framework\Events\Listeners;
+namespace AbterPhp\Admin\Events\Listeners;
 
 use AbterPhp\Framework\Events\NavigationReady;
 use AbterPhp\Framework\Html\Component\Button;
@@ -66,9 +66,9 @@ class NavigationBuilderTest extends TestCase
 
         $event = new NavigationReady($navigationMock);
 
-        $navigationMock->expects($this->once())->method('hasIntent')->willReturn(true);
+        $navigationMock->expects($this->atLeastOnce())->method('hasIntent')->willReturn(true);
 
-        $this->buttonFactoryMock->expects($this->once())->method('createFromName')->willReturn(new Button());
+        $this->buttonFactoryMock->expects($this->atLeastOnce())->method('createFromName')->willReturn(new Button());
 
         $this->sut->handle($event);
     }

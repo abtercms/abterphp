@@ -7,13 +7,20 @@ namespace AbterPhp\Admin\Events\Listeners;
 use AbterPhp\Admin\Constant\Routes;
 use AbterPhp\Framework\Events\NavigationReady;
 use AbterPhp\Framework\Html\Component\ButtonFactory;
-use AbterPhp\Framework\I18n\ITranslator;
+use AbterPhp\Framework\Navigation\Dropdown;
 use AbterPhp\Framework\Navigation\Item;
 use AbterPhp\Framework\Navigation\Navigation;
+use AbterPhp\Framework\Navigation\UserBlock;
+use Opulence\Sessions\ISession;
 
 class NavigationBuilder
 {
-    const BASE_WEIGHT = 1000;
+    const FIRST_ITEM_WEIGHT = 0;
+
+    const DEFAULT_BASE_WEIGHT = 1000;
+
+    /** @var ISession */
+    protected $session;
 
     /** @var ButtonFactory */
     protected $buttonFactory;
@@ -21,10 +28,12 @@ class NavigationBuilder
     /**
      * NavigationRegistrar constructor.
      *
+     * @param ISession      $session
      * @param ButtonFactory $buttonFactory
      */
-    public function __construct(ButtonFactory $buttonFactory)
+    public function __construct(ISession $session, ButtonFactory $buttonFactory)
     {
+        $this->session       = $session;
         $this->buttonFactory = $buttonFactory;
     }
 
@@ -41,9 +50,43 @@ class NavigationBuilder
             return;
         }
 
+        $this->insertFirstItem($navigation);
         $this->addUser($navigation);
         $this->addUserGroup($navigation);
         $this->addLogout($navigation);
+    }
+
+    /**
+     * @param Navigation $navigation
+     */
+    protected function insertFirstItem(Navigation $navigation)
+    {
+        $firstItem = new Item(null, [UserBlock::class]);
+
+        $firstItem[] = $this->createUserBlock();
+        $firstItem[] = $this->createDropdown();
+
+        $navigation->addItem($firstItem, static::FIRST_ITEM_WEIGHT);
+    }
+
+    /**
+     * @return UserBlock
+     */
+    protected function createUserBlock(): UserBlock
+    {
+        return new UserBlock($this->session);
+    }
+
+    /**
+     * @return Dropdown
+     */
+    protected function createDropdown(): Dropdown
+    {
+        $text = 'framework:logout';
+
+        $button = $this->buttonFactory->createFromName($text, Routes::ROUTE_LOGOUT, []);
+
+        return new Dropdown(new Item($button));
     }
 
     /**
@@ -59,7 +102,7 @@ class NavigationBuilder
         $button   = $this->buttonFactory->createFromName($text, Routes::ROUTE_USERS, [], $icon);
         $resource = $this->getAdminResource(Routes::ROUTE_USERS);
 
-        $navigation->addItem(new Item($button), static::BASE_WEIGHT, $resource);
+        $navigation->addItem(new Item($button), static::DEFAULT_BASE_WEIGHT, $resource);
     }
 
     /**
@@ -75,7 +118,7 @@ class NavigationBuilder
         $button   = $this->buttonFactory->createFromName($text, Routes::ROUTE_USER_GROUPS, [], $icon);
         $resource = $this->getAdminResource(Routes::ROUTE_USER_GROUPS);
 
-        $navigation->addItem(new Item($button), static::BASE_WEIGHT, $resource);
+        $navigation->addItem(new Item($button), static::DEFAULT_BASE_WEIGHT, $resource);
     }
 
     /**

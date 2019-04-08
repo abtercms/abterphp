@@ -6,8 +6,7 @@ namespace AbterPhp\Admin\Orm\DataMapper;
 
 use AbterPhp\Admin\Domain\Entities\AdminResource;
 use AbterPhp\Admin\Orm\DataMappers\AdminResourceSqlDataMapper;
-use AbterPhp\Framework\Orm\DataMapper\SqlTestCase;
-use Opulence\Databases\Adapters\Pdo\Connection as Connection;
+use AbterPhp\Framework\Orm\DataMappers\SqlTestCase;
 
 class AdminResourceSqlDataMapperTest extends SqlTestCase
 {

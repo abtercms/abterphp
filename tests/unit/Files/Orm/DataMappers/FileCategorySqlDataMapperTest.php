@@ -7,7 +7,7 @@ namespace AbterPhp\Files\Orm\DataMapper;
 use AbterPhp\Admin\Domain\Entities\UserGroup;
 use AbterPhp\Files\Domain\Entities\FileCategory;
 use AbterPhp\Files\Orm\DataMappers\FileCategorySqlDataMapper;
-use AbterPhp\Framework\Orm\DataMapper\SqlTestCase;
+use AbterPhp\Framework\Orm\DataMappers\SqlTestCase;
 use AbterPhp\Framework\Orm\MockIdGeneratorFactory;
 
 class FileCategorySqlDataMapperTest extends SqlTestCase

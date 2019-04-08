@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace AbterPhp\Files\Databases\Queries;
 
-use AbterPhp\Framework\Orm\DataMapper\SqlTestCase;
+use AbterPhp\Framework\Orm\DataMappers\SqlTestCase;
 
 class FileCategoryAuthLoaderTest extends SqlTestCase
 {

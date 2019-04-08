@@ -7,7 +7,7 @@ namespace AbterPhp\Files\Orm\DataMapper;
 use AbterPhp\Files\Domain\Entities\File;
 use AbterPhp\Files\Domain\Entities\FileCategory;
 use AbterPhp\Files\Orm\DataMappers\FileSqlDataMapper;
-use AbterPhp\Framework\Orm\DataMapper\SqlTestCase;
+use AbterPhp\Framework\Orm\DataMappers\SqlTestCase;
 
 class FileSqlDataMapperTest extends SqlTestCase
 {

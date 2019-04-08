@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace AbterPhp\Website\Orm\DataMapper;
 
-use AbterPhp\Framework\Orm\DataMapper\SqlTestCase;
+use AbterPhp\Framework\Orm\DataMappers\SqlTestCase;
 use AbterPhp\Website\Domain\Entities\Page;
 use AbterPhp\Website\Orm\DataMappers\PageSqlDataMapper;
 use Opulence\Databases\Adapters\Pdo\Connection as Connection;

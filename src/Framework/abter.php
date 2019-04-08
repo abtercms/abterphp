@@ -50,12 +50,6 @@ return [
         Console\Commands\Security\SecretGenerator::class,
         Console\Commands\Template\FlushCache::class,
     ],
-    Module::EVENTS             => [
-        Event::NAVIGATION_READY => [
-            /** @see \AbterPhp\Framework\Events\Listeners\NavigationBuilder::handle */
-            sprintf('%s@handle', Events\Listeners\NavigationBuilder::class),
-        ],
-    ],
     Module::MIDDLEWARE         => [
         Priorities::NORMAL => [
             Http\Middleware\EnvironmentWarning::class,

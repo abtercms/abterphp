@@ -9,7 +9,7 @@ use AbterPhp\Admin\Domain\Entities\UserLanguage;
 use AbterPhp\Files\Domain\Entities\File;
 use AbterPhp\Files\Domain\Entities\FileDownload;
 use AbterPhp\Files\Orm\DataMappers\FileDownloadSqlDataMapper;
-use AbterPhp\Framework\Orm\DataMapper\SqlTestCase;
+use AbterPhp\Framework\Orm\DataMappers\SqlTestCase;
 
 class FileDownloadSqlDataMapperTest extends SqlTestCase
 {

@@ -7,7 +7,7 @@ namespace Infrastructure\Orm\DataMapper;
 use AbterPhp\Admin\Domain\Entities\AdminResource;
 use AbterPhp\Admin\Domain\Entities\UserGroup;
 use AbterPhp\Admin\Orm\DataMappers\UserGroupSqlDataMapper;
-use AbterPhp\Framework\Orm\DataMapper\SqlTestCase;
+use AbterPhp\Framework\Orm\DataMappers\SqlTestCase;
 use AbterPhp\Framework\Orm\MockIdGeneratorFactory;
 
 class UserGroupSqlDataMapperTest extends SqlTestCase
