@@ -181,7 +181,7 @@ before the first stable version.
    - https://medium.freecodecamp.org/web-security-hardening-http-cookies-be8d8d8016e1
 1. 70%+ of PHP source code unit tested, except for bootstrappers and console commands
 1. Verified that `localhost_router.php` works as expected or remove it if too hard to fix
-1. Modular asset management
+1. ~~Modular asset management~~
 1. ~~Completed test automation and automatic reviews set up~~
 1. ~~Refactored module manager~~
 1. ~~Ensured that user creation enforces good passwords in CLI.~~

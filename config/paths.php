@@ -60,8 +60,6 @@ return [
     'resources' => realpath(__DIR__ . '/../resources'),
     'resources.lang' => realpath(__DIR__ . '/../resources/lang'),
     'resources.lang.en' => realpath(__DIR__ . '/../resources/lang/en'),
-    'resources.bootstrap4' => realpath(__DIR__ . '/../resources/bootstrap4'),
-    'resources.propeller' => realpath(__DIR__ . '/../resources/propeller'),
 
     /**
      * ----------------------------------------------------------

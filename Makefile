@@ -1,3 +1,7 @@
+build:
+	$(MAKE) integration
+	$(MAKE) coverage
+
 install:
 	php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
 	php -r "if (hash_file('sha384', 'composer-setup.php') === '48e3236262b34d30969dca3c37281b3b4bbe3221bda826ac6a9a62d6444cdb0dcd0615698a5cbe587c3f0fe57a54d8f5') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
@@ -8,16 +12,8 @@ install:
 update:
 	php composer.phar update
 
-build:
-	./vendor/bin/phpunit --no-coverage
-	./vendor/bin/phpcs
-	./vendor/bin/phpcs -p --colors --cache --standard=PSR12 tests
-	./vendor/bin/phpmd src text .phpmd.xml
-
 precommit:
 	./vendor/bin/phpunit --no-coverage
-	./vendor/bin/phpcs
-	./vendor/bin/phpcs -p --colors --cache --standard=PSR12 tests
 
 unit:
 	./vendor/bin/phpunit --no-coverage --testsuite=unit
@@ -31,4 +27,4 @@ coverage:
 flush:
 	./apex abterphp:flushcache
 
-.PHONY: install update build precommit unit integration coverage
+.PHONY: build install update precommit unit integration coverage flush
