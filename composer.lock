@@ -153,12 +153,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/abterphp/files.git",
-                "reference": "4643e04a8d2c2e90423ec74fdf57aee6a3521356"
+                "reference": "0237197e4e19a9f39428c43bbb77d6eb59bb8f0a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/abterphp/files/zipball/4643e04a8d2c2e90423ec74fdf57aee6a3521356",
-                "reference": "4643e04a8d2c2e90423ec74fdf57aee6a3521356",
+                "url": "https://api.github.com/repos/abterphp/files/zipball/0237197e4e19a9f39428c43bbb77d6eb59bb8f0a",
+                "reference": "0237197e4e19a9f39428c43bbb77d6eb59bb8f0a",
                 "shasum": ""
             },
             "require": {
@@ -191,7 +191,7 @@
                 }
             ],
             "description": "File upload and file sharing module for AbterPHP",
-            "time": "2019-04-15T17:28:08+00:00"
+            "time": "2019-04-16T08:43:20+00:00"
         },
         {
             "name": "abterphp/framework",

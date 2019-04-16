@@ -1,7 +1,7 @@
 version: '3'
 services:
   db:
-    image: mysql
+    image: mariadb
     environment:
       - MYSQL_ROOT_PASSWORD=85TKjy8ZnYGpThBTfYAv
       - MYSQL_DATABASE=abter
@@ -15,7 +15,7 @@ services:
       - "3366:3306"
 
   db_test:
-    image: mysql
+    image: mariadb
     environment:
       - MYSQL_ROOT_PASSWORD=abter_test
       - MYSQL_DATABASE=abter_test
