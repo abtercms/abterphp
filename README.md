@@ -191,7 +191,9 @@ before the first stable version.
 1. Tested project on OSX and Windows 10.
 1. Initial API defined and published
 1. Documentation page exists
-1. 1 nice website module
+1. ~~1 nice website module~~
+1. Page category
+1. Enable/Disable modules from console
 
 ### First beta musts:
 
@@ -238,6 +240,7 @@ before the first stable version.
    - `AbterPhp\Framework\Html\Collection`
    - `AbterPhp\Framework\Html\Helper\ArrayHelper::formatAttribute`
    - Classes with CouplingBetweenObjects over a 15-20 (TBD)
+1. Proper maintenance handling
 
 ## Ideas
 
