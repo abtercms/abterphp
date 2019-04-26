@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/abterphp/admin.git",
-                "reference": "cac88660e60c322cac5918e8ab9d76345fa8512a"
+                "reference": "d776af2cbe61950bffbf1808d919beb86f983eae"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/abterphp/admin/zipball/cac88660e60c322cac5918e8ab9d76345fa8512a",
-                "reference": "cac88660e60c322cac5918e8ab9d76345fa8512a",
+                "url": "https://api.github.com/repos/abterphp/admin/zipball/d776af2cbe61950bffbf1808d919beb86f983eae",
+                "reference": "d776af2cbe61950bffbf1808d919beb86f983eae",
                 "shasum": ""
             },
             "require": {
@@ -53,7 +53,7 @@
                 }
             ],
             "description": "Admin module for AbterPHP",
-            "time": "2019-04-18T13:23:07+00:00"
+            "time": "2019-04-26T16:54:50+00:00"
         },
         {
             "name": "abterphp/bootstrap4-website",
@@ -153,12 +153,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/abterphp/files.git",
-                "reference": "0237197e4e19a9f39428c43bbb77d6eb59bb8f0a"
+                "reference": "05d3bbdbdb93c7fa0d24cc2948484f68181f5e76"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/abterphp/files/zipball/0237197e4e19a9f39428c43bbb77d6eb59bb8f0a",
-                "reference": "0237197e4e19a9f39428c43bbb77d6eb59bb8f0a",
+                "url": "https://api.github.com/repos/abterphp/files/zipball/05d3bbdbdb93c7fa0d24cc2948484f68181f5e76",
+                "reference": "05d3bbdbdb93c7fa0d24cc2948484f68181f5e76",
                 "shasum": ""
             },
             "require": {
@@ -191,7 +191,7 @@
                 }
             ],
             "description": "File upload and file sharing module for AbterPHP",
-            "time": "2019-04-16T08:43:20+00:00"
+            "time": "2019-04-26T16:56:32+00:00"
         },
         {
             "name": "abterphp/framework",
@@ -199,12 +199,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/abterphp/framework.git",
-                "reference": "a219409a5245ec7a96e5344da5845bd3f586105e"
+                "reference": "8ccf6e2d6acf819622e882100c3463f68d843590"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/abterphp/framework/zipball/a219409a5245ec7a96e5344da5845bd3f586105e",
-                "reference": "a219409a5245ec7a96e5344da5845bd3f586105e",
+                "url": "https://api.github.com/repos/abterphp/framework/zipball/8ccf6e2d6acf819622e882100c3463f68d843590",
+                "reference": "8ccf6e2d6acf819622e882100c3463f68d843590",
                 "shasum": ""
             },
             "require": {
@@ -212,6 +212,7 @@
                 "casbin/casbin": "^0.1.6",
                 "casbin/database-adapter": "^0.2.0",
                 "cocur/slugify": "^3.1",
+                "dflydev/apache-mime-types": "^1.0",
                 "ext-iconv": "*",
                 "ext-json": "*",
                 "ext-pdo": "*",
@@ -254,7 +255,7 @@
                 }
             ],
             "description": "Foundations for AbterPHP",
-            "time": "2019-04-21T18:40:19+00:00"
+            "time": "2019-04-26T17:02:36+00:00"
         },
         {
             "name": "abterphp/propeller-admin",
@@ -308,12 +309,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/abterphp/website.git",
-                "reference": "1946a0655bc419cba77a26fa39223bb6e6ce0099"
+                "reference": "ba4eaad9a0d53809e74ba8078ca0791e75a52d83"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/abterphp/website/zipball/1946a0655bc419cba77a26fa39223bb6e6ce0099",
-                "reference": "1946a0655bc419cba77a26fa39223bb6e6ce0099",
+                "url": "https://api.github.com/repos/abterphp/website/zipball/ba4eaad9a0d53809e74ba8078ca0791e75a52d83",
+                "reference": "ba4eaad9a0d53809e74ba8078ca0791e75a52d83",
                 "shasum": ""
             },
             "require": {
@@ -346,7 +347,7 @@
                 }
             ],
             "description": "Website module for AbterPHP",
-            "time": "2019-04-15T17:18:50+00:00"
+            "time": "2019-04-26T17:24:01+00:00"
         },
         {
             "name": "abterphp/website-creative",
@@ -593,6 +594,61 @@
                 "slugify"
             ],
             "time": "2019-01-31T20:38:55+00:00"
+        },
+        {
+            "name": "dflydev/apache-mime-types",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/dflydev/dflydev-apache-mime-types.git",
+                "reference": "f30a57e59b7476e4c5270b6a0727d79c9c0eb861"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/dflydev/dflydev-apache-mime-types/zipball/f30a57e59b7476e4c5270b6a0727d79c9c0eb861",
+                "reference": "f30a57e59b7476e4c5270b6a0727d79c9c0eb861",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3"
+            },
+            "require-dev": {
+                "twig/twig": "1.*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Dflydev\\ApacheMimeTypes": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dragonfly Development Inc.",
+                    "email": "info@dflydev.com",
+                    "homepage": "http://dflydev.com"
+                },
+                {
+                    "name": "Beau Simensen",
+                    "email": "beau@dflydev.com",
+                    "homepage": "http://beausimensen.com"
+                }
+            ],
+            "description": "Apache MIME Types",
+            "keywords": [
+                "apache",
+                "mime",
+                "mimetypes"
+            ],
+            "time": "2013-05-14T02:02:01+00:00"
         },
         {
             "name": "doctrine/lexer",

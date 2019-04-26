@@ -194,6 +194,7 @@ before the first stable version.
 1. ~~1 nice website module~~
 1. Page category
 1. Enable/Disable modules from console
+1. Re-add navigation item filtering by enforcer
 
 ### First beta musts:
 
@@ -218,6 +219,7 @@ before the first stable version.
 1. Cached translations
 1. Documentation covers getting started and main design goals
 1. 3 nice website modules
+1. Fix sidebar propeller "bug"
 
 ### 1.0 musts:
 
@@ -240,6 +242,7 @@ before the first stable version.
    - `AbterPhp\Framework\Html\Collection`
    - `AbterPhp\Framework\Html\Helper\ArrayHelper::formatAttribute`
    - Classes with CouplingBetweenObjects over a 15-20 (TBD)
+   - `AbterPhp\Framework\Module\Manager`
 1. Proper maintenance handling
 
 ## Ideas
