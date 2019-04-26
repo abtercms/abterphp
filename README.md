@@ -220,6 +220,7 @@ before the first stable version.
 1. Documentation covers getting started and main design goals
 1. 3 nice website modules
 1. Fix sidebar propeller "bug"
+1. Cache navigation for user
 
 ### 1.0 musts:
 
@@ -244,6 +245,7 @@ before the first stable version.
    - Classes with CouplingBetweenObjects over a 15-20 (TBD)
    - `AbterPhp\Framework\Module\Manager`
 1. Proper maintenance handling
+1. Consider caching processed module data
 
 ## Ideas
 
