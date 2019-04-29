@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/abterphp/admin.git",
-                "reference": "6d939ce34f125ba54cd3cf17bc269ae749509c5e"
+                "reference": "cbcb8a0028c7861f55f763104e7bcb732b9240d3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/abterphp/admin/zipball/6d939ce34f125ba54cd3cf17bc269ae749509c5e",
-                "reference": "6d939ce34f125ba54cd3cf17bc269ae749509c5e",
+                "url": "https://api.github.com/repos/abterphp/admin/zipball/cbcb8a0028c7861f55f763104e7bcb732b9240d3",
+                "reference": "cbcb8a0028c7861f55f763104e7bcb732b9240d3",
                 "shasum": ""
             },
             "require": {
@@ -53,7 +53,7 @@
                 }
             ],
             "description": "Admin module for AbterPHP",
-            "time": "2019-04-29T08:50:35+00:00"
+            "time": "2019-04-29T12:59:50+00:00"
         },
         {
             "name": "abterphp/bootstrap4-website",
