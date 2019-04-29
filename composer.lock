@@ -61,12 +61,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/abterphp/bootstrap4-website.git",
-                "reference": "06824922d22a4b6a0e968c57a9d9faf1d32b0673"
+                "reference": "88bb11ff2cc4039308862794f89b90c37f26b879"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/abterphp/bootstrap4-website/zipball/06824922d22a4b6a0e968c57a9d9faf1d32b0673",
-                "reference": "06824922d22a4b6a0e968c57a9d9faf1d32b0673",
+                "url": "https://api.github.com/repos/abterphp/bootstrap4-website/zipball/88bb11ff2cc4039308862794f89b90c37f26b879",
+                "reference": "88bb11ff2cc4039308862794f89b90c37f26b879",
                 "shasum": ""
             },
             "require": {
@@ -99,7 +99,7 @@
                 }
             ],
             "description": "Website module for AbterPHP",
-            "time": "2019-04-15T17:24:52+00:00"
+            "time": "2019-04-29T14:07:02+00:00"
         },
         {
             "name": "abterphp/contact",
@@ -3355,7 +3355,7 @@
                 },
                 {
                     "name": "Gert de Pagter",
-                    "email": "backendtea@gmail.com"
+                    "email": "BackEndTea@gmail.com"
                 }
             ],
             "description": "Symfony polyfill for ctype functions",
