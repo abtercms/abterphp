@@ -199,12 +199,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/abterphp/framework.git",
-                "reference": "df62022c86d959faa1a72799feef001e63e1bc78"
+                "reference": "9a8db4f7108798badf8913b7c90f938e53dacc18"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/abterphp/framework/zipball/df62022c86d959faa1a72799feef001e63e1bc78",
-                "reference": "df62022c86d959faa1a72799feef001e63e1bc78",
+                "url": "https://api.github.com/repos/abterphp/framework/zipball/9a8db4f7108798badf8913b7c90f938e53dacc18",
+                "reference": "9a8db4f7108798badf8913b7c90f938e53dacc18",
                 "shasum": ""
             },
             "require": {
@@ -255,7 +255,7 @@
                 }
             ],
             "description": "Foundations for AbterPHP",
-            "time": "2019-04-29T08:47:50+00:00"
+            "time": "2019-04-29T14:06:21+00:00"
         },
         {
             "name": "abterphp/propeller-admin",
