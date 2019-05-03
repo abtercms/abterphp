@@ -5,6 +5,5 @@ nbproject/
 phpunit.phar
 .env.*.php
 !config/environment/.env.example.php
-/dumps/
 /vendor/
 NOTES.md

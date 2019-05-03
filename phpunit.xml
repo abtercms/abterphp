@@ -2,11 +2,17 @@
         bootstrap="vendor/autoload.php"
         colors="true">
     <testsuite name="AbterPHP">
-        <testsuite name="unit">
-            <directory>tests/unit</directory>
-        </testsuite>
         <testsuite name="integration">
             <directory>tests/integration</directory>
+        </testsuite>
+        <testsuite name="unit">
+            <directory>vendor/abterphp/framework/tests</directory>
+            <directory>vendor/abterphp/admin/tests</directory>
+            <directory>vendor/abterphp/website/tests</directory>
+            <directory>vendor/abterphp/files/tests</directory>
+            <directory>vendor/abterphp/contact/tests</directory>
+            <directory>vendor/abterphp/propeller-admin/tests</directory>
+            <directory>vendor/abterphp/bootstrap4-website/tests</directory>
         </testsuite>
     </testsuite>
     <php>
@@ -22,11 +28,17 @@
     </php>
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">./src</directory>
+            <directory suffix=".php">vendor/abterphp/framework/src</directory>
+            <directory suffix=".php">vendor/abterphp/admin/src</directory>
+            <directory suffix=".php">vendor/abterphp/website/src</directory>
+            <directory suffix=".php">vendor/abterphp/files/src</directory>
+            <directory suffix=".php">vendor/abterphp/contact/src</directory>
+            <directory suffix=".php">vendor/abterphp/propeller-admin/src</directory>
+            <directory suffix=".php">vendor/abterphp/bootstrap4-website/src</directory>
             <exclude>
-                <directory suffix=".php">./src/*/Bootstrappers</directory>
-                <directory suffix=".php">./src/*/Console/Commands</directory>
-                <directory suffix="routes.php">./src/*</directory>
+                <directory suffix=".php">*/src/Bootstrappers</directory>
+                <directory suffix=".php">*/src/Console/Commands</directory>
+                <directory suffix=".php">*/src/Http/Controllers</directory>
             </exclude>
         </whitelist>
     </filter>

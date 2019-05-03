@@ -181,7 +181,7 @@ before the first stable version.
    - https://medium.freecodecamp.org/web-security-hardening-http-cookies-be8d8d8016e1
 1. 70%+ of PHP source code unit tested, except for bootstrappers and console commands
 1. Verified that `localhost_router.php` works as expected or remove it if too hard to fix
-1. Modular asset management
+1. ~~Modular asset management~~
 1. ~~Completed test automation and automatic reviews set up~~
 1. ~~Refactored module manager~~
 1. ~~Ensured that user creation enforces good passwords in CLI.~~
@@ -191,7 +191,10 @@ before the first stable version.
 1. Tested project on OSX and Windows 10.
 1. Initial API defined and published
 1. Documentation page exists
-1. 1 nice website module
+1. ~~1 nice website module~~
+1. ~~Page category~~
+1. Enable/Disable modules from console
+1. ~~Re-add navigation item filtering by enforcer~~
 
 ### First beta musts:
 
@@ -216,6 +219,8 @@ before the first stable version.
 1. Cached translations
 1. Documentation covers getting started and main design goals
 1. 3 nice website modules
+1. Fix sidebar propeller "bug"
+1. Cache navigation for user
 
 ### 1.0 musts:
 
@@ -238,6 +243,9 @@ before the first stable version.
    - `AbterPhp\Framework\Html\Collection`
    - `AbterPhp\Framework\Html\Helper\ArrayHelper::formatAttribute`
    - Classes with CouplingBetweenObjects over a 15-20 (TBD)
+   - `AbterPhp\Framework\Module\Manager`
+1. Proper maintenance handling
+1. Consider caching processed module data
 
 ## Ideas
 
