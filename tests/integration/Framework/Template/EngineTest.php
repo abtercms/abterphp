@@ -75,7 +75,7 @@ class EngineTest extends \PHPUnit\Framework\TestCase
     {
         $expectedResult = 'abc-d';
 
-        $page = new Page(0, 'abc', 'd', 'abc', '{{var/body}}-{{var/title}}');
+        $page = new Page(0, 'abc', 'd', 'abc', null, '{{var/body}}-{{var/title}}');
 
         $actualResult = $this->sut->run(
             'page',
@@ -91,7 +91,7 @@ class EngineTest extends \PHPUnit\Framework\TestCase
     {
         $expectedResult = 'efg-h abc-d ijk-l';
 
-        $page = new Page(0, '', 'd', 'abc', '{{block/header}} {{var/body}}-{{var/title}} {{block/footer}}');
+        $page = new Page(0, '', 'd', 'abc', null, '{{block/header}} {{var/body}}-{{var/title}} {{block/footer}}');
 
         $block1 = new Block(0, 'header', 'h', 'efg', '{{var/body}}-{{var/title}}', null);
         $block2 = new Block(0, 'footer', 'l', 'ijk', '{{var/body}}-{{var/title}}', null);
@@ -115,7 +115,7 @@ class EngineTest extends \PHPUnit\Framework\TestCase
     {
         $expectedResult = 'lmn-o efg-h pqr-s abc-d xyz-0 tuv-w ijk-l';
 
-        $page = new Page(0, '', 'd', 'abc', '{{block/header}} {{var/body}}-{{var/title}} {{block/footer}}');
+        $page = new Page(0, '', 'd', 'abc', null, '{{block/header}} {{var/body}}-{{var/title}} {{block/footer}}');
 
         $headerLayout = '{{block/header-sub-1}} {{var/body}}-{{var/title}} {{block/header-sub-2}}';
         $headerBlock  = new Block(0, 'header', 'h', 'efg', $headerLayout);
