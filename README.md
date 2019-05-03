@@ -192,9 +192,9 @@ before the first stable version.
 1. Initial API defined and published
 1. Documentation page exists
 1. ~~1 nice website module~~
-1. Page category
+1. ~~Page category~~
 1. Enable/Disable modules from console
-1. Re-add navigation item filtering by enforcer
+1. ~~Re-add navigation item filtering by enforcer~~
 
 ### First beta musts:
 
