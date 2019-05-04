@@ -15,14 +15,6 @@ install:
   - docker-compose exec php make install
 
 script:
-  - cat vendor/abterphp/admin/abter.php
-  - cat vendor/abterphp/bootstrap4-website/abter.php
-  - cat vendor/abterphp/contact/abter.php
-  - cat vendor/abterphp/files/abter.php
-  - cat vendor/abterphp/framework/abter.php
-  - cat vendor/abterphp/propeller-admin/abter.php
-  - cat vendor/abterphp/website/abter.php
-  - cat vendor/abterphp/website-creative/abter.php
   - docker-compose exec php make build
 
 after_success:
