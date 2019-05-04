@@ -191,9 +191,8 @@ before the first stable version.
 1. Tested project on OSX and Windows 10.
 1. Initial API defined and published
 1. Documentation page exists
-1. ~~1 nice website module~~
+1. 1 nice website module
 1. ~~Page category~~
-1. Enable/Disable modules from console
 1. ~~Re-add navigation item filtering by enforcer~~
 
 ### First beta musts:
@@ -221,6 +220,7 @@ before the first stable version.
 1. 3 nice website modules
 1. Fix sidebar propeller "bug"
 1. Cache navigation for user
+1. Enable/Disable modules from console
 
 ### 1.0 musts:
 
