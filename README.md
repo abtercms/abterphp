@@ -171,8 +171,8 @@ before the first stable version.
 
 1. ~~Make the frontend framework decoupled from the backend system~~
 1. ~~Use ILogger instead of Logger~~
-1. More fine grained authorization
-   - ACL implemented for pages
+1. ~~More fine grained authorization~~
+   - ~~ACL implemented for pages~~
    - ~~Advanced settings access role for pages~~
    - ~~Multiple user group for one user~~
    - ~~New user roles: file uploader, layout designer, page writer~~
@@ -194,6 +194,7 @@ before the first stable version.
 1. 1 nice website module
 1. ~~Page category~~
 1. ~~Re-add navigation item filtering by enforcer~~
+1. List pages on frontend by category
 
 ### First beta musts:
 
