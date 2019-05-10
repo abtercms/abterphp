@@ -176,11 +176,6 @@ before the first stable version.
    - ~~Advanced settings access role for pages~~
    - ~~Multiple user group for one user~~
    - ~~New user roles: file uploader, layout designer, page writer~~
-1. Improved security implementing related headers as recommended:
-   - https://medium.freecodecamp.org/secure-your-web-application-with-these-http-headers-fd66e0367628
-   - https://medium.freecodecamp.org/web-security-hardening-http-cookies-be8d8d8016e1
-1. 70%+ of PHP source code unit tested, except for bootstrappers and console commands
-1. Verified that `localhost_router.php` works as expected or remove it if too hard to fix
 1. ~~Modular asset management~~
 1. ~~Completed test automation and automatic reviews set up~~
 1. ~~Refactored module manager~~
@@ -188,34 +183,39 @@ before the first stable version.
 1. ~~Uuid ids~~
 1. ~~Removed $value in Select constructor~~
 1. ~~Switch `$attribute` and `$tag` order~~
-1. Tested project on OSX and Windows 10.
-1. Initial API defined and published
-1. Documentation page exists
-1. 1 nice website module
+1. ~~1 nice website module~~
 1. ~~Page category~~
 1. ~~Re-add navigation item filtering by enforcer~~
-1. List pages on frontend by category
-1. Fix grids:
+1. ~~Fix grids:~~
    - ~~Filter labels~~
    - ~~Page size selections~~
-   - Sorting
-   - Hide IDs
+   - ~~Sorting~~
+   - ~~Hide IDs~~
+1. ~~Separate grid and form assets in admin~~
+1. API keys for users
 1. Fix forms:
    - "Red" / "Danger" Back to list buttons
    - Ask about discarding changes when using the Back to List button
    - Create and new button
-1. ~~Separate grid and form assets in admin~~
+1. Initial API defined and published
+1. Documentation page exists
+1. Improved security implementing related headers as recommended:
+   - https://medium.freecodecamp.org/secure-your-web-application-with-these-http-headers-fd66e0367628
+   - https://medium.freecodecamp.org/web-security-hardening-http-cookies-be8d8d8016e1
+1. List pages on frontend by category
+1. 70%+ of PHP source code unit tested, except for bootstrappers and console commands
+1. Verified that `localhost_router.php` works as expected or remove it if too hard to fix
+1. Tested project on OSX and Windows 10.
 
 ### First beta musts:
 
-1. API fully defined
+1. ~~Existing phpmd ignore cases reviewed~~
 1. API implemented
 1. 1 grid is covered with acceptance tests (filters, pagination included)
 1. 1 form is covered with acceptance tests (displaying with new and existing entity and saving included)
 1. Documentation page exists
 1. Highlight form fields with validation errors
 1. 12-factor compliance reviewed and improvements planned
-1. ~~Existing phpmd ignore cases reviewed~~
 1. Reviewed and refactored global `$abterModuleManager` usage
 1. Must-accept-cookie module
 1. Test loading entities that don't exist or faulty
