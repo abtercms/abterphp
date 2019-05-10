@@ -196,15 +196,15 @@ before the first stable version.
 1. ~~Re-add navigation item filtering by enforcer~~
 1. List pages on frontend by category
 1. Fix grids:
-   - Filter labels
-   - Page size selections
+   - ~~Filter labels~~
+   - ~~Page size selections~~
    - Sorting
    - Hide IDs
 1. Fix forms:
    - "Red" / "Danger" Back to list buttons
    - Ask about discarding changes when using the Back to List button
    - Create and new button
-1. Separate grid and form assets in admin
+1. ~~Separate grid and form assets in admin~~
 
 ### First beta musts:
 
