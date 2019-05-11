@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/abterphp/admin.git",
-                "reference": "7ba2cb7a88321426ce45421cd282cfa7fd14118b"
+                "reference": "1d30f9db4e7d93b178c40f087186a4709c1e1996"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/abterphp/admin/zipball/7ba2cb7a88321426ce45421cd282cfa7fd14118b",
-                "reference": "7ba2cb7a88321426ce45421cd282cfa7fd14118b",
+                "url": "https://api.github.com/repos/abterphp/admin/zipball/1d30f9db4e7d93b178c40f087186a4709c1e1996",
+                "reference": "1d30f9db4e7d93b178c40f087186a4709c1e1996",
                 "shasum": ""
             },
             "require": {
@@ -53,7 +53,7 @@
                 }
             ],
             "description": "Admin module for AbterPHP",
-            "time": "2019-05-10T14:06:42+00:00"
+            "time": "2019-05-11T10:23:56+00:00"
         },
         {
             "name": "abterphp/bootstrap4-website",
@@ -199,12 +199,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/abterphp/framework.git",
-                "reference": "4961e19ad233d0dffb6ea86271d5fde12392405c"
+                "reference": "4bc3223ed72d47eca04a166e816473230e32d6c3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/abterphp/framework/zipball/4961e19ad233d0dffb6ea86271d5fde12392405c",
-                "reference": "4961e19ad233d0dffb6ea86271d5fde12392405c",
+                "url": "https://api.github.com/repos/abterphp/framework/zipball/4bc3223ed72d47eca04a166e816473230e32d6c3",
+                "reference": "4bc3223ed72d47eca04a166e816473230e32d6c3",
                 "shasum": ""
             },
             "require": {
@@ -255,7 +255,7 @@
                 }
             ],
             "description": "Foundations for AbterPHP",
-            "time": "2019-05-10T14:02:49+00:00"
+            "time": "2019-05-11T10:10:07+00:00"
         },
         {
             "name": "abterphp/propeller-admin",
@@ -263,12 +263,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/abterphp/propeller-admin.git",
-                "reference": "765adacad88ca7f65472856fc459fb2551b6e139"
+                "reference": "696e6da05aeb9b13955220b99ce8e137cfe30fbe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/abterphp/propeller-admin/zipball/765adacad88ca7f65472856fc459fb2551b6e139",
-                "reference": "765adacad88ca7f65472856fc459fb2551b6e139",
+                "url": "https://api.github.com/repos/abterphp/propeller-admin/zipball/696e6da05aeb9b13955220b99ce8e137cfe30fbe",
+                "reference": "696e6da05aeb9b13955220b99ce8e137cfe30fbe",
                 "shasum": ""
             },
             "require": {
@@ -301,7 +301,7 @@
                 }
             ],
             "description": "Propeller design for the Admin module of AbterPHP",
-            "time": "2019-05-10T14:16:27+00:00"
+            "time": "2019-05-11T10:32:05+00:00"
         },
         {
             "name": "abterphp/website",
@@ -309,12 +309,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/abterphp/website.git",
-                "reference": "f7cefd78202f4c4f8ea4e77be40e20ecd1e92aba"
+                "reference": "3f545995a04992a61a19e81cffc024cc16b46636"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/abterphp/website/zipball/f7cefd78202f4c4f8ea4e77be40e20ecd1e92aba",
-                "reference": "f7cefd78202f4c4f8ea4e77be40e20ecd1e92aba",
+                "url": "https://api.github.com/repos/abterphp/website/zipball/3f545995a04992a61a19e81cffc024cc16b46636",
+                "reference": "3f545995a04992a61a19e81cffc024cc16b46636",
                 "shasum": ""
             },
             "require": {
@@ -347,7 +347,7 @@
                 }
             ],
             "description": "Website module for AbterPHP",
-            "time": "2019-05-10T14:07:15+00:00"
+            "time": "2019-05-11T10:31:22+00:00"
         },
         {
             "name": "abterphp/website-creative",

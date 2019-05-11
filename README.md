@@ -192,11 +192,11 @@ before the first stable version.
    - ~~Sorting~~
    - ~~Hide IDs~~
 1. ~~Separate grid and form assets in admin~~
-1. API keys for users
+1. ~~API keys for users~~
 1. Fix forms:
-   - "Red" / "Danger" Back to list buttons
+   - ~~"Red" / "Danger" Back to list buttons~~
+   - ~~Create and new button~~
    - Ask about discarding changes when using the Back to List button
-   - Create and new button
 1. Initial API defined and published
 1. Documentation page exists
 1. Improved security implementing related headers as recommended:
