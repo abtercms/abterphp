@@ -8,6 +8,7 @@ install:
 	php composer-setup.php
 	php -r "unlink('composer-setup.php');"
 	php composer.phar install
+	php apex abterphp:generatesecrets
 	php apex abterphp:setup
 
 update:

@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/abterphp/admin.git",
-                "reference": "2c4864e5d2b5e6f8ee0e897a5a8ec4cc841fabda"
+                "reference": "65658d46d005176a321571891e2e7bf906adfeaa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/abterphp/admin/zipball/2c4864e5d2b5e6f8ee0e897a5a8ec4cc841fabda",
-                "reference": "2c4864e5d2b5e6f8ee0e897a5a8ec4cc841fabda",
+                "url": "https://api.github.com/repos/abterphp/admin/zipball/65658d46d005176a321571891e2e7bf906adfeaa",
+                "reference": "65658d46d005176a321571891e2e7bf906adfeaa",
                 "shasum": ""
             },
             "require": {
@@ -53,7 +53,7 @@
                 }
             ],
             "description": "Admin module for AbterPHP",
-            "time": "2019-05-27T00:57:50+00:00"
+            "time": "2019-05-27T08:45:05+00:00"
         },
         {
             "name": "abterphp/bootstrap4-website",
@@ -199,12 +199,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/abterphp/framework.git",
-                "reference": "c708b1e26fe79ccb2f0c2c185a2a1e3ab5bccbfb"
+                "reference": "04f164ff13764426972bf9900e7d65b53f54fed8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/abterphp/framework/zipball/c708b1e26fe79ccb2f0c2c185a2a1e3ab5bccbfb",
-                "reference": "c708b1e26fe79ccb2f0c2c185a2a1e3ab5bccbfb",
+                "url": "https://api.github.com/repos/abterphp/framework/zipball/04f164ff13764426972bf9900e7d65b53f54fed8",
+                "reference": "04f164ff13764426972bf9900e7d65b53f54fed8",
                 "shasum": ""
             },
             "require": {
@@ -259,7 +259,7 @@
                 }
             ],
             "description": "Foundations for AbterPHP",
-            "time": "2019-05-27T08:43:50+00:00"
+            "time": "2019-05-27T09:45:58+00:00"
         },
         {
             "name": "abterphp/propeller-admin",
