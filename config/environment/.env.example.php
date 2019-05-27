@@ -64,7 +64,7 @@ Environment::setVar("REDIS_DATABASE", 0);
  * Set the encryption key
  * ----------------------------------------------------------
  */
-Environment::setVar("ENCRYPTION_KEY", "");
+Environment::setVar("ENCRYPTION_KEY", "b8fbb40c129ad0e426e19b7d28f42e517ce639282e55ba7a98bd2b698fda7daa");
 
 /**
  * ----------------------------------------------------------
