@@ -8,8 +8,7 @@ install:
 	php composer-setup.php
 	php -r "unlink('composer-setup.php');"
 	php composer.phar install
-	openssl genrsa -passout pass:$OAUTH_PRIVATE_KEY_PASSWORD -out private/private.key 2048
-	openssl rsa -in private.key -passin pass:$OAUTH_PRIVATE_KEY_PASSWORD -pubout -out private/public.key
+	php apex abterphp:setup
 
 update:
 	php composer.phar update
