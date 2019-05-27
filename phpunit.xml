@@ -25,6 +25,10 @@
         <env name="DB_NAME" value="abter_test"/>
         <env name="DB_PASSWORD" value="abter_test"/>
         <env name="DB_PORT" value="3306"/>
+        <env name="OAUTH2_PRIVATE_KEY_PATH" value="/website/tests/resources/private.key"/>
+        <env name="OAUTH2_PRIVATE_KEY_PASSWORD" value="8a!J2SZ9%WBII#9Z"/>
+        <env name="OAUTH2_PUBLIC_KEY_PATH" value="/website/tests/resources/public.key"/>
+        <env name="OAUTH2_ENCRYPTION_KEY" value="def00000cea4c75b84279f43b56dd90851609717c5d29c215fd2c67f9b1acb0c3b1c5ff8528dbeecf0c1f368baa33284aa36d00b24994872970933e8881802287553ff7d"/>
     </php>
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">

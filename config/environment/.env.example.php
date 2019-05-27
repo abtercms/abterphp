@@ -94,6 +94,18 @@ Environment::setVar("DIR_LOGS", "/path/to/root/tmp/logs");
 
 /**
  * ----------------------------------------------------------
+ * Set Oauth2 options
+ * ----------------------------------------------------------
+ */
+Environment::setVar("OAUTH2_PRIVATE_KEY_PATH", "");
+Environment::setVar("OAUTH2_PRIVATE_KEY_PASSWORD", "");
+Environment::setVar("OAUTH2_PUBLIC_KEY_PATH", "");
+Environment::setVar("OAUTH2_ENCRYPTION_KEY", "");
+Environment::setVar("OAUTH2_TOKEN_EXPIRY", "PT1H");
+Environment::setVar("OAUTH2_SECRET_LENGTH", 16);
+
+/**
+ * ----------------------------------------------------------
  * Set login options
  * ----------------------------------------------------------
  */

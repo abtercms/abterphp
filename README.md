@@ -155,6 +155,7 @@ AbterPHP is based on [Opulence](https://www.opulencephp.com/), but uses a few mo
  - [zxcvbn](https://github.com/dropbox/zxcvbn) from Dropbox for password strength estimations (Admin module)
  - [zxcvbn-php](https://github.com/bjeavons/zxcvbn-php) PHP version of `zxcvbn` (Admin module)
  - [php-ulid](https://github.com/robinvdvleuten/php-ulid) for ID generation
+ - [OAuth 2.0 Server](https://oauth2.thephpleague.com/authorization-server/client-credentials-grant/) for API authentication and authorization with [Nyholm/psr7](https://github.com/Nyholm/psr7) as PSR-7 request / response library.
  
 If you want to contribute code you'll also need to get familiar with these tools:
  - [PhpUnit](https://phpunit.de/) for unit tests
@@ -198,6 +199,7 @@ before the first stable version.
    - ~~Create and new button~~
    - Ask about discarding changes when using the Back to List button
 1. Initial API defined and published
+1. All implemented API endpoints return properly formatted errors
 1. Documentation page exists
 1. Improved security implementing related headers as recommended:
    - https://medium.freecodecamp.org/secure-your-web-application-with-these-http-headers-fd66e0367628
