@@ -1,0 +1,1638 @@
+openapi: "3.0.0"
+
+info:
+  version: 0.0.1
+  title: AbterCMS API
+  description: API for AbterCMS (AbterPhp, AbterGo, etc.)
+  termsOfService: http://abtercms.do/terms/
+  contact:
+    name: AbterCMS Team
+    email: team@abtercms.com
+    url: https://team@abtercms.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+
+servers:
+  - url: https://abtercms.do//api
+
+paths:
+  /tokens:
+    post:
+      description: Creates a token for an existing user
+      operationId: createToken
+      requestBody:
+        description: Token credentials
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenRequest'
+      responses:
+        '204':
+          description: Token response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+  /adminresources:
+    post:
+      description: Creates a new admin resource
+      operationId: createAdminResource
+      parameters:
+        - name: token
+          in: header
+          description: Token used for authorization
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Admin resource to create
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdminResourceRequest'
+      responses:
+        '204':
+          description: Admin resource create success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminResourceResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+  /adminresources/{adminresource_id}:
+    put:
+      description: Update an existing admin resource
+      operationId: updateAdminResource
+      parameters:
+        - name: adminresource_id
+          in: path
+          description: ID of admin resource to update
+          required: true
+          schema:
+            type: string
+        - name: token
+          in: header
+          description: Token used for authorization
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Admin resource to update
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdminResourceRequest'
+      responses:
+        '200':
+          description: Admin resource update success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminResourceResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+    delete:
+      description: Delete an admin resource
+      operationId: deleteAdminResource
+      parameters:
+        - name: adminresource_id
+          in: path
+          description: ID of admin resource to update
+          required: true
+          schema:
+            type: string
+        - name: token
+          in: header
+          description: Token used for authorization
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: User group delete success response
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+  /userlanguages:
+    post:
+      description: Creates a new user language
+      operationId: createUserLanguage
+      parameters:
+        - name: token
+          in: header
+          description: Token used for authorization
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: User language to create
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserLanguageRequest'
+      responses:
+        '204':
+          description: User language create success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserLanguageResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+  /userlanguages/{userlanguage_id}:
+    put:
+      description: Update a user language
+      operationId: updateUserLanguage
+      parameters:
+        - name: userlanguage_id
+          in: path
+          description: ID of user language to update
+          required: true
+          schema:
+            type: string
+        - name: token
+          in: header
+          description: Token used for authorization
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: User language to update
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserLanguageRequest'
+      responses:
+        '200':
+          description: User language update success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserLanguageResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+    delete:
+      description: Delete a user language
+      operationId: deleteUserLanguage
+      parameters:
+        - name: userlanguage_id
+          in: path
+          description: ID of user language to update
+          required: true
+          schema:
+            type: string
+        - name: token
+          in: header
+          description: Token used for authorization
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: User language delete success response
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+  /usergroups:
+    post:
+      description: Creates a new user group
+      operationId: createUserGroup
+      parameters:
+        - name: token
+          in: header
+          description: Token used for authorization
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: User group to create
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserGroupRequest'
+      responses:
+        '204':
+          description: User group create success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserGroupResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+  /usergroups/{usergroup_id}:
+    put:
+      description: Update a user group
+      operationId: updateUserGroup
+      parameters:
+        - name: usergroup_id
+          in: path
+          description: ID of user to update
+          required: true
+          schema:
+            type: string
+        - name: token
+          in: header
+          description: Token used for authorization
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: User group to update
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserGroupRequest'
+      responses:
+        '200':
+          description: User group update success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserGroupResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+    delete:
+      description: Delete a user group
+      operationId: deleteUserGroup
+      parameters:
+        - name: usergroup_id
+          in: path
+          description: ID of user group to update
+          required: true
+          schema:
+            type: string
+        - name: token
+          in: header
+          description: Token used for authorization
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: User group delete success response
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+  /users:
+    post:
+      description: Creates a new user
+      operationId: createUser
+      parameters:
+        - name: token
+          in: header
+          description: Token used for authorization
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: User to create
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserCreateRequest'
+      responses:
+        '204':
+          description: User create success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+  /users/{user_id}:
+    put:
+      description: Update a user
+      operationId: updateUser
+      parameters:
+        - name: user_id
+          in: path
+          description: ID of user to update
+          required: true
+          schema:
+            type: string
+        - name: token
+          in: header
+          description: Token used for authorization
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: User to update
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserUpdateRequest'
+      responses:
+        '200':
+          description: User update success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+    delete:
+      description: Delete a user
+      operationId: deleteUser
+      parameters:
+        - name: user_id
+          in: path
+          description: ID of user to update
+          required: true
+          schema:
+            type: string
+        - name: token
+          in: header
+          description: Token used for authorization
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: User delete success response
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+  /blocks:
+    post:
+      description: Creates a new block
+      operationId: createBlock
+      parameters:
+        - name: token
+          in: header
+          description: Token used for authorization
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Block to create
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BlockRequest'
+      responses:
+        '204':
+          description: Block create success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BlockResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+  /blocks/{block_id}:
+    put:
+      description: Update an existing block
+      operationId: updateBlock
+      parameters:
+        - name: block_id
+          in: path
+          description: ID of block to update
+          required: true
+          schema:
+            type: string
+        - name: token
+          in: header
+          description: Token used for authorization
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Block to update
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BlockRequest'
+      responses:
+        '200':
+          description: Block update success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BlockResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+    delete:
+      description: Delete an existing block
+      operationId: deleteBlock
+      parameters:
+        - name: block_id
+          in: path
+          description: ID of block to update
+          required: true
+          schema:
+            type: string
+        - name: token
+          in: header
+          description: Token used for authorization
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Block delete success response
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+  /blocklayouts:
+    post:
+      description: Creates a new block layout
+      operationId: createBlockLayout
+      parameters:
+        - name: token
+          in: header
+          description: Token used for authorization
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Block layout to create
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BlockLayoutRequest'
+      responses:
+        '204':
+          description: Block layout create success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BlockLayoutResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+  /blocklayouts/{blocklayout_id}:
+    put:
+      description: Update an existing block layout
+      operationId: updateBlockLayout
+      parameters:
+        - name: blocklayout_id
+          in: path
+          description: ID of block layout to update
+          required: true
+          schema:
+            type: string
+        - name: token
+          in: header
+          description: Token used for authorization
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Block layout to update
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BlockLayoutRequest'
+      responses:
+        '200':
+          description: Block layout update success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BlockLayoutResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+    delete:
+      description: Delete an existing block layout
+      operationId: deleteBlockLayout
+      parameters:
+        - name: blocklayout_id
+          in: path
+          description: ID of block layout to update
+          required: true
+          schema:
+            type: string
+        - name: token
+          in: header
+          description: Token used for authorization
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: User group delete success response
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+  /pages:
+    post:
+      description: Creates a new page
+      operationId: createPage
+      parameters:
+        - name: token
+          in: header
+          description: Token used for authorization
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Page to create
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PageRequest'
+      responses:
+        '204':
+          description: Page create success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+  /pages/{page_id}:
+    put:
+      description: Update an existing page
+      operationId: updatePage
+      parameters:
+        - name: page_id
+          in: path
+          description: ID of page to update
+          required: true
+          schema:
+            type: string
+        - name: token
+          in: header
+          description: Token used for authorization
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Page to update
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PageRequest'
+      responses:
+        '200':
+          description: Page update success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+    delete:
+      description: Delete an existing page
+      operationId: deletePage
+      parameters:
+        - name: page_id
+          in: path
+          description: ID of page to update
+          required: true
+          schema:
+            type: string
+        - name: token
+          in: header
+          description: Token used for authorization
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Page delete success response
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+  /pagecategories:
+    post:
+      description: Creates a new page category
+      operationId: createPageCategory
+      parameters:
+        - name: token
+          in: header
+          description: Token used for authorization
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Page category to create
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PageCategoryRequest'
+      responses:
+        '204':
+          description: Page category create success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageCategoryResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+  /pagecategories/{pagecategory_id}:
+    put:
+      description: Update an existing page category
+      operationId: updatePageCategory
+      parameters:
+        - name: pagecategory_id
+          in: path
+          description: ID of page category to update
+          required: true
+          schema:
+            type: string
+        - name: token
+          in: header
+          description: Token used for authorization
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Page category to update
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PageCategoryRequest'
+      responses:
+        '200':
+          description: Page category update success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageCategoryResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+    delete:
+      description: Delete an existing page category
+      operationId: deletePageCategory
+      parameters:
+        - name: pagecategory_id
+          in: path
+          description: ID of page category to update
+          required: true
+          schema:
+            type: string
+        - name: token
+          in: header
+          description: Token used for authorization
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Page category delete success response
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+  /pagelayouts:
+    post:
+      description: Creates a new page layout
+      operationId: createPageLayout
+      parameters:
+        - name: token
+          in: header
+          description: Token used for authorization
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Page layout to create
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PageLayoutRequest'
+      responses:
+        '204':
+          description: Page layout create success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageLayoutResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+  /pagelayouts/{pagelayout_id}:
+    put:
+      description: Update an existing page layout
+      operationId: updatePageLayout
+      parameters:
+        - name: pagelayout_id
+          in: path
+          description: ID of page layout to update
+          required: true
+          schema:
+            type: string
+        - name: token
+          in: header
+          description: Token used for authorization
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Page layout to update
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PageLayoutRequest'
+      responses:
+        '200':
+          description: Page layout update success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageLayoutResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+    delete:
+      description: Delete an existing page layout
+      operationId: deletePageLayout
+      parameters:
+        - name: pagelayout_id
+          in: path
+          description: ID of page layout to update
+          required: true
+          schema:
+            type: string
+        - name: token
+          in: header
+          description: Token used for authorization
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Page layout delete success response
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+  /files:
+    post:
+      description: Creates a new file
+      operationId: createFile
+      parameters:
+        - name: token
+          in: header
+          description: Token used for authorization
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: File to create
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FileRequest'
+      responses:
+        '204':
+          description: File create success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+  /files/{file_id}:
+    put:
+      description: Update an existing file
+      operationId: updateFile
+      parameters:
+        - name: file_id
+          in: path
+          description: ID of file to update
+          required: true
+          schema:
+            type: string
+        - name: token
+          in: header
+          description: Token used for authorization
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: File to update
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FileRequest'
+      responses:
+        '200':
+          description: File update success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+    delete:
+      description: Delete an existing file
+      operationId: deleteFile
+      parameters:
+        - name: file_id
+          in: path
+          description: ID of file to update
+          required: true
+          schema:
+            type: string
+        - name: token
+          in: header
+          description: Token used for authorization
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: File delete success response
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+  /filecategories:
+    post:
+      description: Creates a new file category
+      operationId: createFileCategory
+      parameters:
+        - name: token
+          in: header
+          description: Token used for authorization
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: File category to create
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FileCategoryRequest'
+      responses:
+        '204':
+          description: File category create success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileCategoryResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+  /filecategories/{filecategory_id}:
+    put:
+      description: Update an existing file category
+      operationId: updateFileCategory
+      parameters:
+        - name: filecategory_id
+          in: path
+          description: ID of file category to update
+          required: true
+          schema:
+            type: string
+        - name: token
+          in: header
+          description: Token used for authorization
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: File category to update
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FileCategoryRequest'
+      responses:
+        '200':
+          description: File category update success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileCategoryResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+    delete:
+      description: Delete an existing file category
+      operationId: deleteFileCategory
+      parameters:
+        - name: filecategory_id
+          in: path
+          description: ID of file category to update
+          required: true
+          schema:
+            type: string
+        - name: token
+          in: header
+          description: Token used for authorization
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: File category delete success response
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+  /filedownloads:
+    post:
+      description: Creates a new file download
+      operationId: createFileDownload
+      parameters:
+        - name: token
+          in: header
+          description: Token used for authorization
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: File download to create
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FileDownloadRequest'
+      responses:
+        '204':
+          description: File download create success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileDownloadResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+  /filedownloads/{filedownload_id}:
+    put:
+      description: Update an existing file download
+      operationId: updateFileDownload
+      parameters:
+        - name: filedownload_id
+          in: path
+          description: ID of file download to update
+          required: true
+          schema:
+            type: string
+        - name: token
+          in: header
+          description: Token used for authorization
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: File download to update
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FileDownloadRequest'
+      responses:
+        '200':
+          description: File download update success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileDownloadResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+    delete:
+      description: Delete an existing file download
+      operationId: deleteFileDownload
+      parameters:
+        - name: filedownload_id
+          in: path
+          description: ID of file download to update
+          required: true
+          schema:
+            type: string
+        - name: token
+          in: header
+          description: Token used for authorization
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: File download delete success response
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+components:
+  schemas:
+    TokenRequest:
+      required:
+        - grant_type
+        - client_id
+        - client_secret
+        - scope
+      properties:
+        grant_type:
+          type: string
+        client_id:
+          type: string
+        client_secret:
+          type: string
+        scope:
+          type: array
+          items:
+            type: string
+
+    TokenResponse:
+      required:
+        - token_type
+        - expires_in
+        - access_token
+      properties:
+        token_type:
+          type: string
+        expires_in:
+          type: integer
+        access_token:
+          type: string
+
+    AdminResourceRequest:
+      required:
+        - identifier
+        - name
+      properties:
+        identifier:
+          type: string
+        name:
+          type: string
+
+    AdminResourceResponse:
+      allOf:
+        - $ref: '#/components/schemas/UserLanguageRequest'
+      required:
+        - id
+      properties:
+        id:
+          type: string
+
+    UserGroupRequest:
+      required:
+        - identifier
+        - name
+        - admin_resource_ids
+      properties:
+        identifier:
+          type: string
+        name:
+          type: string
+        admin_resource_ids:
+          type: string
+
+    UserGroupResponse:
+      allOf:
+        - $ref: '#/components/schemas/UserGroupRequest'
+      required:
+        - id
+      properties:
+        id:
+          type: string
+
+    UserLanguageRequest:
+      required:
+        - identifier
+        - name
+      properties:
+        identifier:
+          type: string
+        name:
+          type: string
+
+    UserLanguageResponse:
+      allOf:
+        - $ref: '#/components/schemas/UserLanguageRequest'
+      required:
+        - id
+      properties:
+        id:
+          type: string
+
+    UserUpdateRequest:
+      required:
+        - username
+        - email
+        - frontend_salt
+        - password
+        - can_login
+        - is_gravatar_allowed
+        - user_group_ids
+        - user_language_id
+      properties:
+        username:
+          type: string
+        email:
+          type: string
+        frontend_salt:
+          type: string
+        password:
+          type: string
+        can_login:
+          type: boolean
+        is_gravatar_allowed:
+          type: boolean
+        user_group_ids:
+          type: array
+          items:
+            type: string
+        user_language_id:
+          type: string
+
+    UserCreateRequest:
+      allOf:
+        - $ref: '#/components/schemas/UserUpdateRequest'
+        - required:
+            - password
+
+    UserResponse:
+      allOf:
+        - $ref: '#/components/schemas/UserUpdateRequest'
+      required:
+        - id
+      properties:
+        id:
+          type: string
+
+    Assets:
+      required:
+        - key
+        - header
+        - footer
+        - css_files
+        - js_files
+      properties:
+        key:
+          type: string
+        header:
+          type: string
+        footer:
+          type: string
+        css_files:
+          type: string
+        js_files:
+          type: string
+
+    Meta:
+      required:
+        - description
+        - robots
+        - author
+        - copyright
+        - keywords
+        - og_title
+        - og_image
+        - og_description
+      properties:
+        description:
+          type: string
+        robots:
+          type: string
+        author:
+          type: string
+        copyright:
+          type: string
+        keywords:
+          type: string
+        og_title:
+          type: string
+        og_image:
+          type: string
+        og_description:
+          type: string
+
+    PageCategoryRequest:
+      required:
+        - identifier
+        - name
+        - user_group_ids
+      properties:
+        identifier:
+          type: string
+        name:
+          type: string
+        user_group_ids:
+          type: array
+          items:
+            type: string
+
+    PageCategoryResponse:
+      allOf:
+        - $ref: '#/components/schemas/PageCategoryRequest'
+      required:
+        - id
+      properties:
+        id:
+          type: string
+
+    PageLayoutRequest:
+      required:
+        - identifier
+        - body
+      properties:
+        identifier:
+          type: string
+        body:
+          type: string
+        assets:
+          $ref: '#/components/schemas/Assets'
+
+    PageLayoutResponse:
+      allOf:
+        - $ref: '#/components/schemas/PageLayoutRequest'
+      required:
+        - id
+      properties:
+        id:
+          type: string
+
+    PageRequestCategory:
+      required:
+        - id
+      properties:
+        id:
+          type: string
+
+    PageRequest:
+      required:
+        - identifier
+        - title
+        - body
+        - category
+        - layout
+        - layout_id
+        - meta
+        - assets
+      properties:
+        identifier:
+          type: string
+        name:
+          type: string
+        category:
+          $ref: '#/components/schemas/PageRequestCategory'
+        assets:
+          $ref: '#/components/schemas/Assets'
+        meta:
+          $ref: '#/components/schemas/Meta'
+
+    PageResponse:
+      allOf:
+        - $ref: '#/components/schemas/PageRequest'
+      required:
+        - id
+      properties:
+        id:
+          type: string
+
+    BlockLayoutRequest:
+      required:
+        - identifier
+        - body
+      properties:
+        identifier:
+          type: string
+        body:
+          type: string
+
+    BlockLayoutResponse:
+      allOf:
+        - $ref: '#/components/schemas/BlockLayoutRequest'
+      required:
+        - id
+      properties:
+        id:
+          type: string
+
+    BlockRequest:
+      required:
+        - identifier
+        - name
+        - assets
+      properties:
+        identifier:
+          type: string
+        name:
+          type: string
+        assets:
+          $ref: '#/components/schemas/Assets'
+
+    BlockResponse:
+      allOf:
+        - $ref: '#/components/schemas/BlockRequest'
+      required:
+        - id
+      properties:
+        id:
+          type: string
+
+    FileRequest:
+      required:
+        - filename
+        - content
+        - category_id
+      properties:
+        filename:
+          type: string
+        content:
+          type: string
+          format: binary
+        category_id:
+          type: string
+
+    FileResponse:
+      allOf:
+        - $ref: '#/components/schemas/FileRequest'
+      required:
+        - id
+        - uploaded_at
+      properties:
+        id:
+          type: string
+        uploaded_at:
+          type: string
+          format: date-time
+
+    FileCategoryRequest:
+      required:
+        - identifier
+        - name
+        - is_public
+        - user_group_ids
+      properties:
+        identifier:
+          type: string
+        name:
+          type: string
+        is_public:
+          type: boolean
+        user_group_ids:
+          type: array
+          items:
+            type: string
+
+    FileCategoryResponse:
+      allOf:
+        - $ref: '#/components/schemas/FileCategoryRequest'
+      required:
+        - id
+      properties:
+        id:
+          type: string
+
+    FileDownloadRequestFile:
+      required:
+        - id
+      properties:
+        id:
+          type: string
+
+    FileDownloadRequestUser:
+      required:
+        - id
+      properties:
+        id:
+          type: string
+
+    FileDownloadRequest:
+      required:
+        - file
+        - user
+      properties:
+        file:
+          $ref: '#/components/schemas/FileDownloadRequestFile'
+        user:
+          $ref: '#/components/schemas/FileDownloadRequestUser'
+
+    FileDownloadResponse:
+      allOf:
+        - $ref: '#/components/schemas/FileDownloadRequest'
+      required:
+        - id
+        - downloaded_at
+      properties:
+        id:
+          type: string
+        downloaded_at:
+          type: string
+          format: date-time
+
+    Problem:
+      required:
+        - type
+        - title
+      properties:
+        type:
+          type: string
+          format: uri
+          description: |
+            An absolute URI that identifies the problem type.  When dereferenced,
+            it SHOULD provide human-readable documentation for the problem type
+            (e.g., using HTML).
+          default: 'about:blank'
+          example: 'https://kanbanto.do/problem/constraint-violation'
+        title:
+          type: string
+          description: |
+            A short, summary of the problem type. Written in English and readable
+            for engineers (usually not suited for non technical stakeholders and
+            not localized); example: Service Unavailable
+        status:
+          type: integer
+          format: int32
+          description: |
+            The HTTP status code generated by the origin server for this occurrence
+            of the problem.
+          minimum: 100
+          maximum: 600
+          exclusiveMaximum: true
+          example: 503
+        detail:
+          type: string
+          description: |
+            A human readable explanation specific to this occurrence of the
+            problem.
+          example: Connection to database timed out
+        instance:
+          type: string
+          format: uri
+          description: |
+            An absolute URI that identifies the specific occurrence of the problem.
+            It may or may not yield further information if dereferenced.

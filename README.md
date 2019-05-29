@@ -194,11 +194,10 @@ before the first stable version.
    - ~~Hide IDs~~
 1. ~~Separate grid and form assets in admin~~
 1. ~~API keys for users~~
-1. Fix forms:
+1. ~~Fix forms:~~
    - ~~"Red" / "Danger" Back to list buttons~~
    - ~~Create and new button~~
-   - Ask about discarding changes when using the Back to List button
-1. Initial API defined and published
+1. ~~Initial API defined and published~~
 1. All implemented API endpoints return properly formatted errors
 1. Documentation page exists
 1. Improved security implementing related headers as recommended:
@@ -283,6 +282,8 @@ before the first stable version.
    - Needs MySQL 8.0 `BIN_TO_UUID` and `UUID_TO_BIN` support
    - Needs query builder support (although not a must)
  - Setup [codeclimate.com](https://codeclimate.com/) properly
+ - Ask about discarding changes when using the Back to List button
+ - Icons for Grid and Form buttons
 
 ### Ideas for 1.1:
  - WYSIWYG file selector
