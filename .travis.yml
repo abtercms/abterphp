@@ -20,6 +20,7 @@ script:
 after_success:
   - curl -L --output php-coveralls.phar https://github.com/php-coveralls/php-coveralls/releases/download/v2.1.0/php-coveralls.phar
   - curl -L --output phpcov.phar https://phar.phpunit.de/phpcov.phar
+  - chmod +x phpcov.phar php-coveralls.phar
   - mkdir ./tmp/cov
   - ./vendor/bin/phpunit -c vendor/abterphp/framework/phpunit.xml --coverage-php ./tmp/cov/framework.cov
   - ./vendor/bin/phpunit -c vendor/abterphp/admin/phpunit.xml --coverage-php ./tmp/cov/admin.cov
