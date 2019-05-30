@@ -207,6 +207,7 @@ before the first stable version.
 1. 70%+ of PHP source code unit tested, except for bootstrappers and console commands
 1. Verified that `localhost_router.php` works as expected or remove it if too hard to fix
 1. Tested project on OSX and Windows 10.
+1. Upgrade to phpunit 8.1
 
 ### First beta musts:
 

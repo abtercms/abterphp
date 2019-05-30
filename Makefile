@@ -24,7 +24,14 @@ integration:
 	./vendor/bin/phpunit --no-coverage --testsuite=integration
 
 coverage:
-	./vendor/bin/phpunit --testsuite=unit
+	./vendor/bin/phpunit -c ./vendor/abterphp/framework/phpunit.xml --coverage-php ./tmp/cov/framework.cov
+	./vendor/bin/phpunit -c ./vendor/abterphp/admin/phpunit.xml --coverage-php ./tmp/cov/admin.cov
+	./vendor/bin/phpunit -c ./vendor/abterphp/website-creative/phpunit.xml --coverage-php ./tmp/cov/website-creative.cov
+	./vendor/bin/phpunit -c ./vendor/abterphp/bootstrap4-website/phpunit.xml --coverage-php ./tmp/cov/bootstrap4-website.cov
+	./vendor/bin/phpunit -c ./vendor/abterphp/website/phpunit.xml --coverage-php ./tmp/cov/website.cov
+	./vendor/bin/phpunit -c ./vendor/abterphp/contact/phpunit.xml --coverage-php ./tmp/cov/contact.cov
+	./vendor/bin/phpunit -c ./vendor/abterphp/files/phpunit.xml --coverage-php ./tmp/cov/files.cov
+	./vendor/bin/phpunit -c ./vendor/abterphp/propeller-admin/phpunit.xml --coverage-php ./tmp/cov/propeller-admin.cov
 
 flush:
 	./apex abterphp:flushcache
