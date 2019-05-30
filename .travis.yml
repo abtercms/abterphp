@@ -18,12 +18,6 @@ script:
   - docker-compose exec php make build
 
 after_success:
-  - curl -L --output php-coveralls.phar https://github.com/php-coveralls/php-coveralls/releases/download/v2.1.0/php-coveralls.phar
-  - curl -L --output phpcov.phar https://phar.phpunit.de/phpcov.phar
-  - chmod +x phpcov.phar php-coveralls.phar
-  - mkdir ./tmp/cov
+  - docker-compose exec php make pre-coverage
   - docker-compose exec php make coverage
-  - docker-compose ./phpcov.phar merge -vvv --clover tmp/report/clover.xml tmp/cov/
-  - docker-compose ./php-coveralls.phar -v --coverage_clover=./tmp/report/clover.xml --json_path=./tmp/coveralls-upload.json
-  - travis_retry docker-compose exec php make coverage
-  - rm -rf ./tmp/cov
+  - travis_retry docker-compose exec php ./php-coveralls.phar -v --coverage_clover=./tmp/clover.xml --json_path=./tmp/coveralls-upload.json
