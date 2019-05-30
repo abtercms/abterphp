@@ -21,4 +21,4 @@ after_success:
   - docker-compose exec php make pre-coverage
   - docker-compose exec php make coverage
   - docker-compose exec php make post-coverage
-  - travis_retry docker-compose exec php ./php-coveralls.phar -v --coverage_clover=./tmp/clover.xml --json_path=./tmp/coveralls-upload.json
+  - travis_retry docker-compose exec php ./php-coveralls.phar -v --coverage_clover=./tmp/report/clover.xml --json_path=./tmp/coveralls-upload.json
