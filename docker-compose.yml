@@ -47,8 +47,6 @@ services:
       - redis
     environment:
       - DIR_MIGRATIONS=/website/resources/migrations
-      - "TRAVIS=${TRAVIS}"
-      - "TRAVIS_JOB_ID=${TRAVIS_JOB_ID}"
     volumes:
       - .:/website
       - ./docker/php/conf.d/zzz.ini:/usr/local/etc/php/conf.d/zzz.ini:ro
