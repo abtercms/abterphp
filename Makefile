@@ -24,9 +24,8 @@ integration:
 	./vendor/bin/phpunit --no-coverage --testsuite=integration
 
 pre-coverage:
-	curl -L --output php-coveralls.phar https://github.com/php-coveralls/php-coveralls/releases/download/v2.1.0/php-coveralls.phar
 	curl -L --output phpcov.phar https://phar.phpunit.de/phpcov.phar
-	chmod +x phpcov.phar php-coveralls.phar
+	chmod +x phpcov.phar
 	mkdir -p ./tmp/cov
 	cd ./vendor/abterphp/framework; mkdir vendor; cd vendor; ln -s ../../../autoload.php
 	cd ./vendor/abterphp/admin; mkdir vendor; cd vendor; ln -s ../../../autoload.php
@@ -49,6 +48,11 @@ coverage:
 
 post-coverage:
 	./phpcov.phar merge -vvv --clover tmp/report/clover.xml tmp/cov/
+	./php-coveralls.phar -v --coverage_clover=./tmp/report/clover.xml --json_path=./tmp/coveralls-upload.json
+
+send-coverage:
+	curl -L --output php-coveralls.phar https://github.com/php-coveralls/php-coveralls/releases/download/v2.1.0/php-coveralls.phar
+	chmod +x php-coveralls.phar
 	./php-coveralls.phar -v --coverage_clover=./tmp/report/clover.xml --json_path=./tmp/coveralls-upload.json
 
 flush:
