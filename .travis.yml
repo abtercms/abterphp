@@ -1,6 +1,4 @@
-language: php
-php:
-  - "7.3"
+language: go
 
 services:
   - docker
@@ -23,6 +21,4 @@ after_success:
   - docker-compose exec php make pre-coverage
   - docker-compose exec php make coverage
   - docker-compose exec php make post-coverage
-  - curl -L --output php-coveralls.phar https://github.com/php-coveralls/php-coveralls/releases/download/v2.1.0/php-coveralls.phar
-  - chmod +x php-coveralls.phar
-  - travis_retry php php-coveralls.phar -vvv --coverage_clover=./tmp/report/clover.xml --json_path=./tmp/report/coveralls-upload.json
+  - docker-compose exec php make send-coverage
