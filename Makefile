@@ -1,6 +1,6 @@
 build:
+	$(MAKE) unit
 	$(MAKE) integration
-	$(MAKE) coverage
 
 install:
 	php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
