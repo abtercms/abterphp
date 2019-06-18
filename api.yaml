@@ -91,6 +91,31 @@ paths:
                 $ref: '#/components/schemas/Problem'
 
   /adminresources/{adminresource_id}:
+    get:
+      description: Retrieves an admin resource
+      operationId: getAdminResource
+      parameters:
+        - $ref: '#/components/parameters/tokenHeader'
+        - name: adminresource_id
+          in: path
+          description: ID of admin resource to update
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Admin resource response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminResourceResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
     put:
       description: Update an existing admin resource
       operationId: updateAdminResource
@@ -193,6 +218,31 @@ paths:
                 $ref: '#/components/schemas/Problem'
 
   /userlanguages/{userlanguage_id}:
+    get:
+      description: Retrieves a user language
+      operationId: getUserLanguage
+      parameters:
+        - $ref: '#/components/parameters/tokenHeader'
+        - name: userlanguage_id
+          in: path
+          description: ID of user language to update
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: User language response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserLanguageResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
     put:
       description: Update a user language
       operationId: updateUserLanguage
@@ -295,6 +345,31 @@ paths:
                 $ref: '#/components/schemas/Problem'
 
   /usergroups/{usergroup_id}:
+    get:
+      description: Retrieves a user group
+      operationId: getUserGroup
+      parameters:
+        - $ref: '#/components/parameters/tokenHeader'
+        - name: usergroup_id
+          in: path
+          description: ID of user group to update
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: User group response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserGroupResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
     put:
       description: Update a user group
       operationId: updateUserGroup
@@ -397,6 +472,31 @@ paths:
                 $ref: '#/components/schemas/Problem'
 
   /users/{user_id}:
+    get:
+      description: Retrieves a user
+      operationId: getUser
+      parameters:
+        - $ref: '#/components/parameters/tokenHeader'
+        - name: user_id
+          in: path
+          description: ID of user to update
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: User response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
     put:
       description: Update a user
       operationId: updateUser
@@ -499,6 +599,31 @@ paths:
                 $ref: '#/components/schemas/Problem'
 
   /blocks/{block_id}:
+    get:
+      description: Retrieves a block
+      operationId: getBlock
+      parameters:
+        - $ref: '#/components/parameters/tokenHeader'
+        - name: block_id
+          in: path
+          description: ID of block to update
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Block response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BlockResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
     put:
       description: Update an existing block
       operationId: updateBlock
@@ -601,6 +726,31 @@ paths:
                 $ref: '#/components/schemas/Problem'
 
   /blocklayouts/{blocklayout_id}:
+    get:
+      description: Retrieves a block layout
+      operationId: getBlockLayout
+      parameters:
+        - $ref: '#/components/parameters/tokenHeader'
+        - name: blocklayout_id
+          in: path
+          description: ID of block layout to update
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Block layout response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BlockLayoutResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
     put:
       description: Update an existing block layout
       operationId: updateBlockLayout
@@ -836,6 +986,31 @@ paths:
                 $ref: '#/components/schemas/Problem'
 
   /pagecategories/{pagecategory_id}:
+    get:
+      description: Retrieves a page category
+      operationId: getPageCategory
+      parameters:
+        - $ref: '#/components/parameters/tokenHeader'
+        - name: pagecategory_id
+          in: path
+          description: ID of page category to update
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Page category response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageCategoryResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
     put:
       description: Update an existing page category
       operationId: updatePageCategory
@@ -938,6 +1113,31 @@ paths:
                 $ref: '#/components/schemas/Problem'
 
   /pagelayouts/{pagelayout_id}:
+    get:
+      description: Retrieves a page layout
+      operationId: getPageLayout
+      parameters:
+        - $ref: '#/components/parameters/tokenHeader'
+        - name: pagelayout_id
+          in: path
+          description: ID of page layout to update
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Page layout response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageLayoutResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
     put:
       description: Update an existing page layout
       operationId: updatePageLayout
@@ -1040,6 +1240,31 @@ paths:
                 $ref: '#/components/schemas/Problem'
 
   /files/{file_id}:
+    get:
+      description: Retrieves a file
+      operationId: getFile
+      parameters:
+        - $ref: '#/components/parameters/tokenHeader'
+        - name: file_id
+          in: path
+          description: ID of file to update
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: File response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
     put:
       description: Update an existing file
       operationId: updateFile
@@ -1142,6 +1367,31 @@ paths:
                 $ref: '#/components/schemas/Problem'
 
   /filecategories/{filecategory_id}:
+    get:
+      description: Retrieves a file category
+      operationId: getFileCategory
+      parameters:
+        - $ref: '#/components/parameters/tokenHeader'
+        - name: filecategory_id
+          in: path
+          description: ID of file category to update
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: File category response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileCategoryResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
     put:
       description: Update an existing file category
       operationId: updateFileCategory
@@ -1244,6 +1494,31 @@ paths:
                 $ref: '#/components/schemas/Problem'
 
   /filedownloads/{filedownload_id}:
+    get:
+      description: Retrieves a file download
+      operationId: getFileDownload
+      parameters:
+        - $ref: '#/components/parameters/tokenHeader'
+        - name: filedownload_id
+          in: path
+          description: ID of file download to update
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: File download response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileDownloadResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
     put:
       description: Update an existing file download
       operationId: updateFileDownload
