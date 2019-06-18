@@ -46,7 +46,13 @@ services:
       - memcached
       - redis
     environment:
+      - DIR_PRIVATE=/website/private
+      - DIR_PUBLIC=/website/public
+      - DIR_AUTH_CONFIG=/website/config/authorization
       - DIR_MIGRATIONS=/website/resources/migrations
+      - DIR_LOGS=/website/tmp/logs
+      - OAUTH2_PRIVATE_KEY_PATH=/website/private/private.key
+      - OAUTH2_PUBLIC_KEY_PATH=/website/private/public.key
       - "TRAVIS=${TRAVIS}"
       - "TRAVIS_JOB_ID=${TRAVIS_JOB_ID}"
     volumes:
