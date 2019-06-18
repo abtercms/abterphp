@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "db7eb4e338d57f5ec1fe343362b26bd9",
+    "content-hash": "274134cbf1c82580dcef6ef8f15b685e",
     "packages": [
         {
             "name": "abterphp/admin",
@@ -199,12 +199,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/abterphp/framework.git",
-                "reference": "5af4523c1e9494b618f925dbc3a7be644522f012"
+                "reference": "961eeaf3695c0cca6b595215d5c7ac965377745f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/abterphp/framework/zipball/5af4523c1e9494b618f925dbc3a7be644522f012",
-                "reference": "5af4523c1e9494b618f925dbc3a7be644522f012",
+                "url": "https://api.github.com/repos/abterphp/framework/zipball/961eeaf3695c0cca6b595215d5c7ac965377745f",
+                "reference": "961eeaf3695c0cca6b595215d5c7ac965377745f",
                 "shasum": ""
             },
             "require": {
@@ -259,7 +259,7 @@
                 }
             ],
             "description": "Foundations for AbterPHP",
-            "time": "2019-05-28T15:14:35+00:00"
+            "time": "2019-06-18T08:04:21+00:00"
         },
         {
             "name": "abterphp/propeller-admin",
@@ -4029,6 +4029,9 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
+        "abterphp/framework": 20,
+        "abterphp/admin": 20,
+        "abterphp/website": 20,
         "abterphp/propeller-admin": 20,
         "abterphp/bootstrap4-website": 20,
         "abterphp/files": 20,

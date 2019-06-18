@@ -53,6 +53,9 @@
     "prefer-install": "dist"
   },
   "require": {
+    "abterphp/framework": "dev-master",
+    "abterphp/admin": "dev-master",
+    "abterphp/website": "dev-master",
     "abterphp/propeller-admin": "dev-master",
     "abterphp/bootstrap4-website": "dev-master",
     "abterphp/files": "dev-master",
