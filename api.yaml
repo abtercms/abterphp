@@ -43,6 +43,30 @@ paths:
                 $ref: '#/components/schemas/Problem'
 
   /adminresources:
+    get:
+      description: Retrieves a list of admin resources
+      operationId: listAdminResources
+      parameters:
+        - name: token
+          in: header
+          description: Token used for authorization
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Admin resource list success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminResourceListResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
     post:
       description: Creates a new admin resource
       operationId: createAdminResource
@@ -139,6 +163,30 @@ paths:
                 $ref: '#/components/schemas/Problem'
 
   /userlanguages:
+    get:
+      description: Retrieves a list of user languages
+      operationId: listUserLanguages
+      parameters:
+        - name: token
+          in: header
+          description: Token used for authorization
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: User language list success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserLanguageListResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
     post:
       description: Creates a new user language
       operationId: createUserLanguage
@@ -235,6 +283,30 @@ paths:
                 $ref: '#/components/schemas/Problem'
 
   /usergroups:
+    get:
+      description: Retrieves a list of user groups
+      operationId: listUserGroups
+      parameters:
+        - name: token
+          in: header
+          description: Token used for authorization
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: User group list success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserGroupListResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
     post:
       description: Creates a new user group
       operationId: createUserGroup
@@ -331,6 +403,30 @@ paths:
                 $ref: '#/components/schemas/Problem'
 
   /users:
+    get:
+      description: Retrieves a list of users
+      operationId: listUsers
+      parameters:
+        - name: token
+          in: header
+          description: Token used for authorization
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: User list success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserListResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
     post:
       description: Creates a new user
       operationId: createUser
@@ -427,6 +523,30 @@ paths:
                 $ref: '#/components/schemas/Problem'
 
   /blocks:
+    get:
+      description: Retrieves a list of blocks
+      operationId: listBlocks
+      parameters:
+        - name: token
+          in: header
+          description: Token used for authorization
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Block list success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BlockListResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
     post:
       description: Creates a new block
       operationId: createBlock
@@ -523,6 +643,30 @@ paths:
                 $ref: '#/components/schemas/Problem'
 
   /blocklayouts:
+    get:
+      description: Retrieves a list of block layouts
+      operationId: listBlockLayouts
+      parameters:
+        - name: token
+          in: header
+          description: Token used for authorization
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Block layout list success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BlockLayoutListResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
     post:
       description: Creates a new block layout
       operationId: createBlockLayout
@@ -619,6 +763,30 @@ paths:
                 $ref: '#/components/schemas/Problem'
 
   /pages:
+    get:
+      description: Retrieves a list of pages
+      operationId: listPages
+      parameters:
+        - name: token
+          in: header
+          description: Token used for authorization
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Page list success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageListResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
     post:
       description: Creates a new page
       operationId: createPage
@@ -651,6 +819,42 @@ paths:
                 $ref: '#/components/schemas/Problem'
 
   /pages/{page_id}:
+    get:
+      description: Get an existing page
+      operationId: getPage
+      parameters:
+        - name: page_id
+          in: path
+          description: ID of page to update
+          required: true
+          schema:
+            type: string
+        - name: token
+          in: header
+          description: Token used for authorization
+          required: true
+          schema:
+            type: string
+        - name: embed
+          in: query
+          description: "Comma separated list of extra fields to embed. Available values: 'rendered'"
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Page update success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
     put:
       description: Update an existing page
       operationId: updatePage
@@ -715,6 +919,30 @@ paths:
                 $ref: '#/components/schemas/Problem'
 
   /pagecategories:
+    get:
+      description: Retrieves a list of page categories
+      operationId: listPageCategories
+      parameters:
+        - name: token
+          in: header
+          description: Token used for authorization
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Page category list success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageCategoryListResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
     post:
       description: Creates a new page category
       operationId: createPageCategory
@@ -811,6 +1039,30 @@ paths:
                 $ref: '#/components/schemas/Problem'
 
   /pagelayouts:
+    get:
+      description: Retrieves a list of page layouts
+      operationId: listPageLayouts
+      parameters:
+        - name: token
+          in: header
+          description: Token used for authorization
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Page layout list success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageLayoutListResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
     post:
       description: Creates a new page layout
       operationId: createPageLayout
@@ -907,6 +1159,30 @@ paths:
                 $ref: '#/components/schemas/Problem'
 
   /files:
+    get:
+      description: Retrieves a list of files
+      operationId: listFiles
+      parameters:
+        - name: token
+          in: header
+          description: Token used for authorization
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: File list success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileListResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
     post:
       description: Creates a new file
       operationId: createFile
@@ -1003,6 +1279,30 @@ paths:
                 $ref: '#/components/schemas/Problem'
 
   /filecategories:
+    get:
+      description: Retrieves a list of file categories
+      operationId: listFileCategories
+      parameters:
+        - name: token
+          in: header
+          description: Token used for authorization
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: File category list success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileCategoryListResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
     post:
       description: Creates a new file category
       operationId: createFileCategory
@@ -1099,6 +1399,30 @@ paths:
                 $ref: '#/components/schemas/Problem'
 
   /filedownloads:
+    get:
+      description: Retrieve file downloads
+      operationId: listFileDownloads
+      parameters:
+        - name: token
+          in: header
+          description: Token used for authorization
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: File download list success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileDownloadListResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
     post:
       description: Creates a new file download
       operationId: createFileDownload
@@ -1239,12 +1563,27 @@ components:
 
     AdminResourceResponse:
       allOf:
-        - $ref: '#/components/schemas/UserLanguageRequest'
+        - $ref: '#/components/schemas/AdminResourceRequest'
       required:
         - id
       properties:
         id:
           type: string
+
+    AdminResourceListResponse:
+      description: A wrapper object containing a paginated list of admin resources and the total number of admin resources.
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/AdminResourceResponse'
+        total_count:
+          type: integer
+          format: int32
+      required:
+        - data
+        - total_count
 
     UserGroupRequest:
       required:
@@ -1268,6 +1607,21 @@ components:
         id:
           type: string
 
+    UserGroupListResponse:
+      description: A wrapper object containing a paginated list of user groups and the total number of user groups.
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserGroupResponse'
+        total_count:
+          type: integer
+          format: int32
+      required:
+        - data
+        - total_count
+
     UserLanguageRequest:
       required:
         - identifier
@@ -1286,6 +1640,21 @@ components:
       properties:
         id:
           type: string
+
+    UserLanguageListResponse:
+      description: A wrapper object containing a paginated list of user languages and the total number of user languages.
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserLanguageResponse'
+        total_count:
+          type: integer
+          format: int32
+      required:
+        - data
+        - total_count
 
     UserUpdateRequest:
       required:
@@ -1331,6 +1700,21 @@ components:
       properties:
         id:
           type: string
+
+    UserListResponse:
+      description: A wrapper object containing a paginated list of users and the total number of users.
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserResponse'
+        total_count:
+          type: integer
+          format: int32
+      required:
+        - data
+        - total_count
 
     Assets:
       required:
@@ -1403,6 +1787,21 @@ components:
         id:
           type: string
 
+    PageCategoryListResponse:
+      description: A wrapper object containing a paginated list of page categories and the total number of page categories.
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/PageCategoryResponse'
+        total_count:
+          type: integer
+          format: int32
+      required:
+        - data
+        - total_count
+
     PageLayoutRequest:
       required:
         - identifier
@@ -1423,6 +1822,21 @@ components:
       properties:
         id:
           type: string
+
+    PageLayoutListResponse:
+      description: A wrapper object containing a paginated list of page layouts and the total number of page layouts.
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/PageLayoutResponse'
+        total_count:
+          type: integer
+          format: int32
+      required:
+        - data
+        - total_count
 
     PageRequestCategory:
       required:
@@ -1461,6 +1875,23 @@ components:
       properties:
         id:
           type: string
+        rendered:
+          type: string
+
+    PageListResponse:
+      description: A wrapper object containing a paginated list of pages and the total number of pages.
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/PageResponse'
+        total_count:
+          type: integer
+          format: int32
+      required:
+        - data
+        - total_count
 
     BlockLayoutRequest:
       required:
@@ -1480,6 +1911,21 @@ components:
       properties:
         id:
           type: string
+
+    BlockLayoutListResponse:
+      description: A wrapper object containing a paginated list of block layouts and the total number of block layouts.
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/BlockLayoutResponse'
+        total_count:
+          type: integer
+          format: int32
+      required:
+        - data
+        - total_count
 
     BlockRequest:
       required:
@@ -1502,6 +1948,21 @@ components:
       properties:
         id:
           type: string
+
+    BlockListResponse:
+      description: A wrapper object containing a paginated list of blocks and the total number of blocks.
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/BlockResponse'
+        total_count:
+          type: integer
+          format: int32
+      required:
+        - data
+        - total_count
 
     FileRequest:
       required:
@@ -1530,6 +1991,21 @@ components:
           type: string
           format: date-time
 
+    FileListResponse:
+      description: A wrapper object containing a paginated list of files and the total number of files.
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/FileResponse'
+        total_count:
+          type: integer
+          format: int32
+      required:
+        - data
+        - total_count
+
     FileCategoryRequest:
       required:
         - identifier
@@ -1556,6 +2032,21 @@ components:
       properties:
         id:
           type: string
+
+    FileCategoryListResponse:
+      description: A wrapper object containing a paginated list of file categories and the total number of file categories.
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/FileCategoryResponse'
+        total_count:
+          type: integer
+          format: int32
+      required:
+        - data
+        - total_count
 
     FileDownloadRequestFile:
       required:
@@ -1594,6 +2085,21 @@ components:
           type: string
           format: date-time
 
+    FileDownloadListResponse:
+      description: A wrapper object containing a paginated list of file downloads and the total number of file downloads.
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/FileDownloadResponse'
+        total_count:
+          type: integer
+          format: int32
+      required:
+        - data
+        - total_count
+
     Problem:
       required:
         - type
@@ -1607,7 +2113,7 @@ components:
             it SHOULD provide human-readable documentation for the problem type
             (e.g., using HTML).
           default: 'about:blank'
-          example: 'https://kanbanto.do/problem/constraint-violation'
+          example: 'https://abtercms.com/problem/constraint-violation'
         title:
           type: string
           description: |
