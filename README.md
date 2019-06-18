@@ -198,8 +198,8 @@ before the first stable version.
    - ~~"Red" / "Danger" Back to list buttons~~
    - ~~Create and new button~~
 1. ~~Initial API defined and published~~
+1. ~~Documentation page exists~~
 1. All implemented API endpoints return properly formatted errors
-1. Documentation page exists
 1. Improved security implementing related headers as recommended:
    - https://medium.freecodecamp.org/secure-your-web-application-with-these-http-headers-fd66e0367628
    - https://medium.freecodecamp.org/web-security-hardening-http-cookies-be8d8d8016e1
@@ -215,7 +215,6 @@ before the first stable version.
 1. API implemented
 1. 1 grid is covered with acceptance tests (filters, pagination included)
 1. 1 form is covered with acceptance tests (displaying with new and existing entity and saving included)
-1. Documentation page exists
 1. Highlight form fields with validation errors
 1. 12-factor compliance reviewed and improvements planned
 1. Reviewed and refactored global `$abterModuleManager` usage
@@ -238,7 +237,6 @@ before the first stable version.
 ### 1.0 musts:
 
 1. API designed finalized (community input?)
-1. API implemented
 1. API test complete
 1. Acceptance tests for main use cases of each module
 1. All grids, paginations, filters covered with acceptance tests
@@ -248,7 +246,7 @@ before the first stable version.
 1. Refactored configs
 1. Refactored bootstrappers (again)
 1. All constants reviewed
-1. Documentation complete
+1. Documentation "complete"
 1. 12-factor compliance clearly stated
 1. More useful dashboard (community input?)
 1. Enable `ONLY_FULL_GROUP_BY` in `mysql.conf`
