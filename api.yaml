@@ -47,12 +47,9 @@ paths:
       description: Retrieves a list of admin resources
       operationId: listAdminResources
       parameters:
-        - name: token
-          in: header
-          description: Token used for authorization
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/tokenHeader'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/offsetParam'
       responses:
         '200':
           description: Admin resource list success response
@@ -71,12 +68,7 @@ paths:
       description: Creates a new admin resource
       operationId: createAdminResource
       parameters:
-        - name: token
-          in: header
-          description: Token used for authorization
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/tokenHeader'
       requestBody:
         description: Admin resource to create
         required: true
@@ -103,15 +95,10 @@ paths:
       description: Update an existing admin resource
       operationId: updateAdminResource
       parameters:
+        - $ref: '#/components/parameters/tokenHeader'
         - name: adminresource_id
           in: path
           description: ID of admin resource to update
-          required: true
-          schema:
-            type: string
-        - name: token
-          in: header
-          description: Token used for authorization
           required: true
           schema:
             type: string
@@ -140,15 +127,10 @@ paths:
       description: Delete an admin resource
       operationId: deleteAdminResource
       parameters:
+        - $ref: '#/components/parameters/tokenHeader'
         - name: adminresource_id
           in: path
           description: ID of admin resource to update
-          required: true
-          schema:
-            type: string
-        - name: token
-          in: header
-          description: Token used for authorization
           required: true
           schema:
             type: string
@@ -167,12 +149,9 @@ paths:
       description: Retrieves a list of user languages
       operationId: listUserLanguages
       parameters:
-        - name: token
-          in: header
-          description: Token used for authorization
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/tokenHeader'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/offsetParam'
       responses:
         '200':
           description: User language list success response
@@ -191,12 +170,7 @@ paths:
       description: Creates a new user language
       operationId: createUserLanguage
       parameters:
-        - name: token
-          in: header
-          description: Token used for authorization
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/tokenHeader'
       requestBody:
         description: User language to create
         required: true
@@ -223,15 +197,10 @@ paths:
       description: Update a user language
       operationId: updateUserLanguage
       parameters:
+        - $ref: '#/components/parameters/tokenHeader'
         - name: userlanguage_id
           in: path
           description: ID of user language to update
-          required: true
-          schema:
-            type: string
-        - name: token
-          in: header
-          description: Token used for authorization
           required: true
           schema:
             type: string
@@ -260,15 +229,10 @@ paths:
       description: Delete a user language
       operationId: deleteUserLanguage
       parameters:
+        - $ref: '#/components/parameters/tokenHeader'
         - name: userlanguage_id
           in: path
           description: ID of user language to update
-          required: true
-          schema:
-            type: string
-        - name: token
-          in: header
-          description: Token used for authorization
           required: true
           schema:
             type: string
@@ -287,12 +251,9 @@ paths:
       description: Retrieves a list of user groups
       operationId: listUserGroups
       parameters:
-        - name: token
-          in: header
-          description: Token used for authorization
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/tokenHeader'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/offsetParam'
       responses:
         '200':
           description: User group list success response
@@ -311,12 +272,7 @@ paths:
       description: Creates a new user group
       operationId: createUserGroup
       parameters:
-        - name: token
-          in: header
-          description: Token used for authorization
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/tokenHeader'
       requestBody:
         description: User group to create
         required: true
@@ -343,15 +299,10 @@ paths:
       description: Update a user group
       operationId: updateUserGroup
       parameters:
+        - $ref: '#/components/parameters/tokenHeader'
         - name: usergroup_id
           in: path
           description: ID of user to update
-          required: true
-          schema:
-            type: string
-        - name: token
-          in: header
-          description: Token used for authorization
           required: true
           schema:
             type: string
@@ -380,15 +331,10 @@ paths:
       description: Delete a user group
       operationId: deleteUserGroup
       parameters:
+        - $ref: '#/components/parameters/tokenHeader'
         - name: usergroup_id
           in: path
           description: ID of user group to update
-          required: true
-          schema:
-            type: string
-        - name: token
-          in: header
-          description: Token used for authorization
           required: true
           schema:
             type: string
@@ -407,12 +353,9 @@ paths:
       description: Retrieves a list of users
       operationId: listUsers
       parameters:
-        - name: token
-          in: header
-          description: Token used for authorization
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/tokenHeader'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/offsetParam'
       responses:
         '200':
           description: User list success response
@@ -431,12 +374,7 @@ paths:
       description: Creates a new user
       operationId: createUser
       parameters:
-        - name: token
-          in: header
-          description: Token used for authorization
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/tokenHeader'
       requestBody:
         description: User to create
         required: true
@@ -463,15 +401,10 @@ paths:
       description: Update a user
       operationId: updateUser
       parameters:
+        - $ref: '#/components/parameters/tokenHeader'
         - name: user_id
           in: path
           description: ID of user to update
-          required: true
-          schema:
-            type: string
-        - name: token
-          in: header
-          description: Token used for authorization
           required: true
           schema:
             type: string
@@ -500,15 +433,10 @@ paths:
       description: Delete a user
       operationId: deleteUser
       parameters:
+        - $ref: '#/components/parameters/tokenHeader'
         - name: user_id
           in: path
           description: ID of user to update
-          required: true
-          schema:
-            type: string
-        - name: token
-          in: header
-          description: Token used for authorization
           required: true
           schema:
             type: string
@@ -527,12 +455,9 @@ paths:
       description: Retrieves a list of blocks
       operationId: listBlocks
       parameters:
-        - name: token
-          in: header
-          description: Token used for authorization
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/tokenHeader'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/offsetParam'
       responses:
         '200':
           description: Block list success response
@@ -551,12 +476,7 @@ paths:
       description: Creates a new block
       operationId: createBlock
       parameters:
-        - name: token
-          in: header
-          description: Token used for authorization
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/tokenHeader'
       requestBody:
         description: Block to create
         required: true
@@ -583,15 +503,10 @@ paths:
       description: Update an existing block
       operationId: updateBlock
       parameters:
+        - $ref: '#/components/parameters/tokenHeader'
         - name: block_id
           in: path
           description: ID of block to update
-          required: true
-          schema:
-            type: string
-        - name: token
-          in: header
-          description: Token used for authorization
           required: true
           schema:
             type: string
@@ -620,15 +535,10 @@ paths:
       description: Delete an existing block
       operationId: deleteBlock
       parameters:
+        - $ref: '#/components/parameters/tokenHeader'
         - name: block_id
           in: path
           description: ID of block to update
-          required: true
-          schema:
-            type: string
-        - name: token
-          in: header
-          description: Token used for authorization
           required: true
           schema:
             type: string
@@ -647,12 +557,9 @@ paths:
       description: Retrieves a list of block layouts
       operationId: listBlockLayouts
       parameters:
-        - name: token
-          in: header
-          description: Token used for authorization
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/tokenHeader'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/offsetParam'
       responses:
         '200':
           description: Block layout list success response
@@ -671,12 +578,7 @@ paths:
       description: Creates a new block layout
       operationId: createBlockLayout
       parameters:
-        - name: token
-          in: header
-          description: Token used for authorization
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/tokenHeader'
       requestBody:
         description: Block layout to create
         required: true
@@ -703,15 +605,10 @@ paths:
       description: Update an existing block layout
       operationId: updateBlockLayout
       parameters:
+        - $ref: '#/components/parameters/tokenHeader'
         - name: blocklayout_id
           in: path
           description: ID of block layout to update
-          required: true
-          schema:
-            type: string
-        - name: token
-          in: header
-          description: Token used for authorization
           required: true
           schema:
             type: string
@@ -740,15 +637,10 @@ paths:
       description: Delete an existing block layout
       operationId: deleteBlockLayout
       parameters:
+        - $ref: '#/components/parameters/tokenHeader'
         - name: blocklayout_id
           in: path
           description: ID of block layout to update
-          required: true
-          schema:
-            type: string
-        - name: token
-          in: header
-          description: Token used for authorization
           required: true
           schema:
             type: string
@@ -767,12 +659,9 @@ paths:
       description: Retrieves a list of pages
       operationId: listPages
       parameters:
-        - name: token
-          in: header
-          description: Token used for authorization
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/tokenHeader'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/offsetParam'
       responses:
         '200':
           description: Page list success response
@@ -791,12 +680,7 @@ paths:
       description: Creates a new page
       operationId: createPage
       parameters:
-        - name: token
-          in: header
-          description: Token used for authorization
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/tokenHeader'
       requestBody:
         description: Page to create
         required: true
@@ -823,15 +707,10 @@ paths:
       description: Get an existing page
       operationId: getPage
       parameters:
+        - $ref: '#/components/parameters/tokenHeader'
         - name: page_id
           in: path
           description: ID of page to update
-          required: true
-          schema:
-            type: string
-        - name: token
-          in: header
-          description: Token used for authorization
           required: true
           schema:
             type: string
@@ -859,15 +738,10 @@ paths:
       description: Update an existing page
       operationId: updatePage
       parameters:
+        - $ref: '#/components/parameters/tokenHeader'
         - name: page_id
           in: path
           description: ID of page to update
-          required: true
-          schema:
-            type: string
-        - name: token
-          in: header
-          description: Token used for authorization
           required: true
           schema:
             type: string
@@ -896,15 +770,10 @@ paths:
       description: Delete an existing page
       operationId: deletePage
       parameters:
+        - $ref: '#/components/parameters/tokenHeader'
         - name: page_id
           in: path
           description: ID of page to update
-          required: true
-          schema:
-            type: string
-        - name: token
-          in: header
-          description: Token used for authorization
           required: true
           schema:
             type: string
@@ -923,12 +792,9 @@ paths:
       description: Retrieves a list of page categories
       operationId: listPageCategories
       parameters:
-        - name: token
-          in: header
-          description: Token used for authorization
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/tokenHeader'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/offsetParam'
       responses:
         '200':
           description: Page category list success response
@@ -947,12 +813,7 @@ paths:
       description: Creates a new page category
       operationId: createPageCategory
       parameters:
-        - name: token
-          in: header
-          description: Token used for authorization
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/tokenHeader'
       requestBody:
         description: Page category to create
         required: true
@@ -979,15 +840,10 @@ paths:
       description: Update an existing page category
       operationId: updatePageCategory
       parameters:
+        - $ref: '#/components/parameters/tokenHeader'
         - name: pagecategory_id
           in: path
           description: ID of page category to update
-          required: true
-          schema:
-            type: string
-        - name: token
-          in: header
-          description: Token used for authorization
           required: true
           schema:
             type: string
@@ -1016,15 +872,10 @@ paths:
       description: Delete an existing page category
       operationId: deletePageCategory
       parameters:
+        - $ref: '#/components/parameters/tokenHeader'
         - name: pagecategory_id
           in: path
           description: ID of page category to update
-          required: true
-          schema:
-            type: string
-        - name: token
-          in: header
-          description: Token used for authorization
           required: true
           schema:
             type: string
@@ -1043,12 +894,9 @@ paths:
       description: Retrieves a list of page layouts
       operationId: listPageLayouts
       parameters:
-        - name: token
-          in: header
-          description: Token used for authorization
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/tokenHeader'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/offsetParam'
       responses:
         '200':
           description: Page layout list success response
@@ -1067,12 +915,7 @@ paths:
       description: Creates a new page layout
       operationId: createPageLayout
       parameters:
-        - name: token
-          in: header
-          description: Token used for authorization
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/tokenHeader'
       requestBody:
         description: Page layout to create
         required: true
@@ -1099,15 +942,10 @@ paths:
       description: Update an existing page layout
       operationId: updatePageLayout
       parameters:
+        - $ref: '#/components/parameters/tokenHeader'
         - name: pagelayout_id
           in: path
           description: ID of page layout to update
-          required: true
-          schema:
-            type: string
-        - name: token
-          in: header
-          description: Token used for authorization
           required: true
           schema:
             type: string
@@ -1136,15 +974,10 @@ paths:
       description: Delete an existing page layout
       operationId: deletePageLayout
       parameters:
+        - $ref: '#/components/parameters/tokenHeader'
         - name: pagelayout_id
           in: path
           description: ID of page layout to update
-          required: true
-          schema:
-            type: string
-        - name: token
-          in: header
-          description: Token used for authorization
           required: true
           schema:
             type: string
@@ -1163,12 +996,9 @@ paths:
       description: Retrieves a list of files
       operationId: listFiles
       parameters:
-        - name: token
-          in: header
-          description: Token used for authorization
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/tokenHeader'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/offsetParam'
       responses:
         '200':
           description: File list success response
@@ -1187,12 +1017,7 @@ paths:
       description: Creates a new file
       operationId: createFile
       parameters:
-        - name: token
-          in: header
-          description: Token used for authorization
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/tokenHeader'
       requestBody:
         description: File to create
         required: true
@@ -1219,15 +1044,10 @@ paths:
       description: Update an existing file
       operationId: updateFile
       parameters:
+        - $ref: '#/components/parameters/tokenHeader'
         - name: file_id
           in: path
           description: ID of file to update
-          required: true
-          schema:
-            type: string
-        - name: token
-          in: header
-          description: Token used for authorization
           required: true
           schema:
             type: string
@@ -1256,15 +1076,10 @@ paths:
       description: Delete an existing file
       operationId: deleteFile
       parameters:
+        - $ref: '#/components/parameters/tokenHeader'
         - name: file_id
           in: path
           description: ID of file to update
-          required: true
-          schema:
-            type: string
-        - name: token
-          in: header
-          description: Token used for authorization
           required: true
           schema:
             type: string
@@ -1283,12 +1098,9 @@ paths:
       description: Retrieves a list of file categories
       operationId: listFileCategories
       parameters:
-        - name: token
-          in: header
-          description: Token used for authorization
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/tokenHeader'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/offsetParam'
       responses:
         '200':
           description: File category list success response
@@ -1307,12 +1119,7 @@ paths:
       description: Creates a new file category
       operationId: createFileCategory
       parameters:
-        - name: token
-          in: header
-          description: Token used for authorization
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/tokenHeader'
       requestBody:
         description: File category to create
         required: true
@@ -1339,15 +1146,10 @@ paths:
       description: Update an existing file category
       operationId: updateFileCategory
       parameters:
+        - $ref: '#/components/parameters/tokenHeader'
         - name: filecategory_id
           in: path
           description: ID of file category to update
-          required: true
-          schema:
-            type: string
-        - name: token
-          in: header
-          description: Token used for authorization
           required: true
           schema:
             type: string
@@ -1376,15 +1178,10 @@ paths:
       description: Delete an existing file category
       operationId: deleteFileCategory
       parameters:
+        - $ref: '#/components/parameters/tokenHeader'
         - name: filecategory_id
           in: path
           description: ID of file category to update
-          required: true
-          schema:
-            type: string
-        - name: token
-          in: header
-          description: Token used for authorization
           required: true
           schema:
             type: string
@@ -1403,12 +1200,9 @@ paths:
       description: Retrieve file downloads
       operationId: listFileDownloads
       parameters:
-        - name: token
-          in: header
-          description: Token used for authorization
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/tokenHeader'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/offsetParam'
       responses:
         '200':
           description: File download list success response
@@ -1427,12 +1221,7 @@ paths:
       description: Creates a new file download
       operationId: createFileDownload
       parameters:
-        - name: token
-          in: header
-          description: Token used for authorization
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/tokenHeader'
       requestBody:
         description: File download to create
         required: true
@@ -1459,15 +1248,10 @@ paths:
       description: Update an existing file download
       operationId: updateFileDownload
       parameters:
+        - $ref: '#/components/parameters/tokenHeader'
         - name: filedownload_id
           in: path
           description: ID of file download to update
-          required: true
-          schema:
-            type: string
-        - name: token
-          in: header
-          description: Token used for authorization
           required: true
           schema:
             type: string
@@ -1496,15 +1280,10 @@ paths:
       description: Delete an existing file download
       operationId: deleteFileDownload
       parameters:
+        - $ref: '#/components/parameters/tokenHeader'
         - name: filedownload_id
           in: path
           description: ID of file download to update
-          required: true
-          schema:
-            type: string
-        - name: token
-          in: header
-          description: Token used for authorization
           required: true
           schema:
             type: string
@@ -1519,6 +1298,35 @@ paths:
                 $ref: '#/components/schemas/Problem'
 
 components:
+  parameters:
+    tokenHeader:
+      name: token
+      in: header
+      description: Token used for authorization
+      required: true
+      schema:
+        type: string
+
+    limitParam:
+      name: limit
+      in: query
+      description: The size of a paginated list result
+      required: true
+      schema:
+        type: integer
+        format: int32
+        default: 25
+
+    offsetParam:
+      name: offset
+      in: query
+      description: The offset of a paginated list result
+      required: true
+      schema:
+        type: integer
+        format: int32
+        default: 0
+
   schemas:
     TokenRequest:
       required:
