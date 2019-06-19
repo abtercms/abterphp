@@ -1572,6 +1572,165 @@ paths:
               schema:
                 $ref: '#/components/schemas/Problem'
 
+  /contactforms:
+    get:
+      description: Retrieve contact forms
+      operationId: listContactForms
+      parameters:
+        - $ref: '#/components/parameters/tokenHeader'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/offsetParam'
+      responses:
+        '200':
+          description: Contact form list success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContactFormListResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+    post:
+      description: Creates a new contact form
+      operationId: createContactForm
+      parameters:
+        - $ref: '#/components/parameters/tokenHeader'
+      requestBody:
+        description: Contact form to create
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContactFormRequest'
+      responses:
+        '204':
+          description: Contact form create success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContactFormResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+  /contactforms/{contactform_id}:
+    get:
+      description: Retrieves a contact form
+      operationId: getContactForm
+      parameters:
+        - $ref: '#/components/parameters/tokenHeader'
+        - name: contactform_id
+          in: path
+          description: ID of contact form to update
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Contact form response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContactFormResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+    put:
+      description: Update an existing contact form
+      operationId: updateContactForm
+      parameters:
+        - $ref: '#/components/parameters/tokenHeader'
+        - name: contactform_id
+          in: path
+          description: ID of contact form to update
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: File download to update
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FileDownloadRequest'
+      responses:
+        '200':
+          description: Contact form update success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileDownloadResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+    delete:
+      description: Delete an existing contact form
+      operationId: deleteContactForm
+      parameters:
+        - $ref: '#/components/parameters/tokenHeader'
+        - name: contactform_id
+          in: path
+          description: ID of contact form to update
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Contact form delete success response
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+  /contactforms/{contactform_id}/submission:
+    post:
+      description: Creates a new submission for a contact form
+      operationId: submitContactForm
+      parameters:
+        - $ref: '#/components/parameters/tokenHeader'
+        - name: contactform_id
+          in: path
+          description: ID of contact form to submit data for
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Contact form submittion to create
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContactFormSubmissionRequest'
+      responses:
+        '204':
+          description: Contact form submittion response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContactFormSubmissionResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
 components:
   parameters:
     tokenHeader:
@@ -1754,6 +1913,7 @@ components:
           type: string
         email:
           type: string
+          format: email
         frontend_salt:
           type: string
         password:
@@ -2182,6 +2342,68 @@ components:
       required:
         - data
         - total_count
+
+    ContactFormRequest:
+      required:
+        - name
+        - identifier
+        - to_name
+        - to_email
+      properties:
+        identifier:
+          type: string
+        name:
+          type: string
+        to_name:
+          type: string
+        to_email:
+          type: string
+          format: email
+
+    ContactFormResponse:
+      allOf:
+        - $ref: '#/components/schemas/ContactFormRequest'
+      required:
+        - id
+      properties:
+        id:
+          type: string
+
+    ContactFormListResponse:
+      description: A wrapper object containing a paginated list of contact forms and the total number of contact forms.
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContactFormResponse'
+        total_count:
+          type: integer
+          format: int32
+      required:
+        - data
+        - total_count
+
+    ContactFormSubmissionRequest:
+      required:
+        - subject
+        - body
+        - from_name
+        - from_email
+      properties:
+        subject:
+          type: string
+        body:
+          type: string
+        from_name:
+          type: string
+        from_email:
+          type: string
+          format: email
+
+    ContactFormSubmissionResponse:
+      allOf:
+        - $ref: '#/components/schemas/ContactFormRequest'
 
     Problem:
       required:
