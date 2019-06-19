@@ -233,6 +233,8 @@ before the first stable version.
 1. Fix sidebar propeller "bug"
 1. Cache navigation for user
 1. Enable/Disable modules from console
+1. Setup wizard (admin user + security settings)
+1. Client creation via CLI
 
 ### 1.0 musts:
 
