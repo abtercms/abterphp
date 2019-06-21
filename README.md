@@ -200,6 +200,7 @@ before the first stable version.
 1. ~~Initial API defined and published~~
 1. ~~Documentation page exists~~
 1. ~~All implemented API endpoints return properly formatted errors~~
+1. ~~Optionally embed file content into getFile API endpoint~~
 1. Improved security implementing related headers as recommended:
    - https://medium.freecodecamp.org/secure-your-web-application-with-these-http-headers-fd66e0367628
    - https://medium.freecodecamp.org/web-security-hardening-http-cookies-be8d8d8016e1
@@ -236,7 +237,8 @@ before the first stable version.
 1. Setup wizard (admin user + security settings)
 1. ~~Client creation via CLI~~
 1. Revoke token endpoint
-1. Embed rendered page body parameter
+1. Optionally embed rendered page body parameter
+1. Scope checks during serving API calls
 
 ### 1.0 musts:
 
