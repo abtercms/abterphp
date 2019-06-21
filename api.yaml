@@ -2210,15 +2210,23 @@ components:
     FileRequest:
       required:
         - filename
-        - content
+        - description
         - category_id
+        - name
+        - data
+        - mime
       properties:
         filename:
           type: string
-        content:
+        description:
           type: string
-          format: binary
         category_id:
+          type: string
+        name:
+          type: string
+        data:
+          type: string
+        mime:
           type: string
 
     FileResponse:

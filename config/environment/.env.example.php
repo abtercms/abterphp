@@ -180,3 +180,11 @@ Environment::setVar("API_BASE_PATH", "/api-iddqd");
  */
 
 Environment::setVar("MODULE_CACHE_KEY", "AbterPhp:Modules");
+
+/**
+ * ----------------------------------------------------------
+ * API settings
+ * ----------------------------------------------------------
+ */
+
+Environment::setVar("API_PROBLEM_BASE_URL", "https://abtercms.com/problem/");

@@ -199,7 +199,7 @@ before the first stable version.
    - ~~Create and new button~~
 1. ~~Initial API defined and published~~
 1. ~~Documentation page exists~~
-1. All implemented API endpoints return properly formatted errors
+1. ~~All implemented API endpoints return properly formatted errors~~
 1. Improved security implementing related headers as recommended:
    - https://medium.freecodecamp.org/secure-your-web-application-with-these-http-headers-fd66e0367628
    - https://medium.freecodecamp.org/web-security-hardening-http-cookies-be8d8d8016e1
@@ -234,7 +234,9 @@ before the first stable version.
 1. Cache navigation for user
 1. Enable/Disable modules from console
 1. Setup wizard (admin user + security settings)
-1. Client creation via CLI
+1. ~~Client creation via CLI~~
+1. Revoke token endpoint
+1. Embed rendered page body parameter
 
 ### 1.0 musts:
 
@@ -247,6 +249,8 @@ before the first stable version.
 1. AbterPhp\Framework\Form\Factory\Base::getMultiSelectSize -> move to helper or Select
 1. Refactored configs
 1. Refactored bootstrappers (again)
+   - Use Config Provider to remove bootstrappers
+   - Validators registered in framework
 1. All constants reviewed
 1. Documentation "complete"
 1. 12-factor compliance clearly stated
