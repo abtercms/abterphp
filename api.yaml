@@ -1251,6 +1251,12 @@ paths:
           required: true
           schema:
             type: string
+        - name: embed
+          in: query
+          description: "Comma separated list of extra fields to embed. Available values: 'data'"
+          required: false
+          schema:
+            type: string
       responses:
         '200':
           description: File response
@@ -2207,13 +2213,12 @@ components:
         - data
         - total_count
 
-    FileRequest:
+    FileCommon:
       required:
         - filename
         - description
         - category_id
         - name
-        - data
         - mime
       properties:
         filename:
@@ -2229,9 +2234,15 @@ components:
         mime:
           type: string
 
+    FileRequest:
+      allOf:
+        - $ref: '#/components/schemas/FileCommon'
+      required:
+        - data
+
     FileResponse:
       allOf:
-        - $ref: '#/components/schemas/FileRequest'
+        - $ref: '#/components/schemas/FileCommon'
       required:
         - id
         - uploaded_at
