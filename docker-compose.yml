@@ -38,6 +38,14 @@ services:
     ports:
       - "6439:6379"
 
+  mailcatcher:
+    image: mailhog/mailhog
+    ports:
+      - "1085:1025"
+      - "8085:8025"
+    environment:
+      - MH_HOSTNAME=localhost
+
   php:
     image: abtercms/php:72
     links:
@@ -45,6 +53,7 @@ services:
       - db_test
       - memcached
       - redis
+      - mailcatcher
     environment:
       - DIR_PRIVATE=/website/private
       - DIR_PUBLIC=/website/public

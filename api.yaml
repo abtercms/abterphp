@@ -1705,10 +1705,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/Problem'
 
-  /contactforms/{contactform_id}/submission:
+  /contactforms/{contactform_id}/messages:
     post:
-      description: Creates a new submission for a contact form
-      operationId: submitContactForm
+      description: Creates a new message for a contact form
+      operationId: createContactFormMessage
       parameters:
         - $ref: '#/components/parameters/tokenHeader'
         - name: contactform_id
@@ -1723,14 +1723,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ContactFormSubmissionRequest'
+              $ref: '#/components/schemas/ContactFormMessageRequest'
       responses:
         '204':
           description: Contact form submittion response
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ContactFormSubmissionResponse'
+                $ref: '#/components/schemas/ContactFormMessageResponse'
         default:
           description: Unexpected error
           content:
@@ -2403,13 +2403,16 @@ components:
         - data
         - total_count
 
-    ContactFormSubmissionRequest:
+    ContactFormMessageRequest:
       required:
+        - form_id
         - subject
         - body
         - from_name
         - from_email
       properties:
+        form_id:
+          type: string
         subject:
           type: string
         body:
@@ -2420,7 +2423,7 @@ components:
           type: string
           format: email
 
-    ContactFormSubmissionResponse:
+    ContactFormMessageResponse:
       allOf:
         - $ref: '#/components/schemas/ContactFormRequest'
 

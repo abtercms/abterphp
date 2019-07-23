@@ -2,6 +2,7 @@
 
 namespace Integration\Framework\Template;
 
+use AbterPhp\Framework\Config\Provider as ConfigProvider;
 use AbterPhp\Framework\Template\CacheManager;
 use AbterPhp\Framework\Template\Engine;
 use AbterPhp\Framework\Template\Factory;
@@ -10,7 +11,7 @@ use AbterPhp\Website\Databases\Queries\BlockCache;
 use AbterPhp\Website\Domain\Entities\Block;
 use AbterPhp\Website\Domain\Entities\Page;
 use AbterPhp\Website\Orm\BlockRepo;
-use AbterPhp\Website\Template\BlockLoader;
+use AbterPhp\Website\Template\Loader\Block as BlockLoader;
 use PHPUnit\Framework\MockObject\MockObject;
 
 class EngineTest extends \PHPUnit\Framework\TestCase
@@ -33,21 +34,14 @@ class EngineTest extends \PHPUnit\Framework\TestCase
     /** @var CacheManager|MockObject */
     protected $cacheManager;
 
+    /** @var ConfigProvider|MockObject */
+    protected $configProvider;
+
     public function setUp()
     {
         $this->templateFactory = new Factory();
 
         $this->renderer = new Renderer($this->templateFactory);
-
-        $this->blockRepo = $this->getMockBuilder(BlockRepo::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['getWithLayoutByIdentifiers'])
-            ->getMock();
-
-        $this->blockCache = $this->getMockBuilder(BlockCache::class)
-            ->disableOriginalConstructor()
-            ->setMethods(['hasAnyChangedSince'])
-            ->getMock();
 
         $this->cacheManager = $this->getMockBuilder(CacheManager::class)
             ->disableOriginalConstructor()
@@ -60,13 +54,28 @@ class EngineTest extends \PHPUnit\Framework\TestCase
                 ]
             )
             ->getMock();
-
         $this->cacheManager->expects($this->any())->method('storeCacheData')->willReturn(true);
         $this->cacheManager->expects($this->any())->method('storeDocument')->willReturn(true);
 
-        $blockLoader = new BlockLoader($this->blockRepo, $this->blockCache);
+        $this->configProvider = $this->getMockBuilder(ConfigProvider::class)
+            ->disableOriginalConstructor()
+            ->setMethods(['isCacheAllowed'])
+            ->getMock();
+        $this->configProvider->expects($this->any())->method('isCacheAllowed')->willReturn(true);
 
-        $this->sut = new Engine($this->renderer, $this->cacheManager);
+        $this->sut = new Engine($this->renderer, $this->cacheManager, $this->configProvider);
+
+        $this->blockRepo = $this->getMockBuilder(BlockRepo::class)
+            ->disableOriginalConstructor()
+            ->setMethods(['getWithLayoutByIdentifiers'])
+            ->getMock();
+
+        $this->blockCache = $this->getMockBuilder(BlockCache::class)
+            ->disableOriginalConstructor()
+            ->setMethods(['hasAnyChangedSince'])
+            ->getMock();
+
+        $blockLoader = new BlockLoader($this->blockRepo, $this->blockCache);
 
         $this->renderer->addLoader('block', $blockLoader);
     }
@@ -98,7 +107,6 @@ class EngineTest extends \PHPUnit\Framework\TestCase
         $this->blockRepo
             ->expects($this->once())
             ->method('getWithLayoutByIdentifiers')
-            ->with(['footer', 'header'])
             ->willReturn([$block1, $block2]);
 
         $actualResult = $this->sut->run(
@@ -108,7 +116,7 @@ class EngineTest extends \PHPUnit\Framework\TestCase
             ['title' => $page->getTitle()]
         );
 
-        $this->assertSame($expectedResult, $actualResult);
+        $this->assertEquals($expectedResult, $actualResult);
     }
 
     public function testRenderComplex()
@@ -124,7 +132,6 @@ class EngineTest extends \PHPUnit\Framework\TestCase
         $this->blockRepo
             ->expects($this->at(0))
             ->method('getWithLayoutByIdentifiers')
-            ->with(['footer', 'header'])
             ->willReturn([$headerBlock, $footerBlock]);
 
         $headerSub1 = new Block(0, 'header-sub-1', 'o', 'lmn', '{{var/body}}-{{var/title}}');
@@ -132,7 +139,6 @@ class EngineTest extends \PHPUnit\Framework\TestCase
         $this->blockRepo
             ->expects($this->at(1))
             ->method('getWithLayoutByIdentifiers')
-            ->with(['header-sub-1', 'header-sub-2'])
             ->willReturn([$headerSub1, $headerSub2]);
 
         $footerSubLayout = '{{block/footer-sub-sub-1}} {{var/body}}-{{var/title}}';
@@ -140,7 +146,6 @@ class EngineTest extends \PHPUnit\Framework\TestCase
         $this->blockRepo
             ->expects($this->at(2))
             ->method('getWithLayoutByIdentifiers')
-            ->with(['footer-sub-1'])
             ->willReturn([$footerSub1]);
 
         $footerSubSubLayout = '{{var/body}}-{{var/title}}';
@@ -148,7 +153,6 @@ class EngineTest extends \PHPUnit\Framework\TestCase
         $this->blockRepo
             ->expects($this->at(3))
             ->method('getWithLayoutByIdentifiers')
-            ->with(['footer-sub-sub-1'])
             ->willReturn([$footerSubSub1]);
 
         $actualResult = $this->sut->run(
@@ -158,6 +162,6 @@ class EngineTest extends \PHPUnit\Framework\TestCase
             ['title' => $page->getTitle()]
         );
 
-        $this->assertSame($expectedResult, $actualResult);
+        $this->assertEquals($expectedResult, $actualResult);
     }
 }

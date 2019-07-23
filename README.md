@@ -154,7 +154,6 @@ AbterPHP is based on [Opulence](https://www.opulencephp.com/), but uses a few mo
  - [Trumbowyg](https://alex-d.github.io/Trumbowyg/documentation/) as a wysiwyg solution (Admin module)
  - [zxcvbn](https://github.com/dropbox/zxcvbn) from Dropbox for password strength estimations (Admin module)
  - [zxcvbn-php](https://github.com/bjeavons/zxcvbn-php) PHP version of `zxcvbn` (Admin module)
- - [php-ulid](https://github.com/robinvdvleuten/php-ulid) for ID generation
  - [OAuth 2.0 Server](https://oauth2.thephpleague.com/authorization-server/client-credentials-grant/) for API authentication and authorization with [Nyholm/psr7](https://github.com/Nyholm/psr7) as PSR-7 request / response library.
  
 If you want to contribute code you'll also need to get familiar with these tools:
@@ -201,14 +200,16 @@ before the first stable version.
 1. ~~Documentation page exists~~
 1. ~~All implemented API endpoints return properly formatted errors~~
 1. ~~Optionally embed file content into getFile API endpoint~~
+1. ~~Disable block cache for development~~
+1. List pages on frontend by category
 1. Improved security implementing related headers as recommended:
    - https://medium.freecodecamp.org/secure-your-web-application-with-these-http-headers-fd66e0367628
    - https://medium.freecodecamp.org/web-security-hardening-http-cookies-be8d8d8016e1
-1. List pages on frontend by category
 1. 70%+ of PHP source code unit tested, except for bootstrappers and console commands
 1. Verified that `localhost_router.php` works as expected or remove it if too hard to fix
 1. Tested project on OSX and Windows 10.
 1. Upgrade to phpunit 8.1
+1. API verified against Zalando REST API recommendations
 
 ### First beta musts:
 
@@ -237,7 +238,7 @@ before the first stable version.
 1. Setup wizard (admin user + security settings)
 1. ~~Client creation via CLI~~
 1. Revoke token endpoint
-1. Optionally embed rendered page body parameter
+1. ~~Optionally embed rendered page body parameter~~
 1. Scope checks during serving API calls
 
 ### 1.0 musts:
@@ -291,6 +292,8 @@ before the first stable version.
  - Setup [codeclimate.com](https://codeclimate.com/) properly
  - Ask about discarding changes when using the Back to List button
  - Icons for Grid and Form buttons
+ - Website entity to support multipage setups
+ - Frontend language selection
 
 ### Ideas for 1.1:
  - WYSIWYG file selector
