@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/abterphp/admin.git",
-                "reference": "cd46316f9db6790f8746a5e3cfd7f66509e37bc7"
+                "reference": "f63432c32c59585b40eae8f4b96a69bfe2fc23d8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/abterphp/admin/zipball/cd46316f9db6790f8746a5e3cfd7f66509e37bc7",
-                "reference": "cd46316f9db6790f8746a5e3cfd7f66509e37bc7",
+                "url": "https://api.github.com/repos/abterphp/admin/zipball/f63432c32c59585b40eae8f4b96a69bfe2fc23d8",
+                "reference": "f63432c32c59585b40eae8f4b96a69bfe2fc23d8",
                 "shasum": ""
             },
             "require": {
@@ -53,7 +53,7 @@
                 }
             ],
             "description": "Admin module for AbterPHP",
-            "time": "2019-07-22T17:11:22+00:00"
+            "time": "2019-07-26T20:17:00+00:00"
         },
         {
             "name": "abterphp/bootstrap4-website",
@@ -201,12 +201,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/abterphp/framework.git",
-                "reference": "760c610c249b1a856ff2d41568c5d90f3283d6f9"
+                "reference": "7754f1a4092b1582c825a69aec8f8379999a7463"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/abterphp/framework/zipball/760c610c249b1a856ff2d41568c5d90f3283d6f9",
-                "reference": "760c610c249b1a856ff2d41568c5d90f3283d6f9",
+                "url": "https://api.github.com/repos/abterphp/framework/zipball/7754f1a4092b1582c825a69aec8f8379999a7463",
+                "reference": "7754f1a4092b1582c825a69aec8f8379999a7463",
                 "shasum": ""
             },
             "require": {
@@ -262,7 +262,7 @@
                 }
             ],
             "description": "Foundations for AbterPHP",
-            "time": "2019-07-23T11:57:25+00:00"
+            "time": "2019-07-26T20:13:39+00:00"
         },
         {
             "name": "abterphp/propeller-admin",
@@ -270,12 +270,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/abterphp/propeller-admin.git",
-                "reference": "3bb73c7e7fdb485433953d48a8867e74d0d70d76"
+                "reference": "42bb29c73a88cf7ed5ae829a6b6a4e67fc00c36c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/abterphp/propeller-admin/zipball/3bb73c7e7fdb485433953d48a8867e74d0d70d76",
-                "reference": "3bb73c7e7fdb485433953d48a8867e74d0d70d76",
+                "url": "https://api.github.com/repos/abterphp/propeller-admin/zipball/42bb29c73a88cf7ed5ae829a6b6a4e67fc00c36c",
+                "reference": "42bb29c73a88cf7ed5ae829a6b6a4e67fc00c36c",
                 "shasum": ""
             },
             "require": {
@@ -303,12 +303,12 @@
             "authors": [
                 {
                     "name": "Peter Aba",
-                    "email": "peter@peteraba.com",
-                    "role": "Engineer"
+                    "role": "Engineer",
+                    "email": "peter@peteraba.com"
                 }
             ],
             "description": "Propeller design for the Admin module of AbterPHP",
-            "time": "2019-05-27T10:12:08+00:00"
+            "time": "2019-07-27T08:17:07+00:00"
         },
         {
             "name": "abterphp/website",
@@ -316,12 +316,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/abterphp/website.git",
-                "reference": "df08cc79958c4f21321d7e10ac8e5745b39c0a31"
+                "reference": "86fae8fb1d455aa98de9c7930ab40ccf6343ed5c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/abterphp/website/zipball/df08cc79958c4f21321d7e10ac8e5745b39c0a31",
-                "reference": "df08cc79958c4f21321d7e10ac8e5745b39c0a31",
+                "url": "https://api.github.com/repos/abterphp/website/zipball/86fae8fb1d455aa98de9c7930ab40ccf6343ed5c",
+                "reference": "86fae8fb1d455aa98de9c7930ab40ccf6343ed5c",
                 "shasum": ""
             },
             "require": {
@@ -354,7 +354,7 @@
                 }
             ],
             "description": "Website module for AbterPHP",
-            "time": "2019-07-23T11:23:19+00:00"
+            "time": "2019-07-27T08:13:20+00:00"
         },
         {
             "name": "abterphp/website-creative",
@@ -362,16 +362,17 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/abterphp/website-creative.git",
-                "reference": "d8874b63d7518117095e6b883e5545eb18fd173e"
+                "reference": "2900bc366ee8719a4e6459bafe582f5103f9cce8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/abterphp/website-creative/zipball/d8874b63d7518117095e6b883e5545eb18fd173e",
-                "reference": "d8874b63d7518117095e6b883e5545eb18fd173e",
+                "url": "https://api.github.com/repos/abterphp/website-creative/zipball/2900bc366ee8719a4e6459bafe582f5103f9cce8",
+                "reference": "2900bc366ee8719a4e6459bafe582f5103f9cce8",
                 "shasum": ""
             },
             "require": {
-                "abterphp/bootstrap4-website": "dev-master"
+                "abterphp/bootstrap4-website": "dev-master",
+                "abterphp/contact": "dev-master"
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^2.14",
@@ -395,12 +396,12 @@
             "authors": [
                 {
                     "name": "Peter Aba",
-                    "email": "peter@peteraba.com",
-                    "role": "Engineer"
+                    "role": "Engineer",
+                    "email": "peter@peteraba.com"
                 }
             ],
             "description": "Website implementation for Startbootstrap - Creative based on AbterPHP",
-            "time": "2019-05-27T00:58:58+00:00"
+            "time": "2019-07-27T08:23:44+00:00"
         },
         {
             "name": "bjeavons/zxcvbn-php",
