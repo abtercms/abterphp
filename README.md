@@ -201,10 +201,8 @@ before the first stable version.
 1. ~~All implemented API endpoints return properly formatted errors~~
 1. ~~Optionally embed file content into getFile API endpoint~~
 1. ~~Disable block cache for development~~
-1. List pages on frontend by category
-1. Improved security implementing related headers as recommended:
-   - https://medium.freecodecamp.org/secure-your-web-application-with-these-http-headers-fd66e0367628
-   - https://medium.freecodecamp.org/web-security-hardening-http-cookies-be8d8d8016e1
+1. ~~List pages on frontend by category (simple)~~
+1. ~~List pages on frontend by category (detailed)~~
 1. 70%+ of PHP source code unit tested, except for bootstrappers and console commands
 1. Verified that `localhost_router.php` works as expected or remove it if too hard to fix
 1. Tested project on OSX and Windows 10.
@@ -214,13 +212,18 @@ before the first stable version.
 ### First beta musts:
 
 1. ~~Existing phpmd ignore cases reviewed~~
+1. ~~Client creation via CLI~~
+1. ~~Optionally embed rendered page body parameter~~
+1. ~~1st nice website module~~
+1. Must-accept-cookie module
+1. 2nd nice website module
+1. 3rd nice website module
 1. API implemented
 1. 1 grid is covered with acceptance tests (filters, pagination included)
 1. 1 form is covered with acceptance tests (displaying with new and existing entity and saving included)
 1. Highlight form fields with validation errors
 1. 12-factor compliance reviewed and improvements planned
 1. Reviewed and refactored global `$abterModuleManager` usage
-1. Must-accept-cookie module
 1. Test loading entities that don't exist or faulty
 1. Fix empty exceptions (\LogicException, \RuntimeException, \InvalidArgumentException)
 1. Ensure identifiers do not contain a comma (explode issue)
@@ -231,15 +234,17 @@ before the first stable version.
    - Create new validation rules where needed
 1. Cached translations
 1. Documentation covers getting started and main design goals
-1. 3 nice website modules
 1. Fix sidebar propeller "bug"
 1. Cache navigation for user
 1. Enable/Disable modules from console
 1. Setup wizard (admin user + security settings)
-1. ~~Client creation via CLI~~
 1. Revoke token endpoint
-1. ~~Optionally embed rendered page body parameter~~
 1. Scope checks during serving API calls
+1. RSS feeds
+1. Default image for pages
+1. Improved security implementing related headers as recommended:
+   - https://medium.freecodecamp.org/secure-your-web-application-with-these-http-headers-fd66e0367628
+   - https://medium.freecodecamp.org/web-security-hardening-http-cookies-be8d8d8016e1
 
 ### 1.0 musts:
 
