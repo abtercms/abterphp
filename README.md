@@ -154,7 +154,6 @@ AbterPHP is based on [Opulence](https://www.opulencephp.com/), but uses a few mo
  - [Trumbowyg](https://alex-d.github.io/Trumbowyg/documentation/) as a wysiwyg solution (Admin module)
  - [zxcvbn](https://github.com/dropbox/zxcvbn) from Dropbox for password strength estimations (Admin module)
  - [zxcvbn-php](https://github.com/bjeavons/zxcvbn-php) PHP version of `zxcvbn` (Admin module)
- - [php-ulid](https://github.com/robinvdvleuten/php-ulid) for ID generation
  
 If you want to contribute code you'll also need to get familiar with these tools:
  - [PhpUnit](https://phpunit.de/) for unit tests

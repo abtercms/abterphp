@@ -64,7 +64,7 @@ Environment::setVar("REDIS_DATABASE", 0);
  * Set the encryption key
  * ----------------------------------------------------------
  */
-Environment::setVar("ENCRYPTION_KEY", "");
+Environment::setVar("ENCRYPTION_KEY", "def00000cea4c75b84279f43b56dd90851609717c5d29c215fd2c67f9b1acb0c3b1c5ff8528dbeecf0c1f368baa33284aa36d00b24994872970933e8881802287553ff7d");
 
 /**
  * ----------------------------------------------------------
@@ -168,3 +168,16 @@ Environment::setVar("API_BASE_PATH", "/api-iddqd");
  */
 
 Environment::setVar("MODULE_CACHE_KEY", "AbterPhp:Modules");
+
+/**
+ * ----------------------------------------------------------
+ * Oauth2 settings
+ * ----------------------------------------------------------
+ */
+
+Environment::setVar("OAUTH2_PRIVATE_KEY_PATH", "");
+Environment::setVar("OAUTH2_PRIVATE_KEY_PASSWORD", "");
+Environment::setVar("OAUTH2_PUBLIC_KEY_PATH", "");
+Environment::setVar("OAUTH2_ENCRYPTION_KEY", "");
+Environment::setVar("OAUTH2_TOKEN_EXPIRY", "");
+Environment::setVar("OAUTH2_SECRET_LENGTH", "");
