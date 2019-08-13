@@ -23,7 +23,7 @@ integration:
 	./vendor/bin/phpunit --no-coverage --testsuite=AbterPHP\\Integration
 
 coverage:
-	./vendor/bin/phpunit --testsuite=unit
+	./vendor/bin/phpunit --testsuite=AbterPHP\\Unit
 
 flush:
 	./apex abterphp:flushcache
