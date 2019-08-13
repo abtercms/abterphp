@@ -185,6 +185,7 @@ before the first stable version.
 1. ~~1 nice website module~~
 1. ~~Page category~~
 1. ~~Re-add navigation item filtering by enforcer~~
+1. ~~Documentation page exists~~
 1. Improved security implementing related headers as recommended:
    - https://medium.freecodecamp.org/secure-your-web-application-with-these-http-headers-fd66e0367628
    - https://medium.freecodecamp.org/web-security-hardening-http-cookies-be8d8d8016e1
@@ -192,7 +193,6 @@ before the first stable version.
 1. Verified that `localhost_router.php` works as expected or remove it if too hard to fix
 1. Tested project on OSX and Windows 10.
 1. Initial API defined and published
-1. Documentation page exists
 1. Enable/Disable modules from console
 
 ### First beta musts:
