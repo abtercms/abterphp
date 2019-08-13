@@ -9,17 +9,18 @@ update:
 	php composer.phar update
 
 build:
+	$(MAKE) precommit
 	$(MAKE) integration
 	$(MAKE) coverage
 
 precommit:
-	./vendor/bin/phpunit --no-coverage
+	$(MAKE) unit
 
 unit:
-	./vendor/bin/phpunit --no-coverage --testsuite=unit
+	./vendor/bin/phpunit --no-coverage --testsuite=AbterPHP\\Unit --stop-on-error --stop-on-failure
 
 integration:
-	./vendor/bin/phpunit --no-coverage --testsuite=integration
+	./vendor/bin/phpunit --no-coverage --testsuite=AbterPHP\\Integration
 
 coverage:
 	./vendor/bin/phpunit --testsuite=unit

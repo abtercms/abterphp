@@ -7,7 +7,7 @@ namespace Integration\Framework\Template;
 use AbterPhp\Framework\Template\CacheData;
 use AbterPhp\Framework\Template\CacheManager;
 use Opulence\Cache\ICacheBridge;
-use PHPUnit_Framework_MockObject_MockObject as MockObject;
+use PHPUnit\Framework\MockObject;
 
 class CacheManagerTest extends \PHPUnit\Framework\TestCase
 {
@@ -20,7 +20,7 @@ class CacheManagerTest extends \PHPUnit\Framework\TestCase
     /** @var ICacheBridge|MockObject */
     protected $client;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->client = $this->getMockBuilder(ICacheBridge::class)
             ->disableOriginalConstructor()

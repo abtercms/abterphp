@@ -56,7 +56,7 @@ class RealUserCommandTest extends IntegrationTestCase
             ->withStyle(false)
             ->execute()
             ->assertResponse
-            ->isOK()
+            ->isError()
             ->outputEquals(strip_tags(Create::COMMAND_UNSAFE_PASSWORD) . PHP_EOL);
     }
 
@@ -82,7 +82,7 @@ class RealUserCommandTest extends IntegrationTestCase
             ->withStyle(false)
             ->execute()
             ->assertResponse
-            ->isOK()
+            ->isError()
             ->outputEquals(strip_tags(Create::COMMAND_UNSAFE_PASSWORD) . PHP_EOL);
     }
 
@@ -106,7 +106,7 @@ class RealUserCommandTest extends IntegrationTestCase
         return [$user, "$user@example.com", 'hello', 'admin'];
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         /** @var IConnection $connection */
         $connection = $this->container->resolve(IConnection::class);

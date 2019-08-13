@@ -1,11 +1,11 @@
 <phpunit
         bootstrap="vendor/autoload.php"
         colors="true">
-    <testsuite name="AbterPHP">
-        <testsuite name="integration">
+    <testsuites>
+        <testsuite name="AbterPHP\Integration">
             <directory>tests/integration</directory>
         </testsuite>
-        <testsuite name="unit">
+        <testsuite name="AbterPHP\Unit">
             <directory>vendor/abterphp/framework/tests</directory>
             <directory>vendor/abterphp/admin/tests</directory>
             <directory>vendor/abterphp/website/tests</directory>
@@ -14,7 +14,7 @@
             <directory>vendor/abterphp/propeller-admin/tests</directory>
             <directory>vendor/abterphp/bootstrap4-website/tests</directory>
         </testsuite>
-    </testsuite>
+    </testsuites>
     <php>
         <env name="ENV_NAME" value="testing"/>
         <env name="ENCRYPTION_KEY" value="74a64db2018d928d351d7bdd257c410efa938a010bc32bcd789155fd8cd75eb9"/>
@@ -25,6 +25,7 @@
         <env name="DB_NAME" value="abter_test"/>
         <env name="DB_PASSWORD" value="abter_test"/>
         <env name="DB_PORT" value="3306"/>
+        <env name="DIR_AUTH_CONFIG" value="/website/config/authorization"/>
     </php>
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">

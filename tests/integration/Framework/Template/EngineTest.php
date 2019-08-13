@@ -10,11 +10,14 @@ use AbterPhp\Website\Databases\Queries\BlockCache;
 use AbterPhp\Website\Domain\Entities\Block;
 use AbterPhp\Website\Domain\Entities\Page;
 use AbterPhp\Website\Orm\BlockRepo;
-use AbterPhp\Website\Template\BlockLoader;
+use AbterPhp\Website\Template\Loader\Block as BlockLoader;
 use PHPUnit\Framework\MockObject\MockObject;
 
 class EngineTest extends \PHPUnit\Framework\TestCase
 {
+    const CACHE_ALLOWED = true;
+    const CACHE_NOT_ALLOWED = false;
+
     /** @var Engine */
     protected $sut;
 
@@ -33,7 +36,7 @@ class EngineTest extends \PHPUnit\Framework\TestCase
     /** @var CacheManager|MockObject */
     protected $cacheManager;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->templateFactory = new Factory();
 
@@ -66,16 +69,16 @@ class EngineTest extends \PHPUnit\Framework\TestCase
 
         $blockLoader = new BlockLoader($this->blockRepo, $this->blockCache);
 
-        $this->sut = new Engine($this->renderer, $this->cacheManager);
+        $this->sut = new Engine($this->renderer, $this->cacheManager, static::CACHE_NOT_ALLOWED);
 
         $this->renderer->addLoader('block', $blockLoader);
     }
 
     public function testRenderNoBlocks()
     {
-        $expectedResult = 'abc-d';
+        $expectedResult = 'abcde-f';
 
-        $page = new Page(0, 'abc', 'd', 'abc', null, '{{var/body}}-{{var/title}}');
+        $page = new Page(0, 'abc', 'f', 'abcd', 'abcde', false, null, '{{var/body}}-{{var/title}}');
 
         $actualResult = $this->sut->run(
             'page',
@@ -89,16 +92,15 @@ class EngineTest extends \PHPUnit\Framework\TestCase
 
     public function testRenderFlatBlocks()
     {
-        $expectedResult = 'efg-h abc-d ijk-l';
+        $expectedResult = 'efg-h abcde-f ijk-l';
 
-        $page = new Page(0, '', 'd', 'abc', null, '{{block/header}} {{var/body}}-{{var/title}} {{block/footer}}');
+        $page = new Page(0, '', 'f', 'abcd', 'abcde', false, null, '{{block/header}} {{var/body}}-{{var/title}} {{block/footer}}');
 
         $block1 = new Block(0, 'header', 'h', 'efg', '{{var/body}}-{{var/title}}', null);
         $block2 = new Block(0, 'footer', 'l', 'ijk', '{{var/body}}-{{var/title}}', null);
         $this->blockRepo
-            ->expects($this->once())
+            ->expects($this->any())
             ->method('getWithLayoutByIdentifiers')
-            ->with(['footer', 'header'])
             ->willReturn([$block1, $block2]);
 
         $actualResult = $this->sut->run(
@@ -113,9 +115,9 @@ class EngineTest extends \PHPUnit\Framework\TestCase
 
     public function testRenderComplex()
     {
-        $expectedResult = 'lmn-o efg-h pqr-s abc-d xyz-0 tuv-w ijk-l';
+        $expectedResult = 'lmn-o efg-h pqr-s abcde-f xyz-0 tuv-w ijk-l';
 
-        $page = new Page(0, '', 'd', 'abc', null, '{{block/header}} {{var/body}}-{{var/title}} {{block/footer}}');
+        $page = new Page(0, '', 'f', 'abcd', 'abcde', false, null, '{{block/header}} {{var/body}}-{{var/title}} {{block/footer}}');
 
         $headerLayout = '{{block/header-sub-1}} {{var/body}}-{{var/title}} {{block/header-sub-2}}';
         $headerBlock  = new Block(0, 'header', 'h', 'efg', $headerLayout);
@@ -124,7 +126,7 @@ class EngineTest extends \PHPUnit\Framework\TestCase
         $this->blockRepo
             ->expects($this->at(0))
             ->method('getWithLayoutByIdentifiers')
-            ->with(['footer', 'header'])
+            ->with(['header', 'footer'])
             ->willReturn([$headerBlock, $footerBlock]);
 
         $headerSub1 = new Block(0, 'header-sub-1', 'o', 'lmn', '{{var/body}}-{{var/title}}');

@@ -7,7 +7,6 @@ use LogicException;
 use Opulence\Applications\Tasks\Dispatchers\ITaskDispatcher;
 use Opulence\Databases\Migrations\IMigrator;
 use Opulence\Framework\Configuration\Config;
-use Opulence\Framework\Console\Testing\PhpUnit\IntegrationTestCase as BaseIntegrationTestCase;
 use Opulence\Ioc\Bootstrappers\Caching\FileCache;
 use Opulence\Ioc\Bootstrappers\Caching\ICache;
 use Opulence\Ioc\Bootstrappers\Dispatchers\BootstrapperDispatcher;
@@ -18,7 +17,7 @@ use Opulence\Ioc\IContainer;
 /**
  * Defines the console application integration test
  */
-class IntegrationTestCase extends BaseIntegrationTestCase
+class IntegrationTestCase extends BaseTestCase
 {
     /** @var array */
     protected $supportedTags = ['success', 'info', 'question', 'comment', 'error', 'fatal', 'b', 'u'];
@@ -46,7 +45,7 @@ class IntegrationTestCase extends BaseIntegrationTestCase
     /**
      * @inheritdoc
      */
-    public function setUp()
+    public function setUp(): void
     {
         /** @var Manager $abterModuleManager */
         global $abterModuleManager;
@@ -97,7 +96,7 @@ class IntegrationTestCase extends BaseIntegrationTestCase
         parent::setUp();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         // TODO: Fix this after https://github.com/opulencephp/Opulence/issues/106
         /** @var IMigrator $migrator */

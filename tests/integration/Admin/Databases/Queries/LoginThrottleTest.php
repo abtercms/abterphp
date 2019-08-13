@@ -42,7 +42,7 @@ class LoginThrottleTest extends IntegrationTestCase
     /** @var string[] */
     protected $loginAttemptIds;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -164,7 +164,7 @@ class LoginThrottleTest extends IntegrationTestCase
         $statement->execute();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
 

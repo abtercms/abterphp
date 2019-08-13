@@ -25,7 +25,7 @@ class IntegrationTestCase extends TestCase
     /**
      * @inheritdoc
      */
-    public function setUp()
+    public function setUp(): void
     {
         /** @var Manager $abterModuleManager */
         global $abterModuleManager;
@@ -76,7 +76,7 @@ class IntegrationTestCase extends TestCase
         parent::setUp();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         // TODO: Fix this after https://github.com/opulencephp/Opulence/issues/106
         /** @var IMigrator $migrator */

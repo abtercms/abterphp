@@ -175,11 +175,6 @@ before the first stable version.
    - ~~Advanced settings access role for pages~~
    - ~~Multiple user group for one user~~
    - ~~New user roles: file uploader, layout designer, page writer~~
-1. Improved security implementing related headers as recommended:
-   - https://medium.freecodecamp.org/secure-your-web-application-with-these-http-headers-fd66e0367628
-   - https://medium.freecodecamp.org/web-security-hardening-http-cookies-be8d8d8016e1
-1. 70%+ of PHP source code unit tested, except for bootstrappers and console commands
-1. Verified that `localhost_router.php` works as expected or remove it if too hard to fix
 1. ~~Modular asset management~~
 1. ~~Completed test automation and automatic reviews set up~~
 1. ~~Refactored module manager~~
@@ -187,13 +182,18 @@ before the first stable version.
 1. ~~Uuid ids~~
 1. ~~Removed $value in Select constructor~~
 1. ~~Switch `$attribute` and `$tag` order~~
+1. ~~1 nice website module~~
+1. ~~Page category~~
+1. ~~Re-add navigation item filtering by enforcer~~
+1. Improved security implementing related headers as recommended:
+   - https://medium.freecodecamp.org/secure-your-web-application-with-these-http-headers-fd66e0367628
+   - https://medium.freecodecamp.org/web-security-hardening-http-cookies-be8d8d8016e1
+1. 70%+ of PHP source code unit tested, except for bootstrappers and console commands
+1. Verified that `localhost_router.php` works as expected or remove it if too hard to fix
 1. Tested project on OSX and Windows 10.
 1. Initial API defined and published
 1. Documentation page exists
-1. ~~1 nice website module~~
-1. ~~Page category~~
 1. Enable/Disable modules from console
-1. ~~Re-add navigation item filtering by enforcer~~
 
 ### First beta musts:
 

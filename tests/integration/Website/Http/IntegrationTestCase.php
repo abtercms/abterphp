@@ -7,7 +7,6 @@ use Opulence\Debug\Errors\Handlers\IErrorHandler;
 use Opulence\Debug\Exceptions\Handlers\IExceptionHandler;
 use Opulence\Framework\Configuration\Config;
 use Opulence\Framework\Debug\Exceptions\Handlers\Http\IExceptionRenderer;
-use Opulence\Framework\Http\Testing\PhpUnit\IntegrationTestCase as BaseIntegrationTestCase;
 use Opulence\Ioc\Bootstrappers\Dispatchers\BootstrapperDispatcher;
 use Opulence\Ioc\Bootstrappers\Factories\BootstrapperRegistryFactory;
 use Opulence\Ioc\Bootstrappers\IBootstrapperResolver;
@@ -17,7 +16,7 @@ use Psr\Log\LoggerInterface;
 /**
  * Defines the HTTP integration test
  */
-class IntegrationTestCase extends BaseIntegrationTestCase
+class IntegrationTestCase extends BaseTestCase
 {
     /** @var IExceptionHandler The exception handler used by HTTP applications */
     private $exceptionHandler = null;
@@ -27,7 +26,7 @@ class IntegrationTestCase extends BaseIntegrationTestCase
     /**
      * @inheritdoc
      */
-    public function setUp()
+    public function setUp(): void
     {
         global $abterModuleManager;
 
