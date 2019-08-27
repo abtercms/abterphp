@@ -25,7 +25,11 @@ integration:
 coverage:
 	./vendor/bin/phpunit --testsuite=AbterPHP/Unit -c phpunit-cov.xml
 
+after-success:
+	curl -L --output php-coveralls.phar https://github.com/php-coveralls/php-coveralls/releases/download/v2.1.0/php-coveralls.phar
+	php php-coveralls.phar -vvv --coverage_clover=./tmp/report/clover.xml --json_path=./tmp/report/coveralls-upload.json
+
 flush:
 	./apex abterphp:flushcache
 
-.PHONY: build install update precommit unit integration coverage flush
+.PHONY: build install update precommit unit integration coverage after-success flush
