@@ -30,16 +30,46 @@
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
             <directory suffix=".php">vendor/abterphp/framework/src</directory>
+            <exclude>
+                <directory suffix=".php">vendor/abterphp/framework/src/Bootstrappers</directory>
+                <directory suffix=".php">vendor/abterphp/framework/src/Console/Commands</directory>
+                <directory suffix=".php">vendor/abterphp/framework/src/Http/Controllers</directory>
+            </exclude>
             <directory suffix=".php">vendor/abterphp/admin/src</directory>
+            <exclude>
+                <directory suffix=".php">vendor/abterphp/admin/src/Bootstrappers</directory>
+                <directory suffix=".php">vendor/abterphp/admin/src/Console/Commands</directory>
+                <directory suffix=".php">vendor/abterphp/admin/src/Http/Controllers</directory>
+            </exclude>
             <directory suffix=".php">vendor/abterphp/website/src</directory>
+            <exclude>
+                <directory suffix=".php">vendor/abterphp/website/src/Bootstrappers</directory>
+                <directory suffix=".php">vendor/abterphp/website/src/Console/Commands</directory>
+                <directory suffix=".php">vendor/abterphp/website/src/Http/Controllers</directory>
+            </exclude>
             <directory suffix=".php">vendor/abterphp/files/src</directory>
+            <exclude>
+                <directory suffix=".php">vendor/abterphp/files/src/Bootstrappers</directory>
+                <directory suffix=".php">vendor/abterphp/files/src/Console/Commands</directory>
+                <directory suffix=".php">vendor/abterphp/files/src/Http/Controllers</directory>
+            </exclude>
             <directory suffix=".php">vendor/abterphp/contact/src</directory>
+            <exclude>
+                <directory suffix=".php">vendor/abterphp/contact/src/Bootstrappers</directory>
+                <directory suffix=".php">vendor/abterphp/contact/src/Console/Commands</directory>
+                <directory suffix=".php">vendor/abterphp/contact/src/Http/Controllers</directory>
+            </exclude>
             <directory suffix=".php">vendor/abterphp/propeller-admin/src</directory>
+            <exclude>
+                <directory suffix=".php">vendor/abterphp/propeller-admin/src/Bootstrappers</directory>
+                <directory suffix=".php">vendor/abterphp/propeller-admin/src/Console/Commands</directory>
+                <directory suffix=".php">vendor/abterphp/propeller-admin/src/Http/Controllers</directory>
+            </exclude>
             <directory suffix=".php">vendor/abterphp/bootstrap4-website/src</directory>
             <exclude>
-                <directory suffix=".php">*/src/Bootstrappers</directory>
-                <directory suffix=".php">*/src/Console/Commands</directory>
-                <directory suffix=".php">*/src/Http/Controllers</directory>
+                <directory suffix=".php">vendor/abterphp/bootstrap4-website/src/Bootstrappers</directory>
+                <directory suffix=".php">vendor/abterphp/bootstrap4-website/src/Console/Commands</directory>
+                <directory suffix=".php">vendor/abterphp/bootstrap4-website/src/Http/Controllers</directory>
             </exclude>
         </whitelist>
     </filter>
