@@ -50,6 +50,7 @@ services:
     volumes:
       - .:/website
       - ./docker/php/conf.d/zzz.ini:/usr/local/etc/php/conf.d/zzz.ini:ro
+      - ./docker/php/conf.d/xdebug-off.ini:/usr/local/etc/php/conf.d/xdebug-off.ini:ro
     working_dir: /website
 
   nginx:
