@@ -27,4 +27,24 @@
         <env name="DB_PORT" value="3306"/>
         <env name="DIR_AUTH_CONFIG" value="/website/config/authorization"/>
     </php>
+    <filter>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">vendor/abterphp/framework/src</directory>
+            <directory suffix=".php">vendor/abterphp/admin/src</directory>
+            <directory suffix=".php">vendor/abterphp/website/src</directory>
+            <directory suffix=".php">vendor/abterphp/files/src</directory>
+            <directory suffix=".php">vendor/abterphp/contact/src</directory>
+            <directory suffix=".php">vendor/abterphp/propeller-admin/src</directory>
+            <directory suffix=".php">vendor/abterphp/bootstrap4-website/src</directory>
+            <exclude>
+                <directory suffix=".php">*/src/Bootstrappers</directory>
+                <directory suffix=".php">*/src/Console/Commands</directory>
+                <directory suffix=".php">*/src/Http/Controllers</directory>
+            </exclude>
+        </whitelist>
+    </filter>
+    <logging>
+        <log type="coverage-html" target="./tmp/report" lowUpperBound="35" highLowerBound="70"/>
+        <log type="coverage-clover" target="./tmp/report/clover.xml"/>
+    </logging>
 </phpunit>

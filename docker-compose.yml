@@ -49,7 +49,6 @@ services:
       - DIR_MIGRATIONS=/website/resources/migrations
     volumes:
       - .:/website
-      - ./docker/php/conf.d/yyy.ini:/usr/local/etc/php/conf.d/yyy.ini:ro
       - ./docker/php/conf.d/zzz.ini:/usr/local/etc/php/conf.d/zzz.ini:ro
     working_dir: /website
 

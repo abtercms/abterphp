@@ -17,13 +17,13 @@ precommit:
 	$(MAKE) unit
 
 unit:
-	./vendor/bin/phpunit --no-coverage --testsuite=AbterPHP\\Unit --stop-on-error --stop-on-failure
+	./vendor/bin/phpunit --testsuite=AbterPHP/Unit --stop-on-error --stop-on-failure
 
 integration:
-	./vendor/bin/phpunit --no-coverage --testsuite=AbterPHP\\Integration
+	./vendor/bin/phpunit --testsuite=AbterPHP/Integration
 
 coverage:
-	./vendor/bin/phpunit --testsuite=AbterPHP\\Unit
+	./vendor/bin/phpunit --testsuite=AbterPHP/Unit -c phpunit-cov.xml
 
 flush:
 	./apex abterphp:flushcache
