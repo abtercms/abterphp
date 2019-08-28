@@ -1,4 +1,7 @@
-language: go
+language: php
+php:
+  - "7.2"
+  - "7.3"
 
 services:
   - docker
@@ -18,4 +21,6 @@ script:
   - docker-compose exec php make build
 
 after_success:
-  - docker-compose exec php make after-success
+  - make coverage
+  - curl -L --output php-coveralls.phar https://github.com/php-coveralls/php-coveralls/releases/download/v2.1.0/php-coveralls.phar
+  - travis_retry php php-coveralls.phar -vvv --coverage_clover=./tmp/report/clover.xml --json_path=./tmp/report/coveralls-upload.json
