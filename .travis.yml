@@ -23,4 +23,6 @@ script:
 after_success:
   - make coverage
   - curl -L --output php-coveralls.phar https://github.com/php-coveralls/php-coveralls/releases/download/v2.1.0/php-coveralls.phar
+  - cat ./tmp/report/clover.xml
+  - cat ./tmp/report/coveralls-upload.json
   - travis_retry php php-coveralls.phar -vvv --coverage_clover=./tmp/report/clover.xml --json_path=./tmp/report/coveralls-upload.json
