@@ -1,9 +1,6 @@
 # AbterPHP
 
 [![Build Status](https://travis-ci.com/abtercms/abterphp.svg?branch=master)](https://travis-ci.com/abtercms/abterphp)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/abtercms/abterphp/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/abtercms/abterphp/?branch=master)
-[![Build Status](https://scrutinizer-ci.com/g/abtercms/abterphp/badges/build.png?b=master)](https://scrutinizer-ci.com/g/abtercms/abterphp/build-status/master)
-[![Coverage Status](https://coveralls.io/repos/github/abtercms/abterphp/badge.svg)](https://coveralls.io/github/abtercms/abterphp)
 
 AbterPHP is the first and currently the only implementation of AbterCMS, providing backend, frontend and a REST API for it.
 It does not require much JavaScript knowledge as it uses jQuery instead of some nodejs based solution, therefore many might
@@ -79,7 +76,7 @@ The rest of the installation documentation will assume that `.` is the root dire
 
 #### Create certificate
 
-Since security is a top priority, you'll need to create a certificate and move it into
+Since security is a top priority, you'll need to create a certificate and move it into `docker/nginx/certs/`
 
 ```bash
 mkcert abtercms.test "*.abtercms.test"
@@ -194,14 +191,11 @@ before the first stable version.
 1. ~~Page category~~
 1. ~~Re-add navigation item filtering by enforcer~~
 1. ~~Documentation page exists~~
-1. Improved security implementing related headers as recommended:
-   - https://medium.freecodecamp.org/secure-your-web-application-with-these-http-headers-fd66e0367628
-   - https://medium.freecodecamp.org/web-security-hardening-http-cookies-be8d8d8016e1
-1. 70%+ of PHP source code unit tested, except for bootstrappers and console commands
+1. ~~70%+ of PHP source code unit tested, except for bootstrappers and console commands~~
+1. ~~Tested project on OSX~~
+1. ~~Initial API defined and published~~
 1. Verified that `localhost_router.php` works as expected or remove it if too hard to fix
-1. Tested project on OSX and Windows 10.
-1. Initial API defined and published
-1. Enable/Disable modules from console
+1. Tested project on Windows 10+
 
 ### First beta musts:
 
@@ -228,6 +222,10 @@ before the first stable version.
 1. 3 nice website modules
 1. Fix sidebar propeller "bug"
 1. Cache navigation for user
+1. Improved security implementing related headers as recommended:
+   - https://medium.freecodecamp.org/secure-your-web-application-with-these-http-headers-fd66e0367628
+   - https://medium.freecodecamp.org/web-security-hardening-http-cookies-be8d8d8016e1
+1. Enable/Disable modules from console
 
 ### 1.0 musts:
 
