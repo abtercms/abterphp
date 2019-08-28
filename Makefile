@@ -11,6 +11,7 @@ update:
 build:
 	$(MAKE) precommit
 	$(MAKE) integration
+	$(MAKE) coverage
 
 precommit:
 	$(MAKE) unit
