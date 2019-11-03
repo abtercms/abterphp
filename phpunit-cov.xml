@@ -28,4 +28,25 @@
         <env name="OAUTH2_PUBLIC_KEY_PATH" value="/website/tests/resources/public.key"/>
         <env name="OAUTH2_ENCRYPTION_KEY" value="def00000cea4c75b84279f43b56dd90851609717c5d29c215fd2c67f9b1acb0c3b1c5ff8528dbeecf0c1f368baa33284aa36d00b24994872970933e8881802287553ff7d"/>
     </php>
+    <filter>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">vendor/abterphp/framework/src</directory>
+            <directory suffix=".php">vendor/abterphp/admin/src</directory>
+            <directory suffix=".php">vendor/abterphp/website/src</directory>
+            <directory suffix=".php">vendor/abterphp/files/src</directory>
+            <directory suffix=".php">vendor/abterphp/contact/src</directory>
+            <directory suffix=".php">vendor/abterphp/propeller-admin/src</directory>
+            <directory suffix=".php">vendor/abterphp/bootstrap4-website/src</directory>
+            <directory suffix=".php">vendor/abterphp/website-creative/src</directory>
+            <exclude>
+                <directory suffix=".php">*/src/Bootstrappers</directory>
+                <directory suffix=".php">*/src/Console/Commands</directory>
+                <directory suffix=".php">*/src/Http/Controllers</directory>
+            </exclude>
+        </whitelist>
+    </filter>
+    <logging>
+        <log type="coverage-html" target="./tmp/report" lowUpperBound="35" highLowerBound="70"/>
+        <log type="coverage-clover" target="./tmp/report/clover.xml"/>
+    </logging>
 </phpunit>

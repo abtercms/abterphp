@@ -1,6 +1,5 @@
 build:
 	$(MAKE) unit
-	$(MAKE) integration
 
 install:
 	php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
@@ -19,9 +18,6 @@ precommit:
 
 unit:
 	./vendor/bin/phpunit --no-coverage --testsuite=unit
-
-integration:
-	./vendor/bin/phpunit --no-coverage --testsuite=integration
 
 pre-coverage:
 	curl -L --output phpcov.phar https://phar.phpunit.de/phpcov.phar
@@ -58,4 +54,4 @@ send-coverage:
 flush:
 	./apex abterphp:flushcache
 
-.PHONY: build install update precommit unit integration coverage flush
+.PHONY: build install update precommit unit coverage flush

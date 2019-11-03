@@ -7,3 +7,5 @@ phpunit.phar
 !config/environment/.env.example.php
 /vendor/
 NOTES.md
+.phpunit.result.cache
+

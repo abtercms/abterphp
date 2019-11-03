@@ -10,18 +10,8 @@
   ],
   "type": "project",
   "license": "MIT",
-  "autoload": {
-    "psr-4": {
-      "Integration\\": [
-        "tests/integration"
-      ]
-    }
-  },
   "minimum-stability": "dev",
   "prefer-stable": true,
-  "require-dev": {
-    "phpunit/phpunit": "^6.1"
-  },
   "suggest": {
     "ext-redis": "Allows better caching"
   },
@@ -61,5 +51,8 @@
     "abterphp/files": "dev-master",
     "abterphp/contact": "dev-master",
     "abterphp/website-creative": "dev-master"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^8.4"
   }
 }
