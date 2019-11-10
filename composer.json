@@ -43,16 +43,23 @@
     "prefer-install": "dist"
   },
   "require": {
-    "abterphp/framework": "dev-master",
-    "abterphp/admin": "dev-master",
-    "abterphp/website": "dev-master",
-    "abterphp/propeller-admin": "dev-master",
-    "abterphp/bootstrap4-website": "dev-master",
-    "abterphp/files": "dev-master",
-    "abterphp/contact": "dev-master",
-    "abterphp/website-creative": "dev-master"
+    "abterphp/framework": "*",
+    "abterphp/admin": "*",
+    "abterphp/website": "*",
+    "abterphp/propeller-admin": "*",
+    "abterphp/bootstrap4-website": "*",
+    "abterphp/files": "*",
+    "abterphp/contact": "*",
+    "abterphp/website-creative": "*",
+    "opulence/opulence": "dev-primary-key-for-migrations"
   },
   "require-dev": {
     "phpunit/phpunit": "^8.4"
-  }
+  },
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/peteraba/Opulence.git"
+    }
+  ]
 }

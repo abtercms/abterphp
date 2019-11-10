@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "67eb0c369350be1dcca7d701f9406efa",
+    "content-hash": "27ef4e172c6ab6c198162954b9b7f2dd",
     "packages": [
         {
             "name": "abterphp/admin",
@@ -12,16 +12,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/abterphp/admin.git",
-                "reference": "50233219a28a4feb9d8d0f0229055a6c02bf8961"
+                "reference": "c4bbb958482c6a7d15550df5cc5489f06c5d91e1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/abterphp/admin/zipball/50233219a28a4feb9d8d0f0229055a6c02bf8961",
-                "reference": "50233219a28a4feb9d8d0f0229055a6c02bf8961",
+                "url": "https://api.github.com/repos/abterphp/admin/zipball/c4bbb958482c6a7d15550df5cc5489f06c5d91e1",
+                "reference": "c4bbb958482c6a7d15550df5cc5489f06c5d91e1",
                 "shasum": ""
             },
             "require": {
-                "abterphp/framework": "dev-master",
+                "abterphp/framework": "*",
                 "ext-json": "*"
             },
             "require-dev": {
@@ -54,7 +54,7 @@
                 }
             ],
             "description": "Admin module for AbterPHP",
-            "time": "2019-10-27T15:24:15+00:00"
+            "time": "2019-11-10T18:16:07+00:00"
         },
         {
             "name": "abterphp/bootstrap4-website",
@@ -62,16 +62,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/abterphp/bootstrap4-website.git",
-                "reference": "cdc227a60abea9423f5fa3004b7f19cabe882527"
+                "reference": "95c98878ec3bbd0b0a87c42c87e91ac41f4411f8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/abterphp/bootstrap4-website/zipball/cdc227a60abea9423f5fa3004b7f19cabe882527",
-                "reference": "cdc227a60abea9423f5fa3004b7f19cabe882527",
+                "url": "https://api.github.com/repos/abterphp/bootstrap4-website/zipball/95c98878ec3bbd0b0a87c42c87e91ac41f4411f8",
+                "reference": "95c98878ec3bbd0b0a87c42c87e91ac41f4411f8",
                 "shasum": ""
             },
             "require": {
-                "abterphp/website": "dev-master"
+                "abterphp/website": "*"
             },
             "require-dev": {
                 "phan/phan": "^2.2",
@@ -100,7 +100,7 @@
                 }
             ],
             "description": "Website module for AbterPHP",
-            "time": "2019-11-02T15:06:22+00:00"
+            "time": "2019-11-10T18:35:33+00:00"
         },
         {
             "name": "abterphp/contact",
@@ -108,16 +108,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/abterphp/contact.git",
-                "reference": "e00056ccdc2c889379b81ee84601440cad125a40"
+                "reference": "a10212893fcf279f6384cc7b08ab23f191be6ae9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/abterphp/contact/zipball/e00056ccdc2c889379b81ee84601440cad125a40",
-                "reference": "e00056ccdc2c889379b81ee84601440cad125a40",
+                "url": "https://api.github.com/repos/abterphp/contact/zipball/a10212893fcf279f6384cc7b08ab23f191be6ae9",
+                "reference": "a10212893fcf279f6384cc7b08ab23f191be6ae9",
                 "shasum": ""
             },
             "require": {
-                "abterphp/website": "dev-master"
+                "abterphp/website": "*"
             },
             "require-dev": {
                 "phan/phan": "^2.2",
@@ -146,7 +146,7 @@
                 }
             ],
             "description": "Contact module for AbterPHP",
-            "time": "2019-11-02T14:52:54+00:00"
+            "time": "2019-11-10T18:39:33+00:00"
         },
         {
             "name": "abterphp/files",
@@ -154,18 +154,18 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/abterphp/files.git",
-                "reference": "366e8d91ac88726cdd8de6cbf5c68d5e92f70f28"
+                "reference": "d5870912c0676fa1c4de2b91c8867a9cca93412f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/abterphp/files/zipball/366e8d91ac88726cdd8de6cbf5c68d5e92f70f28",
-                "reference": "366e8d91ac88726cdd8de6cbf5c68d5e92f70f28",
+                "url": "https://api.github.com/repos/abterphp/files/zipball/d5870912c0676fa1c4de2b91c8867a9cca93412f",
+                "reference": "d5870912c0676fa1c4de2b91c8867a9cca93412f",
                 "shasum": ""
             },
             "require": {
-                "abterphp/admin": "dev-master",
-                "abterphp/framework": "dev-master",
-                "abterphp/website": "dev-master",
+                "abterphp/admin": "*",
+                "abterphp/framework": "*",
+                "abterphp/website": "*",
                 "ext-json": "*"
             },
             "require-dev": {
@@ -195,20 +195,20 @@
                 }
             ],
             "description": "File upload and file sharing module for AbterPHP",
-            "time": "2019-11-02T15:56:35+00:00"
+            "time": "2019-11-10T19:19:52+00:00"
         },
         {
             "name": "abterphp/framework",
-            "version": "dev-master",
+            "version": "dev-primary-key-for-migrations",
             "source": {
                 "type": "git",
                 "url": "https://github.com/abterphp/framework.git",
-                "reference": "4c000bfb59c2ded0692a458067aa9bbcfbea95e1"
+                "reference": "afe4fe2ded3cb0c82f77dd6f833876b26d31c5f5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/abterphp/framework/zipball/4c000bfb59c2ded0692a458067aa9bbcfbea95e1",
-                "reference": "4c000bfb59c2ded0692a458067aa9bbcfbea95e1",
+                "url": "https://api.github.com/repos/abterphp/framework/zipball/afe4fe2ded3cb0c82f77dd6f833876b26d31c5f5",
+                "reference": "afe4fe2ded3cb0c82f77dd6f833876b26d31c5f5",
                 "shasum": ""
             },
             "require": {
@@ -229,7 +229,7 @@
                 "monolog/monolog": "1.22.0",
                 "nyholm/psr7": "^1.1",
                 "nyholm/psr7-server": "^0.3.0",
-                "opulence/opulence": "1.1.*",
+                "opulence/opulence": "dev-primary-key-for-migrations",
                 "php": "^7.2",
                 "psr/http-message": "^1.0",
                 "swiftmailer/swiftmailer": "^6.1"
@@ -253,7 +253,6 @@
                     ]
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -265,7 +264,11 @@
                 }
             ],
             "description": "Foundations for AbterPHP",
-            "time": "2019-11-02T17:39:26+00:00"
+            "support": {
+                "source": "https://github.com/abterphp/framework/tree/primary-key-for-migrations",
+                "issues": "https://github.com/abterphp/framework/issues"
+            },
+            "time": "2019-11-10T17:58:51+00:00"
         },
         {
             "name": "abterphp/propeller-admin",
@@ -273,16 +276,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/abterphp/propeller-admin.git",
-                "reference": "1411d2ac193636654725166fda01615c30afcf8f"
+                "reference": "888262f8675fd9dd8aaa056e69a450cc81aede2e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/abterphp/propeller-admin/zipball/1411d2ac193636654725166fda01615c30afcf8f",
-                "reference": "1411d2ac193636654725166fda01615c30afcf8f",
+                "url": "https://api.github.com/repos/abterphp/propeller-admin/zipball/888262f8675fd9dd8aaa056e69a450cc81aede2e",
+                "reference": "888262f8675fd9dd8aaa056e69a450cc81aede2e",
                 "shasum": ""
             },
             "require": {
-                "abterphp/admin": "dev-master"
+                "abterphp/admin": "*"
             },
             "require-dev": {
                 "phan/phan": "^2.2",
@@ -311,7 +314,7 @@
                 }
             ],
             "description": "Propeller design for the Admin module of AbterPHP",
-            "time": "2019-11-02T15:16:47+00:00"
+            "time": "2019-11-10T18:47:31+00:00"
         },
         {
             "name": "abterphp/website",
@@ -319,17 +322,17 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/abterphp/website.git",
-                "reference": "4a4957a9a288b72522b6f85e9eb34c38783ebc2f"
+                "reference": "316a3ed21727f2896912e571f02341bea14d4f4f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/abterphp/website/zipball/4a4957a9a288b72522b6f85e9eb34c38783ebc2f",
-                "reference": "4a4957a9a288b72522b6f85e9eb34c38783ebc2f",
+                "url": "https://api.github.com/repos/abterphp/website/zipball/316a3ed21727f2896912e571f02341bea14d4f4f",
+                "reference": "316a3ed21727f2896912e571f02341bea14d4f4f",
                 "shasum": ""
             },
             "require": {
-                "abterphp/admin": "dev-master",
-                "abterphp/framework": "dev-master"
+                "abterphp/admin": "*",
+                "abterphp/framework": "*"
             },
             "require-dev": {
                 "phan/phan": "^2.2",
@@ -358,7 +361,7 @@
                 }
             ],
             "description": "Website module for AbterPHP",
-            "time": "2019-10-29T21:23:20+00:00"
+            "time": "2019-11-10T18:27:19+00:00"
         },
         {
             "name": "abterphp/website-creative",
@@ -366,17 +369,17 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/abterphp/website-creative.git",
-                "reference": "5a0a95238df02be266e6f0367c96a1fcb247b8f8"
+                "reference": "06a38edf61879f3d7e6d4ecd0a1324bd20de7b1a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/abterphp/website-creative/zipball/5a0a95238df02be266e6f0367c96a1fcb247b8f8",
-                "reference": "5a0a95238df02be266e6f0367c96a1fcb247b8f8",
+                "url": "https://api.github.com/repos/abterphp/website-creative/zipball/06a38edf61879f3d7e6d4ecd0a1324bd20de7b1a",
+                "reference": "06a38edf61879f3d7e6d4ecd0a1324bd20de7b1a",
                 "shasum": ""
             },
             "require": {
-                "abterphp/bootstrap4-website": "dev-master",
-                "abterphp/contact": "dev-master"
+                "abterphp/bootstrap4-website": "*",
+                "abterphp/contact": "*"
             },
             "require-dev": {
                 "phan/phan": "^2.2",
@@ -405,7 +408,7 @@
                 }
             ],
             "description": "Website implementation for Startbootstrap - Creative based on AbterPHP",
-            "time": "2019-11-02T15:29:32+00:00"
+            "time": "2019-11-10T18:50:54+00:00"
         },
         {
             "name": "bjeavons/zxcvbn-php",
@@ -1505,16 +1508,16 @@
         },
         {
             "name": "nikic/php-parser",
-            "version": "v4.2.5",
+            "version": "v4.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "b76bbc3c51f22c570648de48e8c2d941ed5e2cf2"
+                "reference": "9a9981c347c5c49d6dfe5cf826bb882b824080dc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/b76bbc3c51f22c570648de48e8c2d941ed5e2cf2",
-                "reference": "b76bbc3c51f22c570648de48e8c2d941ed5e2cf2",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/9a9981c347c5c49d6dfe5cf826bb882b824080dc",
+                "reference": "9a9981c347c5c49d6dfe5cf826bb882b824080dc",
                 "shasum": ""
             },
             "require": {
@@ -1522,7 +1525,7 @@
                 "php": ">=7.0"
             },
             "require-dev": {
-                "ircmaxell/php-yacc": "0.0.4",
+                "ircmaxell/php-yacc": "0.0.5",
                 "phpunit/phpunit": "^6.5 || ^7.0 || ^8.0"
             },
             "bin": [
@@ -1531,7 +1534,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "4.2-dev"
+                    "dev-master": "4.3-dev"
                 }
             },
             "autoload": {
@@ -1553,7 +1556,7 @@
                 "parser",
                 "php"
             ],
-            "time": "2019-10-25T18:33:07+00:00"
+            "time": "2019-11-08T13:50:10+00:00"
         },
         {
             "name": "nyholm/psr7",
@@ -1671,16 +1674,16 @@
         },
         {
             "name": "opulence/opulence",
-            "version": "v1.1.8",
+            "version": "dev-primary-key-for-migrations",
             "source": {
                 "type": "git",
-                "url": "https://github.com/opulencephp/Opulence.git",
-                "reference": "c99006dd3eadb4c76ba7d53f16903cf9348ad0c2"
+                "url": "https://github.com/peteraba/Opulence.git",
+                "reference": "8d5f5450be4f83d8952ef3e3c3619ccc0304851a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/opulencephp/Opulence/zipball/c99006dd3eadb4c76ba7d53f16903cf9348ad0c2",
-                "reference": "c99006dd3eadb4c76ba7d53f16903cf9348ad0c2",
+                "url": "https://api.github.com/repos/peteraba/Opulence/zipball/8d5f5450be4f83d8952ef3e3c3619ccc0304851a",
+                "reference": "8d5f5450be4f83d8952ef3e3c3619ccc0304851a",
                 "shasum": ""
             },
             "require": {
@@ -1736,7 +1739,6 @@
                     "**/Tests/"
                 ]
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -1749,6 +1751,7 @@
             ],
             "description": "The Opulence PHP framework",
             "keywords": [
+                "PHP",
                 "apex",
                 "console",
                 "database",
@@ -1756,10 +1759,12 @@
                 "full stack",
                 "mvc",
                 "orm",
-                "php",
                 "template"
             ],
-            "time": "2019-10-24T21:35:13+00:00"
+            "support": {
+                "source": "https://github.com/peteraba/Opulence/tree/primary-key-for-migrations"
+            },
+            "time": "2019-11-10T13:46:26+00:00"
         },
         {
             "name": "paragonie/random_compat",
@@ -3228,16 +3233,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "8.4.2",
+            "version": "8.4.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "a142a7e66c0ea7b5b6c04ee27f08d10d1137cd9b"
+                "reference": "67f9e35bffc0dd52d55d565ddbe4230454fd6a4e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/a142a7e66c0ea7b5b6c04ee27f08d10d1137cd9b",
-                "reference": "a142a7e66c0ea7b5b6c04ee27f08d10d1137cd9b",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/67f9e35bffc0dd52d55d565ddbe4230454fd6a4e",
+                "reference": "67f9e35bffc0dd52d55d565ddbe4230454fd6a4e",
                 "shasum": ""
             },
             "require": {
@@ -3307,7 +3312,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2019-10-28T10:39:51+00:00"
+            "time": "2019-11-06T09:42:23+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
@@ -4076,14 +4081,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "abterphp/framework": 20,
-        "abterphp/admin": 20,
-        "abterphp/website": 20,
-        "abterphp/propeller-admin": 20,
-        "abterphp/bootstrap4-website": 20,
-        "abterphp/files": 20,
-        "abterphp/contact": 20,
-        "abterphp/website-creative": 20
+        "opulence/opulence": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
