@@ -1,0 +1,2471 @@
+openapi: "3.0.0"
+
+info:
+  version: 0.0.1
+  title: AbterCMS API
+  description: API for AbterCMS (AbterPhp, AbterGo, etc.)
+  termsOfService: http://abtercms.do/terms/
+  contact:
+    name: AbterCMS Team
+    email: team@abtercms.com
+    url: https://team@abtercms.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+
+servers:
+  - url: https://abtercms.do//api
+
+paths:
+  /tokens:
+    post:
+      description: Creates a token for an existing user
+      operationId: createToken
+      requestBody:
+        description: Token credentials
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenRequest'
+      responses:
+        '204':
+          description: Token response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+  /adminresources:
+    get:
+      description: Retrieves a list of admin resources
+      operationId: listAdminResources
+      parameters:
+        - $ref: '#/components/parameters/tokenHeader'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/offsetParam'
+      responses:
+        '200':
+          description: Admin resource list success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminResourceListResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+    post:
+      description: Creates a new admin resource
+      operationId: createAdminResource
+      parameters:
+        - $ref: '#/components/parameters/tokenHeader'
+      requestBody:
+        description: Admin resource to create
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdminResourceRequest'
+      responses:
+        '204':
+          description: Admin resource create success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminResourceResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+  /adminresources/{adminresource_id}:
+    get:
+      description: Retrieves an admin resource
+      operationId: getAdminResource
+      parameters:
+        - $ref: '#/components/parameters/tokenHeader'
+        - name: adminresource_id
+          in: path
+          description: ID of admin resource to update
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Admin resource response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminResourceResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+    put:
+      description: Update an existing admin resource
+      operationId: updateAdminResource
+      parameters:
+        - $ref: '#/components/parameters/tokenHeader'
+        - name: adminresource_id
+          in: path
+          description: ID of admin resource to update
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Admin resource to update
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdminResourceRequest'
+      responses:
+        '200':
+          description: Admin resource update success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminResourceResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+    delete:
+      description: Delete an admin resource
+      operationId: deleteAdminResource
+      parameters:
+        - $ref: '#/components/parameters/tokenHeader'
+        - name: adminresource_id
+          in: path
+          description: ID of admin resource to update
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: User group delete success response
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+  /userlanguages:
+    get:
+      description: Retrieves a list of user languages
+      operationId: listUserLanguages
+      parameters:
+        - $ref: '#/components/parameters/tokenHeader'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/offsetParam'
+      responses:
+        '200':
+          description: User language list success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserLanguageListResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+    post:
+      description: Creates a new user language
+      operationId: createUserLanguage
+      parameters:
+        - $ref: '#/components/parameters/tokenHeader'
+      requestBody:
+        description: User language to create
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserLanguageRequest'
+      responses:
+        '204':
+          description: User language create success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserLanguageResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+  /userlanguages/{userlanguage_id}:
+    get:
+      description: Retrieves a user language
+      operationId: getUserLanguage
+      parameters:
+        - $ref: '#/components/parameters/tokenHeader'
+        - name: userlanguage_id
+          in: path
+          description: ID of user language to update
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: User language response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserLanguageResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+    put:
+      description: Update a user language
+      operationId: updateUserLanguage
+      parameters:
+        - $ref: '#/components/parameters/tokenHeader'
+        - name: userlanguage_id
+          in: path
+          description: ID of user language to update
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: User language to update
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserLanguageRequest'
+      responses:
+        '200':
+          description: User language update success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserLanguageResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+    delete:
+      description: Delete a user language
+      operationId: deleteUserLanguage
+      parameters:
+        - $ref: '#/components/parameters/tokenHeader'
+        - name: userlanguage_id
+          in: path
+          description: ID of user language to update
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: User language delete success response
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+  /usergroups:
+    get:
+      description: Retrieves a list of user groups
+      operationId: listUserGroups
+      parameters:
+        - $ref: '#/components/parameters/tokenHeader'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/offsetParam'
+      responses:
+        '200':
+          description: User group list success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserGroupListResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+    post:
+      description: Creates a new user group
+      operationId: createUserGroup
+      parameters:
+        - $ref: '#/components/parameters/tokenHeader'
+      requestBody:
+        description: User group to create
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserGroupRequest'
+      responses:
+        '204':
+          description: User group create success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserGroupResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+  /usergroups/{usergroup_id}:
+    get:
+      description: Retrieves a user group
+      operationId: getUserGroup
+      parameters:
+        - $ref: '#/components/parameters/tokenHeader'
+        - name: usergroup_id
+          in: path
+          description: ID of user group to update
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: User group response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserGroupResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+    put:
+      description: Update a user group
+      operationId: updateUserGroup
+      parameters:
+        - $ref: '#/components/parameters/tokenHeader'
+        - name: usergroup_id
+          in: path
+          description: ID of user to update
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: User group to update
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserGroupRequest'
+      responses:
+        '200':
+          description: User group update success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserGroupResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+    delete:
+      description: Delete a user group
+      operationId: deleteUserGroup
+      parameters:
+        - $ref: '#/components/parameters/tokenHeader'
+        - name: usergroup_id
+          in: path
+          description: ID of user group to update
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: User group delete success response
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+  /users:
+    get:
+      description: Retrieves a list of users
+      operationId: listUsers
+      parameters:
+        - $ref: '#/components/parameters/tokenHeader'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/offsetParam'
+      responses:
+        '200':
+          description: User list success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserListResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+    post:
+      description: Creates a new user
+      operationId: createUser
+      parameters:
+        - $ref: '#/components/parameters/tokenHeader'
+      requestBody:
+        description: User to create
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserCreateRequest'
+      responses:
+        '204':
+          description: User create success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+  /users/{user_id}:
+    get:
+      description: Retrieves a user
+      operationId: getUser
+      parameters:
+        - $ref: '#/components/parameters/tokenHeader'
+        - name: user_id
+          in: path
+          description: ID of user to update
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: User response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+    put:
+      description: Update a user
+      operationId: updateUser
+      parameters:
+        - $ref: '#/components/parameters/tokenHeader'
+        - name: user_id
+          in: path
+          description: ID of user to update
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: User to update
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserUpdateRequest'
+      responses:
+        '200':
+          description: User update success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+    delete:
+      description: Delete a user
+      operationId: deleteUser
+      parameters:
+        - $ref: '#/components/parameters/tokenHeader'
+        - name: user_id
+          in: path
+          description: ID of user to update
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: User delete success response
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+  /blocks:
+    get:
+      description: Retrieves a list of blocks
+      operationId: listBlocks
+      parameters:
+        - $ref: '#/components/parameters/tokenHeader'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/offsetParam'
+      responses:
+        '200':
+          description: Block list success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BlockListResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+    post:
+      description: Creates a new block
+      operationId: createBlock
+      parameters:
+        - $ref: '#/components/parameters/tokenHeader'
+      requestBody:
+        description: Block to create
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BlockRequest'
+      responses:
+        '204':
+          description: Block create success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BlockResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+  /blocks/{block_id}:
+    get:
+      description: Retrieves a block
+      operationId: getBlock
+      parameters:
+        - $ref: '#/components/parameters/tokenHeader'
+        - name: block_id
+          in: path
+          description: ID of block to update
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Block response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BlockResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+    put:
+      description: Update an existing block
+      operationId: updateBlock
+      parameters:
+        - $ref: '#/components/parameters/tokenHeader'
+        - name: block_id
+          in: path
+          description: ID of block to update
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Block to update
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BlockRequest'
+      responses:
+        '200':
+          description: Block update success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BlockResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+    delete:
+      description: Delete an existing block
+      operationId: deleteBlock
+      parameters:
+        - $ref: '#/components/parameters/tokenHeader'
+        - name: block_id
+          in: path
+          description: ID of block to update
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Block delete success response
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+  /blocklayouts:
+    get:
+      description: Retrieves a list of block layouts
+      operationId: listBlockLayouts
+      parameters:
+        - $ref: '#/components/parameters/tokenHeader'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/offsetParam'
+      responses:
+        '200':
+          description: Block layout list success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BlockLayoutListResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+    post:
+      description: Creates a new block layout
+      operationId: createBlockLayout
+      parameters:
+        - $ref: '#/components/parameters/tokenHeader'
+      requestBody:
+        description: Block layout to create
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BlockLayoutRequest'
+      responses:
+        '204':
+          description: Block layout create success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BlockLayoutResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+  /blocklayouts/{blocklayout_id}:
+    get:
+      description: Retrieves a block layout
+      operationId: getBlockLayout
+      parameters:
+        - $ref: '#/components/parameters/tokenHeader'
+        - name: blocklayout_id
+          in: path
+          description: ID of block layout to update
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Block layout response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BlockLayoutResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+    put:
+      description: Update an existing block layout
+      operationId: updateBlockLayout
+      parameters:
+        - $ref: '#/components/parameters/tokenHeader'
+        - name: blocklayout_id
+          in: path
+          description: ID of block layout to update
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Block layout to update
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BlockLayoutRequest'
+      responses:
+        '200':
+          description: Block layout update success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BlockLayoutResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+    delete:
+      description: Delete an existing block layout
+      operationId: deleteBlockLayout
+      parameters:
+        - $ref: '#/components/parameters/tokenHeader'
+        - name: blocklayout_id
+          in: path
+          description: ID of block layout to update
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: User group delete success response
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+  /pages:
+    get:
+      description: Retrieves a list of pages
+      operationId: listPages
+      parameters:
+        - $ref: '#/components/parameters/tokenHeader'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/offsetParam'
+      responses:
+        '200':
+          description: Page list success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageListResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+    post:
+      description: Creates a new page
+      operationId: createPage
+      parameters:
+        - $ref: '#/components/parameters/tokenHeader'
+      requestBody:
+        description: Page to create
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PageRequest'
+      responses:
+        '204':
+          description: Page create success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+  /pages/{page_id}:
+    get:
+      description: Get an existing page
+      operationId: getPage
+      parameters:
+        - $ref: '#/components/parameters/tokenHeader'
+        - name: page_id
+          in: path
+          description: ID of page to update
+          required: true
+          schema:
+            type: string
+        - name: embed
+          in: query
+          description: "Comma separated list of extra fields to embed. Available values: 'rendered'"
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Page update success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+    put:
+      description: Update an existing page
+      operationId: updatePage
+      parameters:
+        - $ref: '#/components/parameters/tokenHeader'
+        - name: page_id
+          in: path
+          description: ID of page to update
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Page to update
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PageRequest'
+      responses:
+        '200':
+          description: Page update success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+    delete:
+      description: Delete an existing page
+      operationId: deletePage
+      parameters:
+        - $ref: '#/components/parameters/tokenHeader'
+        - name: page_id
+          in: path
+          description: ID of page to update
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Page delete success response
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+  /pagecategories:
+    get:
+      description: Retrieves a list of page categories
+      operationId: listPageCategories
+      parameters:
+        - $ref: '#/components/parameters/tokenHeader'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/offsetParam'
+      responses:
+        '200':
+          description: Page category list success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageCategoryListResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+    post:
+      description: Creates a new page category
+      operationId: createPageCategory
+      parameters:
+        - $ref: '#/components/parameters/tokenHeader'
+      requestBody:
+        description: Page category to create
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PageCategoryRequest'
+      responses:
+        '204':
+          description: Page category create success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageCategoryResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+  /pagecategories/{pagecategory_id}:
+    get:
+      description: Retrieves a page category
+      operationId: getPageCategory
+      parameters:
+        - $ref: '#/components/parameters/tokenHeader'
+        - name: pagecategory_id
+          in: path
+          description: ID of page category to update
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Page category response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageCategoryResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+    put:
+      description: Update an existing page category
+      operationId: updatePageCategory
+      parameters:
+        - $ref: '#/components/parameters/tokenHeader'
+        - name: pagecategory_id
+          in: path
+          description: ID of page category to update
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Page category to update
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PageCategoryRequest'
+      responses:
+        '200':
+          description: Page category update success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageCategoryResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+    delete:
+      description: Delete an existing page category
+      operationId: deletePageCategory
+      parameters:
+        - $ref: '#/components/parameters/tokenHeader'
+        - name: pagecategory_id
+          in: path
+          description: ID of page category to update
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Page category delete success response
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+  /pagelayouts:
+    get:
+      description: Retrieves a list of page layouts
+      operationId: listPageLayouts
+      parameters:
+        - $ref: '#/components/parameters/tokenHeader'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/offsetParam'
+      responses:
+        '200':
+          description: Page layout list success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageLayoutListResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+    post:
+      description: Creates a new page layout
+      operationId: createPageLayout
+      parameters:
+        - $ref: '#/components/parameters/tokenHeader'
+      requestBody:
+        description: Page layout to create
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PageLayoutRequest'
+      responses:
+        '204':
+          description: Page layout create success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageLayoutResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+  /pagelayouts/{pagelayout_id}:
+    get:
+      description: Retrieves a page layout
+      operationId: getPageLayout
+      parameters:
+        - $ref: '#/components/parameters/tokenHeader'
+        - name: pagelayout_id
+          in: path
+          description: ID of page layout to update
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Page layout response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageLayoutResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+    put:
+      description: Update an existing page layout
+      operationId: updatePageLayout
+      parameters:
+        - $ref: '#/components/parameters/tokenHeader'
+        - name: pagelayout_id
+          in: path
+          description: ID of page layout to update
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Page layout to update
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PageLayoutRequest'
+      responses:
+        '200':
+          description: Page layout update success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageLayoutResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+    delete:
+      description: Delete an existing page layout
+      operationId: deletePageLayout
+      parameters:
+        - $ref: '#/components/parameters/tokenHeader'
+        - name: pagelayout_id
+          in: path
+          description: ID of page layout to update
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Page layout delete success response
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+  /files:
+    get:
+      description: Retrieves a list of files
+      operationId: listFiles
+      parameters:
+        - $ref: '#/components/parameters/tokenHeader'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/offsetParam'
+      responses:
+        '200':
+          description: File list success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileListResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+    post:
+      description: Creates a new file
+      operationId: createFile
+      parameters:
+        - $ref: '#/components/parameters/tokenHeader'
+      requestBody:
+        description: File to create
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FileRequest'
+      responses:
+        '204':
+          description: File create success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+  /files/{file_id}:
+    get:
+      description: Retrieves a file
+      operationId: getFile
+      parameters:
+        - $ref: '#/components/parameters/tokenHeader'
+        - name: file_id
+          in: path
+          description: ID of file to update
+          required: true
+          schema:
+            type: string
+        - name: embed
+          in: query
+          description: "Comma separated list of extra fields to embed. Available values: 'data'"
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: File response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+    put:
+      description: Update an existing file
+      operationId: updateFile
+      parameters:
+        - $ref: '#/components/parameters/tokenHeader'
+        - name: file_id
+          in: path
+          description: ID of file to update
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: File to update
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FileRequest'
+      responses:
+        '200':
+          description: File update success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+    delete:
+      description: Delete an existing file
+      operationId: deleteFile
+      parameters:
+        - $ref: '#/components/parameters/tokenHeader'
+        - name: file_id
+          in: path
+          description: ID of file to update
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: File delete success response
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+  /filecategories:
+    get:
+      description: Retrieves a list of file categories
+      operationId: listFileCategories
+      parameters:
+        - $ref: '#/components/parameters/tokenHeader'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/offsetParam'
+      responses:
+        '200':
+          description: File category list success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileCategoryListResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+    post:
+      description: Creates a new file category
+      operationId: createFileCategory
+      parameters:
+        - $ref: '#/components/parameters/tokenHeader'
+      requestBody:
+        description: File category to create
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FileCategoryRequest'
+      responses:
+        '204':
+          description: File category create success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileCategoryResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+  /filecategories/{filecategory_id}:
+    get:
+      description: Retrieves a file category
+      operationId: getFileCategory
+      parameters:
+        - $ref: '#/components/parameters/tokenHeader'
+        - name: filecategory_id
+          in: path
+          description: ID of file category to update
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: File category response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileCategoryResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+    put:
+      description: Update an existing file category
+      operationId: updateFileCategory
+      parameters:
+        - $ref: '#/components/parameters/tokenHeader'
+        - name: filecategory_id
+          in: path
+          description: ID of file category to update
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: File category to update
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FileCategoryRequest'
+      responses:
+        '200':
+          description: File category update success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileCategoryResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+    delete:
+      description: Delete an existing file category
+      operationId: deleteFileCategory
+      parameters:
+        - $ref: '#/components/parameters/tokenHeader'
+        - name: filecategory_id
+          in: path
+          description: ID of file category to update
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: File category delete success response
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+  /filedownloads:
+    get:
+      description: Retrieve file downloads
+      operationId: listFileDownloads
+      parameters:
+        - $ref: '#/components/parameters/tokenHeader'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/offsetParam'
+      responses:
+        '200':
+          description: File download list success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileDownloadListResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+    post:
+      description: Creates a new file download
+      operationId: createFileDownload
+      parameters:
+        - $ref: '#/components/parameters/tokenHeader'
+      requestBody:
+        description: File download to create
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FileDownloadRequest'
+      responses:
+        '204':
+          description: File download create success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileDownloadResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+  /filedownloads/{filedownload_id}:
+    get:
+      description: Retrieves a file download
+      operationId: getFileDownload
+      parameters:
+        - $ref: '#/components/parameters/tokenHeader'
+        - name: filedownload_id
+          in: path
+          description: ID of file download to update
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: File download response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileDownloadResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+    put:
+      description: Update an existing file download
+      operationId: updateFileDownload
+      parameters:
+        - $ref: '#/components/parameters/tokenHeader'
+        - name: filedownload_id
+          in: path
+          description: ID of file download to update
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: File download to update
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FileDownloadRequest'
+      responses:
+        '200':
+          description: File download update success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileDownloadResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+    delete:
+      description: Delete an existing file download
+      operationId: deleteFileDownload
+      parameters:
+        - $ref: '#/components/parameters/tokenHeader'
+        - name: filedownload_id
+          in: path
+          description: ID of file download to update
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: File download delete success response
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+  /contactforms:
+    get:
+      description: Retrieve contact forms
+      operationId: listContactForms
+      parameters:
+        - $ref: '#/components/parameters/tokenHeader'
+        - $ref: '#/components/parameters/limitParam'
+        - $ref: '#/components/parameters/offsetParam'
+      responses:
+        '200':
+          description: Contact form list success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContactFormListResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+    post:
+      description: Creates a new contact form
+      operationId: createContactForm
+      parameters:
+        - $ref: '#/components/parameters/tokenHeader'
+      requestBody:
+        description: Contact form to create
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContactFormRequest'
+      responses:
+        '204':
+          description: Contact form create success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContactFormResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+  /contactforms/{contactform_id}:
+    get:
+      description: Retrieves a contact form
+      operationId: getContactForm
+      parameters:
+        - $ref: '#/components/parameters/tokenHeader'
+        - name: contactform_id
+          in: path
+          description: ID of contact form to update
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Contact form response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContactFormResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+    put:
+      description: Update an existing contact form
+      operationId: updateContactForm
+      parameters:
+        - $ref: '#/components/parameters/tokenHeader'
+        - name: contactform_id
+          in: path
+          description: ID of contact form to update
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: File download to update
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FileDownloadRequest'
+      responses:
+        '200':
+          description: Contact form update success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileDownloadResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+    delete:
+      description: Delete an existing contact form
+      operationId: deleteContactForm
+      parameters:
+        - $ref: '#/components/parameters/tokenHeader'
+        - name: contactform_id
+          in: path
+          description: ID of contact form to update
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Contact form delete success response
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+
+  /contactforms/{contactform_id}/messages:
+    post:
+      description: Creates a new message for a contact form
+      operationId: createContactFormMessage
+      parameters:
+        - $ref: '#/components/parameters/tokenHeader'
+        - name: contactform_id
+          in: path
+          description: ID of contact form to submit data for
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Contact form submittion to create
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContactFormMessageRequest'
+      responses:
+        '204':
+          description: Contact form submittion response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContactFormMessageResponse'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+components:
+  parameters:
+    tokenHeader:
+      name: token
+      in: header
+      description: Token used for authorization
+      required: true
+      schema:
+        type: string
+
+    limitParam:
+      name: limit
+      in: query
+      description: The size of a paginated list result
+      required: true
+      schema:
+        type: integer
+        format: int32
+        default: 25
+
+    offsetParam:
+      name: offset
+      in: query
+      description: The offset of a paginated list result
+      required: true
+      schema:
+        type: integer
+        format: int32
+        default: 0
+
+  schemas:
+    TokenRequest:
+      required:
+        - grant_type
+        - client_id
+        - client_secret
+        - scope
+      properties:
+        grant_type:
+          type: string
+        client_id:
+          type: string
+        client_secret:
+          type: string
+        scope:
+          type: array
+          items:
+            type: string
+
+    TokenResponse:
+      required:
+        - token_type
+        - expires_in
+        - access_token
+      properties:
+        token_type:
+          type: string
+        expires_in:
+          type: integer
+        access_token:
+          type: string
+
+    AdminResourceRequest:
+      required:
+        - identifier
+        - name
+      properties:
+        identifier:
+          type: string
+        name:
+          type: string
+
+    AdminResourceResponse:
+      allOf:
+        - $ref: '#/components/schemas/AdminResourceRequest'
+      required:
+        - id
+      properties:
+        id:
+          type: string
+
+    AdminResourceListResponse:
+      description: A wrapper object containing a paginated list of admin resources and the total number of admin resources.
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/AdminResourceResponse'
+        total_count:
+          type: integer
+          format: int32
+      required:
+        - data
+        - total_count
+
+    UserGroupRequest:
+      required:
+        - identifier
+        - name
+        - admin_resource_ids
+      properties:
+        identifier:
+          type: string
+        name:
+          type: string
+        admin_resource_ids:
+          type: string
+
+    UserGroupResponse:
+      allOf:
+        - $ref: '#/components/schemas/UserGroupRequest'
+      required:
+        - id
+      properties:
+        id:
+          type: string
+
+    UserGroupListResponse:
+      description: A wrapper object containing a paginated list of user groups and the total number of user groups.
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserGroupResponse'
+        total_count:
+          type: integer
+          format: int32
+      required:
+        - data
+        - total_count
+
+    UserLanguageRequest:
+      required:
+        - identifier
+        - name
+      properties:
+        identifier:
+          type: string
+        name:
+          type: string
+
+    UserLanguageResponse:
+      allOf:
+        - $ref: '#/components/schemas/UserLanguageRequest'
+      required:
+        - id
+      properties:
+        id:
+          type: string
+
+    UserLanguageListResponse:
+      description: A wrapper object containing a paginated list of user languages and the total number of user languages.
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserLanguageResponse'
+        total_count:
+          type: integer
+          format: int32
+      required:
+        - data
+        - total_count
+
+    UserUpdateRequest:
+      required:
+        - username
+        - email
+        - frontend_salt
+        - password
+        - can_login
+        - is_gravatar_allowed
+        - user_group_ids
+        - user_language_id
+      properties:
+        username:
+          type: string
+        email:
+          type: string
+          format: email
+        frontend_salt:
+          type: string
+        password:
+          type: string
+        can_login:
+          type: boolean
+        is_gravatar_allowed:
+          type: boolean
+        user_group_ids:
+          type: array
+          items:
+            type: string
+        user_language_id:
+          type: string
+
+    UserCreateRequest:
+      allOf:
+        - $ref: '#/components/schemas/UserUpdateRequest'
+        - required:
+            - password
+
+    UserResponse:
+      allOf:
+        - $ref: '#/components/schemas/UserUpdateRequest'
+      required:
+        - id
+      properties:
+        id:
+          type: string
+
+    UserListResponse:
+      description: A wrapper object containing a paginated list of users and the total number of users.
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserResponse'
+        total_count:
+          type: integer
+          format: int32
+      required:
+        - data
+        - total_count
+
+    Assets:
+      required:
+        - key
+        - header
+        - footer
+        - css_files
+        - js_files
+      properties:
+        key:
+          type: string
+        header:
+          type: string
+        footer:
+          type: string
+        css_files:
+          type: string
+        js_files:
+          type: string
+
+    Meta:
+      required:
+        - description
+        - robots
+        - author
+        - copyright
+        - keywords
+        - og_title
+        - og_image
+        - og_description
+      properties:
+        description:
+          type: string
+        robots:
+          type: string
+        author:
+          type: string
+        copyright:
+          type: string
+        keywords:
+          type: string
+        og_title:
+          type: string
+        og_image:
+          type: string
+        og_description:
+          type: string
+
+    PageCategoryRequest:
+      required:
+        - identifier
+        - name
+        - user_group_ids
+      properties:
+        identifier:
+          type: string
+        name:
+          type: string
+        user_group_ids:
+          type: array
+          items:
+            type: string
+
+    PageCategoryResponse:
+      allOf:
+        - $ref: '#/components/schemas/PageCategoryRequest'
+      required:
+        - id
+      properties:
+        id:
+          type: string
+
+    PageCategoryListResponse:
+      description: A wrapper object containing a paginated list of page categories and the total number of page categories.
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/PageCategoryResponse'
+        total_count:
+          type: integer
+          format: int32
+      required:
+        - data
+        - total_count
+
+    PageLayoutRequest:
+      required:
+        - identifier
+        - body
+      properties:
+        identifier:
+          type: string
+        body:
+          type: string
+        assets:
+          $ref: '#/components/schemas/Assets'
+
+    PageLayoutResponse:
+      allOf:
+        - $ref: '#/components/schemas/PageLayoutRequest'
+      required:
+        - id
+      properties:
+        id:
+          type: string
+
+    PageLayoutListResponse:
+      description: A wrapper object containing a paginated list of page layouts and the total number of page layouts.
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/PageLayoutResponse'
+        total_count:
+          type: integer
+          format: int32
+      required:
+        - data
+        - total_count
+
+    PageRequestCategory:
+      required:
+        - id
+      properties:
+        id:
+          type: string
+
+    PageRequest:
+      required:
+        - identifier
+        - title
+        - body
+        - category
+        - layout
+        - layout_id
+        - meta
+        - assets
+      properties:
+        identifier:
+          type: string
+        name:
+          type: string
+        category:
+          $ref: '#/components/schemas/PageRequestCategory'
+        assets:
+          $ref: '#/components/schemas/Assets'
+        meta:
+          $ref: '#/components/schemas/Meta'
+
+    PageResponse:
+      allOf:
+        - $ref: '#/components/schemas/PageRequest'
+      required:
+        - id
+      properties:
+        id:
+          type: string
+        rendered:
+          type: string
+
+    PageListResponse:
+      description: A wrapper object containing a paginated list of pages and the total number of pages.
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/PageResponse'
+        total_count:
+          type: integer
+          format: int32
+      required:
+        - data
+        - total_count
+
+    BlockLayoutRequest:
+      required:
+        - identifier
+        - body
+      properties:
+        identifier:
+          type: string
+        body:
+          type: string
+
+    BlockLayoutResponse:
+      allOf:
+        - $ref: '#/components/schemas/BlockLayoutRequest'
+      required:
+        - id
+      properties:
+        id:
+          type: string
+
+    BlockLayoutListResponse:
+      description: A wrapper object containing a paginated list of block layouts and the total number of block layouts.
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/BlockLayoutResponse'
+        total_count:
+          type: integer
+          format: int32
+      required:
+        - data
+        - total_count
+
+    BlockRequest:
+      required:
+        - identifier
+        - name
+        - assets
+      properties:
+        identifier:
+          type: string
+        name:
+          type: string
+        assets:
+          $ref: '#/components/schemas/Assets'
+
+    BlockResponse:
+      allOf:
+        - $ref: '#/components/schemas/BlockRequest'
+      required:
+        - id
+      properties:
+        id:
+          type: string
+
+    BlockListResponse:
+      description: A wrapper object containing a paginated list of blocks and the total number of blocks.
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/BlockResponse'
+        total_count:
+          type: integer
+          format: int32
+      required:
+        - data
+        - total_count
+
+    FileCommon:
+      required:
+        - filename
+        - description
+        - category_id
+        - name
+        - mime
+      properties:
+        filename:
+          type: string
+        description:
+          type: string
+        category_id:
+          type: string
+        name:
+          type: string
+        data:
+          type: string
+        mime:
+          type: string
+
+    FileRequest:
+      allOf:
+        - $ref: '#/components/schemas/FileCommon'
+      required:
+        - data
+
+    FileResponse:
+      allOf:
+        - $ref: '#/components/schemas/FileCommon'
+      required:
+        - id
+        - uploaded_at
+      properties:
+        id:
+          type: string
+        uploaded_at:
+          type: string
+          format: date-time
+
+    FileListResponse:
+      description: A wrapper object containing a paginated list of files and the total number of files.
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/FileResponse'
+        total_count:
+          type: integer
+          format: int32
+      required:
+        - data
+        - total_count
+
+    FileCategoryRequest:
+      required:
+        - identifier
+        - name
+        - is_public
+        - user_group_ids
+      properties:
+        identifier:
+          type: string
+        name:
+          type: string
+        is_public:
+          type: boolean
+        user_group_ids:
+          type: array
+          items:
+            type: string
+
+    FileCategoryResponse:
+      allOf:
+        - $ref: '#/components/schemas/FileCategoryRequest'
+      required:
+        - id
+      properties:
+        id:
+          type: string
+
+    FileCategoryListResponse:
+      description: A wrapper object containing a paginated list of file categories and the total number of file categories.
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/FileCategoryResponse'
+        total_count:
+          type: integer
+          format: int32
+      required:
+        - data
+        - total_count
+
+    FileDownloadRequestFile:
+      required:
+        - id
+      properties:
+        id:
+          type: string
+
+    FileDownloadRequestUser:
+      required:
+        - id
+      properties:
+        id:
+          type: string
+
+    FileDownloadRequest:
+      required:
+        - file
+        - user
+      properties:
+        file:
+          $ref: '#/components/schemas/FileDownloadRequestFile'
+        user:
+          $ref: '#/components/schemas/FileDownloadRequestUser'
+
+    FileDownloadResponse:
+      allOf:
+        - $ref: '#/components/schemas/FileDownloadRequest'
+      required:
+        - id
+        - downloaded_at
+      properties:
+        id:
+          type: string
+        downloaded_at:
+          type: string
+          format: date-time
+
+    FileDownloadListResponse:
+      description: A wrapper object containing a paginated list of file downloads and the total number of file downloads.
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/FileDownloadResponse'
+        total_count:
+          type: integer
+          format: int32
+      required:
+        - data
+        - total_count
+
+    ContactFormRequest:
+      required:
+        - name
+        - identifier
+        - to_name
+        - to_email
+      properties:
+        identifier:
+          type: string
+        name:
+          type: string
+        to_name:
+          type: string
+        to_email:
+          type: string
+          format: email
+
+    ContactFormResponse:
+      allOf:
+        - $ref: '#/components/schemas/ContactFormRequest'
+      required:
+        - id
+      properties:
+        id:
+          type: string
+
+    ContactFormListResponse:
+      description: A wrapper object containing a paginated list of contact forms and the total number of contact forms.
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContactFormResponse'
+        total_count:
+          type: integer
+          format: int32
+      required:
+        - data
+        - total_count
+
+    ContactFormMessageRequest:
+      required:
+        - form_id
+        - subject
+        - body
+        - from_name
+        - from_email
+      properties:
+        form_id:
+          type: string
+        subject:
+          type: string
+        body:
+          type: string
+        from_name:
+          type: string
+        from_email:
+          type: string
+          format: email
+
+    ContactFormMessageResponse:
+      allOf:
+        - $ref: '#/components/schemas/ContactFormRequest'
+
+    Problem:
+      required:
+        - type
+        - title
+      properties:
+        type:
+          type: string
+          format: uri
+          description: |
+            An absolute URI that identifies the problem type.  When dereferenced,
+            it SHOULD provide human-readable documentation for the problem type
+            (e.g., using HTML).
+          default: 'about:blank'
+          example: 'https://abtercms.com/problem/constraint-violation'
+        title:
+          type: string
+          description: |
+            A short, summary of the problem type. Written in English and readable
+            for engineers (usually not suited for non technical stakeholders and
+            not localized); example: Service Unavailable
+        status:
+          type: integer
+          format: int32
+          description: |
+            The HTTP status code generated by the origin server for this occurrence
+            of the problem.
+          minimum: 100
+          maximum: 600
+          exclusiveMaximum: true
+          example: 503
+        detail:
+          type: string
+          description: |
+            A human readable explanation specific to this occurrence of the
+            problem.
+          example: Connection to database timed out
+        instance:
+          type: string
+          format: uri
+          description: |
+            An absolute URI that identifies the specific occurrence of the problem.
+            It may or may not yield further information if dereferenced.

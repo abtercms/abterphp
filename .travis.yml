@@ -15,7 +15,5 @@ before_install:
   - docker-compose up -d
 
 install:
-  - docker-compose exec php make install
-
-script:
   - docker-compose exec php make build
+

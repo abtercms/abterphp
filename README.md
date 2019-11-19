@@ -159,6 +159,10 @@ AbterPHP is based on [Opulence](https://www.opulencephp.com/), but uses a few mo
  - [Trumbowyg](https://alex-d.github.io/Trumbowyg/documentation/) as a wysiwyg solution (Admin module)
  - [zxcvbn](https://github.com/dropbox/zxcvbn) from Dropbox for password strength estimations (Admin module)
  - [zxcvbn-php](https://github.com/bjeavons/zxcvbn-php) PHP version of `zxcvbn` (Admin module)
+<<<<<<< HEAD
+=======
+ - [OAuth 2.0 Server](https://oauth2.thephpleague.com/authorization-server/client-credentials-grant/) for API authentication and authorization with [Nyholm/psr7](https://github.com/Nyholm/psr7) as PSR-7 request / response library.
+>>>>>>> framework-update
  
 If you want to contribute code you'll also need to get familiar with these tools:
  - [PhpUnit](https://phpunit.de/) for unit tests
@@ -175,8 +179,8 @@ before the first stable version.
 
 1. ~~Make the frontend framework decoupled from the backend system~~
 1. ~~Use ILogger instead of Logger~~
-1. More fine grained authorization
-   - ACL implemented for pages
+1. ~~More fine grained authorization~~
+   - ~~ACL implemented for pages~~
    - ~~Advanced settings access role for pages~~
    - ~~Multiple user group for one user~~
    - ~~New user roles: file uploader, layout designer, page writer~~
@@ -190,25 +194,53 @@ before the first stable version.
 1. ~~1 nice website module~~
 1. ~~Page category~~
 1. ~~Re-add navigation item filtering by enforcer~~
+<<<<<<< HEAD
 1. ~~Documentation page exists~~
 1. ~~70%+ of PHP source code unit tested, except for bootstrappers and console commands~~
 1. ~~Tested project on OSX~~
 1. ~~Initial API defined and published~~
 1. Verified that `localhost_router.php` works as expected or remove it if too hard to fix
 1. Tested project on Windows 10+
+=======
+1. ~~Fix grids:~~
+   - ~~Filter labels~~
+   - ~~Page size selections~~
+   - ~~Sorting~~
+   - ~~Hide IDs~~
+1. ~~Separate grid and form assets in admin~~
+1. ~~API keys for users~~
+1. ~~Fix forms:~~
+   - ~~"Red" / "Danger" Back to list buttons~~
+   - ~~Create and new button~~
+1. ~~Initial API defined and published~~
+1. ~~Documentation page exists~~
+1. ~~All implemented API endpoints return properly formatted errors~~
+1. ~~Optionally embed file content into getFile API endpoint~~
+1. ~~Disable block cache for development~~
+1. ~~List pages on frontend by category (simple)~~
+1. ~~List pages on frontend by category (detailed)~~
+1. 70%+ of PHP source code unit tested, except for bootstrappers and console commands
+1. Verified that `localhost_router.php` works as expected or remove it if too hard to fix
+1. Tested project on OSX and Windows 10.
+1. Upgrade to phpunit 8.1
+1. API verified against Zalando REST API recommendations
+>>>>>>> framework-update
 
 ### First beta musts:
 
-1. API fully defined
+1. ~~Existing phpmd ignore cases reviewed~~
+1. ~~Client creation via CLI~~
+1. ~~Optionally embed rendered page body parameter~~
+1. ~~1st nice website module~~
+1. Must-accept-cookie module
+1. 2nd nice website module
+1. 3rd nice website module
 1. API implemented
 1. 1 grid is covered with acceptance tests (filters, pagination included)
 1. 1 form is covered with acceptance tests (displaying with new and existing entity and saving included)
-1. Documentation page exists
 1. Highlight form fields with validation errors
 1. 12-factor compliance reviewed and improvements planned
-1. ~~Existing phpmd ignore cases reviewed~~
 1. Reviewed and refactored global `$abterModuleManager` usage
-1. Must-accept-cookie module
 1. Test loading entities that don't exist or faulty
 1. Fix empty exceptions (\LogicException, \RuntimeException, \InvalidArgumentException)
 1. Ensure identifiers do not contain a comma (explode issue)
@@ -219,18 +251,28 @@ before the first stable version.
    - Create new validation rules where needed
 1. Cached translations
 1. Documentation covers getting started and main design goals
-1. 3 nice website modules
 1. Fix sidebar propeller "bug"
 1. Cache navigation for user
+<<<<<<< HEAD
 1. Improved security implementing related headers as recommended:
    - https://medium.freecodecamp.org/secure-your-web-application-with-these-http-headers-fd66e0367628
    - https://medium.freecodecamp.org/web-security-hardening-http-cookies-be8d8d8016e1
 1. Enable/Disable modules from console
+=======
+1. Enable/Disable modules from console
+1. Setup wizard (admin user + security settings)
+1. Revoke token endpoint
+1. Scope checks during serving API calls
+1. RSS feeds
+1. Default image for pages
+1. Improved security implementing related headers as recommended:
+   - https://medium.freecodecamp.org/secure-your-web-application-with-these-http-headers-fd66e0367628
+   - https://medium.freecodecamp.org/web-security-hardening-http-cookies-be8d8d8016e1
+>>>>>>> framework-update
 
 ### 1.0 musts:
 
 1. API designed finalized (community input?)
-1. API implemented
 1. API test complete
 1. Acceptance tests for main use cases of each module
 1. All grids, paginations, filters covered with acceptance tests
@@ -239,8 +281,10 @@ before the first stable version.
 1. AbterPhp\Framework\Form\Factory\Base::getMultiSelectSize -> move to helper or Select
 1. Refactored configs
 1. Refactored bootstrappers (again)
+   - Use Config Provider to remove bootstrappers
+   - Validators registered in framework
 1. All constants reviewed
-1. Documentation complete
+1. Documentation "complete"
 1. 12-factor compliance clearly stated
 1. More useful dashboard (community input?)
 1. Enable `ONLY_FULL_GROUP_BY` in `mysql.conf`
@@ -275,6 +319,10 @@ before the first stable version.
    - Needs MySQL 8.0 `BIN_TO_UUID` and `UUID_TO_BIN` support
    - Needs query builder support (although not a must)
  - Setup [codeclimate.com](https://codeclimate.com/) properly
+ - Ask about discarding changes when using the Back to List button
+ - Icons for Grid and Form buttons
+ - Website entity to support multipage setups
+ - Frontend language selection
 
 ### Ideas for 1.1:
  - WYSIWYG file selector

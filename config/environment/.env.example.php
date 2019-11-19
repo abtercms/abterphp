@@ -94,6 +94,18 @@ Environment::setVar("DIR_LOGS", "/path/to/root/tmp/logs");
 
 /**
  * ----------------------------------------------------------
+ * Set Oauth2 options
+ * ----------------------------------------------------------
+ */
+Environment::setVar("OAUTH2_PRIVATE_KEY_PATH", "");
+Environment::setVar("OAUTH2_PRIVATE_KEY_PASSWORD", "");
+Environment::setVar("OAUTH2_PUBLIC_KEY_PATH", "");
+Environment::setVar("OAUTH2_ENCRYPTION_KEY", "");
+Environment::setVar("OAUTH2_TOKEN_EXPIRY", "PT1H");
+Environment::setVar("OAUTH2_SECRET_LENGTH", 16);
+
+/**
+ * ----------------------------------------------------------
  * Set login options
  * ----------------------------------------------------------
  */
@@ -114,8 +126,8 @@ Environment::setVar("PAGINATION_NUMBER_COUNT", "5");
  * Set general website settings
  * ----------------------------------------------------------
  */
-Environment::setVar("WEBSITE_BASE_URL", "https://abtercms.com/");
-Environment::setVar("WEBSITE_SITE_TITLE", "AbterCMS");
+Environment::setVar("WEBSITE_BASE_URL", "https://abtercms.test/");
+Environment::setVar("WEBSITE_SITE_TITLE", "AbterCMS Test Site");
 
 /**
  * ----------------------------------------------------------
@@ -123,25 +135,11 @@ Environment::setVar("WEBSITE_SITE_TITLE", "AbterCMS");
  * ----------------------------------------------------------
  */
 
-Environment::setVar("EMAIL_SMTP_HOST", "mail.example.com");
-Environment::setVar("EMAIL_SMTP_PORT", "587");
-Environment::setVar("EMAIL_SMTP_ENCRYPTION", "ssl");
-Environment::setVar("EMAIL_SMTP_USERNAME", "abter@example.com");
-Environment::setVar("EMAIL_SMTP_PASSWORD", "94DVxes6uFKbFNmG");
-
-/**
- * ----------------------------------------------------------
- * Contact settings
- * ----------------------------------------------------------
- */
-
-Environment::setVar("DEFAULT_SENDER_EMAIL", "abtercms@example.com");
-Environment::setVar("DEFAULT_SENDER_NAME", "AbterCms Website");
-Environment::setVar("DEFAULT_RECIPIENT_EMAIL", "abtercms@example.com");
-Environment::setVar("DEFAULT_RECIPIENT_NAME", "AbterCms Admin");
-Environment::setVar("DEFAULT_SUCCESS_PAGE", "/contact-success");
-Environment::setVar("DEFAULT_ERROR_PAGE", "/contact-failure");
-Environment::setVar("CONTACT_TEXT_MAX_LENGTH", "160");
+Environment::setVar("EMAIL_SMTP_HOST", "mailcatcher");
+Environment::setVar("EMAIL_SMTP_PORT", "1025");
+Environment::setVar("EMAIL_SMTP_ENCRYPTION", "");
+Environment::setVar("EMAIL_SMTP_USERNAME", "");
+Environment::setVar("EMAIL_SMTP_PASSWORD", "");
 
 /**
  * ----------------------------------------------------------
@@ -160,6 +158,7 @@ Environment::setVar("ADMIN_LOGIN_PATH", "/login-iddqd");
  */
 
 Environment::setVar("API_BASE_PATH", "/api-iddqd");
+Environment::setVar("API_PROBLEM_BASE_URL", "https://abtercms.com/problem/");
 
 /**
  * ----------------------------------------------------------
@@ -181,3 +180,4 @@ Environment::setVar("OAUTH2_PUBLIC_KEY_PATH", "");
 Environment::setVar("OAUTH2_ENCRYPTION_KEY", "");
 Environment::setVar("OAUTH2_TOKEN_EXPIRY", "");
 Environment::setVar("OAUTH2_SECRET_LENGTH", "");
+
