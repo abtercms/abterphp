@@ -128,7 +128,12 @@ More documentation on the settings will be written later.
 
 #### Install the db schema and create a new admin user
 
-You need to log into the PHP container (again) to do this:
+You need to log into the PHP container (again) run migrations and create a user.
+
+*Note:* That AbterPHP uses [zxcvbn-php](https://github.com/bjeavons/zxcvbn-php) to verify password strength. This is
+a modern library that does not enforce rules like using numbers and smaller and upper case characters nor does it
+simply count characters. E.g `ryvenglotbutnofasewordpass` is a strong password, but `verylongbutnotsafepassword` is not.
+(To help migrating users from other systems, it is possible to create users using weak password with the `--unsafe` argument.)
 
 ```
 docker-compose exec php sh
@@ -136,6 +141,7 @@ docker-compose exec php sh
 > ./apex user:create {username} {email} {strongPassword} admin en
 > exit
 ```
+
 
 If everything went well, you should be able to log in with your new user at `https://abtercms.test/login-iddqd`, given
 that you haven't yet changed your `ADMIN_LOGIN_PATH` environment variable in `config/environment/.env.app.php`.
@@ -159,11 +165,8 @@ AbterPHP is based on [Opulence](https://www.opulencephp.com/), but uses a few mo
  - [Trumbowyg](https://alex-d.github.io/Trumbowyg/documentation/) as a wysiwyg solution (Admin module)
  - [zxcvbn](https://github.com/dropbox/zxcvbn) from Dropbox for password strength estimations (Admin module)
  - [zxcvbn-php](https://github.com/bjeavons/zxcvbn-php) PHP version of `zxcvbn` (Admin module)
-<<<<<<< HEAD
-=======
  - [OAuth 2.0 Server](https://oauth2.thephpleague.com/authorization-server/client-credentials-grant/) for API authentication and authorization with [Nyholm/psr7](https://github.com/Nyholm/psr7) as PSR-7 request / response library.
->>>>>>> framework-update
- 
+
 If you want to contribute code you'll also need to get familiar with these tools:
  - [PhpUnit](https://phpunit.de/) for unit tests
  - [vfsStream](https://github.com/mikey179/vfsStream) for mocking the filesystem
@@ -194,14 +197,6 @@ before the first stable version.
 1. ~~1 nice website module~~
 1. ~~Page category~~
 1. ~~Re-add navigation item filtering by enforcer~~
-<<<<<<< HEAD
-1. ~~Documentation page exists~~
-1. ~~70%+ of PHP source code unit tested, except for bootstrappers and console commands~~
-1. ~~Tested project on OSX~~
-1. ~~Initial API defined and published~~
-1. Verified that `localhost_router.php` works as expected or remove it if too hard to fix
-1. Tested project on Windows 10+
-=======
 1. ~~Fix grids:~~
    - ~~Filter labels~~
    - ~~Page size selections~~
@@ -219,12 +214,12 @@ before the first stable version.
 1. ~~Disable block cache for development~~
 1. ~~List pages on frontend by category (simple)~~
 1. ~~List pages on frontend by category (detailed)~~
-1. 70%+ of PHP source code unit tested, except for bootstrappers and console commands
+1. ~~Upgrade to phpunit 8.4~~
+1. ~~70%+ of PHP source code unit tested, except for bootstrappers and console commands~~
+1. ~~Tested project on OSX~~
 1. Verified that `localhost_router.php` works as expected or remove it if too hard to fix
-1. Tested project on OSX and Windows 10.
-1. Upgrade to phpunit 8.1
 1. API verified against Zalando REST API recommendations
->>>>>>> framework-update
+1. Tested project on Windows 10+
 
 ### First beta musts:
 
@@ -253,12 +248,6 @@ before the first stable version.
 1. Documentation covers getting started and main design goals
 1. Fix sidebar propeller "bug"
 1. Cache navigation for user
-<<<<<<< HEAD
-1. Improved security implementing related headers as recommended:
-   - https://medium.freecodecamp.org/secure-your-web-application-with-these-http-headers-fd66e0367628
-   - https://medium.freecodecamp.org/web-security-hardening-http-cookies-be8d8d8016e1
-1. Enable/Disable modules from console
-=======
 1. Enable/Disable modules from console
 1. Setup wizard (admin user + security settings)
 1. Revoke token endpoint
@@ -268,7 +257,6 @@ before the first stable version.
 1. Improved security implementing related headers as recommended:
    - https://medium.freecodecamp.org/secure-your-web-application-with-these-http-headers-fd66e0367628
    - https://medium.freecodecamp.org/web-security-hardening-http-cookies-be8d8d8016e1
->>>>>>> framework-update
 
 ### 1.0 musts:
 
