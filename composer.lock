@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/abterphp/admin.git",
-                "reference": "7adf6165b0f32d08a1e1bb76b72dfe897c946ed2"
+                "reference": "734d0d7aae1cc7adc3dff5ee76499bbe71d9c484"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/abterphp/admin/zipball/7adf6165b0f32d08a1e1bb76b72dfe897c946ed2",
-                "reference": "7adf6165b0f32d08a1e1bb76b72dfe897c946ed2",
+                "url": "https://api.github.com/repos/abterphp/admin/zipball/734d0d7aae1cc7adc3dff5ee76499bbe71d9c484",
+                "reference": "734d0d7aae1cc7adc3dff5ee76499bbe71d9c484",
                 "shasum": ""
             },
             "require": {
@@ -54,7 +54,7 @@
                 }
             ],
             "description": "Admin module for AbterPHP",
-            "time": "2019-12-02T00:57:51+00:00"
+            "time": "2019-12-08T20:24:04+00:00"
         },
         {
             "name": "abterphp/bootstrap4-website",
@@ -203,12 +203,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/abterphp/framework.git",
-                "reference": "1cc3a2e7d864285b7b7593b90493e07e50453dfe"
+                "reference": "4f016e74c0fe776afffbbee00830aea51d2a07a6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/abterphp/framework/zipball/1cc3a2e7d864285b7b7593b90493e07e50453dfe",
-                "reference": "1cc3a2e7d864285b7b7593b90493e07e50453dfe",
+                "url": "https://api.github.com/repos/abterphp/framework/zipball/4f016e74c0fe776afffbbee00830aea51d2a07a6",
+                "reference": "4f016e74c0fe776afffbbee00830aea51d2a07a6",
                 "shasum": ""
             },
             "require": {
@@ -265,7 +265,7 @@
                 }
             ],
             "description": "Foundations for AbterPHP",
-            "time": "2019-12-04T00:49:59+00:00"
+            "time": "2019-12-08T07:54:33+00:00"
         },
         {
             "name": "abterphp/propeller-admin",
@@ -1111,16 +1111,16 @@
         },
         {
             "name": "league/flysystem",
-            "version": "1.0.57",
+            "version": "1.0.59",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem.git",
-                "reference": "0e9db7f0b96b9f12dcf6f65bc34b72b1a30ea55a"
+                "reference": "1426da21dae81e1f3fe1074a166eb6dd3045f810"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/0e9db7f0b96b9f12dcf6f65bc34b72b1a30ea55a",
-                "reference": "0e9db7f0b96b9f12dcf6f65bc34b72b1a30ea55a",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/1426da21dae81e1f3fe1074a166eb6dd3045f810",
+                "reference": "1426da21dae81e1f3fe1074a166eb6dd3045f810",
                 "shasum": ""
             },
             "require": {
@@ -1191,7 +1191,7 @@
                 "sftp",
                 "storage"
             ],
-            "time": "2019-10-16T21:01:05+00:00"
+            "time": "2019-12-08T12:25:29+00:00"
         },
         {
             "name": "league/oauth2-server",
