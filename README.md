@@ -100,18 +100,11 @@ docker-compose up -d
 
 #### Install the dependencies
 
-You first need to install composer.phar locally and than use that to install dependencies.
-
-You need to log into the PHP container to do this:
+To install dependencies, we recommend running `make` from inside the PHP container:
 
 ```bash
 docker-compose exec php sh
-> php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-> php -r "if (hash_file('sha384', 'composer-setup.php') === '48e3236262b34d30969dca3c37281b3b4bbe3221bda826ac6a9a62d6444cdb0dcd0615698a5cbe587c3f0fe57a54d8f5') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
-> php composer-setup.php
-> php -r "unlink('composer-setup.php');"
-> php composer.phar install
-> exit
+> make
 ```
 
 #### Ensure your settings are sane
