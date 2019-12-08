@@ -150,6 +150,7 @@ Environment::setVar("ADMIN_DATE_FORMAT", "Y-m-d");
 Environment::setVar("ADMIN_DATETIME_FORMAT", "Y-m-d H:i:s");
 Environment::setVar("ADMIN_BASE_PATH", "/admin-iddqd");
 Environment::setVar("ADMIN_LOGIN_PATH", "/login-iddqd");
+Environment::setVar("ADMIN_LOGOUT_PATH", "/logout-iddqd");
 
 /**
  * ----------------------------------------------------------
