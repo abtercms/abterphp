@@ -210,6 +210,13 @@ before the first stable version.
 1. ~~Upgrade to phpunit 8.4~~
 1. ~~70%+ of PHP source code unit tested, except for bootstrappers and console commands~~
 1. ~~Tested project on OSX~~
+1. ~~Fix file uploads~~
+1. ~~File category identifiers~~
+1. ~~File category public/private~~
+1. ~~Page structure name~~
+1. ~~Fix page publication~~
+1. ~~Login errors displayed~~
+1. Fix filters
 1. Verified that `localhost_router.php` works as expected or remove it if too hard to fix
 1. API verified against Zalando REST API recommendations
 1. Tested project on Windows 10+
