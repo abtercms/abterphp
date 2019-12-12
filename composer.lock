@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/abterphp/admin.git",
-                "reference": "734d0d7aae1cc7adc3dff5ee76499bbe71d9c484"
+                "reference": "7e71f9cbbaa0e475ad158ed652e17526bf1ffd0f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/abterphp/admin/zipball/734d0d7aae1cc7adc3dff5ee76499bbe71d9c484",
-                "reference": "734d0d7aae1cc7adc3dff5ee76499bbe71d9c484",
+                "url": "https://api.github.com/repos/abterphp/admin/zipball/7e71f9cbbaa0e475ad158ed652e17526bf1ffd0f",
+                "reference": "7e71f9cbbaa0e475ad158ed652e17526bf1ffd0f",
                 "shasum": ""
             },
             "require": {
@@ -54,7 +54,7 @@
                 }
             ],
             "description": "Admin module for AbterPHP",
-            "time": "2019-12-08T20:24:04+00:00"
+            "time": "2019-12-12T13:23:07+00:00"
         },
         {
             "name": "abterphp/bootstrap4-website",
@@ -62,12 +62,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/abterphp/bootstrap4-website.git",
-                "reference": "4600f5dcf6d1b8d87fd1fa18a6797c8ba454ec90"
+                "reference": "ba4438a6cfc608dd9f750924ce014c9eaec4b2ae"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/abterphp/bootstrap4-website/zipball/4600f5dcf6d1b8d87fd1fa18a6797c8ba454ec90",
-                "reference": "4600f5dcf6d1b8d87fd1fa18a6797c8ba454ec90",
+                "url": "https://api.github.com/repos/abterphp/bootstrap4-website/zipball/ba4438a6cfc608dd9f750924ce014c9eaec4b2ae",
+                "reference": "ba4438a6cfc608dd9f750924ce014c9eaec4b2ae",
                 "shasum": ""
             },
             "require": {
@@ -100,7 +100,7 @@
                 }
             ],
             "description": "Website module for AbterPHP",
-            "time": "2019-11-24T22:39:11+00:00"
+            "time": "2019-12-12T13:27:04+00:00"
         },
         {
             "name": "abterphp/contact",
@@ -108,12 +108,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/abterphp/contact.git",
-                "reference": "566022caea23ae02a8c127a697414ea5d3a48c59"
+                "reference": "c9ddb0fa3d145c8e30dd831d93a6551a7f75b654"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/abterphp/contact/zipball/566022caea23ae02a8c127a697414ea5d3a48c59",
-                "reference": "566022caea23ae02a8c127a697414ea5d3a48c59",
+                "url": "https://api.github.com/repos/abterphp/contact/zipball/c9ddb0fa3d145c8e30dd831d93a6551a7f75b654",
+                "reference": "c9ddb0fa3d145c8e30dd831d93a6551a7f75b654",
                 "shasum": ""
             },
             "require": {
@@ -146,7 +146,7 @@
                 }
             ],
             "description": "Contact module for AbterPHP",
-            "time": "2019-12-04T00:38:58+00:00"
+            "time": "2019-12-12T13:26:10+00:00"
         },
         {
             "name": "abterphp/files",
@@ -154,12 +154,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/abterphp/files.git",
-                "reference": "eee61182b4340833f634a7d244c570492827a878"
+                "reference": "69ea62ccf00e8cb382b33a29c7d17a291271aaf2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/abterphp/files/zipball/eee61182b4340833f634a7d244c570492827a878",
-                "reference": "eee61182b4340833f634a7d244c570492827a878",
+                "url": "https://api.github.com/repos/abterphp/files/zipball/69ea62ccf00e8cb382b33a29c7d17a291271aaf2",
+                "reference": "69ea62ccf00e8cb382b33a29c7d17a291271aaf2",
                 "shasum": ""
             },
             "require": {
@@ -195,7 +195,7 @@
                 }
             ],
             "description": "File upload and file sharing module for AbterPHP",
-            "time": "2019-12-01T20:30:37+00:00"
+            "time": "2019-12-12T13:26:52+00:00"
         },
         {
             "name": "abterphp/framework",
@@ -203,12 +203,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/abterphp/framework.git",
-                "reference": "4f016e74c0fe776afffbbee00830aea51d2a07a6"
+                "reference": "2295a4a8e64ec8e3568c8955167b01163c63d290"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/abterphp/framework/zipball/4f016e74c0fe776afffbbee00830aea51d2a07a6",
-                "reference": "4f016e74c0fe776afffbbee00830aea51d2a07a6",
+                "url": "https://api.github.com/repos/abterphp/framework/zipball/2295a4a8e64ec8e3568c8955167b01163c63d290",
+                "reference": "2295a4a8e64ec8e3568c8955167b01163c63d290",
                 "shasum": ""
             },
             "require": {
@@ -265,7 +265,7 @@
                 }
             ],
             "description": "Foundations for AbterPHP",
-            "time": "2019-12-08T07:54:33+00:00"
+            "time": "2019-12-12T13:22:27+00:00"
         },
         {
             "name": "abterphp/propeller-admin",
@@ -273,12 +273,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/abterphp/propeller-admin.git",
-                "reference": "e91a76a19ff8b38f9f52e47cc0126cb83b9003f4"
+                "reference": "5b8e314899d617990d413771318644fa4aacd361"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/abterphp/propeller-admin/zipball/e91a76a19ff8b38f9f52e47cc0126cb83b9003f4",
-                "reference": "e91a76a19ff8b38f9f52e47cc0126cb83b9003f4",
+                "url": "https://api.github.com/repos/abterphp/propeller-admin/zipball/5b8e314899d617990d413771318644fa4aacd361",
+                "reference": "5b8e314899d617990d413771318644fa4aacd361",
                 "shasum": ""
             },
             "require": {
@@ -311,7 +311,7 @@
                 }
             ],
             "description": "Propeller design for the Admin module of AbterPHP",
-            "time": "2019-11-24T22:54:51+00:00"
+            "time": "2019-12-12T13:27:18+00:00"
         },
         {
             "name": "abterphp/website",
@@ -319,12 +319,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/abterphp/website.git",
-                "reference": "8df19cd63c0226e835319a411a2ae7a7f23e3dfe"
+                "reference": "c891c75d742ae1fa700947095bbe4f74acf2fa4f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/abterphp/website/zipball/8df19cd63c0226e835319a411a2ae7a7f23e3dfe",
-                "reference": "8df19cd63c0226e835319a411a2ae7a7f23e3dfe",
+                "url": "https://api.github.com/repos/abterphp/website/zipball/c891c75d742ae1fa700947095bbe4f74acf2fa4f",
+                "reference": "c891c75d742ae1fa700947095bbe4f74acf2fa4f",
                 "shasum": ""
             },
             "require": {
@@ -358,7 +358,7 @@
                 }
             ],
             "description": "Website module for AbterPHP",
-            "time": "2019-12-01T10:31:34+00:00"
+            "time": "2019-12-12T13:25:21+00:00"
         },
         {
             "name": "abterphp/website-creative",
@@ -366,12 +366,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/abterphp/website-creative.git",
-                "reference": "93aa2d3f4658bd7b8a9cc1e76c317f46ca2fefdc"
+                "reference": "c0e7daf78f4d97bb6256b09d99f0c4dd3e303acd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/abterphp/website-creative/zipball/93aa2d3f4658bd7b8a9cc1e76c317f46ca2fefdc",
-                "reference": "93aa2d3f4658bd7b8a9cc1e76c317f46ca2fefdc",
+                "url": "https://api.github.com/repos/abterphp/website-creative/zipball/c0e7daf78f4d97bb6256b09d99f0c4dd3e303acd",
+                "reference": "c0e7daf78f4d97bb6256b09d99f0c4dd3e303acd",
                 "shasum": ""
             },
             "require": {
@@ -405,7 +405,7 @@
                 }
             ],
             "description": "Website implementation for Startbootstrap - Creative based on AbterPHP",
-            "time": "2019-11-24T23:07:36+00:00"
+            "time": "2019-12-12T13:25:43+00:00"
         },
         {
             "name": "bjeavons/zxcvbn-php",
@@ -1111,16 +1111,16 @@
         },
         {
             "name": "league/flysystem",
-            "version": "1.0.59",
+            "version": "1.0.61",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem.git",
-                "reference": "1426da21dae81e1f3fe1074a166eb6dd3045f810"
+                "reference": "4fb13c01784a6c9f165a351e996871488ca2d8c9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/1426da21dae81e1f3fe1074a166eb6dd3045f810",
-                "reference": "1426da21dae81e1f3fe1074a166eb6dd3045f810",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/4fb13c01784a6c9f165a351e996871488ca2d8c9",
+                "reference": "4fb13c01784a6c9f165a351e996871488ca2d8c9",
                 "shasum": ""
             },
             "require": {
@@ -1191,7 +1191,7 @@
                 "sftp",
                 "storage"
             ],
-            "time": "2019-12-08T12:25:29+00:00"
+            "time": "2019-12-08T21:46:50+00:00"
         },
         {
             "name": "league/oauth2-server",
