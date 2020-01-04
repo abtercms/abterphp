@@ -257,6 +257,7 @@ before the first stable version.
 1. Improved security implementing related headers as recommended:
    - https://medium.freecodecamp.org/secure-your-web-application-with-these-http-headers-fd66e0367628
    - https://medium.freecodecamp.org/web-security-hardening-http-cookies-be8d8d8016e1
+1. Logs don't have to be local files
 
 ### 1.0 musts:
 
