@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/abterphp/admin.git",
-                "reference": "7a68ca59ffa9ce9930c5a69eee9f13610c1d28dd"
+                "reference": "d72b49f24f079cf62047e8cee45795b1b4450e99"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/abterphp/admin/zipball/7a68ca59ffa9ce9930c5a69eee9f13610c1d28dd",
-                "reference": "7a68ca59ffa9ce9930c5a69eee9f13610c1d28dd",
+                "url": "https://api.github.com/repos/abterphp/admin/zipball/d72b49f24f079cf62047e8cee45795b1b4450e99",
+                "reference": "d72b49f24f079cf62047e8cee45795b1b4450e99",
                 "shasum": ""
             },
             "require": {
@@ -54,7 +54,7 @@
                 }
             ],
             "description": "Admin module for AbterPHP",
-            "time": "2020-01-04T10:04:31+00:00"
+            "time": "2020-01-04T17:25:24+00:00"
         },
         {
             "name": "abterphp/bootstrap4-website",
@@ -108,12 +108,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/abterphp/contact.git",
-                "reference": "5124492d8a18121bb3fb48ce40cf837b80291bd5"
+                "reference": "49f37f36abd0f4854d6313ae6f7628d49fde5465"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/abterphp/contact/zipball/5124492d8a18121bb3fb48ce40cf837b80291bd5",
-                "reference": "5124492d8a18121bb3fb48ce40cf837b80291bd5",
+                "url": "https://api.github.com/repos/abterphp/contact/zipball/49f37f36abd0f4854d6313ae6f7628d49fde5465",
+                "reference": "49f37f36abd0f4854d6313ae6f7628d49fde5465",
                 "shasum": ""
             },
             "require": {
@@ -146,7 +146,7 @@
                 }
             ],
             "description": "Contact module for AbterPHP",
-            "time": "2020-01-04T11:13:59+00:00"
+            "time": "2020-01-04T18:04:51+00:00"
         },
         {
             "name": "abterphp/files",
@@ -154,12 +154,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/abterphp/files.git",
-                "reference": "ee485a514325f6445bd5fdae066b4713c4706f69"
+                "reference": "b8f10cdd9fd096cb7239c651336c5d0ce42e7a6d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/abterphp/files/zipball/ee485a514325f6445bd5fdae066b4713c4706f69",
-                "reference": "ee485a514325f6445bd5fdae066b4713c4706f69",
+                "url": "https://api.github.com/repos/abterphp/files/zipball/b8f10cdd9fd096cb7239c651336c5d0ce42e7a6d",
+                "reference": "b8f10cdd9fd096cb7239c651336c5d0ce42e7a6d",
                 "shasum": ""
             },
             "require": {
@@ -195,7 +195,7 @@
                 }
             ],
             "description": "File upload and file sharing module for AbterPHP",
-            "time": "2020-01-04T11:22:24+00:00"
+            "time": "2020-01-04T18:01:17+00:00"
         },
         {
             "name": "abterphp/framework",
@@ -319,12 +319,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/abterphp/website.git",
-                "reference": "a11e3f0d0d75414490f4579241bb0925699f523b"
+                "reference": "9d8949d18e02f36652bd2e536e4d4c6c2122436c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/abterphp/website/zipball/a11e3f0d0d75414490f4579241bb0925699f523b",
-                "reference": "a11e3f0d0d75414490f4579241bb0925699f523b",
+                "url": "https://api.github.com/repos/abterphp/website/zipball/9d8949d18e02f36652bd2e536e4d4c6c2122436c",
+                "reference": "9d8949d18e02f36652bd2e536e4d4c6c2122436c",
                 "shasum": ""
             },
             "require": {
@@ -358,7 +358,7 @@
                 }
             ],
             "description": "Website module for AbterPHP",
-            "time": "2020-01-04T11:07:02+00:00"
+            "time": "2020-01-04T17:52:33+00:00"
         },
         {
             "name": "abterphp/website-creative",
@@ -366,12 +366,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/abterphp/website-creative.git",
-                "reference": "fc34b323ec548f806c44cce96a089f61fb3c8342"
+                "reference": "c380b20441407dcd7c76649ea3c706d82901c51f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/abterphp/website-creative/zipball/fc34b323ec548f806c44cce96a089f61fb3c8342",
-                "reference": "fc34b323ec548f806c44cce96a089f61fb3c8342",
+                "url": "https://api.github.com/repos/abterphp/website-creative/zipball/c380b20441407dcd7c76649ea3c706d82901c51f",
+                "reference": "c380b20441407dcd7c76649ea3c706d82901c51f",
                 "shasum": ""
             },
             "require": {
@@ -405,7 +405,7 @@
                 }
             ],
             "description": "Website implementation for Startbootstrap - Creative based on AbterPHP",
-            "time": "2019-12-31T14:43:08+00:00"
+            "time": "2020-01-04T18:09:03+00:00"
         },
         {
             "name": "bjeavons/zxcvbn-php",
@@ -1110,16 +1110,16 @@
         },
         {
             "name": "league/flysystem",
-            "version": "1.0.62",
+            "version": "1.0.63",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem.git",
-                "reference": "14dd5d7dff5fbc29ca9a2a53ff109760e40d91a0"
+                "reference": "8132daec326565036bc8e8d1876f77ec183a7bd6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/14dd5d7dff5fbc29ca9a2a53ff109760e40d91a0",
-                "reference": "14dd5d7dff5fbc29ca9a2a53ff109760e40d91a0",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/8132daec326565036bc8e8d1876f77ec183a7bd6",
+                "reference": "8132daec326565036bc8e8d1876f77ec183a7bd6",
                 "shasum": ""
             },
             "require": {
@@ -1190,7 +1190,7 @@
                 "sftp",
                 "storage"
             ],
-            "time": "2019-12-29T14:46:55+00:00"
+            "time": "2020-01-04T16:30:31+00:00"
         },
         {
             "name": "league/oauth2-server",
