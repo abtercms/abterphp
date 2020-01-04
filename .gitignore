@@ -7,6 +7,6 @@ phpunit.phar
 !config/environment/.env.example.php
 /vendor/
 NOTES.md
-/docker/php/conf.d/zzz.ini
+/docker/php/conf.d/zzz_500_local.ini
 .phpunit.result.cache
 

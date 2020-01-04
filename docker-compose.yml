@@ -71,7 +71,8 @@ services:
       - "TRAVIS_JOB_ID=${TRAVIS_JOB_ID}"
     volumes:
       - .:/website
-      - ./docker/php/conf.d/zzz.ini:/usr/local/etc/php/conf.d/zzz.ini:ro
+      - ./docker/php/conf.d/zzz_020_general.ini:/usr/local/etc/php/conf.d/zzz_020_general.ini:ro
+      - ./docker/php/conf.d/zzz_500_local.ini:/usr/local/etc/php/conf.d/zzz_500_local.ini:ro
       - ./docker/php/conf.d/xdebug-off.ini:/usr/local/etc/php/conf.d/xdebug-off.ini:ro
     working_dir: /website
 
