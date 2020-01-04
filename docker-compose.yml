@@ -47,7 +47,7 @@ services:
       - MH_HOSTNAME=localhost
 
   php:
-    image: abtercms/php:72
+    image: abtercms/php
     links:
       - db
       - db_test
