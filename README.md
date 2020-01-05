@@ -258,6 +258,7 @@ before the first stable version.
    - https://medium.freecodecamp.org/secure-your-web-application-with-these-http-headers-fd66e0367628
    - https://medium.freecodecamp.org/web-security-hardening-http-cookies-be8d8d8016e1
 1. Logs don't have to be local files
+1. Page should use Layout as entity -> Fix getGridQuery::PageSqlDataMapper
 
 ### 1.0 musts:
 
