@@ -42,7 +42,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Problem'
 
-  /adminresources:
+  /admin-resources:
     get:
       description: Retrieves a list of admin resources
       operationId: listAdminResources
@@ -90,18 +90,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/Problem'
 
-  /adminresources/{adminresource_id}:
+  /admin-resources/{id}:
     get:
       description: Retrieves an admin resource
       operationId: getAdminResource
       parameters:
         - $ref: '#/components/parameters/tokenHeader'
-        - name: adminresource_id
-          in: path
-          description: ID of admin resource to update
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/idPath'
       responses:
         '200':
           description: Admin resource response
@@ -121,12 +116,7 @@ paths:
       operationId: updateAdminResource
       parameters:
         - $ref: '#/components/parameters/tokenHeader'
-        - name: adminresource_id
-          in: path
-          description: ID of admin resource to update
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/idPath'
       requestBody:
         description: Admin resource to update
         required: true
@@ -153,12 +143,7 @@ paths:
       operationId: deleteAdminResource
       parameters:
         - $ref: '#/components/parameters/tokenHeader'
-        - name: adminresource_id
-          in: path
-          description: ID of admin resource to update
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/idPath'
       responses:
         '200':
           description: User group delete success response
@@ -169,7 +154,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Problem'
 
-  /userlanguages:
+  /user-languages:
     get:
       description: Retrieves a list of user languages
       operationId: listUserLanguages
@@ -217,18 +202,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/Problem'
 
-  /userlanguages/{userlanguage_id}:
+  /user-languages/{id}:
     get:
       description: Retrieves a user language
       operationId: getUserLanguage
       parameters:
         - $ref: '#/components/parameters/tokenHeader'
-        - name: userlanguage_id
-          in: path
-          description: ID of user language to update
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/idPath'
       responses:
         '200':
           description: User language response
@@ -248,12 +228,7 @@ paths:
       operationId: updateUserLanguage
       parameters:
         - $ref: '#/components/parameters/tokenHeader'
-        - name: userlanguage_id
-          in: path
-          description: ID of user language to update
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/idPath'
       requestBody:
         description: User language to update
         required: true
@@ -280,12 +255,7 @@ paths:
       operationId: deleteUserLanguage
       parameters:
         - $ref: '#/components/parameters/tokenHeader'
-        - name: userlanguage_id
-          in: path
-          description: ID of user language to update
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/idPath'
       responses:
         '200':
           description: User language delete success response
@@ -296,7 +266,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Problem'
 
-  /usergroups:
+  /user-groups:
     get:
       description: Retrieves a list of user groups
       operationId: listUserGroups
@@ -344,18 +314,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/Problem'
 
-  /usergroups/{usergroup_id}:
+  /user-groups/{id}:
     get:
       description: Retrieves a user group
       operationId: getUserGroup
       parameters:
         - $ref: '#/components/parameters/tokenHeader'
-        - name: usergroup_id
-          in: path
-          description: ID of user group to update
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/idPath'
       responses:
         '200':
           description: User group response
@@ -375,12 +340,7 @@ paths:
       operationId: updateUserGroup
       parameters:
         - $ref: '#/components/parameters/tokenHeader'
-        - name: usergroup_id
-          in: path
-          description: ID of user to update
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/idPath'
       requestBody:
         description: User group to update
         required: true
@@ -407,12 +367,7 @@ paths:
       operationId: deleteUserGroup
       parameters:
         - $ref: '#/components/parameters/tokenHeader'
-        - name: usergroup_id
-          in: path
-          description: ID of user group to update
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/idPath'
       responses:
         '200':
           description: User group delete success response
@@ -471,18 +426,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/Problem'
 
-  /users/{user_id}:
+  /users/{id}:
     get:
       description: Retrieves a user
       operationId: getUser
       parameters:
         - $ref: '#/components/parameters/tokenHeader'
-        - name: user_id
-          in: path
-          description: ID of user to update
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/idPath'
       responses:
         '200':
           description: User response
@@ -502,12 +452,7 @@ paths:
       operationId: updateUser
       parameters:
         - $ref: '#/components/parameters/tokenHeader'
-        - name: user_id
-          in: path
-          description: ID of user to update
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/idPath'
       requestBody:
         description: User to update
         required: true
@@ -534,12 +479,7 @@ paths:
       operationId: deleteUser
       parameters:
         - $ref: '#/components/parameters/tokenHeader'
-        - name: user_id
-          in: path
-          description: ID of user to update
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/idPath'
       responses:
         '200':
           description: User delete success response
@@ -598,18 +538,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/Problem'
 
-  /blocks/{block_id}:
+  /blocks/{id}:
     get:
       description: Retrieves a block
       operationId: getBlock
       parameters:
         - $ref: '#/components/parameters/tokenHeader'
-        - name: block_id
-          in: path
-          description: ID of block to update
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/idPath'
       responses:
         '200':
           description: Block response
@@ -629,12 +564,7 @@ paths:
       operationId: updateBlock
       parameters:
         - $ref: '#/components/parameters/tokenHeader'
-        - name: block_id
-          in: path
-          description: ID of block to update
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/idPath'
       requestBody:
         description: Block to update
         required: true
@@ -661,12 +591,7 @@ paths:
       operationId: deleteBlock
       parameters:
         - $ref: '#/components/parameters/tokenHeader'
-        - name: block_id
-          in: path
-          description: ID of block to update
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/idPath'
       responses:
         '200':
           description: Block delete success response
@@ -677,7 +602,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Problem'
 
-  /blocklayouts:
+  /block-layouts:
     get:
       description: Retrieves a list of block layouts
       operationId: listBlockLayouts
@@ -725,18 +650,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/Problem'
 
-  /blocklayouts/{blocklayout_id}:
+  /block-layouts/{id}:
     get:
       description: Retrieves a block layout
       operationId: getBlockLayout
       parameters:
         - $ref: '#/components/parameters/tokenHeader'
-        - name: blocklayout_id
-          in: path
-          description: ID of block layout to update
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/idPath'
       responses:
         '200':
           description: Block layout response
@@ -756,12 +676,7 @@ paths:
       operationId: updateBlockLayout
       parameters:
         - $ref: '#/components/parameters/tokenHeader'
-        - name: blocklayout_id
-          in: path
-          description: ID of block layout to update
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/idPath'
       requestBody:
         description: Block layout to update
         required: true
@@ -788,12 +703,7 @@ paths:
       operationId: deleteBlockLayout
       parameters:
         - $ref: '#/components/parameters/tokenHeader'
-        - name: blocklayout_id
-          in: path
-          description: ID of block layout to update
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/idPath'
       responses:
         '200':
           description: User group delete success response
@@ -852,18 +762,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/Problem'
 
-  /pages/{page_id}:
+  /pages/{id}:
     get:
       description: Get an existing page
       operationId: getPage
       parameters:
         - $ref: '#/components/parameters/tokenHeader'
-        - name: page_id
-          in: path
-          description: ID of page to update
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/idPath'
         - name: embed
           in: query
           description: "Comma separated list of extra fields to embed. Available values: 'rendered'"
@@ -889,12 +794,7 @@ paths:
       operationId: updatePage
       parameters:
         - $ref: '#/components/parameters/tokenHeader'
-        - name: page_id
-          in: path
-          description: ID of page to update
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/idPath'
       requestBody:
         description: Page to update
         required: true
@@ -921,12 +821,7 @@ paths:
       operationId: deletePage
       parameters:
         - $ref: '#/components/parameters/tokenHeader'
-        - name: page_id
-          in: path
-          description: ID of page to update
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/idPath'
       responses:
         '200':
           description: Page delete success response
@@ -937,7 +832,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Problem'
 
-  /pagecategories:
+  /page-categories:
     get:
       description: Retrieves a list of page categories
       operationId: listPageCategories
@@ -985,18 +880,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/Problem'
 
-  /pagecategories/{pagecategory_id}:
+  /page-categories/{id}:
     get:
       description: Retrieves a page category
       operationId: getPageCategory
       parameters:
         - $ref: '#/components/parameters/tokenHeader'
-        - name: pagecategory_id
-          in: path
-          description: ID of page category to update
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/idPath'
       responses:
         '200':
           description: Page category response
@@ -1016,12 +906,7 @@ paths:
       operationId: updatePageCategory
       parameters:
         - $ref: '#/components/parameters/tokenHeader'
-        - name: pagecategory_id
-          in: path
-          description: ID of page category to update
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/idPath'
       requestBody:
         description: Page category to update
         required: true
@@ -1048,12 +933,7 @@ paths:
       operationId: deletePageCategory
       parameters:
         - $ref: '#/components/parameters/tokenHeader'
-        - name: pagecategory_id
-          in: path
-          description: ID of page category to update
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/idPath'
       responses:
         '200':
           description: Page category delete success response
@@ -1064,7 +944,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Problem'
 
-  /pagelayouts:
+  /page-layouts:
     get:
       description: Retrieves a list of page layouts
       operationId: listPageLayouts
@@ -1112,18 +992,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/Problem'
 
-  /pagelayouts/{pagelayout_id}:
+  /page-layouts/{id}:
     get:
       description: Retrieves a page layout
       operationId: getPageLayout
       parameters:
         - $ref: '#/components/parameters/tokenHeader'
-        - name: pagelayout_id
-          in: path
-          description: ID of page layout to update
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/idPath'
       responses:
         '200':
           description: Page layout response
@@ -1143,12 +1018,7 @@ paths:
       operationId: updatePageLayout
       parameters:
         - $ref: '#/components/parameters/tokenHeader'
-        - name: pagelayout_id
-          in: path
-          description: ID of page layout to update
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/idPath'
       requestBody:
         description: Page layout to update
         required: true
@@ -1175,12 +1045,7 @@ paths:
       operationId: deletePageLayout
       parameters:
         - $ref: '#/components/parameters/tokenHeader'
-        - name: pagelayout_id
-          in: path
-          description: ID of page layout to update
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/idPath'
       responses:
         '200':
           description: Page layout delete success response
@@ -1239,18 +1104,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/Problem'
 
-  /files/{file_id}:
+  /files/{id}:
     get:
       description: Retrieves a file
       operationId: getFile
       parameters:
         - $ref: '#/components/parameters/tokenHeader'
-        - name: file_id
-          in: path
-          description: ID of file to update
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/idPath'
         - name: embed
           in: query
           description: "Comma separated list of extra fields to embed. Available values: 'data'"
@@ -1276,12 +1136,7 @@ paths:
       operationId: updateFile
       parameters:
         - $ref: '#/components/parameters/tokenHeader'
-        - name: file_id
-          in: path
-          description: ID of file to update
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/idPath'
       requestBody:
         description: File to update
         required: true
@@ -1308,12 +1163,7 @@ paths:
       operationId: deleteFile
       parameters:
         - $ref: '#/components/parameters/tokenHeader'
-        - name: file_id
-          in: path
-          description: ID of file to update
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/idPath'
       responses:
         '200':
           description: File delete success response
@@ -1324,7 +1174,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Problem'
 
-  /filecategories:
+  /file-categories:
     get:
       description: Retrieves a list of file categories
       operationId: listFileCategories
@@ -1372,18 +1222,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/Problem'
 
-  /filecategories/{filecategory_id}:
+  /file-categories/{id}:
     get:
       description: Retrieves a file category
       operationId: getFileCategory
       parameters:
         - $ref: '#/components/parameters/tokenHeader'
-        - name: filecategory_id
-          in: path
-          description: ID of file category to update
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/idPath'
       responses:
         '200':
           description: File category response
@@ -1403,12 +1248,7 @@ paths:
       operationId: updateFileCategory
       parameters:
         - $ref: '#/components/parameters/tokenHeader'
-        - name: filecategory_id
-          in: path
-          description: ID of file category to update
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/idPath'
       requestBody:
         description: File category to update
         required: true
@@ -1435,12 +1275,7 @@ paths:
       operationId: deleteFileCategory
       parameters:
         - $ref: '#/components/parameters/tokenHeader'
-        - name: filecategory_id
-          in: path
-          description: ID of file category to update
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/idPath'
       responses:
         '200':
           description: File category delete success response
@@ -1451,7 +1286,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Problem'
 
-  /filedownloads:
+  /file-downloads:
     get:
       description: Retrieve file downloads
       operationId: listFileDownloads
@@ -1499,18 +1334,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/Problem'
 
-  /filedownloads/{filedownload_id}:
+  /file-downloads/{id}:
     get:
       description: Retrieves a file download
       operationId: getFileDownload
       parameters:
         - $ref: '#/components/parameters/tokenHeader'
-        - name: filedownload_id
-          in: path
-          description: ID of file download to update
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/idPath'
       responses:
         '200':
           description: File download response
@@ -1530,12 +1360,7 @@ paths:
       operationId: updateFileDownload
       parameters:
         - $ref: '#/components/parameters/tokenHeader'
-        - name: filedownload_id
-          in: path
-          description: ID of file download to update
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/idPath'
       requestBody:
         description: File download to update
         required: true
@@ -1562,12 +1387,7 @@ paths:
       operationId: deleteFileDownload
       parameters:
         - $ref: '#/components/parameters/tokenHeader'
-        - name: filedownload_id
-          in: path
-          description: ID of file download to update
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/idPath'
       responses:
         '200':
           description: File download delete success response
@@ -1578,7 +1398,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Problem'
 
-  /contactforms:
+  /contact-forms:
     get:
       description: Retrieve contact forms
       operationId: listContactForms
@@ -1626,18 +1446,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/Problem'
 
-  /contactforms/{contactform_id}:
+  /contact-forms/{id}:
     get:
       description: Retrieves a contact form
       operationId: getContactForm
       parameters:
         - $ref: '#/components/parameters/tokenHeader'
-        - name: contactform_id
-          in: path
-          description: ID of contact form to update
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/idPath'
       responses:
         '200':
           description: Contact form response
@@ -1657,12 +1472,7 @@ paths:
       operationId: updateContactForm
       parameters:
         - $ref: '#/components/parameters/tokenHeader'
-        - name: contactform_id
-          in: path
-          description: ID of contact form to update
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/idPath'
       requestBody:
         description: File download to update
         required: true
@@ -1689,12 +1499,7 @@ paths:
       operationId: deleteContactForm
       parameters:
         - $ref: '#/components/parameters/tokenHeader'
-        - name: contactform_id
-          in: path
-          description: ID of contact form to update
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/idPath'
       responses:
         '200':
           description: Contact form delete success response
@@ -1705,18 +1510,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/Problem'
 
-  /contactforms/{contactform_id}/messages:
+  /contact-forms/{id}/messages:
     post:
       description: Creates a new message for a contact form
       operationId: createContactFormMessage
       parameters:
         - $ref: '#/components/parameters/tokenHeader'
-        - name: contactform_id
-          in: path
-          description: ID of contact form to submit data for
-          required: true
-          schema:
-            type: string
+        - $ref: '#/components/parameters/idPath'
       requestBody:
         description: Contact form submittion to create
         required: true
@@ -1766,6 +1566,14 @@ components:
         type: integer
         format: int32
         default: 0
+
+    idPath:
+      name: id
+      in: path
+      description: ID of resource to act upon (read, update, delete)
+      required: true
+      schema:
+        type: string
 
   schemas:
     TokenRequest:
