@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2fbb37ddad848a09525ca85d08d60183",
+    "content-hash": "f953f935fb67688c71267ba68bed56e6",
     "packages": [
         {
             "name": "abterphp/admin",
@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/abterphp/admin.git",
-                "reference": "c764157342c1551f8124100d6908632d033b7e5b"
+                "reference": "f5762f10b577f1fc84cf61aa8e783b4a3ed651c2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/abterphp/admin/zipball/c764157342c1551f8124100d6908632d033b7e5b",
-                "reference": "c764157342c1551f8124100d6908632d033b7e5b",
+                "url": "https://api.github.com/repos/abterphp/admin/zipball/f5762f10b577f1fc84cf61aa8e783b4a3ed651c2",
+                "reference": "f5762f10b577f1fc84cf61aa8e783b4a3ed651c2",
                 "shasum": ""
             },
             "require": {
@@ -54,7 +54,7 @@
                 }
             ],
             "description": "Admin module for AbterPHP",
-            "time": "2020-01-06T22:56:02+00:00"
+            "time": "2020-01-16T01:25:33+00:00"
         },
         {
             "name": "abterphp/bootstrap4-website",
@@ -108,12 +108,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/abterphp/contact.git",
-                "reference": "7611fd8cd394aff8ad04d909941fe9feef7dc1b6"
+                "reference": "6e29798af3d2b4e66e81018d221e95c8ec28002b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/abterphp/contact/zipball/7611fd8cd394aff8ad04d909941fe9feef7dc1b6",
-                "reference": "7611fd8cd394aff8ad04d909941fe9feef7dc1b6",
+                "url": "https://api.github.com/repos/abterphp/contact/zipball/6e29798af3d2b4e66e81018d221e95c8ec28002b",
+                "reference": "6e29798af3d2b4e66e81018d221e95c8ec28002b",
                 "shasum": ""
             },
             "require": {
@@ -146,7 +146,7 @@
                 }
             ],
             "description": "Contact module for AbterPHP",
-            "time": "2020-01-06T23:17:09+00:00"
+            "time": "2020-01-16T01:55:21+00:00"
         },
         {
             "name": "abterphp/files",
@@ -154,12 +154,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/abterphp/files.git",
-                "reference": "ef0322c39502f080178643f33b1c10ed6a27ac63"
+                "reference": "8ba158d67265fe7b8f9bfc3c4de18ca88c13aaee"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/abterphp/files/zipball/ef0322c39502f080178643f33b1c10ed6a27ac63",
-                "reference": "ef0322c39502f080178643f33b1c10ed6a27ac63",
+                "url": "https://api.github.com/repos/abterphp/files/zipball/8ba158d67265fe7b8f9bfc3c4de18ca88c13aaee",
+                "reference": "8ba158d67265fe7b8f9bfc3c4de18ca88c13aaee",
                 "shasum": ""
             },
             "require": {
@@ -195,7 +195,7 @@
                 }
             ],
             "description": "File upload and file sharing module for AbterPHP",
-            "time": "2020-01-06T23:16:00+00:00"
+            "time": "2020-01-16T01:53:00+00:00"
         },
         {
             "name": "abterphp/framework",
@@ -203,12 +203,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/abterphp/framework.git",
-                "reference": "c607f7d5cb5d032abd18cbf7c7f54c0fea471128"
+                "reference": "a527641cc6c7e763553431722cd6151652b6d378"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/abterphp/framework/zipball/c607f7d5cb5d032abd18cbf7c7f54c0fea471128",
-                "reference": "c607f7d5cb5d032abd18cbf7c7f54c0fea471128",
+                "url": "https://api.github.com/repos/abterphp/framework/zipball/a527641cc6c7e763553431722cd6151652b6d378",
+                "reference": "a527641cc6c7e763553431722cd6151652b6d378",
                 "shasum": ""
             },
             "require": {
@@ -265,7 +265,7 @@
                 }
             ],
             "description": "Foundations for AbterPHP",
-            "time": "2020-01-06T22:38:25+00:00"
+            "time": "2020-01-16T01:16:23+00:00"
         },
         {
             "name": "abterphp/propeller-admin",
@@ -319,12 +319,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/abterphp/website.git",
-                "reference": "c3009ea7700e9dd72019b8af75abcb8ae81d6a41"
+                "reference": "f5d2c399d47d1ea51465d9fa2fe5ad746dccd802"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/abterphp/website/zipball/c3009ea7700e9dd72019b8af75abcb8ae81d6a41",
-                "reference": "c3009ea7700e9dd72019b8af75abcb8ae81d6a41",
+                "url": "https://api.github.com/repos/abterphp/website/zipball/f5d2c399d47d1ea51465d9fa2fe5ad746dccd802",
+                "reference": "f5d2c399d47d1ea51465d9fa2fe5ad746dccd802",
                 "shasum": ""
             },
             "require": {
@@ -358,54 +358,7 @@
                 }
             ],
             "description": "Website module for AbterPHP",
-            "time": "2020-01-06T23:00:43+00:00"
-        },
-        {
-            "name": "abterphp/website-creative",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/abterphp/website-creative.git",
-                "reference": "19f34c34bfa0385b90428ec6ddaed6be594a02fc"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/abterphp/website-creative/zipball/19f34c34bfa0385b90428ec6ddaed6be594a02fc",
-                "reference": "19f34c34bfa0385b90428ec6ddaed6be594a02fc",
-                "shasum": ""
-            },
-            "require": {
-                "abterphp/bootstrap4-website": "*",
-                "abterphp/contact": "*"
-            },
-            "require-dev": {
-                "phan/phan": "^2.2",
-                "phpmd/phpmd": "^2.6",
-                "phpunit/phpunit": "^8.2",
-                "squizlabs/php_codesniffer": "^3.4"
-            },
-            "type": "project",
-            "autoload": {
-                "psr-4": {
-                    "AbterPhp\\WebsiteCreative\\": [
-                        "src",
-                        "tests"
-                    ]
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Peter Aba",
-                    "email": "peter@peteraba.com",
-                    "role": "Engineer"
-                }
-            ],
-            "description": "Website implementation for Startbootstrap - Creative based on AbterPHP",
-            "time": "2020-01-04T22:33:10+00:00"
+            "time": "2020-01-16T01:46:08+00:00"
         },
         {
             "name": "bjeavons/zxcvbn-php",
@@ -789,16 +742,16 @@
         },
         {
             "name": "egulias/email-validator",
-            "version": "2.1.13",
+            "version": "2.1.14",
             "source": {
                 "type": "git",
                 "url": "https://github.com/egulias/EmailValidator.git",
-                "reference": "834593d5900615639208417760ba6a17299e2497"
+                "reference": "c4b8d12921999d8a561004371701dbc2e05b5ece"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/egulias/EmailValidator/zipball/834593d5900615639208417760ba6a17299e2497",
-                "reference": "834593d5900615639208417760ba6a17299e2497",
+                "url": "https://api.github.com/repos/egulias/EmailValidator/zipball/c4b8d12921999d8a561004371701dbc2e05b5ece",
+                "reference": "c4b8d12921999d8a561004371701dbc2e05b5ece",
                 "shasum": ""
             },
             "require": {
@@ -842,20 +795,20 @@
                 "validation",
                 "validator"
             ],
-            "time": "2019-12-30T08:14:25+00:00"
+            "time": "2020-01-05T14:11:20+00:00"
         },
         {
             "name": "filp/whoops",
-            "version": "2.7.0",
+            "version": "2.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filp/whoops.git",
-                "reference": "4c97f814aa2f0dd4d5bedc89181c10ef12c004c5"
+                "reference": "fff6f1e4f36be0e0d0b84d66b413d9dcb0c49130"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/filp/whoops/zipball/4c97f814aa2f0dd4d5bedc89181c10ef12c004c5",
-                "reference": "4c97f814aa2f0dd4d5bedc89181c10ef12c004c5",
+                "url": "https://api.github.com/repos/filp/whoops/zipball/fff6f1e4f36be0e0d0b84d66b413d9dcb0c49130",
+                "reference": "fff6f1e4f36be0e0d0b84d66b413d9dcb0c49130",
                 "shasum": ""
             },
             "require": {
@@ -903,7 +856,7 @@
                 "throwable",
                 "whoops"
             ],
-            "time": "2019-12-29T10:00:00+00:00"
+            "time": "2020-01-15T10:00:00+00:00"
         },
         {
             "name": "hackzilla/password-generator",
@@ -1670,16 +1623,16 @@
         },
         {
             "name": "opulence/opulence",
-            "version": "v1.1.11",
+            "version": "v1.1.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/opulencephp/Opulence.git",
-                "reference": "f3f27e254c39f877c5ec9720bf0e60eabb6dafcc"
+                "reference": "ed505379d7707fae59918793559887639f63e877"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/opulencephp/Opulence/zipball/f3f27e254c39f877c5ec9720bf0e60eabb6dafcc",
-                "reference": "f3f27e254c39f877c5ec9720bf0e60eabb6dafcc",
+                "url": "https://api.github.com/repos/opulencephp/Opulence/zipball/ed505379d7707fae59918793559887639f63e877",
+                "reference": "ed505379d7707fae59918793559887639f63e877",
                 "shasum": ""
             },
             "require": {
@@ -1758,7 +1711,7 @@
                 "php",
                 "template"
             ],
-            "time": "2019-12-29T15:48:06+00:00"
+            "time": "2020-01-15T13:26:49+00:00"
         },
         {
             "name": "paragonie/random_compat",
@@ -3228,16 +3181,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "8.5.1",
+            "version": "8.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "7870c78da3c5e4883eaef36ae47853ebb3cb86f2"
+                "reference": "018b6ac3c8ab20916db85fa91bf6465acb64d1e0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/7870c78da3c5e4883eaef36ae47853ebb3cb86f2",
-                "reference": "7870c78da3c5e4883eaef36ae47853ebb3cb86f2",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/018b6ac3c8ab20916db85fa91bf6465acb64d1e0",
+                "reference": "018b6ac3c8ab20916db85fa91bf6465acb64d1e0",
                 "shasum": ""
             },
             "require": {
@@ -3307,7 +3260,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2019-12-25T14:49:39+00:00"
+            "time": "2020-01-08T08:49:49+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",

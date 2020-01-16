@@ -49,8 +49,7 @@
     "abterphp/propeller-admin": "*",
     "abterphp/bootstrap4-website": "*",
     "abterphp/files": "*",
-    "abterphp/contact": "*",
-    "abterphp/website-creative": "*"
+    "abterphp/contact": "*"
   },
   "require-dev": {
     "phpunit/phpunit": "^8.5"
