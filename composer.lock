@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/abterphp/admin.git",
-                "reference": "e81a21e1efadaba3499935b10d00dc5a34008125"
+                "reference": "d388f34f9d72bd791181db14065b8e5d487aa525"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/abterphp/admin/zipball/e81a21e1efadaba3499935b10d00dc5a34008125",
-                "reference": "e81a21e1efadaba3499935b10d00dc5a34008125",
+                "url": "https://api.github.com/repos/abterphp/admin/zipball/d388f34f9d72bd791181db14065b8e5d487aa525",
+                "reference": "d388f34f9d72bd791181db14065b8e5d487aa525",
                 "shasum": ""
             },
             "require": {
@@ -54,7 +54,7 @@
                 }
             ],
             "description": "Admin module for AbterPHP",
-            "time": "2020-01-21T21:48:45+00:00"
+            "time": "2020-01-22T00:19:25+00:00"
         },
         {
             "name": "abterphp/bootstrap4-website",
@@ -365,12 +365,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/abterphp/website.git",
-                "reference": "9f3dda23e3f9d40d64a79ab9bdfd6c0fc3a3c04a"
+                "reference": "4ede6529567adb2ff55ec40222f97ea3df6be105"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/abterphp/website/zipball/9f3dda23e3f9d40d64a79ab9bdfd6c0fc3a3c04a",
-                "reference": "9f3dda23e3f9d40d64a79ab9bdfd6c0fc3a3c04a",
+                "url": "https://api.github.com/repos/abterphp/website/zipball/4ede6529567adb2ff55ec40222f97ea3df6be105",
+                "reference": "4ede6529567adb2ff55ec40222f97ea3df6be105",
                 "shasum": ""
             },
             "require": {
@@ -404,7 +404,7 @@
                 }
             ],
             "description": "Website module for AbterPHP",
-            "time": "2020-01-21T22:02:35+00:00"
+            "time": "2020-01-22T00:20:31+00:00"
         },
         {
             "name": "bjeavons/zxcvbn-php",
