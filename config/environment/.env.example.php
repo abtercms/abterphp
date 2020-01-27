@@ -110,9 +110,12 @@ Environment::setVar("MODULE_CACHE_KEY", "AbterPhp:Modules");
  */
 Environment::setVar("DIR_PRIVATE", "/path/to/root/private");
 Environment::setVar("DIR_PUBLIC", "/path/to/root/public");
+Environment::setVar("DIR_MEDIA", "/path/to/root/media");
 Environment::setVar("DIR_AUTH_CONFIG", "/path/to/root/config/authorization");
 Environment::setVar("DIR_MIGRATIONS", "/path/to/root/resources/migrations");
 Environment::setVar("DIR_LOGS", "/path/to/root/tmp/logs");
+
+Environment::setVar("CACHE_BASE_PATH", "/cache");
 
 /**
  * ----------------------------------------------------------
@@ -150,12 +153,14 @@ Environment::setVar("EMAIL_SMTP_PASSWORD", "");
  */
 Environment::setVar("ADMIN_DATE_FORMAT", "Y-m-d");
 Environment::setVar("ADMIN_DATETIME_FORMAT", "Y-m-d H:i:s");
+
 Environment::setVar("ADMIN_BASE_PATH", "/admin-iddqd");
 Environment::setVar("ADMIN_LOGIN_PATH", "/login-iddqd");
 Environment::setVar("ADMIN_LOGOUT_PATH", "/logout-iddqd");
-Environment::setVar("DIR_UPLOAD", "/path/to/root/public/editor-file-upload");
-Environment::setVar("UPLOAD_BASE_URL", "https://abtercms.test/editor-file-upload");
-Environment::setVar("UPLOAD_CLIENT_ID", "");
+
+Environment::setVar("MEDIA_BASE_URL", "https://media.abtercms.test/");
+Environment::setVar("EDITOR_BASE_PATH", "/editor-file-upload");
+Environment::setVar("EDITOR_CLIENT_ID", "");
 
 /**
  * ----------------------------------------------------------
@@ -163,8 +168,9 @@ Environment::setVar("UPLOAD_CLIENT_ID", "");
  * ----------------------------------------------------------
  */
 
+Environment::setVar("API_BASE_URL", "https://api.abtercms.com/");
 Environment::setVar("API_BASE_PATH", "/api-iddqd");
-Environment::setVar("API_PROBLEM_BASE_URL", "https://abtercms.com/problem/");
+Environment::setVar("API_PROBLEM_PATH", "/problem");
 
 /**
  * ----------------------------------------------------------
