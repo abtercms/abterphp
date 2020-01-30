@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/abterphp/admin.git",
-                "reference": "013d89146e9a84161e4e7b81156b827f5f73fec1"
+                "reference": "7707feebb8e9c37078f11637e2bc3c232932cb63"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/abterphp/admin/zipball/013d89146e9a84161e4e7b81156b827f5f73fec1",
-                "reference": "013d89146e9a84161e4e7b81156b827f5f73fec1",
+                "url": "https://api.github.com/repos/abterphp/admin/zipball/7707feebb8e9c37078f11637e2bc3c232932cb63",
+                "reference": "7707feebb8e9c37078f11637e2bc3c232932cb63",
                 "shasum": ""
             },
             "require": {
@@ -54,7 +54,7 @@
                 }
             ],
             "description": "Admin module for AbterPHP",
-            "time": "2020-01-28T22:20:39+00:00"
+            "time": "2020-01-30T22:30:20+00:00"
         },
         {
             "name": "abterphp/bootstrap4-website",
@@ -365,12 +365,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/abterphp/website.git",
-                "reference": "083920558ae570283bb47d1057fcfef7455ad007"
+                "reference": "3dfa63e6f3aa296dbdd37c775155c1b936fa4e0c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/abterphp/website/zipball/083920558ae570283bb47d1057fcfef7455ad007",
-                "reference": "083920558ae570283bb47d1057fcfef7455ad007",
+                "url": "https://api.github.com/repos/abterphp/website/zipball/3dfa63e6f3aa296dbdd37c775155c1b936fa4e0c",
+                "reference": "3dfa63e6f3aa296dbdd37c775155c1b936fa4e0c",
                 "shasum": ""
             },
             "require": {
@@ -404,7 +404,7 @@
                 }
             ],
             "description": "Website module for AbterPHP",
-            "time": "2020-01-27T21:42:13+00:00"
+            "time": "2020-01-30T23:19:04+00:00"
         },
         {
             "name": "bjeavons/zxcvbn-php",
@@ -4136,16 +4136,16 @@
         },
         {
             "name": "squizlabs/php_codesniffer",
-            "version": "3.5.3",
+            "version": "3.5.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
-                "reference": "557a1fc7ac702c66b0bbfe16ab3d55839ef724cb"
+                "reference": "dceec07328401de6211037abbb18bda423677e26"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/557a1fc7ac702c66b0bbfe16ab3d55839ef724cb",
-                "reference": "557a1fc7ac702c66b0bbfe16ab3d55839ef724cb",
+                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/dceec07328401de6211037abbb18bda423677e26",
+                "reference": "dceec07328401de6211037abbb18bda423677e26",
                 "shasum": ""
             },
             "require": {
@@ -4183,7 +4183,7 @@
                 "phpcs",
                 "standards"
             ],
-            "time": "2019-12-04T04:46:47+00:00"
+            "time": "2020-01-30T22:20:29+00:00"
         },
         {
             "name": "symfony/config",
