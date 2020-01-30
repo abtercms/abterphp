@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/abterphp/admin.git",
-                "reference": "d388f34f9d72bd791181db14065b8e5d487aa525"
+                "reference": "013d89146e9a84161e4e7b81156b827f5f73fec1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/abterphp/admin/zipball/d388f34f9d72bd791181db14065b8e5d487aa525",
-                "reference": "d388f34f9d72bd791181db14065b8e5d487aa525",
+                "url": "https://api.github.com/repos/abterphp/admin/zipball/013d89146e9a84161e4e7b81156b827f5f73fec1",
+                "reference": "013d89146e9a84161e4e7b81156b827f5f73fec1",
                 "shasum": ""
             },
             "require": {
@@ -54,7 +54,7 @@
                 }
             ],
             "description": "Admin module for AbterPHP",
-            "time": "2020-01-22T00:19:25+00:00"
+            "time": "2020-01-28T22:20:39+00:00"
         },
         {
             "name": "abterphp/bootstrap4-website",
@@ -154,12 +154,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/abterphp/docmed.git",
-                "reference": "cfd64076e56c4a2015376d299a835c01fab1fa4d"
+                "reference": "59f4f06b7df14f6f33641f72db3e8156e366bce1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/abterphp/docmed/zipball/cfd64076e56c4a2015376d299a835c01fab1fa4d",
-                "reference": "cfd64076e56c4a2015376d299a835c01fab1fa4d",
+                "url": "https://api.github.com/repos/abterphp/docmed/zipball/59f4f06b7df14f6f33641f72db3e8156e366bce1",
+                "reference": "59f4f06b7df14f6f33641f72db3e8156e366bce1",
                 "shasum": ""
             },
             "require": {
@@ -192,7 +192,7 @@
                 }
             ],
             "description": "Website implementation for Colorlab - Docmed based on AbterPHP",
-            "time": "2020-01-19T19:31:11+00:00"
+            "time": "2020-01-24T22:24:23+00:00"
         },
         {
             "name": "abterphp/files",
@@ -200,12 +200,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/abterphp/files.git",
-                "reference": "7687c933b10cf69105a20d9151b952504a0d6b2a"
+                "reference": "b4d848f3f81cc4395e9fa766ccb8a3e032bf5eb3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/abterphp/files/zipball/7687c933b10cf69105a20d9151b952504a0d6b2a",
-                "reference": "7687c933b10cf69105a20d9151b952504a0d6b2a",
+                "url": "https://api.github.com/repos/abterphp/files/zipball/b4d848f3f81cc4395e9fa766ccb8a3e032bf5eb3",
+                "reference": "b4d848f3f81cc4395e9fa766ccb8a3e032bf5eb3",
                 "shasum": ""
             },
             "require": {
@@ -241,7 +241,7 @@
                 }
             ],
             "description": "File upload and file sharing module for AbterPHP",
-            "time": "2020-01-19T10:51:35+00:00"
+            "time": "2020-01-27T21:46:11+00:00"
         },
         {
             "name": "abterphp/framework",
@@ -249,12 +249,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/abterphp/framework.git",
-                "reference": "7fa77d771e46908912febded1ad0d716e5a56396"
+                "reference": "cdcb0ad42ece35f251dc16b672a2f3e3881d8288"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/abterphp/framework/zipball/7fa77d771e46908912febded1ad0d716e5a56396",
-                "reference": "7fa77d771e46908912febded1ad0d716e5a56396",
+                "url": "https://api.github.com/repos/abterphp/framework/zipball/cdcb0ad42ece35f251dc16b672a2f3e3881d8288",
+                "reference": "cdcb0ad42ece35f251dc16b672a2f3e3881d8288",
                 "shasum": ""
             },
             "require": {
@@ -311,7 +311,7 @@
                 }
             ],
             "description": "Foundations for AbterPHP",
-            "time": "2020-01-21T22:20:18+00:00"
+            "time": "2020-01-29T23:40:30+00:00"
         },
         {
             "name": "abterphp/propeller-admin",
@@ -365,12 +365,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/abterphp/website.git",
-                "reference": "4ede6529567adb2ff55ec40222f97ea3df6be105"
+                "reference": "083920558ae570283bb47d1057fcfef7455ad007"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/abterphp/website/zipball/4ede6529567adb2ff55ec40222f97ea3df6be105",
-                "reference": "4ede6529567adb2ff55ec40222f97ea3df6be105",
+                "url": "https://api.github.com/repos/abterphp/website/zipball/083920558ae570283bb47d1057fcfef7455ad007",
+                "reference": "083920558ae570283bb47d1057fcfef7455ad007",
                 "shasum": ""
             },
             "require": {
@@ -404,7 +404,7 @@
                 }
             ],
             "description": "Website module for AbterPHP",
-            "time": "2020-01-22T00:20:31+00:00"
+            "time": "2020-01-27T21:42:13+00:00"
         },
         {
             "name": "bjeavons/zxcvbn-php",
@@ -1331,16 +1331,16 @@
         },
         {
             "name": "matthiasmullie/path-converter",
-            "version": "1.1.2",
+            "version": "1.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/matthiasmullie/path-converter.git",
-                "reference": "5e4b121c8b9f97c80835c1d878b0812ba1d607c9"
+                "reference": "e7d13b2c7e2f2268e1424aaed02085518afa02d9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/matthiasmullie/path-converter/zipball/5e4b121c8b9f97c80835c1d878b0812ba1d607c9",
-                "reference": "5e4b121c8b9f97c80835c1d878b0812ba1d607c9",
+                "url": "https://api.github.com/repos/matthiasmullie/path-converter/zipball/e7d13b2c7e2f2268e1424aaed02085518afa02d9",
+                "reference": "e7d13b2c7e2f2268e1424aaed02085518afa02d9",
                 "shasum": ""
             },
             "require": {
@@ -1376,7 +1376,7 @@
                 "paths",
                 "relative"
             ],
-            "time": "2018-10-25T15:19:41+00:00"
+            "time": "2019-02-05T23:41:09+00:00"
         },
         {
             "name": "mikey179/vfsstream",
@@ -2704,16 +2704,16 @@
         },
         {
             "name": "pdepend/pdepend",
-            "version": "2.6.1",
+            "version": "2.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/pdepend/pdepend.git",
-                "reference": "395b0f356bc0881ef88864bffb4ba1423ca0d111"
+                "reference": "cba74e118ce806f97fcb108c00d61ebf2a5a936e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pdepend/pdepend/zipball/395b0f356bc0881ef88864bffb4ba1423ca0d111",
-                "reference": "395b0f356bc0881ef88864bffb4ba1423ca0d111",
+                "url": "https://api.github.com/repos/pdepend/pdepend/zipball/cba74e118ce806f97fcb108c00d61ebf2a5a936e",
+                "reference": "cba74e118ce806f97fcb108c00d61ebf2a5a936e",
                 "shasum": ""
             },
             "require": {
@@ -2747,7 +2747,7 @@
                 "BSD-3-Clause"
             ],
             "description": "Official version of pdepend to be handled with Composer",
-            "time": "2019-12-21T16:33:56+00:00"
+            "time": "2020-01-24T08:09:26+00:00"
         },
         {
             "name": "phar-io/manifest",
