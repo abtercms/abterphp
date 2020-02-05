@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/abterphp/admin.git",
-                "reference": "84d84fc4c8875a0aecd00658337424a1d0775cfc"
+                "reference": "80fed11c1cf4115e6605f8ac2236c195b7cf253c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/abterphp/admin/zipball/84d84fc4c8875a0aecd00658337424a1d0775cfc",
-                "reference": "84d84fc4c8875a0aecd00658337424a1d0775cfc",
+                "url": "https://api.github.com/repos/abterphp/admin/zipball/80fed11c1cf4115e6605f8ac2236c195b7cf253c",
+                "reference": "80fed11c1cf4115e6605f8ac2236c195b7cf253c",
                 "shasum": ""
             },
             "require": {
@@ -54,7 +54,7 @@
                 }
             ],
             "description": "Admin module for AbterPHP",
-            "time": "2020-02-05T12:38:28+00:00"
+            "time": "2020-02-05T20:25:15+00:00"
         },
         {
             "name": "abterphp/bootstrap4-website",
@@ -154,12 +154,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/abterphp/docmed.git",
-                "reference": "59f4f06b7df14f6f33641f72db3e8156e366bce1"
+                "reference": "213816e700da39d14a8b25da8a950f07f646e82d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/abterphp/docmed/zipball/59f4f06b7df14f6f33641f72db3e8156e366bce1",
-                "reference": "59f4f06b7df14f6f33641f72db3e8156e366bce1",
+                "url": "https://api.github.com/repos/abterphp/docmed/zipball/213816e700da39d14a8b25da8a950f07f646e82d",
+                "reference": "213816e700da39d14a8b25da8a950f07f646e82d",
                 "shasum": ""
             },
             "require": {
@@ -192,7 +192,7 @@
                 }
             ],
             "description": "Website implementation for Colorlab - Docmed based on AbterPHP",
-            "time": "2020-01-24T22:24:23+00:00"
+            "time": "2020-02-05T20:48:16+00:00"
         },
         {
             "name": "abterphp/files",
@@ -249,12 +249,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/abterphp/framework.git",
-                "reference": "cdcb0ad42ece35f251dc16b672a2f3e3881d8288"
+                "reference": "3da5b15282961626c7dab0ab767accb39dacc615"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/abterphp/framework/zipball/cdcb0ad42ece35f251dc16b672a2f3e3881d8288",
-                "reference": "cdcb0ad42ece35f251dc16b672a2f3e3881d8288",
+                "url": "https://api.github.com/repos/abterphp/framework/zipball/3da5b15282961626c7dab0ab767accb39dacc615",
+                "reference": "3da5b15282961626c7dab0ab767accb39dacc615",
                 "shasum": ""
             },
             "require": {
@@ -311,7 +311,7 @@
                 }
             ],
             "description": "Foundations for AbterPHP",
-            "time": "2020-01-29T23:40:30+00:00"
+            "time": "2020-02-05T13:47:00+00:00"
         },
         {
             "name": "abterphp/propeller-admin",
@@ -365,12 +365,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/abterphp/website.git",
-                "reference": "b6e36e79bdace6810d26694b58d65add5fab29e6"
+                "reference": "ed398d21d7ccc9b7d1db589d6484d2bb8077ba54"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/abterphp/website/zipball/b6e36e79bdace6810d26694b58d65add5fab29e6",
-                "reference": "b6e36e79bdace6810d26694b58d65add5fab29e6",
+                "url": "https://api.github.com/repos/abterphp/website/zipball/ed398d21d7ccc9b7d1db589d6484d2bb8077ba54",
+                "reference": "ed398d21d7ccc9b7d1db589d6484d2bb8077ba54",
                 "shasum": ""
             },
             "require": {
@@ -404,7 +404,7 @@
                 }
             ],
             "description": "Website module for AbterPHP",
-            "time": "2020-02-05T12:44:57+00:00"
+            "time": "2020-02-05T20:46:03+00:00"
         },
         {
             "name": "bjeavons/zxcvbn-php",
@@ -1110,16 +1110,16 @@
         },
         {
             "name": "league/flysystem",
-            "version": "1.0.63",
+            "version": "1.0.64",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem.git",
-                "reference": "8132daec326565036bc8e8d1876f77ec183a7bd6"
+                "reference": "d13c43dbd4b791f815215959105a008515d1a2e0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/8132daec326565036bc8e8d1876f77ec183a7bd6",
-                "reference": "8132daec326565036bc8e8d1876f77ec183a7bd6",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/d13c43dbd4b791f815215959105a008515d1a2e0",
+                "reference": "d13c43dbd4b791f815215959105a008515d1a2e0",
                 "shasum": ""
             },
             "require": {
@@ -1131,7 +1131,7 @@
             },
             "require-dev": {
                 "phpspec/phpspec": "^3.4",
-                "phpunit/phpunit": "^5.7.10"
+                "phpunit/phpunit": "^5.7.26"
             },
             "suggest": {
                 "ext-fileinfo": "Required for MimeType",
@@ -1190,7 +1190,7 @@
                 "sftp",
                 "storage"
             ],
-            "time": "2020-01-04T16:30:31+00:00"
+            "time": "2020-02-05T18:14:17+00:00"
         },
         {
             "name": "league/oauth2-server",
