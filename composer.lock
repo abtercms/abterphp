@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/abterphp/admin.git",
-                "reference": "7707feebb8e9c37078f11637e2bc3c232932cb63"
+                "reference": "84d84fc4c8875a0aecd00658337424a1d0775cfc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/abterphp/admin/zipball/7707feebb8e9c37078f11637e2bc3c232932cb63",
-                "reference": "7707feebb8e9c37078f11637e2bc3c232932cb63",
+                "url": "https://api.github.com/repos/abterphp/admin/zipball/84d84fc4c8875a0aecd00658337424a1d0775cfc",
+                "reference": "84d84fc4c8875a0aecd00658337424a1d0775cfc",
                 "shasum": ""
             },
             "require": {
@@ -54,7 +54,7 @@
                 }
             ],
             "description": "Admin module for AbterPHP",
-            "time": "2020-01-30T22:30:20+00:00"
+            "time": "2020-02-05T12:38:28+00:00"
         },
         {
             "name": "abterphp/bootstrap4-website",
@@ -200,12 +200,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/abterphp/files.git",
-                "reference": "b4d848f3f81cc4395e9fa766ccb8a3e032bf5eb3"
+                "reference": "3805176fa9f5dea323f46088ae9660734274a3ec"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/abterphp/files/zipball/b4d848f3f81cc4395e9fa766ccb8a3e032bf5eb3",
-                "reference": "b4d848f3f81cc4395e9fa766ccb8a3e032bf5eb3",
+                "url": "https://api.github.com/repos/abterphp/files/zipball/3805176fa9f5dea323f46088ae9660734274a3ec",
+                "reference": "3805176fa9f5dea323f46088ae9660734274a3ec",
                 "shasum": ""
             },
             "require": {
@@ -241,7 +241,7 @@
                 }
             ],
             "description": "File upload and file sharing module for AbterPHP",
-            "time": "2020-01-27T21:46:11+00:00"
+            "time": "2020-02-03T00:05:01+00:00"
         },
         {
             "name": "abterphp/framework",
@@ -365,12 +365,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/abterphp/website.git",
-                "reference": "3dfa63e6f3aa296dbdd37c775155c1b936fa4e0c"
+                "reference": "b6e36e79bdace6810d26694b58d65add5fab29e6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/abterphp/website/zipball/3dfa63e6f3aa296dbdd37c775155c1b936fa4e0c",
-                "reference": "3dfa63e6f3aa296dbdd37c775155c1b936fa4e0c",
+                "url": "https://api.github.com/repos/abterphp/website/zipball/b6e36e79bdace6810d26694b58d65add5fab29e6",
+                "reference": "b6e36e79bdace6810d26694b58d65add5fab29e6",
                 "shasum": ""
             },
             "require": {
@@ -404,7 +404,7 @@
                 }
             ],
             "description": "Website module for AbterPHP",
-            "time": "2020-01-30T23:19:04+00:00"
+            "time": "2020-02-05T12:44:57+00:00"
         },
         {
             "name": "bjeavons/zxcvbn-php",
@@ -4187,7 +4187,7 @@
         },
         {
             "name": "symfony/config",
-            "version": "v5.0.3",
+            "version": "v5.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/config.git",
@@ -4251,16 +4251,16 @@
         },
         {
             "name": "symfony/dependency-injection",
-            "version": "v5.0.3",
+            "version": "v5.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/dependency-injection.git",
-                "reference": "5a56807650c7258bbcc4a15a020904958c70247e"
+                "reference": "86338f459313525dd95f5a012f8a9ea118002f94"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/dependency-injection/zipball/5a56807650c7258bbcc4a15a020904958c70247e",
-                "reference": "5a56807650c7258bbcc4a15a020904958c70247e",
+                "url": "https://api.github.com/repos/symfony/dependency-injection/zipball/86338f459313525dd95f5a012f8a9ea118002f94",
+                "reference": "86338f459313525dd95f5a012f8a9ea118002f94",
                 "shasum": ""
             },
             "require": {
@@ -4320,11 +4320,11 @@
             ],
             "description": "Symfony DependencyInjection Component",
             "homepage": "https://symfony.com",
-            "time": "2020-01-21T08:40:24+00:00"
+            "time": "2020-01-31T09:49:43+00:00"
         },
         {
             "name": "symfony/filesystem",
-            "version": "v5.0.3",
+            "version": "v5.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/filesystem.git",
