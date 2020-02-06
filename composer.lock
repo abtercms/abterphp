@@ -108,12 +108,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/abterphp/contact.git",
-                "reference": "32bdedbf577defc288a8364f13f380f86d958780"
+                "reference": "84a999274add35d7ae8ebbd490ef11759f75b5de"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/abterphp/contact/zipball/32bdedbf577defc288a8364f13f380f86d958780",
-                "reference": "32bdedbf577defc288a8364f13f380f86d958780",
+                "url": "https://api.github.com/repos/abterphp/contact/zipball/84a999274add35d7ae8ebbd490ef11759f75b5de",
+                "reference": "84a999274add35d7ae8ebbd490ef11759f75b5de",
                 "shasum": ""
             },
             "require": {
@@ -146,7 +146,7 @@
                 }
             ],
             "description": "Contact module for AbterPHP",
-            "time": "2020-01-19T10:52:03+00:00"
+            "time": "2020-02-05T22:08:30+00:00"
         },
         {
             "name": "abterphp/docmed",
