@@ -1,6 +1,6 @@
 # AbterPHP
 
-[![Build Status](https://travis-ci.com/abtercms/abterphp.svg?branch=master)](https://travis-ci.com/abtercms/abterphp)
+[![Build Status](https://github.com/abtercms/abterphp/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/abtercms/abterphp/actions)
 
 AbterPHP is the first and currently the only implementation of AbterCMS, providing backend, frontend and a REST API for it.
 It does not require much JavaScript knowledge as it uses jQuery instead of some nodejs based solution, therefore many might
