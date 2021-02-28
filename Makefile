@@ -1,16 +1,16 @@
-build:
-	php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-	php -r "if (hash_file('sha384', 'composer-setup.php') === 'c5b9b6d368201a9db6f74e2611495f369991b72d9c8cbd3ffbc63edff210eb73d46ffbfce88669ad33695ef77dc76976') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
-	php composer-setup.php
-	php -r "unlink('composer-setup.php');"
-	php composer.phar install
-	php apex abterphp:generatesecrets
-	php apex abterphp:setup
+install:
+ifeq (,$(wildcard /usr/local/bin/composer))
+	./bin/composer-install.sh
+	mv composer.phar /usr/local/bin/composer
+endif
+	XDEBUG_MODE=off composer install --no-progress --prefer-dist --optimize-autoloader
+	XDEBUG_MODE=off ./apex abterphp:generatesecrets
+	XDEBUG_MODE=off ./apex abterphp:setup
 
 update:
-	php composer.phar update
+	XDEBUG_MODE=off composer update
 
 flush:
-	./apex abterphp:flushcache
+	XDEBUG_MODE=off ./apex abterphp:flushcache
 
-.PHONY: build update flush
+.PHONY: install update flush

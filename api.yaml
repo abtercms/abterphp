@@ -1537,6 +1537,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Problem'
+
 components:
   parameters:
     tokenHeader:
