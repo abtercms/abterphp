@@ -5,6 +5,9 @@ ifeq (,$(wildcard /usr/local/bin/composer))
 endif
 	XDEBUG_MODE=off composer install --no-progress --prefer-dist --optimize-autoloader
 
+build:
+	# not added yet
+
 setup:
 	XDEBUG_MODE=off ./apex abterphp:generatesecrets
 	XDEBUG_MODE=off ./apex abterphp:setup
@@ -15,4 +18,4 @@ update:
 flush:
 	XDEBUG_MODE=off ./apex abterphp:flushcache
 
-.PHONY: install setup update flush
+.PHONY: install build setup update flush
