@@ -173,49 +173,6 @@ before the first stable version.
 
 ### First alpha musts:
 
-1. ~~Make the frontend framework decoupled from the backend system~~
-1. ~~Use ILogger instead of Logger~~
-1. ~~More fine grained authorization~~
-   - ~~ACL implemented for pages~~
-   - ~~Advanced settings access role for pages~~
-   - ~~Multiple user group for one user~~
-   - ~~New user roles: file uploader, layout designer, page writer~~
-1. ~~Modular asset management~~
-1. ~~Completed test automation and automatic reviews set up~~
-1. ~~Refactored module manager~~
-1. ~~Ensured that user creation enforces good passwords in CLI.~~
-1. ~~Uuid ids~~
-1. ~~Removed $value in Select constructor~~
-1. ~~Switch `$attribute` and `$tag` order~~
-1. ~~1 nice website module~~
-1. ~~Page category~~
-1. ~~Re-add navigation item filtering by enforcer~~
-1. ~~Fix grids:~~
-   - ~~Filter labels~~
-   - ~~Page size selections~~
-   - ~~Sorting~~
-   - ~~Hide IDs~~
-1. ~~Separate grid and form assets in admin~~
-1. ~~API keys for users~~
-1. ~~Fix forms:~~
-   - ~~"Red" / "Danger" Back to list buttons~~
-   - ~~Create and new button~~
-1. ~~Initial API defined and published~~
-1. ~~Documentation page exists~~
-1. ~~All implemented API endpoints return properly formatted errors~~
-1. ~~Optionally embed file content into getFile API endpoint~~
-1. ~~Disable block cache for development~~
-1. ~~List pages on frontend by category (simple)~~
-1. ~~List pages on frontend by category (detailed)~~
-1. ~~Upgrade to phpunit 8.4~~
-1. ~~70%+ of PHP source code unit tested, except for bootstrappers and console commands~~
-1. ~~Tested project on OSX~~
-1. ~~Fix file uploads~~
-1. ~~File category identifiers~~
-1. ~~File category public/private~~
-1. ~~Page structure name~~
-1. ~~Fix page publication~~
-1. ~~Login errors displayed~~
 1. Fix filters
 1. Verified that `localhost_router.php` works as expected or remove it if too hard to fix
 1. API verified against Zalando REST API recommendations
@@ -223,10 +180,6 @@ before the first stable version.
 
 ### First beta musts:
 
-1. ~~Existing phpmd ignore cases reviewed~~
-1. ~~Client creation via CLI~~
-1. ~~Optionally embed rendered page body parameter~~
-1. ~~1st nice website module~~
 1. Must-accept-cookie module
 1. 2nd nice website module
 1. 3rd nice website module
@@ -315,6 +268,7 @@ before the first stable version.
  - Frontend language selection
 
 ### Ideas for 1.1:
+ - Switch to [Aphiria](https://www.aphiria.com/) from [Opulence](https://github.com/opulencephp/Opulence)
  - WYSIWYG file selector
  - WYSIWYG image upload
  - User image upload
