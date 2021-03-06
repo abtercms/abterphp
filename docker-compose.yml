@@ -46,7 +46,36 @@ services:
     environment:
       - MH_HOSTNAME=localhost
 
-  php:
+  fpm:
+    image: abtercms/php:74
+    links:
+      - db
+      - db_test
+      - memcached
+      - redis
+      - mailcatcher
+    environment:
+      - DIR_PRIVATE=/website/private
+      - DIR_PUBLIC=/website/public
+      - DIR_AUTH_CONFIG=/website/config/authorization
+      - DIR_MIGRATIONS=/website/resources/migrations
+      - DIR_LOGS=/website/tmp/logs
+      - DIR_MEDIA=/website/media
+      - CACHE_BASE_PATH=/cache
+      - OAUTH2_PRIVATE_KEY_PATH=/website/private/private.key
+      - OAUTH2_PUBLIC_KEY_PATH=/website/private/public.key
+      - DB_HOST=db
+      - DB_NAME=abter
+      - DB_USER=abter
+      - DB_PASSWORD=28T3pqyvKG3tEgsjE8Rj
+      - DB_PORT=3306
+    volumes:
+      - .:/website
+      - ./docker/php/conf.d/zzz_020_general.ini:/usr/local/etc/php/conf.d/zzz_020_general.ini:ro
+      - ./docker/php/conf.d/zzz_500_local.ini:/usr/local/etc/php/conf.d/zzz_500_local.ini:ro
+    working_dir: /website
+
+  cli:
     image: abtercms/php:74
     links:
       - db
@@ -67,19 +96,17 @@ services:
       - DB_USER=abter
       - DB_PASSWORD=28T3pqyvKG3tEgsjE8Rj
       - DB_PORT=3306
-      - "TRAVIS=${TRAVIS}"
-      - "TRAVIS_JOB_ID=${TRAVIS_JOB_ID}"
     volumes:
       - .:/website
+      - ./docker/php/conf.d/ast-on.ini:/usr/local/etc/php/conf.d/ast-on.ini:ro
       - ./docker/php/conf.d/zzz_020_general.ini:/usr/local/etc/php/conf.d/zzz_020_general.ini:ro
       - ./docker/php/conf.d/zzz_500_local.ini:/usr/local/etc/php/conf.d/zzz_500_local.ini:ro
-      - ./docker/php/conf.d/xdebug-off.ini:/usr/local/etc/php/conf.d/xdebug-off.ini:ro
     working_dir: /website
 
   nginx:
     image: nginx
     links:
-      - php
+      - fpm
     ports:
       - "443:443"
       - "80:80"
