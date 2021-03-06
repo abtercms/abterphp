@@ -11,9 +11,11 @@ build:
 setup:
 	XDEBUG_MODE=off ./apex abterphp:generatesecrets
 	XDEBUG_MODE=off ./apex abterphp:setup
+	XDEBUG_MODE=off ./apex migrations:up
 
 update:
 	XDEBUG_MODE=off composer update
+	XDEBUG_MODE=off ./apex migrations:up
 
 flush:
 	XDEBUG_MODE=off ./apex abterphp:flushcache
