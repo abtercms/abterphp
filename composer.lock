@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ed6a5fd11445f1305266b03301710252",
+    "content-hash": "2ac78bfea88cef960fa5c22799a42c24",
     "packages": [
         {
             "name": "abterphp/admin",
-            "version": "dev-master",
+            "version": "dev-main",
             "source": {
                 "type": "git",
                 "url": "https://github.com/abterphp/admin.git",
-                "reference": "7ada397848d1dd3db9fcf9657ec68a23513a4b7e"
+                "reference": "8e3d822933f21b9fc2e383f9d3fb859599a7323f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/abterphp/admin/zipball/7ada397848d1dd3db9fcf9657ec68a23513a4b7e",
-                "reference": "7ada397848d1dd3db9fcf9657ec68a23513a4b7e",
+                "url": "https://api.github.com/repos/abterphp/admin/zipball/8e3d822933f21b9fc2e383f9d3fb859599a7323f",
+                "reference": "8e3d822933f21b9fc2e383f9d3fb859599a7323f",
                 "shasum": ""
             },
             "require": {
@@ -54,22 +54,22 @@
             "description": "Admin module for AbterPHP",
             "support": {
                 "issues": "https://github.com/abterphp/admin/issues",
-                "source": "https://github.com/abterphp/admin/tree/master"
+                "source": "https://github.com/abterphp/admin/tree/main"
             },
-            "time": "2021-02-28T12:32:37+00:00"
+            "time": "2021-02-28T23:57:39+00:00"
         },
         {
             "name": "abterphp/bootstrap4-website",
-            "version": "dev-master",
+            "version": "dev-main",
             "source": {
                 "type": "git",
                 "url": "https://github.com/abterphp/bootstrap4-website.git",
-                "reference": "d96b6556e81f37a1e18ebcb4f10f52b040eb0065"
+                "reference": "63cfa53f422618c62352470bb832d8c48347d16d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/abterphp/bootstrap4-website/zipball/d96b6556e81f37a1e18ebcb4f10f52b040eb0065",
-                "reference": "d96b6556e81f37a1e18ebcb4f10f52b040eb0065",
+                "url": "https://api.github.com/repos/abterphp/bootstrap4-website/zipball/63cfa53f422618c62352470bb832d8c48347d16d",
+                "reference": "63cfa53f422618c62352470bb832d8c48347d16d",
                 "shasum": ""
             },
             "require": {
@@ -106,22 +106,22 @@
             "description": "Website module for AbterPHP",
             "support": {
                 "issues": "https://github.com/abterphp/bootstrap4-website/issues",
-                "source": "https://github.com/abterphp/bootstrap4-website/tree/master"
+                "source": "https://github.com/abterphp/bootstrap4-website/tree/main"
             },
-            "time": "2021-02-28T14:16:34+00:00"
+            "time": "2021-03-01T00:37:17+00:00"
         },
         {
             "name": "abterphp/contact",
-            "version": "dev-master",
+            "version": "dev-main",
             "source": {
                 "type": "git",
                 "url": "https://github.com/abterphp/contact.git",
-                "reference": "a28dc74f8dcabdeb74829307df08a58ced05ee6a"
+                "reference": "58d3654a90413efb60a782f5f8bad59c2bf002c2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/abterphp/contact/zipball/a28dc74f8dcabdeb74829307df08a58ced05ee6a",
-                "reference": "a28dc74f8dcabdeb74829307df08a58ced05ee6a",
+                "url": "https://api.github.com/repos/abterphp/contact/zipball/58d3654a90413efb60a782f5f8bad59c2bf002c2",
+                "reference": "58d3654a90413efb60a782f5f8bad59c2bf002c2",
                 "shasum": ""
             },
             "require": {
@@ -158,35 +158,33 @@
             "description": "Contact module for AbterPHP",
             "support": {
                 "issues": "https://github.com/abterphp/contact/issues",
-                "source": "https://github.com/abterphp/contact/tree/master"
+                "source": "https://github.com/abterphp/contact/tree/main"
             },
-            "time": "2021-02-28T13:13:39+00:00"
+            "time": "2021-03-01T00:05:07+00:00"
         },
         {
             "name": "abterphp/docmed",
-            "version": "dev-master",
+            "version": "0.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/abterphp/docmed.git",
-                "reference": "0c3fda610210a39591f0ba77cbc7daf82fb93cb7"
+                "reference": "d7769ed1794493ed3f0e58c7e861751d0f0d729d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/abterphp/docmed/zipball/0c3fda610210a39591f0ba77cbc7daf82fb93cb7",
-                "reference": "0c3fda610210a39591f0ba77cbc7daf82fb93cb7",
+                "url": "https://api.github.com/repos/abterphp/docmed/zipball/d7769ed1794493ed3f0e58c7e861751d0f0d729d",
+                "reference": "d7769ed1794493ed3f0e58c7e861751d0f0d729d",
                 "shasum": ""
             },
             "require": {
                 "abterphp/bootstrap4-website": "*"
             },
             "require-dev": {
-                "friendsofphp/php-cs-fixer": "^2.18",
-                "phan/phan": "^4.0",
-                "phpmd/phpmd": "^2.9",
-                "phpunit/phpunit": "^9.5",
-                "squizlabs/php_codesniffer": "^3.5"
+                "phan/phan": "^2.2",
+                "phpmd/phpmd": "^2.6",
+                "phpunit/phpunit": "^8.2",
+                "squizlabs/php_codesniffer": "^3.4"
             },
-            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -212,20 +210,20 @@
                 "issues": "https://github.com/abterphp/docmed/issues",
                 "source": "https://github.com/abterphp/docmed/tree/master"
             },
-            "time": "2021-02-28T16:18:17+00:00"
+            "time": "2020-01-19T10:53:15+00:00"
         },
         {
             "name": "abterphp/files",
-            "version": "dev-master",
+            "version": "dev-main",
             "source": {
                 "type": "git",
                 "url": "https://github.com/abterphp/files.git",
-                "reference": "f13cd39ad738aa013b155aefd519c16adbbf4c2e"
+                "reference": "e37b779bc35826fcb67600fc586d82ce4e4d0a26"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/abterphp/files/zipball/f13cd39ad738aa013b155aefd519c16adbbf4c2e",
-                "reference": "f13cd39ad738aa013b155aefd519c16adbbf4c2e",
+                "url": "https://api.github.com/repos/abterphp/files/zipball/e37b779bc35826fcb67600fc586d82ce4e4d0a26",
+                "reference": "e37b779bc35826fcb67600fc586d82ce4e4d0a26",
                 "shasum": ""
             },
             "require": {
@@ -264,22 +262,22 @@
             "description": "File upload and file sharing module for AbterPHP",
             "support": {
                 "issues": "https://github.com/abterphp/files/issues",
-                "source": "https://github.com/abterphp/files/tree/master"
+                "source": "https://github.com/abterphp/files/tree/main"
             },
-            "time": "2021-02-28T14:00:00+00:00"
+            "time": "2021-03-01T00:10:19+00:00"
         },
         {
             "name": "abterphp/framework",
-            "version": "dev-master",
+            "version": "dev-main",
             "source": {
                 "type": "git",
                 "url": "https://github.com/abterphp/framework.git",
-                "reference": "1850280d1fd9163c251383da795e7c384ac66aaf"
+                "reference": "6e94c024e5156c7a8faf5c7f5662cff764aac21f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/abterphp/framework/zipball/1850280d1fd9163c251383da795e7c384ac66aaf",
-                "reference": "1850280d1fd9163c251383da795e7c384ac66aaf",
+                "url": "https://api.github.com/repos/abterphp/framework/zipball/6e94c024e5156c7a8faf5c7f5662cff764aac21f",
+                "reference": "6e94c024e5156c7a8faf5c7f5662cff764aac21f",
                 "shasum": ""
             },
             "require": {
@@ -342,22 +340,22 @@
             "description": "Foundations for AbterPHP",
             "support": {
                 "issues": "https://github.com/abterphp/framework/issues",
-                "source": "https://github.com/abterphp/framework/tree/master"
+                "source": "https://github.com/abterphp/framework/tree/main"
             },
-            "time": "2021-02-28T14:03:50+00:00"
+            "time": "2021-02-28T23:50:31+00:00"
         },
         {
             "name": "abterphp/propeller-admin",
-            "version": "dev-master",
+            "version": "dev-main",
             "source": {
                 "type": "git",
                 "url": "https://github.com/abterphp/propeller-admin.git",
-                "reference": "24856d174f6abb01729d3f1e80c442ce1b40153c"
+                "reference": "15a6a7f207eeb3605ce4ad38da1be968d4608531"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/abterphp/propeller-admin/zipball/24856d174f6abb01729d3f1e80c442ce1b40153c",
-                "reference": "24856d174f6abb01729d3f1e80c442ce1b40153c",
+                "url": "https://api.github.com/repos/abterphp/propeller-admin/zipball/15a6a7f207eeb3605ce4ad38da1be968d4608531",
+                "reference": "15a6a7f207eeb3605ce4ad38da1be968d4608531",
                 "shasum": ""
             },
             "require": {
@@ -393,22 +391,22 @@
             "description": "Propeller design for the Admin module of AbterPHP",
             "support": {
                 "issues": "https://github.com/abterphp/propeller-admin/issues",
-                "source": "https://github.com/abterphp/propeller-admin/tree/master"
+                "source": "https://github.com/abterphp/propeller-admin/tree/main"
             },
-            "time": "2021-02-28T14:36:00+00:00"
+            "time": "2021-03-01T00:35:32+00:00"
         },
         {
             "name": "abterphp/website",
-            "version": "dev-master",
+            "version": "dev-main",
             "source": {
                 "type": "git",
                 "url": "https://github.com/abterphp/website.git",
-                "reference": "548540787ac41c903653abdb69b102a296840374"
+                "reference": "3db2bc4d9a8532a06223de889f89bce5b29b3b9a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/abterphp/website/zipball/548540787ac41c903653abdb69b102a296840374",
-                "reference": "548540787ac41c903653abdb69b102a296840374",
+                "url": "https://api.github.com/repos/abterphp/website/zipball/3db2bc4d9a8532a06223de889f89bce5b29b3b9a",
+                "reference": "3db2bc4d9a8532a06223de889f89bce5b29b3b9a",
                 "shasum": ""
             },
             "require": {
@@ -446,9 +444,9 @@
             "description": "Website module for AbterPHP",
             "support": {
                 "issues": "https://github.com/abterphp/website/issues",
-                "source": "https://github.com/abterphp/website/tree/master"
+                "source": "https://github.com/abterphp/website/tree/main"
             },
-            "time": "2021-02-28T12:40:28+00:00"
+            "time": "2021-03-01T00:00:56+00:00"
         },
         {
             "name": "bjeavons/zxcvbn-php",
@@ -2433,16 +2431,16 @@
         },
         {
             "name": "swiftmailer/swiftmailer",
-            "version": "v6.2.5",
+            "version": "v6.2.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/swiftmailer/swiftmailer.git",
-                "reference": "698a6a9f54d7eb321274de3ad19863802c879fb7"
+                "reference": "d2791ff0b73247cdc2096b14f5580aba40c12bff"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/698a6a9f54d7eb321274de3ad19863802c879fb7",
-                "reference": "698a6a9f54d7eb321274de3ad19863802c879fb7",
+                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/d2791ff0b73247cdc2096b14f5580aba40c12bff",
+                "reference": "d2791ff0b73247cdc2096b14f5580aba40c12bff",
                 "shasum": ""
             },
             "require": {
@@ -2492,7 +2490,7 @@
             ],
             "support": {
                 "issues": "https://github.com/swiftmailer/swiftmailer/issues",
-                "source": "https://github.com/swiftmailer/swiftmailer/tree/v6.2.5"
+                "source": "https://github.com/swiftmailer/swiftmailer/tree/v6.2.6"
             },
             "funding": [
                 {
@@ -2504,7 +2502,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-01-12T09:35:59+00:00"
+            "time": "2021-03-05T12:08:49+00:00"
         },
         {
             "name": "symfony/expression-language",
@@ -4698,27 +4696,22 @@
         },
         {
             "name": "psr/container",
-            "version": "1.0.0",
+            "version": "1.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-fig/container.git",
-                "reference": "b7ce3b176482dbbc1245ebf52b181af44c2cf55f"
+                "reference": "8622567409010282b7aeebe4bb841fe98b58dcaf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/container/zipball/b7ce3b176482dbbc1245ebf52b181af44c2cf55f",
-                "reference": "b7ce3b176482dbbc1245ebf52b181af44c2cf55f",
+                "url": "https://api.github.com/repos/php-fig/container/zipball/8622567409010282b7aeebe4bb841fe98b58dcaf",
+                "reference": "8622567409010282b7aeebe4bb841fe98b58dcaf",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.0"
+                "php": ">=7.2.0"
             },
             "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0.x-dev"
-                }
-            },
             "autoload": {
                 "psr-4": {
                     "Psr\\Container\\": "src/"
@@ -4731,7 +4724,7 @@
             "authors": [
                 {
                     "name": "PHP-FIG",
-                    "homepage": "http://www.php-fig.org/"
+                    "homepage": "https://www.php-fig.org/"
                 }
             ],
             "description": "Common Container Interface (PHP FIG PSR-11)",
@@ -4745,9 +4738,9 @@
             ],
             "support": {
                 "issues": "https://github.com/php-fig/container/issues",
-                "source": "https://github.com/php-fig/container/tree/master"
+                "source": "https://github.com/php-fig/container/tree/1.1.1"
             },
-            "time": "2017-02-14T16:28:37+00:00"
+            "time": "2021-03-05T17:36:06+00:00"
         },
         {
             "name": "psr/event-dispatcher",
@@ -5887,16 +5880,16 @@
         },
         {
             "name": "symfony/config",
-            "version": "v5.2.3",
+            "version": "v5.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/config.git",
-                "reference": "50e0e1314a3b2609d32b6a5a0d0fb5342494c4ab"
+                "reference": "212d54675bf203ff8aef7d8cee8eecfb72f4a263"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/config/zipball/50e0e1314a3b2609d32b6a5a0d0fb5342494c4ab",
-                "reference": "50e0e1314a3b2609d32b6a5a0d0fb5342494c4ab",
+                "url": "https://api.github.com/repos/symfony/config/zipball/212d54675bf203ff8aef7d8cee8eecfb72f4a263",
+                "reference": "212d54675bf203ff8aef7d8cee8eecfb72f4a263",
                 "shasum": ""
             },
             "require": {
@@ -5945,7 +5938,7 @@
             "description": "Helps you find, load, combine, autofill and validate configuration values of any kind",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/config/tree/v5.2.3"
+                "source": "https://github.com/symfony/config/tree/v5.2.4"
             },
             "funding": [
                 {
@@ -5961,20 +5954,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-01-27T10:15:41+00:00"
+            "time": "2021-02-23T23:58:19+00:00"
         },
         {
             "name": "symfony/console",
-            "version": "v5.2.3",
+            "version": "v5.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "89d4b176d12a2946a1ae4e34906a025b7b6b135a"
+                "reference": "d6d0cc30d8c0fda4e7b213c20509b0159a8f4556"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/89d4b176d12a2946a1ae4e34906a025b7b6b135a",
-                "reference": "89d4b176d12a2946a1ae4e34906a025b7b6b135a",
+                "url": "https://api.github.com/repos/symfony/console/zipball/d6d0cc30d8c0fda4e7b213c20509b0159a8f4556",
+                "reference": "d6d0cc30d8c0fda4e7b213c20509b0159a8f4556",
                 "shasum": ""
             },
             "require": {
@@ -6042,7 +6035,7 @@
                 "terminal"
             ],
             "support": {
-                "source": "https://github.com/symfony/console/tree/v5.2.3"
+                "source": "https://github.com/symfony/console/tree/v5.2.4"
             },
             "funding": [
                 {
@@ -6058,20 +6051,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-01-28T22:06:19+00:00"
+            "time": "2021-02-23T10:08:49+00:00"
         },
         {
             "name": "symfony/dependency-injection",
-            "version": "v5.2.3",
+            "version": "v5.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/dependency-injection.git",
-                "reference": "62f72187be689540385dce6c68a5d4c16f034139"
+                "reference": "f7d89110c55d88620dc811f342f94393b8a045d4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/dependency-injection/zipball/62f72187be689540385dce6c68a5d4c16f034139",
-                "reference": "62f72187be689540385dce6c68a5d4c16f034139",
+                "url": "https://api.github.com/repos/symfony/dependency-injection/zipball/f7d89110c55d88620dc811f342f94393b8a045d4",
+                "reference": "f7d89110c55d88620dc811f342f94393b8a045d4",
                 "shasum": ""
             },
             "require": {
@@ -6089,7 +6082,7 @@
             },
             "provide": {
                 "psr/container-implementation": "1.0",
-                "symfony/service-implementation": "1.0"
+                "symfony/service-implementation": "1.0|2.0"
             },
             "require-dev": {
                 "symfony/config": "^5.1",
@@ -6129,7 +6122,7 @@
             "description": "Allows you to standardize and centralize the way objects are constructed in your application",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/dependency-injection/tree/v5.2.3"
+                "source": "https://github.com/symfony/dependency-injection/tree/v5.2.4"
             },
             "funding": [
                 {
@@ -6145,7 +6138,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-01-27T12:56:27+00:00"
+            "time": "2021-03-04T15:41:09+00:00"
         },
         {
             "name": "symfony/deprecation-contracts",
@@ -6216,16 +6209,16 @@
         },
         {
             "name": "symfony/event-dispatcher",
-            "version": "v5.2.3",
+            "version": "v5.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/event-dispatcher.git",
-                "reference": "4f9760f8074978ad82e2ce854dff79a71fe45367"
+                "reference": "d08d6ec121a425897951900ab692b612a61d6240"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/4f9760f8074978ad82e2ce854dff79a71fe45367",
-                "reference": "4f9760f8074978ad82e2ce854dff79a71fe45367",
+                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/d08d6ec121a425897951900ab692b612a61d6240",
+                "reference": "d08d6ec121a425897951900ab692b612a61d6240",
                 "shasum": ""
             },
             "require": {
@@ -6281,7 +6274,7 @@
             "description": "Provides tools that allow your application components to communicate with each other by dispatching events and listening to them",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/event-dispatcher/tree/v5.2.3"
+                "source": "https://github.com/symfony/event-dispatcher/tree/v5.2.4"
             },
             "funding": [
                 {
@@ -6297,7 +6290,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-01-27T10:36:42+00:00"
+            "time": "2021-02-18T17:12:37+00:00"
         },
         {
             "name": "symfony/event-dispatcher-contracts",
@@ -6380,16 +6373,16 @@
         },
         {
             "name": "symfony/filesystem",
-            "version": "v5.2.3",
+            "version": "v5.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/filesystem.git",
-                "reference": "262d033b57c73e8b59cd6e68a45c528318b15038"
+                "reference": "710d364200997a5afde34d9fe57bd52f3cc1e108"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/filesystem/zipball/262d033b57c73e8b59cd6e68a45c528318b15038",
-                "reference": "262d033b57c73e8b59cd6e68a45c528318b15038",
+                "url": "https://api.github.com/repos/symfony/filesystem/zipball/710d364200997a5afde34d9fe57bd52f3cc1e108",
+                "reference": "710d364200997a5afde34d9fe57bd52f3cc1e108",
                 "shasum": ""
             },
             "require": {
@@ -6422,7 +6415,7 @@
             "description": "Provides basic utilities for the filesystem",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/filesystem/tree/v5.2.3"
+                "source": "https://github.com/symfony/filesystem/tree/v5.2.4"
             },
             "funding": [
                 {
@@ -6438,20 +6431,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-01-27T10:01:46+00:00"
+            "time": "2021-02-12T10:38:38+00:00"
         },
         {
             "name": "symfony/finder",
-            "version": "v5.2.3",
+            "version": "v5.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/finder.git",
-                "reference": "4adc8d172d602008c204c2e16956f99257248e03"
+                "reference": "0d639a0943822626290d169965804f79400e6a04"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/finder/zipball/4adc8d172d602008c204c2e16956f99257248e03",
-                "reference": "4adc8d172d602008c204c2e16956f99257248e03",
+                "url": "https://api.github.com/repos/symfony/finder/zipball/0d639a0943822626290d169965804f79400e6a04",
+                "reference": "0d639a0943822626290d169965804f79400e6a04",
                 "shasum": ""
             },
             "require": {
@@ -6483,7 +6476,7 @@
             "description": "Finds files and directories via an intuitive fluent interface",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/finder/tree/v5.2.3"
+                "source": "https://github.com/symfony/finder/tree/v5.2.4"
             },
             "funding": [
                 {
@@ -6499,11 +6492,11 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-01-28T22:06:19+00:00"
+            "time": "2021-02-15T18:55:04+00:00"
         },
         {
             "name": "symfony/options-resolver",
-            "version": "v5.2.3",
+            "version": "v5.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/options-resolver.git",
@@ -6552,7 +6545,7 @@
                 "options"
             ],
             "support": {
-                "source": "https://github.com/symfony/options-resolver/tree/v5.2.3"
+                "source": "https://github.com/symfony/options-resolver/tree/v5.2.4"
             },
             "funding": [
                 {
@@ -6962,7 +6955,7 @@
         },
         {
             "name": "symfony/process",
-            "version": "v5.2.3",
+            "version": "v5.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/process.git",
@@ -7004,7 +6997,7 @@
             "description": "Executes commands in sub-processes",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/process/tree/v5.2.3"
+                "source": "https://github.com/symfony/process/tree/v5.2.4"
             },
             "funding": [
                 {
@@ -7103,7 +7096,7 @@
         },
         {
             "name": "symfony/stopwatch",
-            "version": "v5.2.3",
+            "version": "v5.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/stopwatch.git",
@@ -7145,7 +7138,7 @@
             "description": "Provides a way to profile code",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/stopwatch/tree/v5.2.3"
+                "source": "https://github.com/symfony/stopwatch/tree/v5.2.4"
             },
             "funding": [
                 {
@@ -7165,16 +7158,16 @@
         },
         {
             "name": "symfony/string",
-            "version": "v5.2.3",
+            "version": "v5.2.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/string.git",
-                "reference": "c95468897f408dd0aca2ff582074423dd0455122"
+                "reference": "4e78d7d47061fa183639927ec40d607973699609"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/string/zipball/c95468897f408dd0aca2ff582074423dd0455122",
-                "reference": "c95468897f408dd0aca2ff582074423dd0455122",
+                "url": "https://api.github.com/repos/symfony/string/zipball/4e78d7d47061fa183639927ec40d607973699609",
+                "reference": "4e78d7d47061fa183639927ec40d607973699609",
                 "shasum": ""
             },
             "require": {
@@ -7228,7 +7221,7 @@
                 "utf8"
             ],
             "support": {
-                "source": "https://github.com/symfony/string/tree/v5.2.3"
+                "source": "https://github.com/symfony/string/tree/v5.2.4"
             },
             "funding": [
                 {
@@ -7244,7 +7237,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-01-25T15:14:59+00:00"
+            "time": "2021-02-16T10:20:28+00:00"
         },
         {
             "name": "theseer/tokenizer",
@@ -7352,9 +7345,7 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "abterphp/docmed": 20
-    },
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": [],

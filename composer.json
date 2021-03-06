@@ -50,7 +50,7 @@
     "abterphp/bootstrap4-website": "*",
     "abterphp/files": "*",
     "abterphp/contact": "*",
-    "abterphp/docmed": "dev-master"
+    "abterphp/docmed": "*"
   },
   "require-dev": {
     "phpunit/phpunit": "^9.5",
