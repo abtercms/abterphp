@@ -1,0 +1,36 @@
+<?php
+
+declare(strict_types=1);
+
+namespace AbterPhp\Framework\Tests\Bootstrappers\Dashboard;
+
+use AbterPhp\Framework\Bootstrappers\Dashboard\DashboardBootstrapper;
+use AbterPhp\Framework\Dashboard\Dashboard;
+use Opulence\Events\Dispatchers\IEventDispatcher;
+use Opulence\Ioc\Container;
+use PHPUnit\Framework\TestCase;
+
+class DashboardBootstrapperTest extends TestCase
+{
+    /** @var DashboardBootstrapper - System Under Test */
+    protected DashboardBootstrapper $sut;
+
+    public function setUp(): void
+    {
+        $this->sut = new DashboardBootstrapper();
+    }
+
+    public function testRegisterBindings(): void
+    {
+        $eventDispatcherMock = $this->getMockBuilder(IEventDispatcher::class)->disableOriginalConstructor()->getMock();
+        $eventDispatcherMock->expects($this->once())->method('dispatch');
+
+        $container = new Container();
+        $container->bindInstance(IEventDispatcher::class, $eventDispatcherMock);
+
+        $this->sut->registerBindings($container);
+
+        $actual = $container->resolve(Dashboard::class);
+        $this->assertInstanceOf(Dashboard::class, $actual);
+    }
+}

@@ -1,0 +1,10 @@
+<phpunit
+        bootstrap="vendor/autoload.php"
+        failOnWarning="true"
+        colors="true">
+    <testsuites>
+        <testsuite name="AbterPHP/PropellerAdmin/Unit">
+            <directory>./tests</directory>
+        </testsuite>
+    </testsuites>
+</phpunit>

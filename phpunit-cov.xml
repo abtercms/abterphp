@@ -1,0 +1,32 @@
+<phpunit
+        bootstrap="vendor/autoload.php"
+        colors="true"
+        convertDeprecationsToExceptions="true"
+        convertErrorsToExceptions="true"
+        convertNoticesToExceptions="true"
+        convertWarningsToExceptions="true">
+    <testsuite name="AbterPHP Tests">
+        <directory>src/Framework/Tests</directory>
+        <directory>src/Admin/Tests</directory>
+        <directory>src/Website/Tests</directory>
+        <directory>src/Contact/Tests</directory>
+        <directory>src/Files/Tests</directory>
+        <directory>src/Bootstrap4Website/Tests</directory>
+        <directory>src/PropellerAdmin/Tests</directory>
+    </testsuite>
+    <coverage cacheDirectory=".phpunit.cache/code-coverage" processUncoveredFiles="true">
+        <include>
+            <directory suffix=".php">src</directory>
+        </include>
+        <exclude>
+            <directory suffix="abter.php">src</directory>
+            <directory suffix=".fortune.php">src</directory>
+
+            <directory suffix=".php">src/PropellerAdmin/resources</directory>
+        </exclude>
+        <report>
+            <clover outputFile="clover.xml" />
+            <text outputFile="coverage.txt" showUncoveredFiles="false" showOnlySummary="true"/>
+        </report>
+    </coverage>
+</phpunit>

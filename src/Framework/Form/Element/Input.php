@@ -1,0 +1,142 @@
+<?php
+
+declare(strict_types=1);
+
+namespace AbterPhp\Framework\Form\Element;
+
+use AbterPhp\Framework\Constant\Html5;
+use AbterPhp\Framework\Html\Attribute;
+use AbterPhp\Framework\Html\Helper\Attributes;
+use AbterPhp\Framework\Html\Helper\Tag as TagHelper;
+use AbterPhp\Framework\Html\Tag;
+
+class Input extends Tag implements IElement
+{
+    public const TYPE_BUTTON         = 'button';
+    public const TYPE_CHECKBOX       = 'checkbox';
+    public const TYPE_COLOR          = 'color';
+    public const TYPE_DATE           = 'date';
+    public const TYPE_DATETIME       = 'datetime';
+    public const TYPE_DATETIME_LOCAL = 'datetime-local';
+    public const TYPE_EMAIL          = 'email';
+    public const TYPE_FILE           = 'file';
+    public const TYPE_HIDDEN         = 'hidden';
+    public const TYPE_IMAGE          = 'image';
+    public const TYPE_MONTH          = 'month';
+    public const TYPE_NUMBER         = 'number';
+    public const TYPE_PASSWORD       = 'password';
+    public const TYPE_RADIO          = 'radio';
+    public const TYPE_RANGE          = 'range';
+    public const TYPE_RESET          = 'reset';
+    public const TYPE_SEARCH         = 'search';
+    public const TYPE_SUBMIT         = 'submit';
+    public const TYPE_TEL            = 'tel';
+    public const TYPE_TEXT           = 'text';
+    public const TYPE_URL            = 'url';
+    public const TYPE_WEEK           = 'week';
+
+    public const NAME_HTTP_METHOD = '_method';
+
+    public const AUTOCOMPLETE_OFF = 'off';
+
+    public const CLASS_SEMI_AUTO = 'semi-auto';
+
+    public const IDENTIFIER_ATTRIBS = [Html5::ATTR_CLASS => self::CLASS_SEMI_AUTO];
+
+    protected const DEFAULT_TAG = Html5::TAG_INPUT;
+
+    protected const DEFAULT_TYPE = self::TYPE_TEXT;
+
+    protected const PROTECTED_KEYS = [Html5::ATTR_ID, Html5::ATTR_TYPE, Html5::ATTR_NAME, Html5::ATTR_VALUE];
+
+    /**
+     * Input constructor.
+     *
+     * @param string              $inputId
+     * @param string              $name
+     * @param string              $value
+     * @param string[]            $intents
+     * @param array<string,mixed> $attributes
+     * @param string|null         $tag
+     */
+    public function __construct(
+        string $inputId,
+        string $name,
+        string $value = '',
+        array $intents = [],
+        array $attributes = [],
+        ?string $tag = null
+    ) {
+        parent::__construct(null, $intents, $attributes, $tag);
+
+        $this->addAttribute(Html5::ATTR_ID, $inputId);
+        if (!array_key_exists(Html5::ATTR_TYPE, $this->attributes)) {
+            $this->addAttribute(Html5::ATTR_TYPE, static::DEFAULT_TYPE);
+        }
+        $this->addAttribute(Html5::ATTR_NAME, $name);
+
+        $this->setValue($value);
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        $values = $this->attributes[Html5::ATTR_NAME]->getValues();
+        if (null === $values) {
+            return '';
+        }
+
+        return implode(' ', $values);
+    }
+
+    /**
+     * @suppress PhanParamSignatureMismatch
+     *
+     * @return string
+     */
+    public function getValue()
+    {
+        return $this->getAttribute(Html5::ATTR_VALUE)->getValue();
+    }
+
+    /**
+     * @param string|string[] $value
+     *
+     * @return $this
+     */
+    public function setValue($value): self
+    {
+        if (!is_string($value)) {
+            throw new \InvalidArgumentException();
+        }
+
+        $this->attributes = Attributes::addItem($this->attributes, Html5::ATTR_VALUE, htmlspecialchars($value));
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return TagHelper::toString($this->tag, '', $this->getAttributes());
+    }
+
+    /**
+     * @param bool $isChecked
+     *
+     * @return array<string, null|string|string[]|Attribute>
+     */
+    public static function getRawCheckboxAttribs(bool $isChecked): array
+    {
+        $attributes = [Html5::ATTR_TYPE => Input::TYPE_CHECKBOX];
+        if ($isChecked) {
+            $attributes[Html5::ATTR_CHECKED] = null;
+        }
+
+        return $attributes;
+    }
+}

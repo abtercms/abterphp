@@ -1,0 +1,41 @@
+<?php
+
+declare(strict_types=1);
+
+namespace AbterPhp\Framework\Tests\Bootstrappers\Http\Middleware;
+
+use AbterPhp\Framework\Bootstrappers\Http\Middleware\EnvironmentWarningBootstrapper;
+use AbterPhp\Framework\Constant\Env;
+use AbterPhp\Framework\Environments\Environment;
+use AbterPhp\Framework\Http\Middleware\EnvironmentWarning;
+use AbterPhp\Framework\I18n\ITranslator;
+use Opulence\Ioc\Container;
+use PHPUnit\Framework\TestCase;
+
+class EnvironmentWarningBootstrapperTest extends TestCase
+{
+    /** @var EnvironmentWarningBootstrapper - System Under Test */
+    protected EnvironmentWarningBootstrapper $sut;
+
+    public function setUp(): void
+    {
+        Environment::unsetVar(Env::ENV_NAME);
+
+        $this->sut = new EnvironmentWarningBootstrapper();
+    }
+
+    public function testRegisterBindings(): void
+    {
+        Environment::setVar(Env::ENV_NAME, 'foo');
+
+        $translatorMock = $this->getMockBuilder(ITranslator::class)->getMock();
+
+        $container = new Container();
+        $container->bindInstance(ITranslator::class, $translatorMock);
+
+        $this->sut->registerBindings($container);
+
+        $actual = $container->resolve(EnvironmentWarning::class);
+        $this->assertInstanceOf(EnvironmentWarning::class, $actual);
+    }
+}

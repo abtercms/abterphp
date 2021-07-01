@@ -1,0 +1,17 @@
+<phpunit
+        bootstrap="vendor/autoload.php"
+        colors="true"
+        convertDeprecationsToExceptions="true"
+        convertErrorsToExceptions="true"
+        convertNoticesToExceptions="true"
+        convertWarningsToExceptions="true">
+    <testsuite name="AbterPHP Tests">
+        <directory>src/Framework/Tests</directory>
+        <directory>src/Admin/Tests</directory>
+        <directory>src/Website/Tests</directory>
+        <directory>src/Contact/Tests</directory>
+        <directory>src/Files/Tests</directory>
+        <directory>src/Bootstrap4Website/Tests</directory>
+        <directory>src/PropellerAdmin/Tests</directory>
+    </testsuite>
+</phpunit>

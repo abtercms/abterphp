@@ -1,0 +1,72 @@
+<?php
+
+declare(strict_types=1);
+
+namespace AbterPhp\Framework\Tests\Bootstrappers\Http;
+
+use AbterPhp\Framework\Bootstrappers\Http\RouterBootstrapper;
+use AbterPhp\Framework\Routes\IRouteConfigurator;
+use Opulence\Framework\Configuration\Config;
+use Opulence\Ioc\Container;
+use Opulence\Routing\Dispatchers\IRouteDispatcher;
+use Opulence\Routing\Router;
+use Opulence\Routing\Routes\Caching\ICache;
+use Opulence\Routing\Routes\Compilers\ICompiler;
+use Opulence\Routing\Urls\UrlGenerator;
+use org\bovigo\vfs\vfsStream;
+use PHPUnit\Framework\TestCase;
+
+class RouterBootstrapperTest extends TestCase
+{
+    protected const ROOT_PATH = 'exampleDir';
+
+    /** @var RouterBootstrapper - System Under Test */
+    protected RouterBootstrapper $sut;
+
+    public function setUp(): void
+    {
+        $this->sut = new RouterBootstrapper();
+    }
+
+    protected function tearDown(): void
+    {
+        Config::set('paths', 'config.http', null);
+    }
+
+    public function testRegisterBindings(): void
+    {
+        vfsStream::setup(static::ROOT_PATH);
+        $exampleDir = vfsStream::url(static::ROOT_PATH);
+
+        Config::set('paths', 'config.http', $exampleDir);
+
+        $routeConfiguratorStub = $this->createMock(IRouteConfigurator::class);
+
+        file_put_contents($exampleDir . DIRECTORY_SEPARATOR . 'routes.php', '<?php return 1;');
+        file_put_contents($exampleDir . DIRECTORY_SEPARATOR . 'module.php', '<?php return 2;');
+
+        $this->sut->setRouteConfigurators([IRouteConfigurator::class]);
+
+        $container = new Container();
+
+        $container->bindInstance(IRouteConfigurator::class, $routeConfiguratorStub);
+
+        $this->sut->setContainer($container);
+        $this->sut->registerBindings($container);
+
+        $cache = $container->resolve(ICache::class);
+        $this->assertInstanceOf(ICache::class, $cache);
+
+        $routeDispatcher = $container->resolve(IRouteDispatcher::class);
+        $this->assertInstanceOf(IRouteDispatcher::class, $routeDispatcher);
+
+        $compiler = $container->resolve(ICompiler::class);
+        $this->assertInstanceOf(ICompiler::class, $compiler);
+
+        $router = $container->resolve(Router::class);
+        $this->assertInstanceOf(Router::class, $router);
+
+        $urlGenerator = $container->resolve(UrlGenerator::class);
+        $this->assertInstanceOf(UrlGenerator::class, $urlGenerator);
+    }
+}

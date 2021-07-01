@@ -1,7 +1,7 @@
 <?php
+
+use AbterPhp\Framework\Environments\Environment;
 use Opulence\Cache\FileBridge;
-use Opulence\Databases\Adapters\Pdo\MySql\Driver;
-use Opulence\Environments\Environment;
 use Opulence\Sessions\Handlers\FileSessionHandler;
 use Opulence\Views\Caching\FileCache;
 
@@ -35,12 +35,33 @@ Environment::setVar("VIEW_CACHE", FileCache::class);
  * Set SQL database connection info
  * ----------------------------------------------------------
  */
-Environment::setVar('DB_DRIVER', Driver::class);
-Environment::setVar("DB_HOST", "localhost");
-Environment::setVar("DB_USER", "myuser");
-Environment::setVar("DB_PASSWORD", "mypassword");
-Environment::setVar("DB_NAME", "public");
-Environment::setVar("DB_PORT", 5432);
+Environment::setVar("PDO_READ_TYPE", "mysql");
+Environment::setVar("PDO_READ_HOST", "localhost");
+Environment::setVar("PDO_READ_USERNAME", "myuser");
+Environment::setVar("PDO_READ_PASSWORD", "mypassword");
+Environment::setVar("PDO_READ_DATABASE", "public");
+Environment::setVar("PDO_READ_PORT", 5432);
+Environment::setVar("PDO_READ_CHARSET", "utf8mb4");
+Environment::setVar("PDO_READ_COLLATION", "utf8mb4_general_ci");
+Environment::setVar("PDO_READ_PREFIX", "");
+Environment::setVar("PDO_READ_LOGGING", false);
+Environment::setVar("PDO_READ_ERROR_MODE", PDO::ERRMODE_EXCEPTION);
+Environment::setVar("PDO_READ_OPTIONS", json_encode([PDO::ATTR_CASE => PDO::CASE_NATURAL]));
+Environment::setVar("PDO_READ_COMMANDS", 'SET SQL_MODE=ANSI_QUOTES');
+
+Environment::setVar("PDO_WRITE_HOST", "mysql");
+Environment::setVar("PDO_WRITE_HOST", "localhost");
+Environment::setVar("PDO_WRITE_USERNAME", "myuser");
+Environment::setVar("PDO_WRITE_PASSWORD", "mypassword");
+Environment::setVar("PDO_WRITE_DATABASE", "public");
+Environment::setVar("PDO_WRITE_PORT", 5432);
+Environment::setVar("PDO_WRITE_CHARSET", "utf8mb4");
+Environment::setVar("PDO_WRITE_COLLATION", "utf8mb4_general_ci");
+Environment::setVar("PDO_WRITE_PREFIX", "");
+Environment::setVar("PDO_WRITE_LOGGING", false);
+Environment::setVar("PDO_WRITE_ERROR_MODE", PDO::ERRMODE_EXCEPTION);
+Environment::setVar("PDO_WRITE_OPTIONS", json_encode([PDO::ATTR_CASE => PDO::CASE_NATURAL]));
+Environment::setVar("PDO_WRITE_COMMANDS", 'SET SQL_MODE=ANSI_QUOTES');
 
 /**
  * ----------------------------------------------------------
@@ -167,7 +188,7 @@ Environment::setVar("EDITOR_CLIENT_ID", "");
  * API settings
  * ----------------------------------------------------------
  */
-
+Environment::setVar("API_PROBLEM_BASE_URL", "https://abtercms.com/problem/");
 Environment::setVar("API_BASE_URL", "https://api.abtercms.com/");
 Environment::setVar("API_BASE_PATH", "/api-iddqd");
 Environment::setVar("API_PROBLEM_PATH", "/problem");

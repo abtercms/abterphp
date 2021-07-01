@@ -1,0 +1,54 @@
+<?php
+
+declare(strict_types=1);
+
+namespace AbterPhp\Framework\Tests\Validation\Rules;
+
+use AbterPhp\Framework\Validation\Rules\Base64;
+use PHPUnit\Framework\TestCase;
+
+class Base64Test extends TestCase
+{
+    /** @var Base64 - System Under Test */
+    protected Base64 $sut;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->sut = new Base64();
+    }
+
+    /**
+     * @return array[]
+     */
+    public function passesProvider(): array
+    {
+        return [
+            'empty' => ['', [], true],
+            'basic' => ['YXNkYXNk', [], true],
+            'wrong' => ['https://www.example.com/', [], false],
+        ];
+    }
+
+    /**
+     * @dataProvider passesProvider
+     *
+     * @param       $value
+     * @param array $allValues
+     * @param bool  $expectedResult
+     */
+    public function testPasses($value, array $allValues, bool $expectedResult): void
+    {
+        $actualResult = $this->sut->passes($value, $allValues);
+
+        $this->assertEquals($expectedResult, $actualResult);
+    }
+
+    public function testGetSlug(): void
+    {
+        $actualResult = $this->sut->getSlug();
+
+        $this->assertSame('base64', $actualResult);
+    }
+}

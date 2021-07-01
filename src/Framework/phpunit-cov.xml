@@ -1,0 +1,18 @@
+<phpunit
+        bootstrap="vendor/autoload.php"
+        failOnWarning="true"
+        colors="true">
+    <testsuites>
+        <testsuite name="AbterPHP/Framework/Unit">
+            <directory>./tests</directory>
+        </testsuite>
+    </testsuites>
+    <coverage cacheDirectory=".phpunit.cache/code-coverage" processUncoveredFiles="true">
+        <include>
+            <directory suffix=".php">src</directory>
+        </include>
+        <report>
+            <clover outputFile="clover.xml" />
+        </report>
+    </coverage>
+</phpunit>

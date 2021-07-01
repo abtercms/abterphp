@@ -10,3 +10,4 @@ NOTES.md
 /docker/php/conf.d/zzz_500_local.ini
 .phpunit.result.cache
 
+.phpunit.cache

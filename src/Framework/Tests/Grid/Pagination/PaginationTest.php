@@ -1,0 +1,175 @@
+<?php
+
+declare(strict_types=1);
+
+namespace AbterPhp\Framework\Tests\Grid\Pagination;
+
+use AbterPhp\Framework\Form\Element\Select;
+use AbterPhp\Framework\Grid\Pagination\Numbers;
+use AbterPhp\Framework\Grid\Pagination\Pagination;
+use PHPUnit\Framework\TestCase;
+
+class PaginationTest extends TestCase
+{
+    public function getTestToStringDataProvider(): array
+    {
+        return [
+            [1, 10, 8, 5, ['>1<']],
+            [1, 10, 12, 5, ['>1<', '>2<']],
+            [2, 10, 38, 5, ['>1<', '>2<', '>3<', '>4<']],
+            [3, 10, 38, 3, ['>3<', '>4<']],
+            [14, 20, 942, 5, ['>12<', '>13<', '>14<', '>15<', '>16<']],
+            [200, 20, 5000, 9, ['>196<', '>197<', '>200<', '>203<', '>204<']],
+        ];
+    }
+
+    /**
+     * @dataProvider getTestToStringDataProvider
+     *
+     * @param int $page
+     * @param int $pageSize
+     * @param int $totalCount
+     * @param int $numberCount
+     * @param string[] $expectedResult
+     */
+    public function testToString(
+        int $page,
+        int $pageSize,
+        int $totalCount,
+        int $numberCount,
+        array $expectedResult
+    ): void {
+        $params = ['page' => (string)$page];
+
+        $sut = new Pagination($params, '', $numberCount, $pageSize, [$pageSize]);
+
+        $sut->setTotalCount($totalCount);
+
+        $actualResult = (string)$sut;
+
+        foreach ($expectedResult as $number) {
+            $this->assertStringContainsString("$number", $actualResult);
+        }
+
+        $this->assertSame($actualResult, (string)$sut);
+    }
+
+    public function testConstructFailureOnEvenNumberCount(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+
+        $params = ['page' => '1'];
+
+        new Pagination($params, '', 4, 10, [10]);
+    }
+
+    public function testConstructFailureOnInvalidPageSize(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+
+        $params = ['page' => '1'];
+
+        new Pagination($params, '', 5, 8, [10]);
+    }
+
+    public function testConstructFailureOnInvalidPageSizeParam(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+
+        $params = ['page' => '1', 'page-size' => -8];
+
+        new Pagination($params, '', 4, 10, [10]);
+    }
+
+    public function testSetTotalCountFailureOnNegativeTotalCount(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+
+        $params = ['page' => '1'];
+
+        $sut = new Pagination($params, '', 5, 10, [10]);
+
+        $sut->setTotalCount(-1);
+    }
+
+    public function testSetTotalCountFailureOutOfRangeTotalCount(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+
+        $params = ['page' => '2'];
+
+        $sut = new Pagination($params, '', 5, 10, [10]);
+
+        $sut->setTotalCount(0);
+    }
+
+    public function testGetNodes(): void
+    {
+        $sut = new Pagination([], '', 5, 10, [10]);
+
+        $actualResult = $sut->getNodes();
+
+        $this->assertSame([], $actualResult);
+    }
+
+    public function testGetExtendedNodes(): void
+    {
+        $sut = new Pagination([], '', 5, 10, [10]);
+
+        $actualResult = $sut->getExtendedNodes();
+
+        $this->assertCount(2, $actualResult);
+        $this->assertInstanceOf(Numbers::class, $actualResult[0]);
+        $this->assertInstanceOf(Select::class, $actualResult[1]);
+    }
+
+    public function testTemplateIsChangeable(): void
+    {
+        $sut = new Pagination([], '', 5, 10, [10]);
+
+        $sut->setTemplate('<foo>%1$s</foo><bar>%2$s%3$s</bar>');
+
+        $this->assertMatchesRegularExpression('/\<foo\>.*\<\/foo\>\<bar\>.*\<\/bar\>/', (string)$sut);
+    }
+
+    public function testSetSortedUrlCanSetsUrlOnNumbersBeforeTotalCountIsSet(): void
+    {
+        $url = '/foo?';
+
+        $sut = new Pagination([], '', 5, 10, [10]);
+
+        $sut->setSortedUrl($url);
+
+        $sut->setTotalCount(100);
+
+        $actualResult = (string)$sut;
+
+        $this->assertStringContainsString($url, $actualResult);
+    }
+
+    public function testSetSortedUrlCanNotSetsUrlOnNumbersAfterTotalCountIsSet(): void
+    {
+        $url = '/foo?';
+
+        $sut = new Pagination([], '', 5, 10, [10]);
+
+        $sut->setTotalCount(100);
+
+        $sut->setSortedUrl($url);
+
+        $actualResult = (string)$sut;
+
+        $this->assertStringNotContainsString($url, $actualResult);
+    }
+
+    public function testGetGroup()
+    {
+        $expectedResult = 10;
+
+        $sut = new Pagination([], '', 5, 10, [10]);
+
+        $pageSize = $sut->getPageSize();
+
+        $this->assertSame($expectedResult, $pageSize);
+    }
+}

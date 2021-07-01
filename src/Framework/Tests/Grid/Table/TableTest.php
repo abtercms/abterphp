@@ -1,0 +1,119 @@
+<?php
+
+declare(strict_types=1);
+
+namespace AbterPhp\Framework\Tests\Grid\Table;
+
+use AbterPhp\Framework\Grid\Component\Body;
+use AbterPhp\Framework\Grid\Component\Header;
+use AbterPhp\Framework\Grid\Table\Table;
+use AbterPhp\Framework\Tests\TestDouble\Domain\MockEntityFactory;
+use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\MockObject\MockObject;
+
+class TableTest extends TestCase
+{
+    /** @var Table - System Under Test */
+    protected Table $sut;
+
+    /** @var Body|MockObject */
+    protected $body;
+
+    /** @var Header|MockObject */
+    protected $header;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->body = $this->createMock(Body::class);
+
+        $this->header = $this->createMock(Header::class);
+
+        $this->sut = new Table($this->body, $this->header);
+    }
+
+    public function testToStringContainsHeaders(): void
+    {
+        $this->body->expects($this->any())->method('__toString')->willReturn('!A!');
+        $this->header->expects($this->any())->method('__toString')->willReturn('!B!');
+
+        $this->assertStringContainsString('B', (string)$this->sut);
+    }
+
+    public function testToStringContainsRows(): void
+    {
+        $this->body->expects($this->any())->method('__toString')->willReturn('!A!');
+        $this->header->expects($this->any())->method('__toString')->willReturn('!B!');
+
+        $this->assertStringContainsString('!B!', (string)$this->sut);
+    }
+
+    public function testSetTemplateCanChangeContent(): void
+    {
+        $template = '--||--';
+
+        $this->body->expects($this->any())->method('__toString')->willReturn('!A!');
+        $this->header->expects($this->any())->method('__toString')->willReturn('!B!');
+
+        $this->sut->setTemplate($template);
+
+        $actualResult = (string)$this->sut;
+
+        $this->assertStringNotContainsString('!A!', $actualResult);
+        $this->assertStringNotContainsString('!A!', $actualResult);
+        $this->assertStringContainsString($template, $actualResult);
+    }
+
+    public function testGetSortedUrlCallsHeader(): void
+    {
+        $stubBaseUrl   = '/foo?';
+        $stubSortedUrl = '/foo?bar';
+
+        $this->header->expects($this->once())->method('getSortedUrl')->with($stubBaseUrl)->willReturn($stubSortedUrl);
+
+        $actualResult = $this->sut->getSortedUrl($stubBaseUrl);
+
+        $this->assertSame($stubSortedUrl, $actualResult);
+    }
+
+    public function testGetSortedConditionsCallsHeader(): void
+    {
+        $stubSortedConditions = ['foo', 'bar'];
+
+        $this->header->expects($this->once())->method('getSortConditions')->willReturn($stubSortedConditions);
+
+        $actualResult = $this->sut->getSortConditions();
+
+        $this->assertSame($stubSortedConditions, $actualResult);
+    }
+
+    public function testGetSqlParamsCallsHeader(): void
+    {
+        $stubQueryParams = ['foo', 'bar'];
+
+        $this->header->expects($this->once())->method('getQueryParams')->willReturn($stubQueryParams);
+
+        $actualResult = $this->sut->getSqlParams();
+
+        $this->assertSame($stubQueryParams, $actualResult);
+    }
+
+    public function testSetEntitiesCallsBody(): void
+    {
+        $stubEntity = MockEntityFactory::createEntityStub($this);
+
+        $stubEntities = [$stubEntity];
+
+        $this->body->expects($this->once())->method('setEntities')->with($stubEntities);
+
+        $this->sut->setEntities($stubEntities);
+    }
+
+    public function testGetExtendedNodes(): void
+    {
+        $actualResult = $this->sut->getExtendedNodes();
+
+        $this->assertSame([$this->header, $this->body], $actualResult);
+    }
+}

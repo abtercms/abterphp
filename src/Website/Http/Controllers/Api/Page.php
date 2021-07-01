@@ -1,0 +1,106 @@
+<?php
+
+declare(strict_types=1);
+
+namespace AbterPhp\Website\Http\Controllers\Api;
+
+use AbterPhp\Admin\Http\Controllers\ApiAbstract;
+use AbterPhp\Framework\Databases\Queries\FoundRows;
+use AbterPhp\Website\Service\Execute\Page as RepoService;
+use AbterPhp\Website\Service\Website\Index as IndexService;
+use Casbin\Exceptions\CasbinException;
+use Opulence\Http\Responses\Response;
+use Opulence\Orm\OrmException;
+use Psr\Log\LoggerInterface;
+
+class Page extends ApiAbstract
+{
+    public const ENTITY_SINGULAR = 'page';
+    public const ENTITY_PLURAL   = 'pages';
+
+    /** @var IndexService */
+    protected IndexService $indexService;
+
+    /**
+     * Page constructor.
+     *
+     * @param LoggerInterface $logger
+     * @param RepoService     $repoService
+     * @param FoundRows       $foundRows
+     * @param string          $problemBaseUrl
+     * @param IndexService    $indexService
+     */
+    public function __construct(
+        LoggerInterface $logger,
+        RepoService $repoService,
+        FoundRows $foundRows,
+        string $problemBaseUrl,
+        IndexService $indexService
+    ) {
+        parent::__construct($logger, $repoService, $foundRows, $problemBaseUrl);
+
+        $this->indexService = $indexService;
+    }
+
+    /**
+     * @param string $entityId
+     *
+     * @return Response
+     */
+    public function get(string $entityId): Response
+    {
+        if ($this->request->getQuery()->get('embed') === 'rendered') {
+            return $this->getWithRendered($entityId);
+        }
+
+        return parent::get($entityId);
+    }
+
+    /**
+     * @param string $entityId
+     *
+     * @return Response
+     */
+    public function getWithRendered(string $entityId): Response
+    {
+        try {
+            $userGroupIdentifiers = $this->indexService->getUserGroupIdentifiers($this->getUserIdentifier());
+
+            $entity = $this->indexService->getRenderedPage($entityId, $userGroupIdentifiers);
+
+            return $this->handleGetSuccess($entity);
+        } catch (CasbinException $e) {
+            return $this->handleUnauthorized();
+        } catch (OrmException $e) {
+            try {
+                $this->repoService->retrieveEntity($entityId);
+            } catch (OrmException $e) {
+                return $this->handleNotFound();
+            }
+            $msg = sprintf(static::LOG_MSG_GET_FAILURE, static::ENTITY_SINGULAR, $entityId);
+
+            return $this->handleException($msg, $e);
+        } catch (\Exception $e) {
+            $msg = sprintf(static::LOG_MSG_GET_FAILURE, static::ENTITY_SINGULAR, $entityId);
+
+            return $this->handleException($msg, $e);
+        }
+    }
+
+    /**
+     * @return array
+     */
+    public function getSharedData(): array
+    {
+        $data = $this->request->getJsonBody();
+
+        $data['meta']   = !empty($data['meta']) ? $data['meta'] : [];
+        $data['assets'] = !empty($data['assets']) ? $data['assets'] : [];
+
+        $data = array_merge($data, $data['meta'], $data['assets']);
+
+        unset($data['meta'], $data['assets']);
+
+        return $data;
+    }
+}

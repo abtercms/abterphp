@@ -47,7 +47,7 @@ services:
       - MH_HOSTNAME=localhost
 
   fpm:
-    image: abtercms/php:74
+    image: abtercms/php:80
     links:
       - db
       - db_test
@@ -64,19 +64,29 @@ services:
       - CACHE_BASE_PATH=/cache
       - OAUTH2_PRIVATE_KEY_PATH=/website/private/private.key
       - OAUTH2_PUBLIC_KEY_PATH=/website/private/public.key
-      - DB_HOST=db
-      - DB_NAME=abter
-      - DB_USER=abter
-      - DB_PASSWORD=28T3pqyvKG3tEgsjE8Rj
-      - DB_PORT=3306
+      - PDO_READ_TYPE=mysql
+      - PDO_READ_HOST=db
+      - PDO_READ_DATABASE=abter
+      - PDO_READ_USERNAME=abter
+      - PDO_READ_PASSWORD=28T3pqyvKG3tEgsjE8Rj
+      - PDO_READ_PORT=3306
+      - PDO_WRITE_TYPE=mysql
+      - PDO_WRITE_HOST=db
+      - PDO_WRITE_DATABASE=abter
+      - PDO_WRITE_USERNAME=abter
+      - PDO_WRITE_PASSWORD=28T3pqyvKG3tEgsjE8Rj
+      - PDO_WRITE_PORT=3306
     volumes:
       - .:/website
+      - ./docker/php/conf.d/xdebug-on.ini:/usr/local/etc/php/conf.d/xdebug-on.ini:ro
       - ./docker/php/conf.d/zzz_020_general.ini:/usr/local/etc/php/conf.d/zzz_020_general.ini:ro
       - ./docker/php/conf.d/zzz_500_local.ini:/usr/local/etc/php/conf.d/zzz_500_local.ini:ro
     working_dir: /website
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
   cli:
-    image: abtercms/php:74
+    image: abtercms/php:80
     links:
       - db
       - db_test
@@ -91,17 +101,29 @@ services:
       - DIR_LOGS=/website/tmp/logs
       - OAUTH2_PRIVATE_KEY_PATH=/website/private/private.key
       - OAUTH2_PUBLIC_KEY_PATH=/website/private/public.key
-      - DB_HOST=db
-      - DB_NAME=abter
-      - DB_USER=abter
-      - DB_PASSWORD=28T3pqyvKG3tEgsjE8Rj
-      - DB_PORT=3306
+      - PDO_READ_TYPE=mysql
+      - PDO_READ_HOST=db
+      - PDO_READ_DATABASE=abter
+      - PDO_READ_USERNAME=abter
+      - PDO_READ_PASSWORD=28T3pqyvKG3tEgsjE8Rj
+      - PDO_READ_PORT=3306
+      - PDO_WRITE_TYPE=mysql
+      - PDO_WRITE_HOST=db
+      - PDO_WRITE_DATABASE=abter
+      - PDO_WRITE_USERNAME=abter
+      - PDO_WRITE_PASSWORD=28T3pqyvKG3tEgsjE8Rj
+      - PDO_WRITE_PORT=3306
+      - PHP_IDE_CONFIG=serverName=abtercms.test
+      - XDEBUG_SESSION=1
     volumes:
       - .:/website
       - ./docker/php/conf.d/ast-on.ini:/usr/local/etc/php/conf.d/ast-on.ini:ro
+      - ./docker/php/conf.d/xdebug-on.ini:/usr/local/etc/php/conf.d/xdebug-on.ini:ro
       - ./docker/php/conf.d/zzz_020_general.ini:/usr/local/etc/php/conf.d/zzz_020_general.ini:ro
       - ./docker/php/conf.d/zzz_500_local.ini:/usr/local/etc/php/conf.d/zzz_500_local.ini:ro
     working_dir: /website
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
   nginx:
     image: nginx

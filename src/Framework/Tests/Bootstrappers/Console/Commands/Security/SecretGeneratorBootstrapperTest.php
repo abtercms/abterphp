@@ -1,0 +1,36 @@
+<?php
+
+declare(strict_types=1);
+
+namespace AbterPhp\Framework\Tests\Bootstrappers\Console\Commands\Security;
+
+use AbterPhp\Framework\Bootstrappers\Console\Commands\Security\SecretGeneratorBootstrapper;
+use AbterPhp\Framework\Console\Commands\Security\SecretGenerator;
+use Opulence\Events\Dispatchers\IEventDispatcher;
+use Opulence\Ioc\Container;
+use PHPUnit\Framework\TestCase;
+
+class SecretGeneratorBootstrapperTest extends TestCase
+{
+    /** @var SecretGeneratorBootstrapper - System Under Test */
+    protected SecretGeneratorBootstrapper $sut;
+
+    public function setUp(): void
+    {
+        $this->sut = new SecretGeneratorBootstrapper();
+    }
+
+    public function testRegisterBindings(): void
+    {
+        $eventDispatchedMock = $this->getMockBuilder(IEventDispatcher::class)->getMock();
+        $eventDispatchedMock->expects($this->once())->method('dispatch');
+
+        $container = new Container();
+        $container->bindInstance(IEventDispatcher::class, $eventDispatchedMock);
+
+        $this->sut->registerBindings($container);
+
+        $actual = $container->resolve(SecretGenerator::class);
+        $this->assertInstanceOf(SecretGenerator::class, $actual);
+    }
+}

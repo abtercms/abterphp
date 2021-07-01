@@ -1,0 +1,258 @@
+<?php
+
+declare(strict_types=1);
+
+namespace AbterPhp\Website\Form\Factory;
+
+use AbterPhp\Admin\Form\Factory\Base;
+use AbterPhp\Framework\Constant\Html5;
+use AbterPhp\Framework\Constant\Session;
+use AbterPhp\Framework\Form\Component\Option;
+use AbterPhp\Framework\Form\Container\FormGroup;
+use AbterPhp\Framework\Form\Element\Input;
+use AbterPhp\Framework\Form\Element\Select;
+use AbterPhp\Framework\Form\Element\Textarea;
+use AbterPhp\Framework\Form\Extra\Help;
+use AbterPhp\Framework\Form\IForm;
+use AbterPhp\Framework\Form\Label\Countable;
+use AbterPhp\Framework\Form\Label\Label;
+use AbterPhp\Framework\I18n\ITranslator;
+use AbterPhp\Website\Constant\Authorization;
+use AbterPhp\Website\Domain\Entities\Block as Entity;
+use AbterPhp\Website\Domain\Entities\BlockLayout;
+use AbterPhp\Website\Orm\BlockLayoutRepo;
+use Casbin\Enforcer;
+use Casbin\Exceptions\CasbinException;
+use Opulence\Orm\IEntity;
+use Opulence\Orm\OrmException;
+use Opulence\Sessions\ISession;
+
+class Block extends Base
+{
+    protected const BODY_ATTRIBS              = [
+        Html5::ATTR_CLASS => Textarea::CLASS_WYSIWYG,
+        Html5::ATTR_ROWS  => '15',
+    ];
+    protected const LAYOUT_TEXTAREA_ATTRIBS   = [Html5::ATTR_ROWS => '15'];
+    protected const LAYOUT_FORM_GROUP_ATTRIBS = [
+        Html5::ATTR_ID    => 'layout-div',
+        Html5::ATTR_CLASS => FormGroup::CLASS_COUNTABLE,
+    ];
+
+    protected BlockLayoutRepo $layoutRepo;
+
+    protected Enforcer $enforcer;
+
+    /**
+     * Block constructor.
+     *
+     * @param ISession        $session
+     * @param ITranslator     $translator
+     * @param BlockLayoutRepo $layoutRepo
+     * @param Enforcer        $enforcer
+     */
+    public function __construct(
+        ISession $session,
+        ITranslator $translator,
+        BlockLayoutRepo $layoutRepo,
+        Enforcer $enforcer
+    ) {
+        parent::__construct($session, $translator);
+
+        $this->layoutRepo = $layoutRepo;
+        $this->enforcer   = $enforcer;
+    }
+
+    /**
+     * @param string       $action
+     * @param string       $method
+     * @param string       $showUrl
+     * @param IEntity|null $entity
+     *
+     * @return IForm
+     * @throws CasbinException
+     * @throws OrmException
+     */
+    public function create(string $action, string $method, string $showUrl, ?IEntity $entity = null): IForm
+    {
+        assert($entity instanceof Entity, new \InvalidArgumentException());
+
+        $username        = $this->session->get(Session::USERNAME);
+        $advancedAllowed = $this->enforcer->enforce(
+            $username,
+            Authorization::RESOURCE_BLOCKS,
+            Authorization::ROLE_ADVANCED_WRITE
+        );
+
+        $this->createForm($action, $method)
+            ->addDefaultElements()
+            ->addTitle($entity)
+            ->addIdentifier($entity)
+            ->addBody($entity)
+            ->addLayoutId($entity, $advancedAllowed)
+            ->addLayout($entity, $advancedAllowed)
+            ->addDefaultButtons($showUrl);
+
+        $form = $this->form;
+
+        $this->form = null;
+
+        return $form;
+    }
+
+    /**
+     * @param Entity $entity
+     *
+     * @return $this
+     */
+    protected function addTitle(Entity $entity): Block
+    {
+        $input = new Input('title', 'title', $entity->getTitle());
+        $label = new Label('title', 'website:blockTitle');
+
+        $this->form[] = new FormGroup($input, $label, null, [], FormGroup::REQUIRED_ATTRIBS);
+
+        return $this;
+    }
+
+    /**
+     * @param Entity $entity
+     *
+     * @return $this
+     */
+    protected function addIdentifier(Entity $entity): Block
+    {
+        $input = new Input('identifier', 'identifier', $entity->getIdentifier(), [], Input::IDENTIFIER_ATTRIBS);
+        $label = new Label('identifier', 'website:blockIdentifier');
+        $help  = new Help('website:blockIdentifierHelp');
+
+        $this->form[] = new FormGroup($input, $label, $help);
+
+        return $this;
+    }
+
+    /**
+     * @param Entity $entity
+     *
+     * @return $this
+     */
+    protected function addBody(Entity $entity): Block
+    {
+        $input = new Textarea('body', 'body', $entity->getBody(), [], static::BODY_ATTRIBS);
+        $label = new Label('body', 'website:blockBody');
+
+        $this->form[] = new FormGroup($input, $label);
+
+        return $this;
+    }
+
+    /**
+     * @param Entity $entity
+     * @param bool   $advancedAllowed
+     *
+     * @return $this
+     * @throws OrmException
+     */
+    protected function addLayoutId(Entity $entity, bool $advancedAllowed): Block
+    {
+        if (!$advancedAllowed && $entity->getId() && !$entity->getLayoutId()) {
+            return $this;
+        }
+
+        $allLayouts = $this->getAllLayouts();
+        $layoutId   = $entity->getLayoutId();
+
+        $options = $this->createLayoutIdOptions($allLayouts, $layoutId, $advancedAllowed);
+
+        $this->form[] = new FormGroup(
+            $this->createLayoutIdSelect($options),
+            $this->createLayoutIdLabel()
+        );
+
+        return $this;
+    }
+
+    /**
+     * @return BlockLayout[]
+     * @throws OrmException
+     */
+    protected function getAllLayouts(): array
+    {
+        return $this->layoutRepo->getAll();
+    }
+
+    /**
+     * @param BlockLayout[] $allLayouts
+     * @param string|null   $layoutId
+     * @param bool          $advancedAllowed
+     *
+     * @return Option[]
+     */
+    protected function createLayoutIdOptions(array $allLayouts, ?string $layoutId, bool $advancedAllowed): array
+    {
+        $options = [];
+        if ($advancedAllowed) {
+            $options[] = new Option('', 'framework:none', false);
+        }
+        foreach ($allLayouts as $layout) {
+            $isSelected = $layout->getId() === $layoutId;
+            $options[]  = new Option($layout->getId(), $layout->getName(), $isSelected);
+        }
+
+        return $options;
+    }
+
+    /**
+     * @param Option[] $options
+     *
+     * @return Select
+     */
+    protected function createLayoutIdSelect(array $options): Select
+    {
+        $select = new Select('layout_id', 'layout_id');
+
+        foreach ($options as $option) {
+            $select[] = $option;
+        }
+
+        return $select;
+    }
+
+    /**
+     * @return Label
+     */
+    protected function createLayoutIdLabel(): Label
+    {
+        return new Label('layout_id', 'website:blockLayoutIdLabel');
+    }
+
+    /**
+     * @param Entity $entity
+     * @param bool   $advancedAllowed
+     *
+     * @return $this
+     */
+    protected function addLayout(Entity $entity, bool $advancedAllowed): Block
+    {
+        if (!$advancedAllowed) {
+            return $this;
+        }
+
+        return $this->addLayoutTextarea($entity);
+    }
+
+    /**
+     * @param Entity $entity
+     *
+     * @return $this
+     */
+    protected function addLayoutTextarea(Entity $entity): Block
+    {
+        $input = new Textarea('layout', 'layout', $entity->getLayout(), [], static::LAYOUT_TEXTAREA_ATTRIBS);
+        $label = new Countable('description', 'website:blockLayoutLabel', Countable::DEFAULT_SIZE);
+
+        $this->form[] = new FormGroup($input, $label, null, [], static::LAYOUT_FORM_GROUP_ATTRIBS);
+
+        return $this;
+    }
+}
