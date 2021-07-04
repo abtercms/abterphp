@@ -5,37 +5,73 @@ declare(strict_types=1);
 namespace AbterPhp\Contact\Orm;
 
 use AbterPhp\Contact\Domain\Entities\Form as Entity;
-use AbterPhp\Contact\Orm\DataMappers\FormSqlDataMapper; // @phan-suppress-current-line PhanUnreferencedUseNormal
-use AbterPhp\Framework\Orm\IGridRepo;
-use Opulence\Orm\Repositories\Repository;
+use AbterPhp\Framework\Orm\GridRepo;
+use Opulence\Orm\IEntity;
+use QB\Generic\Statement\ISelect;
+use QB\MySQL\QueryBuilder\QueryBuilder;
+use QB\MySQL\Statement\Select;
 
-class FormRepo extends Repository implements IGridRepo
+class FormRepo extends GridRepo
 {
-    /**
-     * @param int      $limitFrom
-     * @param int      $pageSize
-     * @param string[] $orders
-     * @param array    $filters
-     * @param array    $params
-     *
-     * @return Entity[]
-     * @throws \Opulence\Orm\OrmException
-     */
-    public function getPage(int $limitFrom, int $pageSize, array $orders, array $filters, array $params): array
-    {
-        /** @see FormSqlDataMapper::getPage() */
-        return $this->getFromDataMapper('getPage', [$limitFrom, $pageSize, $orders, $filters, $params]);
-    }
+    /** @var QueryBuilder */
+    protected $queryBuilder;
 
     /**
      * @param string $identifier
      *
      * @return Entity|null
-     * @throws \Opulence\Orm\OrmException
      */
     public function getByIdentifier(string $identifier): ?Entity
     {
-        /** @see FormSqlDataMapper::getPage() */
-        return $this->getFromDataMapper('getByIdentifier', [$identifier]);
+        return $this->getOne(['cf.identifier' => $identifier]);
+    }
+
+    /**
+     * @return array<string,string>
+     */
+    public function getDefaultSorting(): array
+    {
+        return [
+            'cf.name' => ISelect::DIRECTION_ASC,
+        ];
+    }
+
+    /**
+     * @param array $row
+     *
+     * @return IEntity
+     */
+    public function createEntity(array $row): IEntity
+    {
+        return new Entity(
+            $row['id'],
+            $row['name'],
+            $row['identifier'],
+            $row['to_name'],
+            $row['to_email'],
+            $row['success_url'],
+            $row['failure_url'],
+            (int)$row['max_body_length']
+        );
+    }
+
+    /**
+     * @return Select
+     */
+    public function getBaseQuery(): Select
+    {
+        return $this->queryBuilder
+            ->select(
+                'cf.id',
+                'cf.name',
+                'cf.identifier',
+                'cf.to_name',
+                'cf.to_email',
+                'cf.success_url',
+                'cf.failure_url',
+                'cf.max_body_length'
+            )
+            ->from('contact_forms', 'cf')
+            ->where('cf.deleted_at IS NULL');
     }
 }

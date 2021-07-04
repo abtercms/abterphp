@@ -6,6 +6,7 @@ namespace AbterPhp\Admin\Console\Commands\User;
 
 use AbterPhp\Admin\Orm\UserRepo;
 use AbterPhp\Framework\Authorization\CacheManager;
+use AbterPhp\Framework\Database\PDO\UnitOfWork;
 use Opulence\Console\Commands\Command;
 use Opulence\Console\Requests\Argument;
 use Opulence\Console\Requests\ArgumentTypes;
@@ -13,7 +14,6 @@ use Opulence\Console\Requests\Option;
 use Opulence\Console\Requests\OptionTypes;
 use Opulence\Console\Responses\IResponse;
 use Opulence\Console\StatusCodes;
-use Opulence\Orm\IUnitOfWork;
 
 class Delete extends Command
 {
@@ -29,7 +29,7 @@ class Delete extends Command
 
     protected UserRepo $userRepo;
 
-    protected IUnitOfWork $unitOfWork;
+    protected UnitOfWork $unitOfWork;
 
     protected CacheManager $cacheManager;
 
@@ -37,10 +37,10 @@ class Delete extends Command
      * CreateUserCommand constructor.
      *
      * @param UserRepo     $userRepo
-     * @param IUnitOfWork  $unitOfWork
+     * @param UnitOfWork   $unitOfWork
      * @param CacheManager $cacheManager
      */
-    public function __construct(UserRepo $userRepo, IUnitOfWork $unitOfWork, CacheManager $cacheManager)
+    public function __construct(UserRepo $userRepo, UnitOfWork $unitOfWork, CacheManager $cacheManager)
     {
         $this->userRepo     = $userRepo;
         $this->unitOfWork   = $unitOfWork;

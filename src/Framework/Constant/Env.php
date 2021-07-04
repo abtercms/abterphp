@@ -16,8 +16,6 @@ class Env
     public const PDO_READ_PORT       = 'PDO_READ_PORT';
     public const PDO_READ_CHARSET    = 'PDO_READ_CHARSET';
     public const PDO_READ_COLLATION  = 'PDO_READ_COLLATION';
-    public const PDO_READ_PREFIX     = 'PDO_READ_PREFIX';
-    public const PDO_READ_LOGGING    = 'PDO_READ_LOGGING';
     public const PDO_READ_ERROR_MODE = 'PDO_READ_ERROR_MODE';
     public const PDO_READ_OPTIONS    = 'PDO_READ_OPTIONS';
     public const PDO_READ_COMMANDS   = 'PDO_READ_COMMANDS';
@@ -30,8 +28,6 @@ class Env
     public const PDO_WRITE_PORT       = 'PDO_WRITE_PORT';
     public const PDO_WRITE_CHARSET    = 'PDO_WRITE_CHARSET';
     public const PDO_WRITE_COLLATION  = 'PDO_WRITE_COLLATION';
-    public const PDO_WRITE_PREFIX     = 'PDO_WRITE_PREFIX';
-    public const PDO_WRITE_LOGGING    = 'PDO_WRITE_LOGGING';
     public const PDO_WRITE_ERROR_MODE = 'PDO_WRITE_ERROR_MODE';
     public const PDO_WRITE_OPTIONS    = 'PDO_WRITE_OPTIONS';
     public const PDO_WRITE_COMMANDS   = 'PDO_WRITE_COMMANDS';

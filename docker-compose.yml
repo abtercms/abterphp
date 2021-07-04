@@ -47,7 +47,7 @@ services:
       - MH_HOSTNAME=localhost
 
   fpm:
-    image: abtercms/php:80
+    image: abtercms/php:80-dev
     links:
       - db
       - db_test
@@ -64,6 +64,8 @@ services:
       - CACHE_BASE_PATH=/cache
       - OAUTH2_PRIVATE_KEY_PATH=/website/private/private.key
       - OAUTH2_PUBLIC_KEY_PATH=/website/private/public.key
+      - OAUTH2_PRIVATE_KEY_PASSWORD=&&ZV2qcDVFI93%9^8EIJj35ivXNdtWMM
+      - OAUTH2_SECRET_LENGTH=32
       - PDO_READ_TYPE=mysql
       - PDO_READ_HOST=db
       - PDO_READ_DATABASE=abter
@@ -76,9 +78,12 @@ services:
       - PDO_WRITE_USERNAME=abter
       - PDO_WRITE_PASSWORD=28T3pqyvKG3tEgsjE8Rj
       - PDO_WRITE_PORT=3306
+      - CRYPTO_ENCRYPTION_PEPPER=^dz85@HkaM9F%sku
+      - CRYPTO_FRONTEND_SALT=rvA792@B
     volumes:
       - .:/website
       - ./docker/php/conf.d/xdebug-on.ini:/usr/local/etc/php/conf.d/xdebug-on.ini:ro
+      - ./docker/php/conf.d/ast-off.ini:/usr/local/etc/php/conf.d/docker-php-ext-ast.ini:ro
       - ./docker/php/conf.d/zzz_020_general.ini:/usr/local/etc/php/conf.d/zzz_020_general.ini:ro
       - ./docker/php/conf.d/zzz_500_local.ini:/usr/local/etc/php/conf.d/zzz_500_local.ini:ro
     working_dir: /website
@@ -86,7 +91,7 @@ services:
       - "host.docker.internal:host-gateway"
 
   cli:
-    image: abtercms/php:80
+    image: abtercms/php:80-dev
     links:
       - db
       - db_test
@@ -101,6 +106,8 @@ services:
       - DIR_LOGS=/website/tmp/logs
       - OAUTH2_PRIVATE_KEY_PATH=/website/private/private.key
       - OAUTH2_PUBLIC_KEY_PATH=/website/private/public.key
+      - OAUTH2_PRIVATE_KEY_PASSWORD=&&ZV2qcDVFI93%9^8EIJj35ivXNdtWMM
+      - OAUTH2_SECRET_LENGTH=32
       - PDO_READ_TYPE=mysql
       - PDO_READ_HOST=db
       - PDO_READ_DATABASE=abter
@@ -114,10 +121,10 @@ services:
       - PDO_WRITE_PASSWORD=28T3pqyvKG3tEgsjE8Rj
       - PDO_WRITE_PORT=3306
       - PHP_IDE_CONFIG=serverName=abtercms.test
-      - XDEBUG_SESSION=1
+      - CRYPTO_ENCRYPTION_PEPPER=^dz85@HkaM9F%sku
+      - CRYPTO_FRONTEND_SALT=rvA792@B
     volumes:
       - .:/website
-      - ./docker/php/conf.d/ast-on.ini:/usr/local/etc/php/conf.d/ast-on.ini:ro
       - ./docker/php/conf.d/xdebug-on.ini:/usr/local/etc/php/conf.d/xdebug-on.ini:ro
       - ./docker/php/conf.d/zzz_020_general.ini:/usr/local/etc/php/conf.d/zzz_020_general.ini:ro
       - ./docker/php/conf.d/zzz_500_local.ini:/usr/local/etc/php/conf.d/zzz_500_local.ini:ro

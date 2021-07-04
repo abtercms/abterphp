@@ -6,12 +6,14 @@ namespace AbterPhp\Admin\Orm;
 
 use AbterPhp\Admin\Domain\Entities\AdminResource;
 use AbterPhp\Admin\Domain\Entities\UserGroup as Entity;
+use AbterPhp\Framework\Orm\GridRepo;
 use AbterPhp\Framework\Orm\IdGeneratorUserTrait;
-use AbterPhp\Framework\Orm\IGridRepo;
-use AbterPhp\Framework\Orm\Repository;
+use InvalidArgumentException;
 use Opulence\Orm\IEntity;
+use QB\Generic\Expr\Expr;
+use QB\MySQL\QueryBuilder\QueryBuilder;
 
-class UserGroupRepo extends Repository implements IGridRepo
+class UserGroupRepo extends GridRepo
 {
     use IdGeneratorUserTrait;
 
@@ -19,12 +21,15 @@ class UserGroupRepo extends Repository implements IGridRepo
 
     protected ?string $deletedAtColumn = self::COLUMN_DELETED_AT;
 
+    /** @var QueryBuilder */
+    protected $queryBuilder;
+
     /**
      * @param IEntity $entity
      */
     public function add(IEntity $entity)
     {
-        assert($entity instanceof Entity, new \InvalidArgumentException());
+        assert($entity instanceof Entity, new InvalidArgumentException());
 
         parent::add($entity);
     }
@@ -34,7 +39,7 @@ class UserGroupRepo extends Repository implements IGridRepo
      */
     public function update(IEntity $entity)
     {
-        assert($entity instanceof Entity, new \InvalidArgumentException());
+        assert($entity instanceof Entity, new InvalidArgumentException());
 
         parent::update($entity);
     }
@@ -44,7 +49,7 @@ class UserGroupRepo extends Repository implements IGridRepo
      */
     public function delete(IEntity $entity)
     {
-        assert($entity instanceof Entity, new \InvalidArgumentException());
+        assert($entity instanceof Entity, new InvalidArgumentException());
 
         parent::delete($entity);
     }
@@ -100,12 +105,11 @@ class UserGroupRepo extends Repository implements IGridRepo
      */
     protected function deleteAdminResources(Entity $entity)
     {
-        $delete = $this->queryBuilder->delete('user_groups_admin_resources')
-            ->where()
-            ->equals('user_group_id', $entity->getId())
-            ->end();
+        $delete = $this->queryBuilder->delete()
+            ->from('user_groups_admin_resources')
+            ->where(new Expr('user_group_id = ?', [$entity->getId()]));
 
-        $this->writer->exec($delete->getSql());
+        $this->writer->execute($delete);
     }
 
     /**
@@ -115,24 +119,26 @@ class UserGroupRepo extends Repository implements IGridRepo
     {
         $idGenerator = $this->getIdGenerator();
 
-        $values = [
-            'id'                => ':id',
-            'api_client_id'     => ':api_client_id',
-            'admin_resource_id' => ':admin_resource_id',
-        ];
-
-        $insert = $this->queryBuilder->insert('user_groups_admin_resources', $values);
-
-        $stmt = $this->writer->prepare($insert->getSql());
+        $insert = $this->queryBuilder->insert()
+            ->into('user_groups_admin_resources')
+            ->columns('id', 'api_client_id', 'admin_resource_id');
 
         foreach ($entity->getAdminResources() as $adminResource) {
-            $stmt->execute(
-                [
-                    'id'                => $idGenerator->generate($entity),
-                    'api_client_id'     => $entity->getId(),
-                    'admin_resource_id' => $adminResource->getId(),
-                ]
+            $insert->values(
+                new Expr('?', [$idGenerator->generate($entity)]),
+                new Expr('?', [$entity->getId()]),
+                new Expr('?', [$adminResource->getId()]),
             );
         }
+
+        $this->writer->execute($insert);
+    }
+
+    /**
+     * @return array<string,string>
+     */
+    public function getDefaultSorting(): array
+    {
+        return [];
     }
 }

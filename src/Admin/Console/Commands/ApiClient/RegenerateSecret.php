@@ -7,6 +7,7 @@ namespace AbterPhp\Admin\Console\Commands\ApiClient;
 use AbterPhp\Admin\Orm\ApiClientRepo;
 use AbterPhp\Framework\Authorization\CacheManager;
 use AbterPhp\Framework\Crypto\Crypto;
+use AbterPhp\Framework\Database\PDO\UnitOfWork;
 use Hackzilla\PasswordGenerator\Generator\ComputerPasswordGenerator as PasswordGenerator;
 use Opulence\Console\Commands\Command;
 use Opulence\Console\Requests\Argument;
@@ -15,7 +16,6 @@ use Opulence\Console\Requests\Option;
 use Opulence\Console\Requests\OptionTypes;
 use Opulence\Console\Responses\IResponse;
 use Opulence\Console\StatusCodes;
-use Opulence\Orm\IUnitOfWork;
 use ZxcvbnPhp\Zxcvbn;
 
 class RegenerateSecret extends Command
@@ -39,7 +39,7 @@ class RegenerateSecret extends Command
 
     protected Crypto $crypto;
 
-    protected IUnitOfWork $unitOfWork;
+    protected UnitOfWork $unitOfWork;
 
     protected CacheManager $cacheManager;
 
@@ -51,7 +51,7 @@ class RegenerateSecret extends Command
      * @param ApiClientRepo     $apiClientRepo
      * @param PasswordGenerator $passwordGenerator
      * @param Crypto            $crypto
-     * @param IUnitOfWork       $unitOfWork
+     * @param UnitOfWork        $unitOfWork
      * @param CacheManager      $cacheManager
      * @param Zxcvbn            $zxcvbn
      */
@@ -59,7 +59,7 @@ class RegenerateSecret extends Command
         ApiClientRepo $apiClientRepo,
         PasswordGenerator $passwordGenerator,
         Crypto $crypto,
-        IUnitOfWork $unitOfWork,
+        UnitOfWork $unitOfWork,
         CacheManager $cacheManager,
         Zxcvbn $zxcvbn
     ) {

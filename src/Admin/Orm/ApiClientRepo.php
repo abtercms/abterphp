@@ -6,12 +6,14 @@ namespace AbterPhp\Admin\Orm;
 
 use AbterPhp\Admin\Domain\Entities\AdminResource;
 use AbterPhp\Admin\Domain\Entities\ApiClient as Entity;
+use AbterPhp\Framework\Orm\GridRepo;
 use AbterPhp\Framework\Orm\IdGeneratorUserTrait;
-use AbterPhp\Framework\Orm\IGridRepo;
-use AbterPhp\Framework\Orm\Repository;
+use InvalidArgumentException;
 use Opulence\Orm\IEntity;
+use QB\Generic\Expr\Expr;
+use QB\Generic\Statement\ISelect;
 
-class ApiClientRepo extends Repository implements IGridRepo
+class ApiClientRepo extends GridRepo
 {
     use IdGeneratorUserTrait;
 
@@ -24,7 +26,7 @@ class ApiClientRepo extends Repository implements IGridRepo
      */
     public function add(IEntity $entity)
     {
-        assert($entity instanceof Entity, new \InvalidArgumentException());
+        assert($entity instanceof Entity, new InvalidArgumentException());
 
         parent::add($entity);
     }
@@ -34,7 +36,7 @@ class ApiClientRepo extends Repository implements IGridRepo
      */
     public function delete(IEntity $entity)
     {
-        assert($entity instanceof Entity, new \InvalidArgumentException());
+        assert($entity instanceof Entity, new InvalidArgumentException());
 
         parent::delete($entity);
     }
@@ -44,22 +46,12 @@ class ApiClientRepo extends Repository implements IGridRepo
      */
     public function update(IEntity $entity)
     {
-        assert($entity instanceof Entity, new \InvalidArgumentException());
+        assert($entity instanceof Entity, new InvalidArgumentException());
 
-        $this->writer->withWrite(
-            function () use ($entity) {
-                try {
-                    parent::update($entity);
+        parent::update($entity);
 
-                    $this->deleteAdminResources($entity);
-                    $this->addAdminResources($entity);
-                } catch (\Exception $e) {
-                    return false;
-                }
-
-                return true;
-            }
-        );
+        $this->deleteAdminResources($entity);
+        $this->addAdminResources($entity);
     }
 
     /**
@@ -67,12 +59,11 @@ class ApiClientRepo extends Repository implements IGridRepo
      */
     protected function deleteAdminResources(Entity $entity)
     {
-        $delete = $this->queryBuilder->delete('api_clients_admin_resources')
-            ->where()
-            ->equals('api_client_id', $entity->getId())
-            ->end();
+        $delete = $this->queryBuilder->delete()
+            ->from('api_clients_admin_resources')
+            ->where(new Expr('api_client_id = ?', [$entity->getId()]));
 
-        $this->writer->exec($delete->getSql());
+        $this->writer->execute($delete);
     }
 
     /**
@@ -82,25 +73,19 @@ class ApiClientRepo extends Repository implements IGridRepo
     {
         $idGenerator = $this->getIdGenerator();
 
-        $values = [
-            'id'                => ':id',
-            'api_client_id'     => ':api_client_id',
-            'admin_resource_id' => ':admin_resource_id',
-        ];
-
-        $insert = $this->queryBuilder->insert('api_clients_admin_resources', $values);
-
-        $stmt = $this->writer->prepare($insert->getSql());
+        $insert = $this->queryBuilder->insert()
+            ->into('api_clients_admin_resources')
+            ->columns('id', 'api_client_id', 'admin_resource_id');
 
         foreach ($entity->getAdminResources() as $adminResource) {
-            $stmt->execute(
-                [
-                    'id'                => $idGenerator->generate($entity),
-                    'api_client_id'     => $entity->getId(),
-                    'admin_resource_id' => $adminResource->getId(),
-                ]
+            $insert->values(
+                new Expr('?', [$idGenerator->generate($entity)]),
+                new Expr('?', [$entity->getId()]),
+                new Expr('?', [$adminResource->getId()])
             );
         }
+
+        $this->writer->execute($insert);
     }
 
     /**
@@ -141,5 +126,16 @@ class ApiClientRepo extends Repository implements IGridRepo
         }
 
         return $adminResources;
+    }
+
+    /**
+     * @return array<string,string>
+     */
+    public function getDefaultSorting(): array
+    {
+        return [
+            'user_id'     => ISelect::DIRECTION_ASC,
+            'description' => ISelect::DIRECTION_ASC,
+        ];
     }
 }

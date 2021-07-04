@@ -8,6 +8,7 @@ use AbterPhp\Admin\Domain\Entities\Token as Entity;
 use AbterPhp\Framework\Orm\Repository;
 use DateTimeImmutable;
 use Exception;
+use InvalidArgumentException;
 use Opulence\Orm\IEntity;
 
 class TokenRepo extends Repository
@@ -21,7 +22,7 @@ class TokenRepo extends Repository
      */
     public function add(IEntity $entity)
     {
-        assert($entity instanceof Entity, new \InvalidArgumentException());
+        assert($entity instanceof Entity, new InvalidArgumentException());
 
         parent::add($entity);
     }
@@ -31,7 +32,7 @@ class TokenRepo extends Repository
      */
     public function update(IEntity $entity)
     {
-        assert($entity instanceof Entity, new \InvalidArgumentException());
+        assert($entity instanceof Entity, new InvalidArgumentException());
 
         parent::update($entity);
     }
@@ -41,7 +42,7 @@ class TokenRepo extends Repository
      */
     public function delete(IEntity $entity)
     {
-        assert($entity instanceof Entity, new \InvalidArgumentException());
+        assert($entity instanceof Entity, new InvalidArgumentException());
 
         parent::delete($entity);
     }

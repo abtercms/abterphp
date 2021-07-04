@@ -12,9 +12,13 @@ use Opulence\Ioc\Bootstrappers\Bootstrapper;
 use Opulence\Ioc\Bootstrappers\ILazyBootstrapper;
 use Opulence\Ioc\IContainer;
 use PDO;
+use QB\Extra\PDOWrapper;
 
 class PDOBootstrapper extends Bootstrapper implements ILazyBootstrapper
 {
+    protected const DEFAULT_CHARSET   = 'utf8';
+    protected const DEFAULT_COLLATION = 'utf8mb4_unicode_ci';
+
     /**
      * @inheritdoc
      */
@@ -46,18 +50,14 @@ class PDOBootstrapper extends Bootstrapper implements ILazyBootstrapper
             Environment::mustGetVar(Env::PDO_READ_HOST),
             Environment::mustGetVar(Env::PDO_READ_DATABASE),
             Environment::mustGetVar(Env::PDO_READ_PORT),
-            Environment::mustGetVar(Env::PDO_READ_CHARSET),
-            Environment::mustGetVar(Env::PDO_READ_COLLATION)
+            Environment::mustGetVar(Env::PDO_READ_CHARSET, static::DEFAULT_CHARSET),
+            Environment::mustGetVar(Env::PDO_READ_COLLATION, static::DEFAULT_COLLATION)
         );
 
         $username  = Environment::mustGetVar(Env::PDO_READ_USERNAME);
         $password  = Environment::mustGetVar(Env::PDO_READ_PASSWORD);
-        $options   = Environment::mustGetVar(Env::PDO_READ_OPTIONS);
-        $errorMode = Environment::mustGetVar(Env::PDO_READ_ERROR_MODE);
-
-        $options = $options ? [] : json_decode($options);
-
-        $commands = explode(';', Environment::mustGetVar(Env::PDO_READ_COMMANDS));
+        $options   = json_decode(Environment::mustGetVar(Env::PDO_READ_OPTIONS, '[]'));
+        $errorMode = (int)Environment::mustGetVar(Env::PDO_READ_ERROR_MODE, (string)PDO::ERRMODE_EXCEPTION);
 
         $options[PDO::ATTR_ERRMODE] = $errorMode;
 
@@ -66,9 +66,7 @@ class PDOBootstrapper extends Bootstrapper implements ILazyBootstrapper
         $reader = new Reader($pdo);
         $reader->setDialect(Environment::mustGetVar(Env::PDO_READ_TYPE));
 
-        foreach ($commands as $command) {
-            $pdo->exec($command);
-        }
+        $this->init($pdo, Environment::getVar(Env::PDO_READ_COMMANDS, ''));
 
         return $reader;
     }
@@ -81,18 +79,14 @@ class PDOBootstrapper extends Bootstrapper implements ILazyBootstrapper
             Environment::mustGetVar(Env::PDO_WRITE_HOST),
             Environment::mustGetVar(Env::PDO_WRITE_DATABASE),
             Environment::mustGetVar(Env::PDO_WRITE_PORT),
-            Environment::mustGetVar(Env::PDO_WRITE_CHARSET),
-            Environment::mustGetVar(Env::PDO_WRITE_COLLATION)
+            Environment::mustGetVar(Env::PDO_WRITE_CHARSET, static::DEFAULT_CHARSET),
+            Environment::mustGetVar(Env::PDO_WRITE_COLLATION, static::DEFAULT_COLLATION)
         );
 
         $username  = Environment::mustGetVar(Env::PDO_WRITE_USERNAME);
         $password  = Environment::mustGetVar(Env::PDO_WRITE_PASSWORD);
-        $options   = Environment::mustGetVar(Env::PDO_WRITE_OPTIONS);
-        $errorMode = Environment::mustGetVar(Env::PDO_WRITE_ERROR_MODE);
-
-        $options = $options ? [] : json_decode($options);
-
-        $commands = explode(';', Environment::mustGetVar(Env::PDO_WRITE_COMMANDS));
+        $options   = json_decode(Environment::mustGetVar(Env::PDO_WRITE_OPTIONS, '[]'));
+        $errorMode = (int)Environment::mustGetVar(Env::PDO_WRITE_ERROR_MODE, (string)PDO::ERRMODE_EXCEPTION);
 
         $options[PDO::ATTR_ERRMODE] = $errorMode;
 
@@ -101,10 +95,24 @@ class PDOBootstrapper extends Bootstrapper implements ILazyBootstrapper
         $writer = new Writer($pdo);
         $writer->setDialect(Environment::mustGetVar(Env::PDO_WRITE_TYPE));
 
+        $this->init($pdo, Environment::getVar(Env::PDO_WRITE_COMMANDS, ''));
+
+        return $writer;
+    }
+
+    /**
+     * @param PDO    $pdo
+     * @param string $rawCommands
+     */
+    protected function init(PDO $pdo, string $rawCommands): void
+    {
+        if (!$rawCommands) {
+            return;
+        }
+
+        $commands = explode(';', $rawCommands);
         foreach ($commands as $command) {
             $pdo->exec($command);
         }
-
-        return $writer;
     }
 }

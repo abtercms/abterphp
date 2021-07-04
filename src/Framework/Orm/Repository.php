@@ -6,13 +6,14 @@ namespace AbterPhp\Framework\Orm;
 
 use AbterPhp\Admin\Domain\Entities\AdminResource as Entity;
 use AbterPhp\Framework\Database\PDO\Writer;
-use AbterPhp\Framework\Form\Element\Select;
-use DateTime;
-use Opulence\Databases\Providers\Types\TypeMapper;
+use InvalidArgumentException;
 use Opulence\Orm\IEntity;
 use QB\Generic\Expr\Expr;
 use QB\Generic\QueryBuilder\IQueryBuilder;
+use QB\Generic\Statement\IDelete;
 use QB\Generic\Statement\ISelect;
+use QB\Generic\Statement\IUpdate;
+use QB\Generic\Statement\IWhereStatement;
 
 abstract class Repository implements IRepository
 {
@@ -23,9 +24,8 @@ abstract class Repository implements IRepository
 
     protected Writer $writer;
 
-    protected IQueryBuilder $queryBuilder;
-
-    protected TypeMapper $typeMapper;
+    /** @var IQueryBuilder */
+    protected $queryBuilder;
 
     protected string $tableName;
 
@@ -39,13 +39,11 @@ abstract class Repository implements IRepository
      *
      * @param Writer        $writer
      * @param IQueryBuilder $queryBuilder
-     * @param TypeMapper    $typeMapper
      */
-    public function __construct(Writer $writer, IQueryBuilder $queryBuilder, TypeMapper $typeMapper)
+    public function __construct(Writer $writer, IQueryBuilder $queryBuilder)
     {
         $this->writer       = $writer;
         $this->queryBuilder = $queryBuilder;
-        $this->typeMapper   = $typeMapper;
     }
 
     /**
@@ -73,12 +71,12 @@ abstract class Repository implements IRepository
      */
     public function add(IEntity $entity)
     {
-        assert($entity instanceof Entity, new \InvalidArgumentException());
+        assert($entity instanceof Entity, new InvalidArgumentException());
 
         $insert = $this->queryBuilder
             ->insert()
-            ->setInto($this->tableName)
-            ->addValues($this->getData($entity));
+            ->into($this->tableName)
+            ->values($this->getData($entity));
 
         $this->writer->execute($insert);
     }
@@ -88,15 +86,15 @@ abstract class Repository implements IRepository
      */
     public function update(IEntity $entity)
     {
-        assert($entity instanceof Entity, new \InvalidArgumentException());
+        assert($entity instanceof Entity, new InvalidArgumentException());
 
         $update = $this->queryBuilder
             ->update($this->tableName)
-            ->setValues($this->getData($entity));
+            ->values($this->getData($entity));
 
-        $update = $this->addWhereByEntity($entity, $update->where())->end();
+        $update = $this->addWhereByEntity($update, $entity);
 
-        $this->writer->exec($update->getSql());
+        $this->writer->execute($update);
     }
 
     /**
@@ -104,16 +102,17 @@ abstract class Repository implements IRepository
      */
     public function delete(IEntity $entity)
     {
-        assert($entity instanceof Entity, new \InvalidArgumentException());
+        assert($entity instanceof Entity, new InvalidArgumentException());
 
         if ($this->deletedAtColumn) {
-            $delete = $this->queryBuilder->delete()->addFrom($this->tableName);
+            $delete = $this->queryBuilder->delete()
+                ->from($this->tableName);
         } else {
             $delete = $this->queryBuilder->update($this->tableName)
-                ->addWhere(new Expr($this->deletedAtColumn . ' = NOW()'));
+                ->where(new Expr($this->deletedAtColumn . ' = NOW()'));
         }
 
-        $delete = $this->addWhereByEntity($entity, $delete->where())->end();
+        $delete = $this->addWhereByEntity($delete, $entity);
 
         $this->writer->execute($delete);
     }
@@ -139,7 +138,7 @@ abstract class Repository implements IRepository
      */
     public function getById($id): ?IEntity
     {
-        $this->getOne([$this->idColumn => $id]);
+        return $this->getOne([$this->idColumn => $id]);
     }
 
     /**
@@ -149,16 +148,20 @@ abstract class Repository implements IRepository
      */
     protected function getOne(array $where): ?IEntity
     {
-        $select = $this->getBaseQuery()->where();
+        $select = $this->getBaseQuery();
         foreach ($where as $k => $v) {
-            $select = $select->equals($k, $v);
+            if ($v instanceof Expr) {
+                $select = $select->where($v);
+            } else {
+                $select = $select->where(new Expr($k . ' = ?', [$v]));
+            }
         }
         if ($this->deletedAtColumn) {
-            $select->equals($this->deletedAtColumn, null);
+            $select = $select->where($this->deletedAtColumn . ' IS NULL');
         }
-        $select = $select->end()->limit(0, 1);
+        $select = $select->limit(1);
 
-        $row = $this->writer->fetch($select->getSql());
+        $row = $this->writer->fetch($select);
 
         if (empty($row)) {
             return null;
@@ -168,45 +171,20 @@ abstract class Repository implements IRepository
     }
 
     /**
-     * @param int      $limitFrom
-     * @param int      $pageSize
-     * @param string[] $orders
-     * @param array    $filters
-     * @param array    $params
+     * @param IWhereStatement $select
+     * @param IEntity         $entity
      *
-     * @return IEntity[]
+     * @return IWhereStatement $select
      */
-    public function getPage(int $limitFrom, int $pageSize, array $orders, array $filters, array $params): array
+    protected function addWhereByEntity(IWhereStatement $select, IEntity $entity): ISelect|IUpdate|IDelete
     {
-        $select = $this->getBaseQuery();
-
-        $select = $select->where();
-        foreach ($filters as $k => $v) {
-            $select = $select->equals($k, $v);
-        }
-        $select = $select->end();
-        $select = $select->limit($limitFrom, $pageSize);
-
-        $rows = $this->writer->fetch($select->getSql());
-
-        return $this->createCollection($rows);
-    }
-
-    /**
-     * @param IEntity $entity
-     * @param Where   $where
-     *
-     * @return Where
-     */
-    protected function addWhereByEntity(IEntity $entity, Where $where): Where
-    {
-        $where = $where->equals($this->idColumn, $entity->getId());
+        $select = $select->where(new Expr($this->idColumn . ' = ?', [$entity->getId()]));
 
         if ($this->deletedAtColumn) {
-            $where = $where->equals($this->deletedAtColumn, null);
+            $select = $select->where($this->deletedAtColumn . ' IS NULL');
         }
 
-        return $where;
+        return $select;
     }
 
     /**
@@ -256,9 +234,9 @@ abstract class Repository implements IRepository
     protected function getBaseQuery(): ISelect
     {
         return $this->queryBuilder->select()
-            ->addFrom($this->tableName)
-            ->addColumns(...$this->getColumns())
-            ->setLimit($this->limit);
+            ->from($this->tableName)
+            ->columns(...$this->getColumns())
+            ->limit($this->limit);
     }
 
     /**

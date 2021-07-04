@@ -5,51 +5,107 @@ declare(strict_types=1);
 namespace AbterPhp\Files\Orm;
 
 use AbterPhp\Admin\Domain\Entities\User;
+use AbterPhp\Admin\Domain\Entities\UserLanguage;
 use AbterPhp\Files\Domain\Entities\File;
 use AbterPhp\Files\Domain\Entities\FileDownload as Entity;
-use AbterPhp\Files\Orm\DataMappers\FileDownloadSqlDataMapper; // @phan-suppress-current-line PhanUnreferencedUseNormal
-use AbterPhp\Framework\Orm\IGridRepo;
-use Opulence\Orm\Repositories\Repository;
+use AbterPhp\Framework\Orm\GridRepo;
+use DateTime;
+use Exception;
+use QB\Generic\Clause\Column;
+use QB\Generic\Expr\Expr;
+use QB\Generic\Statement\ISelect;
+use QB\MySQL\QueryBuilder\QueryBuilder;
+use QB\MySQL\Statement\Select;
 
-class FileDownloadRepo extends Repository implements IGridRepo
+class FileDownloadRepo extends GridRepo
 {
-    /**
-     * @param int      $limitFrom
-     * @param int      $pageSize
-     * @param string[] $orders
-     * @param array    $filters
-     * @param array    $params
-     *
-     * @return Entity[]
-     * @throws \Opulence\Orm\OrmException
-     */
-    public function getPage(int $limitFrom, int $pageSize, array $orders, array $filters, array $params): array
-    {
-        /** @see FileDownloadSqlDataMapper::getPage() */
-        return $this->getFromDataMapper('getPage', [$limitFrom, $pageSize, $orders, $filters, $params]);
-    }
+    /** @var QueryBuilder */
+    protected $queryBuilder;
 
     /**
      * @param File $file
      *
      * @return Entity[]
-     * @throws \Opulence\Orm\OrmException
      */
     public function getByFile(File $file): array
     {
-        /** @see FileDownloadSqlDataMapper::getByFileId() */
-        return $this->getFromDataMapper('getByFileId', [$file->getId()]);
+        return $this->getPage(0, static::DEFAULT_LIMIT, [], [new Expr('file_id = ?', [$file->getId()])]);
     }
 
     /**
      * @param User $user
      *
      * @return Entity[]
-     * @throws \Opulence\Orm\OrmException
      */
     public function getByUser(User $user): array
     {
-        /** @see FileDownloadSqlDataMapper::getByUserId() */
-        return $this->getFromDataMapper('getByUserId', [$user->getId()]);
+        return $this->getPage(0, static::DEFAULT_LIMIT, [], [new Expr('user_id = ?', [$user->getId()])]);
+    }
+
+    /**
+     * @param array $row
+     *
+     * @return Entity
+     * @throws Exception
+     */
+    public function createEntity(array $row): Entity
+    {
+        $file         = new File($row['file_id'], $row['filesystem_name'], $row['public_name'], $row['mime'], '');
+        $userLanguage = new UserLanguage('', '', '');
+        $user         = new User(
+            $row['user_id'],
+            $row['username'],
+            '',
+            '',
+            true,
+            true,
+            $userLanguage
+        );
+
+        return new Entity(
+            $row['id'],
+            $file,
+            $user,
+            new DateTime($row['downloaded_at'])
+        );
+    }
+
+    /**
+     * @return Select
+     */
+    public function getBaseQuery(): Select
+    {
+        return $this->queryBuilder
+            ->select()
+            ->from('file_downloads')
+            ->columns(
+                'file_downloads.id',
+                'file_downloads.file_id',
+                'file_downloads.user_id',
+                'file_downloads.downloaded_at',
+                new Column('files.filesystem_name', 'filesystem_name'),
+                new Column('files.public_name', 'public_name'),
+                new Column('files.mime', 'mime'),
+                new Column('users.username', 'username')
+            )
+            ->innerJoin(
+                'files',
+                'files.id=file_downloads.file_id'
+            )
+            ->innerJoin(
+                'users',
+                'users.id=file_downloads.user_id'
+            )
+            ->where('file_downloads.deleted_at IS NULL');
+    }
+
+    /**
+     * @return array<string,string>
+     */
+    public function getDefaultSorting(): array
+    {
+        return [
+            'downloaded_at' => ISelect::DIRECTION_DESC,
+        ];
     }
 }

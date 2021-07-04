@@ -6,6 +6,7 @@ namespace AbterPhp\Admin\Console\Commands\ApiClient;
 
 use AbterPhp\Admin\Orm\ApiClientRepo;
 use AbterPhp\Framework\Authorization\CacheManager;
+use AbterPhp\Framework\Database\PDO\UnitOfWork;
 use Opulence\Console\Commands\Command;
 use Opulence\Console\Requests\Argument;
 use Opulence\Console\Requests\ArgumentTypes;
@@ -29,7 +30,7 @@ class Delete extends Command
 
     protected ApiClientRepo $apiClientRepo;
 
-    protected IUnitOfWork $unitOfWork;
+    protected UnitOfWork $unitOfWork;
 
     protected CacheManager $cacheManager;
 
@@ -37,10 +38,10 @@ class Delete extends Command
      * Delete constructor.
      *
      * @param ApiClientRepo $apiClientRepo
-     * @param IUnitOfWork   $unitOfWork
+     * @param UnitOfWork    $unitOfWork
      * @param CacheManager  $cacheManager
      */
-    public function __construct(ApiClientRepo $apiClientRepo, IUnitOfWork $unitOfWork, CacheManager $cacheManager)
+    public function __construct(ApiClientRepo $apiClientRepo, UnitOfWork $unitOfWork, CacheManager $cacheManager)
     {
         $this->apiClientRepo = $apiClientRepo;
         $this->unitOfWork    = $unitOfWork;

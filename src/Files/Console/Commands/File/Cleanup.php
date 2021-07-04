@@ -6,6 +6,7 @@ namespace AbterPhp\Files\Console\Commands\File;
 
 use AbterPhp\Files\Domain\Entities\File as Entity;
 use AbterPhp\Files\Orm\FileRepo;
+use AbterPhp\Framework\Database\PDO\UnitOfWork;
 use AbterPhp\Framework\Filesystem\Uploader;
 use FilesystemIterator;
 use Opulence\Console\Commands\Command;
@@ -13,7 +14,6 @@ use Opulence\Console\Requests\Option;
 use Opulence\Console\Requests\OptionTypes;
 use Opulence\Console\Responses\IResponse;
 use Opulence\Console\StatusCodes;
-use Opulence\Orm\IUnitOfWork;
 
 class Cleanup extends Command
 {
@@ -33,7 +33,7 @@ class Cleanup extends Command
 
     protected FileRepo $fileRepo;
 
-    protected IUnitOfWork $unitOfWork;
+    protected UnitOfWork $unitOfWork;
 
     protected Uploader $uploader;
 
@@ -44,12 +44,12 @@ class Cleanup extends Command
      * Cleanup constructor.
      *
      * @param FileRepo    $fileRepo
-     * @param IUnitOfWork $unitOfWork
+     * @param UnitOfWork  $unitOfWork
      * @param Uploader    $uploader
      */
     public function __construct(
         FileRepo $fileRepo,
-        IUnitOfWork $unitOfWork,
+        UnitOfWork $unitOfWork,
         Uploader $uploader
     ) {
         $this->fileRepo   = $fileRepo;

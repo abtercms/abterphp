@@ -11,6 +11,7 @@ use Opulence\Databases\Providers\Types\TypeMapper;
 use QB\Generic\Expr\Expr;
 use QB\Generic\QueryBuilder\IQueryBuilder;
 use QB\Generic\Statement\Command;
+use QB\Generic\Statement\ISelect;
 
 class PdoMigrationRepository implements IExecutedMigrationRepository
 {
@@ -79,8 +80,8 @@ class PdoMigrationRepository implements IExecutedMigrationRepository
         $this->createMigrationsTable();
 
         $query = $this->queryBuilder->delete()
-            ->addFrom($this->tableName)
-            ->addWhere(new Expr('migrations = ?', [$this->tableName]));
+            ->from($this->tableName)
+            ->where(new Expr('migrations = ?', [$this->tableName]));
 
         $this->writer->execute($query);
     }
@@ -90,16 +91,16 @@ class PdoMigrationRepository implements IExecutedMigrationRepository
      *
      * @return string[] The list of migration class names
      */
-    public function getAll()
+    public function getAll() : array
     {
         $this->createMigrationsTable();
 
         $query = $this->queryBuilder->select()
-            ->addFrom($this->tableName)
-            ->addColumns('migration')
-            ->addOrderBy('id', 'DESC');
+            ->from($this->tableName)
+            ->columns('migration')
+            ->orderBy('id', 'DESC');
 
-        return $this->writer->fetchColumn($query);
+        return $this->writer->fetchAll($query);
     }
 
     /**
@@ -114,10 +115,10 @@ class PdoMigrationRepository implements IExecutedMigrationRepository
         $this->createMigrationsTable();
 
         $select = $this->queryBuilder->select()
-            ->addFrom($this->tableName)
-            ->addColumns('migration')
-            ->addOrderBy('id', 'DESC')
-            ->setLimit($number);
+            ->from($this->tableName)
+            ->columns('migration')
+            ->orderBy('id', ISelect::DIRECTION_DESC)
+            ->limit($number);
 
         return $this->writer->fetchColumn($select);
     }

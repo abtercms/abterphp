@@ -6,7 +6,9 @@ namespace AbterPhp\Admin\Orm;
 
 use AbterPhp\Admin\Domain\Entities\AdminResource as Entity;
 use AbterPhp\Framework\Orm\Repository;
+use InvalidArgumentException;
 use Opulence\Orm\IEntity;
+use QB\Generic\Expr\Expr;
 
 class AdminResourceRepo extends Repository
 {
@@ -19,7 +21,7 @@ class AdminResourceRepo extends Repository
      */
     public function add(IEntity $entity)
     {
-        assert($entity instanceof Entity, new \InvalidArgumentException());
+        assert($entity instanceof Entity, new InvalidArgumentException());
 
         parent::add($entity);
     }
@@ -29,7 +31,7 @@ class AdminResourceRepo extends Repository
      */
     public function update(IEntity $entity)
     {
-        assert($entity instanceof Entity, new \InvalidArgumentException());
+        assert($entity instanceof Entity, new InvalidArgumentException());
 
         parent::update($entity);
     }
@@ -39,7 +41,7 @@ class AdminResourceRepo extends Repository
      */
     public function delete(IEntity $entity)
     {
-        assert($entity instanceof Entity, new \InvalidArgumentException());
+        assert($entity instanceof Entity, new InvalidArgumentException());
 
         parent::delete($entity);
     }
@@ -51,7 +53,7 @@ class AdminResourceRepo extends Repository
      */
     public function getByIdentifier(string $identifier): ?Entity
     {
-        $this->getOne(['identifier' => $identifier]);
+        return $this->getOne(['identifier' => $identifier]);
     }
 
     /**
@@ -61,22 +63,15 @@ class AdminResourceRepo extends Repository
      */
     public function getByUserId(string $userId): array
     {
-        $sql = sprintf(
-            'SELECT %s FROM %s INNER JOIN %s INNER JOIN %s INNER JOIN %s WHERE %s GROUP BY %s',
-            $this->getColumnsStr(),
-            $this->tableName,
-            'user_groups_admin_resources ON user_groups_admin_resources.admin_resource_id = admin_resources.id',
-            'user_groups ON user_groups.id = user_groups_admin_resources.user_group_id',
-            'users_user_groups ON users_user_groups.user_group_id = user_groups.id',
-            'users_user_groups.user_id = :user_id',
-            'admin_resources.id'
-        );
+        $select = $this->queryBuilder->select()
+            ->from($this->tableName)
+            ->innerJoin('user_groups_admin_resources', 'user_groups_admin_resources.admin_resource_id = admin_resources.id')
+            ->innerJoin('user_groups', 'user_groups.id = user_groups_admin_resources.user_group_id')
+            ->innerJoin('users_user_groups', 'users_user_groups.user_group_id = user_groups.id')
+            ->where(new Expr('users_user_groups.user_id = ?', [$userId]))
+            ->groupBy('admin_resources.id');
 
-        $stmt = $this->writer->prepare($sql);
-
-        $stmt->execute(['user_id' => $userId]);
-
-        $rows = $stmt->fetchAll();
+        $rows = $this->writer->fetchAll($select);
 
         return $this->createCollection($rows);
     }

@@ -6,6 +6,7 @@ namespace AbterPhp\Admin\Orm;
 
 use AbterPhp\Admin\Domain\Entities\LoginAttempt as Entity;
 use AbterPhp\Framework\Orm\Repository;
+use InvalidArgumentException;
 use Opulence\Orm\IEntity;
 
 class LoginAttemptRepo extends Repository
@@ -19,7 +20,7 @@ class LoginAttemptRepo extends Repository
      */
     public function add(IEntity $entity)
     {
-        assert($entity instanceof Entity, new \InvalidArgumentException());
+        assert($entity instanceof Entity, new InvalidArgumentException());
 
         parent::add($entity);
     }
@@ -29,7 +30,7 @@ class LoginAttemptRepo extends Repository
      */
     public function update(IEntity $entity)
     {
-        assert($entity instanceof Entity, new \InvalidArgumentException());
+        assert($entity instanceof Entity, new InvalidArgumentException());
 
         parent::update($entity);
     }
@@ -39,7 +40,7 @@ class LoginAttemptRepo extends Repository
      */
     public function delete(IEntity $entity)
     {
-        assert($entity instanceof Entity, new \InvalidArgumentException());
+        assert($entity instanceof Entity, new InvalidArgumentException());
 
         parent::delete($entity);
     }
@@ -51,7 +52,7 @@ class LoginAttemptRepo extends Repository
      */
     public function getByIdentifier(string $identifier): ?Entity
     {
-        $this->getOne(['identifier' => $identifier]);
+        return $this->getOne(['identifier' => $identifier]);
     }
 
     /**

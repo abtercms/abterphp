@@ -11,6 +11,8 @@ use AbterPhp\Admin\Orm\ApiClientRepo;
 use AbterPhp\Admin\Orm\UserRepo;
 use AbterPhp\Framework\Authorization\CacheManager;
 use AbterPhp\Framework\Crypto\Crypto;
+use AbterPhp\Framework\Database\PDO\UnitOfWork;
+use Exception;
 use Hackzilla\PasswordGenerator\Generator\ComputerPasswordGenerator as PasswordGenerator;
 use Opulence\Console\Commands\Command;
 use Opulence\Console\Requests\Argument;
@@ -19,8 +21,7 @@ use Opulence\Console\Requests\Option;
 use Opulence\Console\Requests\OptionTypes;
 use Opulence\Console\Responses\IResponse;
 use Opulence\Console\StatusCodes;
-use Opulence\Orm\IUnitOfWork;
-use Opulence\Orm\OrmException;
+use RuntimeException;
 use ZxcvbnPhp\Zxcvbn;
 
 class Create extends Command
@@ -49,7 +50,7 @@ class Create extends Command
 
     protected Crypto $crypto;
 
-    protected IUnitOfWork $unitOfWork;
+    protected UnitOfWork $unitOfWork;
 
     protected CacheManager $cacheManager;
 
@@ -63,7 +64,7 @@ class Create extends Command
      * @param ApiClientRepo     $apiClientRepo
      * @param PasswordGenerator $passwordGenerator
      * @param Crypto            $crypto
-     * @param IUnitOfWork       $unitOfWork
+     * @param UnitOfWork        $unitOfWork
      * @param CacheManager      $cacheManager
      * @param Zxcvbn            $zxcvbn
      */
@@ -73,7 +74,7 @@ class Create extends Command
         ApiClientRepo $apiClientRepo,
         PasswordGenerator $passwordGenerator,
         Crypto $crypto,
-        IUnitOfWork $unitOfWork,
+        UnitOfWork $unitOfWork,
         CacheManager $cacheManager,
         Zxcvbn $zxcvbn
     ) {
@@ -138,7 +139,7 @@ class Create extends Command
         try {
             $user = $this->userRepo->find($userIdentifier);
             if (!$user) {
-                throw new \RuntimeException();
+                throw new RuntimeException();
             }
 
             $adminResources = $this->getAdminResources($user->getId());
@@ -150,7 +151,7 @@ class Create extends Command
             $apiClient = $this->getApiClient($user->getId(), $packedPassword, $adminResources);
 
             $this->apiClientRepo->add($apiClient);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             if ($e->getPrevious()) {
                 $response->writeln(sprintf('<error>%s</error>', $e->getPrevious()->getMessage()));
             }
@@ -171,7 +172,7 @@ class Create extends Command
         try {
             $this->unitOfWork->commit();
             $this->cacheManager->clearAll();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             if ($e->getPrevious()) {
                 $response->writeln(sprintf('<error>%s</error>', $e->getPrevious()->getMessage()));
             }
@@ -192,7 +193,7 @@ class Create extends Command
      * @param AdminResource[] $adminResources
      *
      * @return ApiClient
-     * @throws \RuntimeException
+     * @throws RuntimeException
      */
     protected function getApiClient(string $userId, string $packedPassword, array $adminResources): ApiClient
     {
@@ -211,7 +212,6 @@ class Create extends Command
      * @param string $userId
      *
      * @return AdminResource[]
-     * @throws OrmException
      */
     protected function getAdminResources(string $userId): array
     {
@@ -230,7 +230,7 @@ class Create extends Command
         }
 
         if (count($resources) != count($adminResources)) {
-            throw new \RuntimeException('User does not have all requested resources');
+            throw new RuntimeException('User does not have all requested resources');
         }
 
         return $adminResources;

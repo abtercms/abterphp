@@ -4,24 +4,13 @@ declare(strict_types=1);
 
 namespace AbterPhp\Admin\Bootstrappers\Orm;
 
-use AbterPhp\Admin\Domain\Entities\AdminResource;
-use AbterPhp\Admin\Domain\Entities\ApiClient;
-use AbterPhp\Admin\Domain\Entities\LoginAttempt;
-use AbterPhp\Admin\Domain\Entities\User;
-use AbterPhp\Admin\Domain\Entities\UserGroup;
-use AbterPhp\Admin\Domain\Entities\UserLanguage;
 use AbterPhp\Admin\Orm\AdminResourceRepo;
 use AbterPhp\Admin\Orm\ApiClientRepo;
-use AbterPhp\Admin\Orm\DataMappers\AdminResourceSqlDataMapper;
-use AbterPhp\Admin\Orm\DataMappers\ApiClientSqlDataMapper;
-use AbterPhp\Admin\Orm\DataMappers\LoginAttemptSqlDataMapper;
-use AbterPhp\Admin\Orm\DataMappers\UserGroupSqlDataMapper;
-use AbterPhp\Admin\Orm\DataMappers\UserLanguageSqlDataMapper;
-use AbterPhp\Admin\Orm\DataMappers\UserSqlDataMapper;
 use AbterPhp\Admin\Orm\LoginAttemptRepo;
 use AbterPhp\Admin\Orm\UserGroupRepo;
 use AbterPhp\Admin\Orm\UserLanguageRepo;
 use AbterPhp\Admin\Orm\UserRepo;
+use AbterPhp\Framework\Database\PDO\Writer;
 use AbterPhp\Framework\Orm\Ids\Generators\IdGeneratorRegistry;
 use Opulence\Databases\ConnectionPools\ConnectionPool;
 use Opulence\Databases\IConnection;
@@ -29,14 +18,10 @@ use Opulence\Ioc\Bootstrappers\Bootstrapper;
 use Opulence\Ioc\Bootstrappers\ILazyBootstrapper;
 use Opulence\Ioc\IContainer;
 use Opulence\Ioc\IocException;
-use Opulence\Orm\ChangeTracking\ChangeTracker;
-use Opulence\Orm\ChangeTracking\IChangeTracker;
-use Opulence\Orm\EntityRegistry;
-use Opulence\Orm\Ids\Accessors\IdAccessorRegistry;
-use Opulence\Orm\Ids\Accessors\IIdAccessorRegistry;
 use Opulence\Orm\Ids\Generators\IIdGeneratorRegistry;
 use Opulence\Orm\IUnitOfWork;
 use Opulence\Orm\UnitOfWork;
+use QB\Generic\QueryBuilder\IQueryBuilder;
 use RuntimeException;
 
 /**
@@ -44,14 +29,14 @@ use RuntimeException;
  */
 class OrmBootstrapper extends Bootstrapper implements ILazyBootstrapper
 {
-    /** @var array<string,string[]> */
+    /** @var string[] */
     protected array $repoMappers = [
-        AdminResourceRepo::class => [AdminResourceSqlDataMapper::class, AdminResource::class],
-        LoginAttemptRepo::class  => [LoginAttemptSqlDataMapper::class, LoginAttempt::class],
-        ApiClientRepo::class     => [ApiClientSqlDataMapper::class, ApiClient::class],
-        UserGroupRepo::class     => [UserGroupSqlDataMapper::class, UserGroup::class],
-        UserLanguageRepo::class  => [UserLanguageSqlDataMapper::class, UserLanguage::class],
-        UserRepo::class          => [UserSqlDataMapper::class, User::class],
+        AdminResourceRepo::class,
+        LoginAttemptRepo::class,
+        ApiClientRepo::class,
+        UserGroupRepo::class,
+        UserLanguageRepo::class,
+        UserRepo::class,
     ];
 
     /**
@@ -63,7 +48,7 @@ class OrmBootstrapper extends Bootstrapper implements ILazyBootstrapper
             IIdGeneratorRegistry::class,
         ];
 
-        return array_merge($baseBindings, array_keys($this->repoMappers));
+        return array_merge($baseBindings, $this->repoMappers);
     }
 
     /**
@@ -72,23 +57,14 @@ class OrmBootstrapper extends Bootstrapper implements ILazyBootstrapper
     public function registerBindings(IContainer $container)
     {
         try {
-//            $idAccessorRegistry  = new IdAccessorRegistry();
             $idGeneratorRegistry = new IdGeneratorRegistry();
-//            $changeTracker       = new ChangeTracker();
-//            $entityRegistry      = new EntityRegistry($idAccessorRegistry, $changeTracker);
-//            $unitOfWork          = new UnitOfWork(
-//                $entityRegistry,
-//                $idAccessorRegistry,
-//                $idGeneratorRegistry,
-//                $changeTracker,
-//                $container->resolve(IConnection::class)
-//            );
-//            $this->bindRepositories($container, $unitOfWork);
-//            $container->bindInstance(IIdAccessorRegistry::class, $idAccessorRegistry);
             $container->bindInstance(IIdGeneratorRegistry::class, $idGeneratorRegistry);
-//            $container->bindInstance(IChangeTracker::class, $changeTracker);
-//            $container->bindInstance(IUnitOfWork::class, $unitOfWork);
-//            $container->bindInstance(EntityRegistry::class, $entityRegistry);
+
+            $writer = $container->resolve(Writer::class);
+            $qb = $container->resolve(IQueryBuilder::class);
+            foreach ($this->repoMappers as $repoClass) {
+                $container->bindInstance($repoClass, new $repoClass($writer, $qb));
+            }
         } catch (IocException $ex) {
             throw new RuntimeException('Failed to register ORM bindings', 0, $ex);
         }
@@ -102,9 +78,8 @@ class OrmBootstrapper extends Bootstrapper implements ILazyBootstrapper
      *
      * @throws IocException
      */
-    protected function bindRepositories(IContainer $container, IUnitOfWork $unitOfWork)
+    protected function bindRepositories(IContainer $container, UnitOfWork $unitOfWork)
     {
-        $connection = $container->resolve(\AbterPhp\Framework\Databases\Connection\IConnection::class);
         $connectionPool  = $container->resolve(ConnectionPool::class);
         $readConnection  = $connectionPool->getReadConnection();
         $writeConnection = $connectionPool->getWriteConnection();

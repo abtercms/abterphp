@@ -7,14 +7,17 @@ namespace AbterPhp\Admin\Orm;
 use AbterPhp\Admin\Domain\Entities\User as Entity;
 use AbterPhp\Admin\Domain\Entities\UserGroup;
 use AbterPhp\Admin\Domain\Entities\UserLanguage;
+use AbterPhp\Framework\Orm\GridRepo;
 use AbterPhp\Framework\Orm\IdGeneratorUserTrait;
-use AbterPhp\Framework\Orm\IGridRepo;
-use AbterPhp\Framework\Orm\Repository;
-use NilPortugues\Sql\QueryBuilder\Manipulation\Select;
-use NilPortugues\Sql\QueryBuilder\Syntax\Where;
+use InvalidArgumentException;
 use Opulence\Orm\IEntity;
+use QB\Generic\Clause\Table;
+use QB\Generic\Expr\Expr;
+use QB\Generic\Statement\ISelect;
+use QB\MySQL\QueryBuilder\QueryBuilder;
+use QB\MySQL\Statement\Select;
 
-class UserRepo extends Repository implements IGridRepo
+class UserRepo extends GridRepo
 {
     use IdGeneratorUserTrait;
 
@@ -22,12 +25,15 @@ class UserRepo extends Repository implements IGridRepo
 
     protected ?string $deletedAtColumn = self::COLUMN_DELETED_AT;
 
+    /** @var QueryBuilder */
+    protected $queryBuilder;
+
     /**
      * @param IEntity $entity
      */
     public function add(IEntity $entity)
     {
-        assert($entity instanceof Entity, new \InvalidArgumentException());
+        assert($entity instanceof Entity, new InvalidArgumentException());
 
         parent::add($entity);
     }
@@ -37,7 +43,7 @@ class UserRepo extends Repository implements IGridRepo
      */
     public function update(IEntity $entity)
     {
-        assert($entity instanceof Entity, new \InvalidArgumentException());
+        assert($entity instanceof Entity, new InvalidArgumentException());
 
         parent::update($entity);
     }
@@ -47,7 +53,7 @@ class UserRepo extends Repository implements IGridRepo
      */
     public function delete(IEntity $entity)
     {
-        assert($entity instanceof Entity, new \InvalidArgumentException());
+        assert($entity instanceof Entity, new InvalidArgumentException());
 
         parent::delete($entity);
     }
@@ -59,6 +65,7 @@ class UserRepo extends Repository implements IGridRepo
      */
     public function getByClientId(string $clientId): ?Entity
     {
+        return parent::getOne(['client_id' => $clientId]);
     }
 
     /**
@@ -89,16 +96,11 @@ class UserRepo extends Repository implements IGridRepo
     public function find(string $identifier): ?Entity
     {
         $select = $this->getBaseQuery()
-            ->where()
-            ->equals($this->deletedAtColumn, null)
-            ->subWhere()
-            ->equals('username', $identifier)
-            ->equals('email', $identifier)
-            ->end()
-            ->limit(0, 1);
+            ->where($this->deletedAtColumn . ' IS NULL')
+            ->where(new Expr('(username = ? OR email = ?)', [$identifier, $identifier]))
+            ->limit(1);
 
-        $row = $this->writer->fetch($select->getSql());
-
+        $row = $this->writer->fetch($select);
         if (empty($row)) {
             return null;
         }
@@ -174,13 +176,20 @@ class UserRepo extends Repository implements IGridRepo
             'GROUP_CONCAT(ug.name) AS user_group_names'
         ];
 
-        return $this->queryBuilder->select($this->tableName, $columns)
-            ->innerJoin('user_languages', )
-            ->leftJoin('users_user_groups')
-            ->leftJoin('user_groups')
-            ->groupBy('id')
-            ->where()
-            ->isNotNull('deleted_at');
+        return $this->queryBuilder->select()
+            ->from($this->tableName)
+            ->columns(...$columns)
+            ->innerJoin(new Table('user_languages', 'ul'), 'users.language_id = ul.id')
+            ->leftJoin(new Table('users_user_groups', 'usg'), 'users.user_group_id = usg.id')
+            ->leftJoin(new Table('user_groups', 'ug'), 'usg.group_id = ug.id')
+            ->groupBy('users.id')
+            ->where('deleted_at IS NOT NULL');
     }
 
+    public function getDefaultSorting(): array
+    {
+        return [
+            'users.username' => ISelect::DIRECTION_ASC,
+        ];
+    }
 }

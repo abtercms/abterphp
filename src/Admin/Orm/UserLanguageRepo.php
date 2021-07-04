@@ -5,18 +5,23 @@ declare(strict_types=1);
 namespace AbterPhp\Admin\Orm;
 
 use AbterPhp\Admin\Domain\Entities\UserLanguage as Entity;
-use AbterPhp\Framework\Orm\IGridRepo;
-use AbterPhp\Framework\Orm\Repository;
+use AbterPhp\Framework\Orm\GridRepo;
+use InvalidArgumentException;
 use Opulence\Orm\IEntity;
+use QB\Generic\Statement\ISelect;
+use QB\MySQL\QueryBuilder\QueryBuilder;
 
-class UserLanguageRepo extends Repository implements IGridRepo
+class UserLanguageRepo extends GridRepo
 {
+    /** @var QueryBuilder */
+    protected $queryBuilder;
+
     /**
      * @param IEntity $entity
      */
     public function add(IEntity $entity)
     {
-        assert($entity instanceof Entity, new \InvalidArgumentException());
+        assert($entity instanceof Entity, new InvalidArgumentException());
 
         parent::add($entity);
     }
@@ -26,7 +31,7 @@ class UserLanguageRepo extends Repository implements IGridRepo
      */
     public function update(IEntity $entity)
     {
-        assert($entity instanceof Entity, new \InvalidArgumentException());
+        assert($entity instanceof Entity, new InvalidArgumentException());
 
         parent::update($entity);
     }
@@ -36,7 +41,7 @@ class UserLanguageRepo extends Repository implements IGridRepo
      */
     public function delete(IEntity $entity)
     {
-        assert($entity instanceof Entity, new \InvalidArgumentException());
+        assert($entity instanceof Entity, new InvalidArgumentException());
 
         parent::delete($entity);
     }
@@ -63,5 +68,15 @@ class UserLanguageRepo extends Repository implements IGridRepo
             $row['identifier'],
             $row['name']
         );
+    }
+
+    /**
+     * @return array<string,string>
+     */
+    public function getDefaultSorting(): array
+    {
+        return [
+            'name' => ISelect::DIRECTION_ASC
+        ];
     }
 }

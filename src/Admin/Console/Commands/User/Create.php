@@ -10,6 +10,7 @@ use AbterPhp\Admin\Orm\UserLanguageRepo;
 use AbterPhp\Admin\Orm\UserRepo;
 use AbterPhp\Framework\Authorization\CacheManager;
 use AbterPhp\Framework\Crypto\Crypto;
+use AbterPhp\Framework\Database\PDO\UnitOfWork;
 use Opulence\Console\Commands\Command;
 use Opulence\Console\Requests\Argument;
 use Opulence\Console\Requests\ArgumentTypes;
@@ -17,7 +18,6 @@ use Opulence\Console\Requests\Option;
 use Opulence\Console\Requests\OptionTypes;
 use Opulence\Console\Responses\IResponse;
 use Opulence\Console\StatusCodes;
-use Opulence\Orm\IUnitOfWork;
 use ZxcvbnPhp\Zxcvbn;
 
 class Create extends Command
@@ -50,7 +50,7 @@ class Create extends Command
 
     protected Crypto $crypto;
 
-    protected IUnitOfWork $unitOfWork;
+    protected UnitOfWork $unitOfWork;
 
     protected CacheManager $cacheManager;
 
@@ -63,7 +63,7 @@ class Create extends Command
      * @param UserGroupRepo    $userGroupRepo
      * @param UserLanguageRepo $userLanguageRepo
      * @param Crypto           $crypto
-     * @param IUnitOfWork      $unitOfWork
+     * @param UnitOfWork       $unitOfWork
      * @param CacheManager     $cacheManager
      * @param Zxcvbn           $zxcvbn
      */
@@ -72,7 +72,7 @@ class Create extends Command
         UserGroupRepo $userGroupRepo,
         UserLanguageRepo $userLanguageRepo,
         Crypto $crypto,
-        IUnitOfWork $unitOfWork,
+        UnitOfWork $unitOfWork,
         CacheManager $cacheManager,
         Zxcvbn $zxcvbn
     ) {

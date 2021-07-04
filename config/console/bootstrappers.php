@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use Opulence\Framework\Composer\Bootstrappers\ComposerBootstrapper;
-use Opulence\Framework\Console\Bootstrappers\CommandsBootstrapper;
+use AbterPhp\Framework\Bootstrappers\Console\CommandsBootstrapper;
 use Opulence\Framework\Console\Bootstrappers\RequestBootstrapper;
 
 /**
