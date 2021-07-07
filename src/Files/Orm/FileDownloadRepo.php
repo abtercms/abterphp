@@ -11,6 +11,7 @@ use AbterPhp\Files\Domain\Entities\FileDownload as Entity;
 use AbterPhp\Framework\Orm\GridRepo;
 use DateTime;
 use Exception;
+use Opulence\Orm\IEntity;
 use QB\Generic\Clause\Column;
 use QB\Generic\Expr\Expr;
 use QB\Generic\Statement\ISelect;
@@ -21,6 +22,40 @@ class FileDownloadRepo extends GridRepo
 {
     /** @var QueryBuilder */
     protected $queryBuilder;
+
+    protected string $tableName = 'file_downloads';
+
+    protected ?string $deletedAtColumn = self::COLUMN_DELETED_AT;
+
+    /**
+     * @param Entity $entity
+     */
+    public function add(IEntity $entity)
+    {
+        assert($entity);
+
+        parent::add($entity);
+    }
+
+    /**
+     * @param Entity $entity
+     */
+    public function update(IEntity $entity)
+    {
+        assert($entity);
+
+        parent::update($entity);
+    }
+
+    /**
+     * @param Entity $entity
+     */
+    public function delete(IEntity $entity)
+    {
+        assert($entity);
+
+        parent::delete($entity);
+    }
 
     /**
      * @param File $file
@@ -107,5 +142,16 @@ class FileDownloadRepo extends GridRepo
         return [
             'downloaded_at' => ISelect::DIRECTION_DESC,
         ];
+    }
+
+    /**
+     * @param IEntity $entity
+     */
+    protected function assert(IEntity $entity)
+    {
+        assert(
+            $entity instanceof Entity,
+            sprintf('entity of type %s expected, got %s', Entity::class, gettype($entity))
+        );
     }
 }

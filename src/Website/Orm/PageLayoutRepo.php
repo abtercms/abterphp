@@ -7,11 +7,19 @@ namespace AbterPhp\Website\Orm;
 use AbterPhp\Framework\Orm\GridRepo;
 use AbterPhp\Website\Domain\Entities\PageLayout as Entity;
 use QB\Generic\Statement\ISelect;
+use QB\MySQL\QueryBuilder\QueryBuilder;
 
 // @phan-suppress-current-line PhanUnreferencedUseNormal
 
 class PageLayoutRepo extends GridRepo
 {
+    /** @var QueryBuilder */
+    protected $queryBuilder;
+
+    protected string $tableName = 'page_layouts';
+
+    protected ?string $deletedAtColumn = self::COLUMN_DELETED_AT;
+
     /**
      * @param string $identifier
      *

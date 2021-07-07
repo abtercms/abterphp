@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace AbterPhp\Admin\Service\RepoGrid;
 
-use AbterPhp\Framework\Databases\Queries\FoundRows;
 use AbterPhp\Framework\Grid\Factory\IBase as GridFactory;
 use AbterPhp\Framework\Grid\IGrid;
 use AbterPhp\Framework\Http\Service\RepoGrid\IRepoGrid;
@@ -18,28 +17,23 @@ abstract class RepoGridAbstract implements IRepoGrid
 
     protected IGridRepo $repo;
 
-    protected FoundRows $foundRows;
-
     protected GridFactory $gridFactory;
 
     /**
      * GridAbstract constructor.
      *
-     * @param Enforcer          $enforcer
-     * @param IGridRepo         $repo
-     * @param FoundRows         $foundRows
-     * @param GridFactory       $gridFactory
+     * @param Enforcer    $enforcer
+     * @param IGridRepo   $repo
+     * @param GridFactory $gridFactory
      */
     public function __construct(
         Enforcer $enforcer,
         IGridRepo $repo,
-        FoundRows $foundRows,
         GridFactory $gridFactory
     ) {
-        $this->enforcer          = $enforcer;
-        $this->repo              = $repo;
-        $this->foundRows         = $foundRows;
-        $this->gridFactory       = $gridFactory;
+        $this->enforcer    = $enforcer;
+        $this->repo        = $repo;
+        $this->gridFactory = $gridFactory;
     }
 
     /**
@@ -52,15 +46,14 @@ abstract class RepoGridAbstract implements IRepoGrid
     {
         $grid = $this->gridFactory->createGrid($query->getAll(), $baseUrl);
 
-        $pageSize  = $grid->getPageSize();
-        $limitFrom = $this->getOffset($query, $pageSize);
+        $limit  = $grid->getPageSize();
+        $offset = $this->getOffset($query, $limit);
 
-        $sortBy = $this->getSortConditions($grid);
-        $where  = $this->getWhereConditions($grid);
-        $params = $this->getSqlParams($grid);
+        $sortBy  = $this->getSortConditions($grid);
+        $filters = $this->getWhereConditions($grid);
 
-        $entities = $this->repo->getPage($limitFrom, $pageSize, $sortBy, $where, $params);
-        $maxCount = $this->foundRows->get();
+        $entities = $this->repo->getPage($offset, $limit, $sortBy, $filters);
+        $maxCount = $this->repo->getCount($filters);
 
         $grid->setTotalCount($maxCount)->setEntities($entities);
 
@@ -88,16 +81,6 @@ abstract class RepoGridAbstract implements IRepoGrid
     }
 
     /**
-     * @param IGrid $grid
-     *
-     * @return array
-     */
-    protected function getSqlParams(IGrid $grid): array
-    {
-        return $grid->getSqlParams();
-    }
-
-    /**
      * @param Collection $query
      * @param int        $pageSize
      *
@@ -105,7 +88,7 @@ abstract class RepoGridAbstract implements IRepoGrid
      */
     protected function getOffset(Collection $query, int $pageSize): int
     {
-        $page   = (int)$query->get('page', 1);
+        $page = (int)$query->get('page', 1);
 
         return ($page - 1) * $pageSize;
     }

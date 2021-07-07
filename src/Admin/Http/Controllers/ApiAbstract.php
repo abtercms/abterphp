@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace AbterPhp\Admin\Http\Controllers;
 
-use AbterPhp\Framework\Databases\Queries\FoundRows;
 use AbterPhp\Framework\Http\Service\Execute\IRepoService;
 use Opulence\Http\Responses\Response;
 use Opulence\Orm\OrmException;
@@ -34,25 +33,20 @@ abstract class ApiAbstract extends Controller
 
     protected IRepoService $repoService;
 
-    protected FoundRows $foundRows;
-
     /**
      * ApiAbstract constructor.
      *
      * @param LoggerInterface $logger
      * @param IRepoService    $repoService
-     * @param FoundRows       $foundRows
      * @param string          $problemBaseUrl
      */
     public function __construct(
         LoggerInterface $logger,
         IRepoService $repoService,
-        FoundRows $foundRows,
         string $problemBaseUrl
     ) {
         $this->logger         = $logger;
         $this->repoService    = $repoService;
-        $this->foundRows      = $foundRows;
         $this->problemBaseUrl = $problemBaseUrl;
     }
 
@@ -85,14 +79,14 @@ abstract class ApiAbstract extends Controller
         $limit  = (int)$query->get('limit', 100);
 
         try {
-            $entities = $this->repoService->retrieveList($offset, $limit, [], [], []);
+            $entities = $this->repoService->retrieveList($offset, $limit, [], []);
         } catch (\Exception $e) {
             $msg = sprintf(static::LOG_MSG_LIST_FAILURE, static::ENTITY_PLURAL);
 
             return $this->handleException($msg, $e);
         }
 
-        $maxCount = $this->foundRows->get();
+        $maxCount = $this->repoService->retrieveCount([]);
 
         return $this->handleListSuccess($entities, $maxCount);
     }

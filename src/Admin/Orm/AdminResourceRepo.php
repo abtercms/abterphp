@@ -9,9 +9,13 @@ use AbterPhp\Framework\Orm\Repository;
 use InvalidArgumentException;
 use Opulence\Orm\IEntity;
 use QB\Generic\Expr\Expr;
+use QB\MySQL\QueryBuilder\QueryBuilder;
 
 class AdminResourceRepo extends Repository
 {
+    /** @var QueryBuilder */
+    protected $queryBuilder;
+
     protected string $tableName = 'admin_resources';
 
     protected ?string $deletedAtColumn = self::COLUMN_DELETED_AT;

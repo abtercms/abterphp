@@ -5,117 +5,58 @@ declare(strict_types=1);
 namespace AbterPhp\Admin\Tests\Orm;
 
 use AbterPhp\Admin\Domain\Entities\LoginAttempt as Entity;
-use AbterPhp\Admin\Orm\DataMappers\LoginAttemptSqlDataMapper;
 use AbterPhp\Admin\Orm\LoginAttemptRepo;
 use AbterPhp\Admin\Tests\TestCase\Orm\RepoTestCase;
-use Opulence\Orm\DataMappers\IDataMapper;
-use Opulence\Orm\IEntityRegistry;
-use PHPUnit\Framework\MockObject\MockObject;
 
 class LoginAttemptRepoTest extends RepoTestCase
 {
     /** @var LoginAttemptRepo - System Under Test */
     protected LoginAttemptRepo $sut;
 
-    /** @var LoginAttemptSqlDataMapper|MockObject */
-    protected $dataMapperMock;
-
     public function setUp(): void
     {
         parent::setUp();
 
-        $this->sut = new LoginAttemptRepo($this->className, $this->dataMapperMock, $this->unitOfWorkMock);
+        $this->sut = new LoginAttemptRepo($this->writerMock, $this->queryBuilder);
     }
 
     /**
-     * @return LoginAttemptSqlDataMapper|MockObject
+     * @return array
      */
-    protected function createDataMapperMock(): IDataMapper
+    protected function getStubRows(): array
     {
-        /** @var LoginAttemptSqlDataMapper|MockObject $mock */
-        return $this->createMock(LoginAttemptSqlDataMapper::class);
-    }
+        $rows   = [];
+        $rows[] = [
+            'id'         => 'foo',
+            'ip_hash'    => 'foo-ip_hash',
+            'username'   => 'foo-username',
+            'ip_address' => 'foo-ip_address',
+        ];
+        $rows[] = [
+            'id'         => 'bar',
+            'ip_hash'    => 'bar-ip_hash',
+            'username'   => 'bar-username',
+            'ip_address' => null,
+        ];
 
-    public function testGetAll()
-    {
-        $entityStub0 = new Entity('foo0', '127.0.0.1', 'foo-0');
-        $entityStub1 = new Entity('foo1', '127.0.0.1', 'foo-1');
-        $entities    = [$entityStub0, $entityStub1];
-
-        $entityRegistry = $this->createEntityRegistryStub(null);
-
-        $this->dataMapperMock->expects($this->once())->method('getAll')->willReturn($entities);
-
-        $this->unitOfWorkMock->expects($this->any())->method('getEntityRegistry')->willReturn($entityRegistry);
-
-        $actualResult = $this->sut->getAll();
-
-        $this->assertSame($entities, $actualResult);
-    }
-
-    public function testGetByIdFromCache()
-    {
-        $entityStub = new Entity('foo0', '127.0.0.1', 'foo-0');
-
-        $entityRegistry = $this->createEntityRegistryStub($entityStub);
-
-        $this->unitOfWorkMock->expects($this->any())->method('getEntityRegistry')->willReturn($entityRegistry);
-
-        $this->dataMapperMock->expects($this->never())->method('getById');
-
-        $id = 'foo';
-
-        $actualResult = $this->sut->getById($id);
-
-        $this->assertSame($entityStub, $actualResult);
-    }
-
-    public function testGetByIdFromDataMapper()
-    {
-        $entityStub = new Entity('foo0', '127.0.0.1', 'foo-0');
-
-        $entityRegistry = $this->createEntityRegistryStub(null);
-
-        $this->unitOfWorkMock->expects($this->any())->method('getEntityRegistry')->willReturn($entityRegistry);
-
-        $this->dataMapperMock->expects($this->once())->method('getById')->willReturn($entityStub);
-
-        $id = 'foo';
-
-        $actualResult = $this->sut->getById($id);
-
-        $this->assertSame($entityStub, $actualResult);
-    }
-
-    public function testAdd()
-    {
-        $entityStub = new Entity('foo0', '127.0.0.1', 'foo-0');
-
-        $this->unitOfWorkMock->expects($this->once())->method('scheduleForInsertion')->with($entityStub);
-
-        $this->sut->add($entityStub);
-    }
-
-    public function testDelete()
-    {
-        $entityStub = new Entity('foo0', '127.0.0.1', 'foo-0');
-
-        $this->unitOfWorkMock->expects($this->once())->method('scheduleForDeletion')->with($entityStub);
-
-        $this->sut->delete($entityStub);
+        return $rows;
     }
 
     /**
-     * @param Entity|null $entity
+     * @param int $i
      *
-     * @return MockObject
+     * @return Entity
      */
-    protected function createEntityRegistryStub(?Entity $entity): MockObject
+    protected function createEntityStub(int $i = 0): Entity
     {
-        $entityRegistry = $this->createMock(IEntityRegistry::class);
+        $rows = $this->getStubRows();
+        $row  = $rows[$i];
 
-        $entityRegistry->expects($this->any())->method('getEntity')->willReturn($entity);
-
-        return $entityRegistry;
+        return new Entity(
+            $row['id'],
+            $row['ip_hash'],
+            $row['username'],
+            $row['ip_address']
+        );
     }
 }

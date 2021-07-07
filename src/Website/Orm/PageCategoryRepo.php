@@ -23,6 +23,10 @@ class PageCategoryRepo extends GridRepo
     /** @var QueryBuilder */
     protected $queryBuilder;
 
+    protected string $tableName = 'page_categories';
+
+    protected ?string $deletedAtColumn = self::COLUMN_DELETED_AT;
+
     /**
      * @param string $identifier
      *

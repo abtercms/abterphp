@@ -4,46 +4,119 @@ declare(strict_types=1);
 
 namespace AbterPhp\Admin\Tests\TestCase\Orm;
 
-use Opulence\Orm\DataMappers\IDataMapper;
-use Opulence\Orm\IUnitOfWork;
+use AbterPhp\Framework\Database\PDO\Writer;
+use Opulence\Orm\IEntity;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use QB\Generic\QueryBuilder\IQueryBuilder;
+use QB\MySQL\QueryBuilder\QueryBuilder;
 
 abstract class RepoTestCase extends TestCase
 {
-    /** @var string */
-    protected string $className = 'Foo';
+    /** @var Writer|MockObject */
+    protected $writerMock;
 
-    /** @var IDataMapper|MockObject */
-    protected $dataMapperMock;
-
-    /** @var IUnitOfWork|MockObject */
-    protected $unitOfWorkMock;
+    /** @var IQueryBuilder|MockObject */
+    protected $queryBuilder;
 
     public function setUp(): void
     {
         parent::setUp();
 
-        $this->dataMapperMock = $this->createDataMapperMock();
+        $this->writerMock = $this->createMock(Writer::class);
 
-        $this->unitOfWorkMock = $this->createUnitOfWorkMock();
+        $this->queryBuilder = new QueryBuilder();
     }
 
     /**
-     * @return IDataMapper|MockObject
+     * @return array<int,array<string,string>>
      */
-    protected function createDataMapperMock(): IDataMapper
-    {
-        /** @var IDataMapper|MockObject $mock */
-        return $this->createMock(IDataMapper::class);
-    }
+    abstract protected function getStubRows(): array;
 
     /**
-     * @return IUnitOfWork|MockObject
+     * @param int $i
+     *
+     * @return IEntity
      */
-    protected function createUnitOfWorkMock(): IUnitOfWork
+    abstract protected function createEntityStub(int $i = 0): IEntity;
+
+    public function testGetAll()
     {
-        /** @var IUnitOfWork|MockObject $mock */
-        return $this->createMock(IUnitOfWork::class);
+        $rows = $this->getStubRows();
+
+        $this->writerMock
+            ->expects($this->once())
+            ->method('fetchAll')
+            ->willReturn($rows);
+
+        $actualResult = $this->sut->getAll();
+
+        $this->assertCount(2, $actualResult);
+        $this->assertSame('foo', $actualResult[0]->getId());
+        $this->assertSame('bar', $actualResult[1]->getId());
+    }
+
+    public function testAdd()
+    {
+        $entityStub0 = $this->createEntityStub();
+
+        $this->writerMock
+            ->expects($this->once())
+            ->method('execute')
+            ->willReturnCallback(function ($a) {
+                $this->assertStringContainsString('INSERT', (string)$a);
+                return true;
+            });
+
+        $this->sut->add($entityStub0);
+    }
+
+    public function testUpdate()
+    {
+        $entityStub0 = $this->createEntityStub();
+
+        $this->writerMock
+            ->expects($this->once())
+            ->method('execute')
+            ->willReturnCallback(function ($a) {
+                $this->assertStringContainsString('UPDATE', (string)$a);
+                return true;
+            });
+
+        $this->sut->update($entityStub0);
+    }
+
+    public function testDelete()
+    {
+        $entityStub0 = $this->createEntityStub();
+
+        $this->writerMock
+            ->expects($this->once())
+            ->method('execute')
+            ->willReturnCallback(function ($a) {
+                $this->assertStringContainsString('UPDATE', (string)$a);
+                return true;
+            });
+
+        $this->sut->delete($entityStub0);
+    }
+
+    public function testGetPage()
+    {
+        $rows = $this->getStubRows();
+
+        $this->writerMock
+            ->expects($this->once())
+            ->method('fetchAll')
+            ->willReturnCallback(function ($a) use ($rows) {
+                $this->assertStringContainsString('SELECT', (string)$a);
+                return $rows;
+            });
+
+        $actualResult = $this->sut->getPage(0, 10, [], []);
+
+        $this->assertCount(2, $actualResult);
+        $this->assertSame('foo', $actualResult[0]->getId());
+        $this->assertSame('bar', $actualResult[1]->getId());
     }
 }

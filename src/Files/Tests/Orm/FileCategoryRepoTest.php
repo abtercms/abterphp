@@ -5,153 +5,84 @@ declare(strict_types=1);
 namespace AbterPhp\Files\Tests\Orm;
 
 use AbterPhp\Admin\Domain\Entities\UserGroup;
-use AbterPhp\Admin\Tests\TestCase\Orm\RepoTestCase;
+use AbterPhp\Admin\Tests\TestCase\Orm\GridRepoTestCase;
 use AbterPhp\Files\Domain\Entities\FileCategory as Entity;
-use AbterPhp\Files\Orm\DataMappers\FileCategorySqlDataMapper;
 use AbterPhp\Files\Orm\FileCategoryRepo;
-use Opulence\Orm\DataMappers\IDataMapper;
-use Opulence\Orm\IEntityRegistry;
-use PHPUnit\Framework\MockObject\MockObject;
+use PDO;
+use QB\MySQL\Statement\Select;
 
-class FileCategoryRepoTest extends RepoTestCase
+class FileCategoryRepoTest extends GridRepoTestCase
 {
     /** @var FileCategoryRepo - System Under Test */
     protected FileCategoryRepo $sut;
-
-    /** @var FileCategorySqlDataMapper|MockObject */
-    protected $dataMapperMock;
 
     public function setUp(): void
     {
         parent::setUp();
 
-        $this->sut = new FileCategoryRepo($this->className, $this->dataMapperMock, $this->unitOfWorkMock);
+        $this->sut = new FileCategoryRepo($this->writerMock, $this->queryBuilder);
     }
 
     /**
-     * @return FileCategorySqlDataMapper|MockObject
+     * @return array<int,array<string,string>>
      */
-    protected function createDataMapperMock(): IDataMapper
+    protected function getStubRows(): array
     {
-        /** @var FileCategorySqlDataMapper|MockObject $mock */
-        return $this->createMock(FileCategorySqlDataMapper::class);
+        $rows   = [];
+        $rows[] = [
+            'id'             => 'foo',
+            'identifier'     => 'foo-identifier',
+            'name'           => 'foo-name',
+            'is_public'      => 'false',
+            'user_group_ids' => 'ug1,ug2',
+        ];
+        $rows[] = [
+            'id'             => 'bar',
+            'identifier'     => 'bar-identifier',
+            'name'           => 'bar-name',
+            'is_public'      => 'true',
+            'user_group_ids' => 'ug1,ug3',
+        ];
+
+        return $rows;
     }
 
-    public function testGetAll()
+    /**
+     * @param int $i
+     *
+     * @return Entity
+     */
+    protected function createEntityStub(int $i = 0): Entity
     {
-        $entityStub0 = new Entity('foo0', 'foo-0', 'Foo 0', false);
-        $entityStub1 = new Entity('foo1', 'foo-1', 'Foo 1', false);
-        $entities    = [$entityStub0, $entityStub1];
+        $rows = $this->getStubRows();
+        $row  = $rows[$i];
 
-        $entityRegistry = $this->createEntityRegistryStub(null);
+        $userGroups = [];
+        foreach (explode(',', $row['user_group_ids']) as $ugId) {
+            $userGroups[] = new UserGroup($ugId, "$ugId-identifier", "$ugId-name");
+        }
 
-        $this->dataMapperMock->expects($this->once())->method('getAll')->willReturn($entities);
-
-        $this->unitOfWorkMock->expects($this->any())->method('getEntityRegistry')->willReturn($entityRegistry);
-
-        $actualResult = $this->sut->getAll();
-
-        $this->assertSame($entities, $actualResult);
-    }
-
-    public function testGetByIdFromCache()
-    {
-        $entityStub0 = new Entity('foo0', 'foo-0', 'Foo 0', false);
-
-        $entityRegistry = $this->createEntityRegistryStub($entityStub0);
-
-        $this->unitOfWorkMock->expects($this->any())->method('getEntityRegistry')->willReturn($entityRegistry);
-
-        $this->dataMapperMock->expects($this->never())->method('getById');
-
-        $id = 'foo';
-
-        $actualResult = $this->sut->getById($id);
-
-        $this->assertSame($entityStub0, $actualResult);
-    }
-
-    public function testGetByIdFromDataMapper()
-    {
-        $entityStub0 = new Entity('foo0', 'foo-0', 'Foo 0', false);
-
-        $entityRegistry = $this->createEntityRegistryStub(null);
-
-        $this->unitOfWorkMock->expects($this->any())->method('getEntityRegistry')->willReturn($entityRegistry);
-
-        $this->dataMapperMock->expects($this->once())->method('getById')->willReturn($entityStub0);
-
-        $id = 'foo';
-
-        $actualResult = $this->sut->getById($id);
-
-        $this->assertSame($entityStub0, $actualResult);
-    }
-
-    public function testAdd()
-    {
-        $entityStub0 = new Entity('foo0', 'foo-0', 'Foo 0', false);
-
-        $this->unitOfWorkMock->expects($this->once())->method('scheduleForInsertion')->with($entityStub0);
-
-        $this->sut->add($entityStub0);
-    }
-
-    public function testDelete()
-    {
-        $entityStub0 = new Entity('foo0', 'foo-0', 'Foo 0', false);
-
-        $this->unitOfWorkMock->expects($this->once())->method('scheduleForDeletion')->with($entityStub0);
-
-        $this->sut->delete($entityStub0);
-    }
-
-    public function testGetPage()
-    {
-        $entityStub0 = new Entity('foo0', 'foo-0', 'Foo 0', false);
-        $entityStub1 = new Entity('foo1', 'foo-1', 'Foo 1', false);
-        $entities    = [$entityStub0, $entityStub1];
-
-        $entityRegistry = $this->createEntityRegistryStub(null);
-
-        $this->dataMapperMock->expects($this->once())->method('getPage')->willReturn($entities);
-
-        $this->unitOfWorkMock->expects($this->any())->method('getEntityRegistry')->willReturn($entityRegistry);
-
-        $actualResult = $this->sut->getPage(0, 10, [], [], []);
-
-        $this->assertSame($entities, $actualResult);
+        return new Entity($row['id'], $row['identifier'], $row['name'], (bool)$row['is_public'], $userGroups);
     }
 
     public function testGetByUserGroup()
     {
-        $userGroup   = new UserGroup('bar0', 'bar-0', 'Bar 0');
-        $entityStub0 = new Entity('foo0', 'foo-0', 'Foo 0', false, [$userGroup]);
-        $entityStub1 = new Entity('foo1', 'foo-1', 'Foo 1', false, [$userGroup]);
-        $entities    = [$entityStub0, $entityStub1];
+        $rows       = $this->getStubRows();
+        $userGroups = $this->createEntityStub()->getUserGroups();
 
-        $entityRegistry = $this->createEntityRegistryStub(null);
+        $this->writerMock
+            ->expects($this->once())
+            ->method('fetchAll')
+            ->willReturnCallback(function (Select $a) use ($rows, $userGroups) {
+                $this->assertStringContainsString('SELECT', (string)$a);
+                $this->assertContains([$userGroups[0]->getId(), PDO::PARAM_STR], $a->getParams());
+                return $rows;
+            });
 
-        $this->dataMapperMock->expects($this->once())->method('getByUserGroupId')->willReturn($entities);
+        $actualResult = $this->sut->getByUserGroup($userGroups[0]);
 
-        $this->unitOfWorkMock->expects($this->any())->method('getEntityRegistry')->willReturn($entityRegistry);
-
-        $actualResult = $this->sut->getByUserGroup($userGroup);
-
-        $this->assertSame($entities, $actualResult);
-    }
-
-    /**
-     * @param Entity|null $entity
-     *
-     * @return MockObject
-     */
-    protected function createEntityRegistryStub(?Entity $entity): MockObject
-    {
-        $entityRegistry = $this->createMock(IEntityRegistry::class);
-        $entityRegistry->expects($this->any())->method('registerEntity');
-        $entityRegistry->expects($this->any())->method('getEntity')->willReturn($entity);
-
-        return $entityRegistry;
+        $this->assertCount(2, $actualResult);
+        $this->assertSame($rows[0]['id'], $actualResult[0]->getId());
+        $this->assertSame($rows[1]['id'], $actualResult[1]->getId());
     }
 }

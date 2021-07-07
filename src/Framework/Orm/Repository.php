@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace AbterPhp\Framework\Orm;
 
-use AbterPhp\Admin\Domain\Entities\AdminResource as Entity;
 use AbterPhp\Framework\Database\PDO\Writer;
-use InvalidArgumentException;
 use Opulence\Orm\IEntity;
 use QB\Generic\Expr\Expr;
 use QB\Generic\QueryBuilder\IQueryBuilder;
@@ -71,12 +69,15 @@ abstract class Repository implements IRepository
      */
     public function add(IEntity $entity)
     {
-        assert($entity instanceof Entity, new InvalidArgumentException());
+        $data   = $this->getData($entity);
+        $keys   = array_keys($data);
+        $values = array_values($data);
 
         $insert = $this->queryBuilder
             ->insert()
             ->into($this->tableName)
-            ->values($this->getData($entity));
+            ->columns(...$keys)
+            ->values(...$values);
 
         $this->writer->execute($insert);
     }
@@ -86,8 +87,6 @@ abstract class Repository implements IRepository
      */
     public function update(IEntity $entity)
     {
-        assert($entity instanceof Entity, new InvalidArgumentException());
-
         $update = $this->queryBuilder
             ->update($this->tableName)
             ->values($this->getData($entity));
@@ -102,14 +101,12 @@ abstract class Repository implements IRepository
      */
     public function delete(IEntity $entity)
     {
-        assert($entity instanceof Entity, new InvalidArgumentException());
-
-        if ($this->deletedAtColumn) {
+        if ($this->deletedAtColumn === null) {
             $delete = $this->queryBuilder->delete()
                 ->from($this->tableName);
         } else {
             $delete = $this->queryBuilder->update($this->tableName)
-                ->where(new Expr($this->deletedAtColumn . ' = NOW()'));
+                ->values([$this->deletedAtColumn => 'NOW()']);
         }
 
         $delete = $this->addWhereByEntity($delete, $entity);
@@ -156,7 +153,7 @@ abstract class Repository implements IRepository
                 $select = $select->where(new Expr($k . ' = ?', [$v]));
             }
         }
-        if ($this->deletedAtColumn) {
+        if ($this->deletedAtColumn !== null) {
             $select = $select->where($this->deletedAtColumn . ' IS NULL');
         }
         $select = $select->limit(1);
@@ -180,7 +177,7 @@ abstract class Repository implements IRepository
     {
         $select = $select->where(new Expr($this->idColumn . ' = ?', [$entity->getId()]));
 
-        if ($this->deletedAtColumn) {
+        if ($this->deletedAtColumn !== null) {
             $select = $select->where($this->deletedAtColumn . ' IS NULL');
         }
 

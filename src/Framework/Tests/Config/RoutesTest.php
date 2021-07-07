@@ -41,7 +41,7 @@ class RoutesTest extends TestCase
     {
         $mediaBaseUrl = 'foo';
 
-        Environment::setVar(Env::MEDIA_BASE_URL, $mediaBaseUrl);
+        Environment::forceSetVar(Env::MEDIA_BASE_URL, $mediaBaseUrl);
 
         $actualResult = $this->sut->getMediaUrl();
 

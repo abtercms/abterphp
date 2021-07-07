@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace AbterPhp\Framework\Tests\Bootstrappers\Databases;
 
 use AbterPhp\Framework\Bootstrappers\Database\MigrationsBootstrapper;
-use Opulence\Databases\IConnection;
+use AbterPhp\Framework\Database\PDO\Writer;
 use Opulence\Databases\Migrations\IMigrator;
 use Opulence\Ioc\Container;
 use PHPUnit\Framework\TestCase;
+use QB\Generic\QueryBuilder\IQueryBuilder;
+use QB\MySQL\QueryBuilder\QueryBuilder;
 
 class MigrationsBootstrapperTest extends TestCase
 {
@@ -22,12 +24,14 @@ class MigrationsBootstrapperTest extends TestCase
 
     public function testRegisterBindings(): void
     {
-        $connectionMock = $this->getMockBuilder(IConnection::class)->getMock();
+        $writerStub = $this->createStub(Writer::class);
+        $queryBuilderStub = $this->createStub(QueryBuilder::class);
 
         $this->sut->setMigrationPaths([]);
 
         $container = new Container();
-        $container->bindInstance(IConnection::class, $connectionMock);
+        $container->bindInstance(Writer::class, $writerStub);
+        $container->bindInstance(IQueryBuilder::class, $queryBuilderStub);
 
         $this->sut->registerBindings($container);
 

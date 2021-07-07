@@ -7,7 +7,6 @@ namespace AbterPhp\Admin\Tests\Service\RepoGrid;
 use AbterPhp\Admin\Grid\Factory\ApiClient as GridFactory;
 use AbterPhp\Admin\Orm\ApiClientRepo as Repo;
 use AbterPhp\Admin\Service\RepoGrid\ApiClient;
-use AbterPhp\Framework\Databases\Queries\FoundRows;
 use AbterPhp\Framework\Grid\IGrid;
 use AbterPhp\Framework\Tests\TestDouble\Session\MockSessionFactory;
 use Casbin\Enforcer;
@@ -27,9 +26,6 @@ class ApiClientTest extends TestCase
     /** @var Repo|MockObject */
     protected $repoMock;
 
-    /** @var FoundRows|MockObject */
-    protected $foundRowsMock;
-
     /** @var GridFactory|MockObject */
     protected $gridFactoryMock;
 
@@ -42,14 +38,12 @@ class ApiClientTest extends TestCase
 
         $this->enforcerMock    = $this->createMock(Enforcer::class);
         $this->repoMock        = $this->createMock(Repo::class);
-        $this->foundRowsMock   = $this->createMock(FoundRows::class);
         $this->gridFactoryMock = $this->createMock(GridFactory::class);
         $this->sessionMock     = MockSessionFactory::create($this, ['foo' => 'bar']);
 
         $this->sut = new ApiClient(
             $this->enforcerMock,
             $this->repoMock,
-            $this->foundRowsMock,
             $this->gridFactoryMock,
             $this->sessionMock
         );

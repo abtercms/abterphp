@@ -10,6 +10,7 @@ use AbterPhp\Files\Domain\Entities\FileCategory;
 use AbterPhp\Framework\Orm\GridRepo;
 use DateTime;
 use Exception;
+use Opulence\Orm\IEntity;
 use QB\Generic\Clause\Column;
 use QB\Generic\Clause\Table;
 use QB\Generic\Expr\Expr;
@@ -21,6 +22,40 @@ class FileRepo extends GridRepo
 {
     /** @var QueryBuilder */
     protected $queryBuilder;
+
+    protected string $tableName = 'files';
+
+    protected ?string $deletedAtColumn = self::COLUMN_DELETED_AT;
+
+    /**
+     * @param Entity $entity
+     */
+    public function add(IEntity $entity)
+    {
+        assert($entity);
+
+        parent::add($entity);
+    }
+
+    /**
+     * @param Entity $entity
+     */
+    public function update(IEntity $entity)
+    {
+        assert($entity);
+
+        parent::update($entity);
+    }
+
+    /**
+     * @param Entity $entity
+     */
+    public function delete(IEntity $entity)
+    {
+        assert($entity);
+
+        parent::delete($entity);
+    }
 
     /**
      * @param User $user
@@ -168,5 +203,16 @@ class FileRepo extends GridRepo
         return [
             'files.public_name' => ISelect::DIRECTION_ASC,
         ];
+    }
+
+    /**
+     * @param IEntity $entity
+     */
+    protected function assert(IEntity $entity)
+    {
+        assert(
+            $entity instanceof Entity,
+            sprintf('entity of type %s expected, got %s', Entity::class, gettype($entity))
+        );
     }
 }

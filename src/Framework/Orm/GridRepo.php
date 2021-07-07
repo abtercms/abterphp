@@ -12,10 +12,10 @@ use QB\Generic\Statement\ISelect;
 abstract class GridRepo extends Repository implements IGridRepo
 {
     /**
-     * @param int          $offset
-     * @param int          $limit
-     * @param string[]     $sorting
-     * @param array        $filters
+     * @param int      $offset
+     * @param int      $limit
+     * @param string[] $sorting
+     * @param array    $filters
      *
      * @return IEntity[]
      */
@@ -30,7 +30,7 @@ abstract class GridRepo extends Repository implements IGridRepo
                 $select = $select->where(new Expr($k . ' = ?', [$v]));
             }
         }
-        if ($this->deletedAtColumn) {
+        if ($this->deletedAtColumn !== null) {
             $select = $select->where($this->deletedAtColumn . ' IS NULL');
         }
         $select = $select->limit($limit)->offset($offset);
@@ -43,6 +43,29 @@ abstract class GridRepo extends Repository implements IGridRepo
         $rows = $this->writer->fetchAll($select);
 
         return $this->createCollection($rows);
+    }
+
+    /**
+     * @param array $filters
+     *
+     * @return int
+     */
+    public function getCount(array $filters): int
+    {
+        $select = $this->getGridQuery();
+
+        foreach ($filters as $k => $v) {
+            if ($v instanceof IQueryPart) {
+                $select->where($v);
+            } else {
+                $select = $select->where(new Expr($k . ' = ?', [$v]));
+            }
+        }
+        if ($this->deletedAtColumn) {
+            $select = $select->where($this->deletedAtColumn . ' IS NULL');
+        }
+
+        return $this->writer->fetchColumn($select);
     }
 
     /**

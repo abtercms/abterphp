@@ -6,6 +6,7 @@ namespace AbterPhp\Files\Domain\Entities;
 
 use AbterPhp\Framework\Domain\Entities\IStringerEntity;
 use DateTime;
+use DateTimeInterface;
 
 class File implements IStringerEntity
 {
@@ -287,8 +288,8 @@ class File implements IStringerEntity
             'name'        => $this->getPublicName(),
             'mime'        => $this->getMime(),
             'description' => $this->getDescription(),
-            'category_id' => $this->getCategory()->getId(),
-            'uploaded_at' => $this->getUploadedAt()->format(\DateTime::ISO8601),
+            'category_id' => $this->getCategory() ? $this->getCategory()->getId() : null,
+            'uploaded_at' => $this->getUploadedAt()->format(DateTimeInterface::ISO8601),
         ];
 
         if ($this->hasContent()) {

@@ -8,9 +8,17 @@ use AbterPhp\Framework\Orm\GridRepo;
 use AbterPhp\Website\Domain\Entities\ContentList as Entity;
 use Opulence\Orm\IEntity;
 use QB\Generic\Statement\ISelect;
+use QB\MySQL\QueryBuilder\QueryBuilder;
 
 class ContentListRepo extends GridRepo
 {
+    /** @var QueryBuilder */
+    protected $queryBuilder;
+
+    protected string $tableName = 'content_lists';
+
+    protected ?string $deletedAtColumn = self::COLUMN_DELETED_AT;
+
     /**
      * @param string $identifier
      *

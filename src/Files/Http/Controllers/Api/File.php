@@ -7,7 +7,6 @@ namespace AbterPhp\Files\Http\Controllers\Api;
 use AbterPhp\Admin\Http\Controllers\ApiAbstract;
 use AbterPhp\Files\Domain\Entities\File as Entity;
 use AbterPhp\Files\Service\Execute\Api\File as RepoService;
-use AbterPhp\Framework\Databases\Queries\FoundRows;
 use AbterPhp\Framework\Http\Service\Execute\IRepoService;
 use League\Flysystem\Filesystem;
 use League\Flysystem\FilesystemException;
@@ -32,18 +31,16 @@ class File extends ApiAbstract
      *
      * @param LoggerInterface $logger
      * @param RepoService     $repoService
-     * @param FoundRows       $foundRows
      * @param string          $problemBaseUrl
      * @param Filesystem      $filesystem
      */
     public function __construct(
         LoggerInterface $logger,
         RepoService $repoService,
-        FoundRows $foundRows,
         string $problemBaseUrl,
         Filesystem $filesystem
     ) {
-        parent::__construct($logger, $repoService, $foundRows, $problemBaseUrl);
+        parent::__construct($logger, $repoService, $problemBaseUrl);
 
         $this->filesystem = $filesystem;
     }

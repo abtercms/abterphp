@@ -7,7 +7,6 @@ namespace AbterPhp\Contact\Tests\Service\RepoGrid;
 use AbterPhp\Contact\Grid\Factory\Form as GridFactory;
 use AbterPhp\Contact\Orm\FormRepo as Repo;
 use AbterPhp\Contact\Service\RepoGrid\Form;
-use AbterPhp\Framework\Databases\Queries\FoundRows;
 use AbterPhp\Framework\Grid\IGrid;
 use Casbin\Enforcer;
 use Opulence\Http\Collection;
@@ -25,9 +24,6 @@ class FormTest extends TestCase
     /** @var Repo|MockObject */
     protected $repoMock;
 
-    /** @var FoundRows|MockObject */
-    protected $foundRowsMock;
-
     /** @var GridFactory|MockObject */
     protected $gridFactoryMock;
 
@@ -37,13 +33,11 @@ class FormTest extends TestCase
 
         $this->enforcerMock    = $this->createMock(Enforcer::class);
         $this->repoMock        = $this->createMock(Repo::class);
-        $this->foundRowsMock   = $this->createMock(FoundRows::class);
         $this->gridFactoryMock = $this->createMock(GridFactory::class);
 
         $this->sut = new Form(
             $this->enforcerMock,
             $this->repoMock,
-            $this->foundRowsMock,
             $this->gridFactoryMock
         );
     }

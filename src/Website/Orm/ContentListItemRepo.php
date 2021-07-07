@@ -15,6 +15,10 @@ class ContentListItemRepo extends GridRepo
     /** @var QueryBuilder */
     protected $queryBuilder;
 
+    protected string $tableName = 'content_list_items';
+
+    protected ?string $deletedAtColumn = self::COLUMN_DELETED_AT;
+
     /**
      * @param string $listId
      *

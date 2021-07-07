@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace AbterPhp\Files\Tests\Service\RepoGrid;
 
 use AbterPhp\Files\Service\RepoGrid\FileCategory;
-use AbterPhp\Framework\Databases\Queries\FoundRows;
 use AbterPhp\Framework\Grid\IGrid;
 use AbterPhp\Files\Grid\Factory\FileCategory as GridFactory;
 use AbterPhp\Files\Orm\FileCategoryRepo as Repo;
@@ -25,9 +24,6 @@ class FileCategoryTest extends TestCase
     /** @var Repo|MockObject */
     protected $repoMock;
 
-    /** @var FoundRows|MockObject */
-    protected $foundRowsMock;
-
     /** @var GridFactory|MockObject */
     protected $gridFactoryMock;
 
@@ -37,13 +33,11 @@ class FileCategoryTest extends TestCase
 
         $this->enforcerMock    = $this->createMock(Enforcer::class);
         $this->repoMock        = $this->createMock(Repo::class);
-        $this->foundRowsMock   = $this->createMock(FoundRows::class);
         $this->gridFactoryMock = $this->createMock(GridFactory::class);
 
         $this->sut = new FileCategory(
             $this->enforcerMock,
             $this->repoMock,
-            $this->foundRowsMock,
             $this->gridFactoryMock
         );
     }

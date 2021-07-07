@@ -50,11 +50,11 @@ class CasbinDatabaseAdapterBootstrapper extends Bootstrapper implements ILazyBoo
 
         $config = [
             'type'     => $dirDriver,
-            'hostname' => Environment::mustGetVar(Env::DB_HOST),
-            'database' => Environment::mustGetVar(Env::DB_NAME),
-            'username' => Environment::mustGetVar(Env::DB_USER),
-            'password' => Environment::mustGetVar(Env::DB_PASSWORD),
-            'hostport' => Environment::mustGetVar(Env::DB_PORT),
+            'hostname' => Environment::mustGetVar(Env::PDO_WRITE_HOST),
+            'database' => Environment::mustGetVar(Env::PDO_WRITE_DATABASE),
+            'username' => Environment::mustGetVar(Env::PDO_WRITE_USERNAME),
+            'password' => Environment::mustGetVar(Env::PDO_WRITE_PASSWORD),
+            'hostport' => Environment::mustGetVar(Env::PDO_WRITE_PORT),
         ];
 
         $adapter = Adapter::newAdapter($config);

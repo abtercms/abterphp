@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace AbterPhp\Website\Tests\Service\RepoGrid;
 
-use AbterPhp\Framework\Databases\Queries\FoundRows;
 use AbterPhp\Framework\Grid\IGrid;
 use AbterPhp\Website\Grid\Factory\PageCategory as GridFactory;
 use AbterPhp\Website\Orm\PageCategoryRepo as Repo;
@@ -25,9 +24,6 @@ class PageCategoryTest extends TestCase
     /** @var Repo|MockObject */
     protected $repoMock;
 
-    /** @var FoundRows|MockObject */
-    protected $foundRowsMock;
-
     /** @var GridFactory|MockObject */
     protected $gridFactoryMock;
 
@@ -37,13 +33,11 @@ class PageCategoryTest extends TestCase
 
         $this->enforcerMock    = $this->createMock(Enforcer::class);
         $this->repoMock        = $this->createMock(Repo::class);
-        $this->foundRowsMock   = $this->createMock(FoundRows::class);
         $this->gridFactoryMock = $this->createMock(GridFactory::class);
 
         $this->sut = new PageCategory(
             $this->enforcerMock,
             $this->repoMock,
-            $this->foundRowsMock,
             $this->gridFactoryMock
         );
     }

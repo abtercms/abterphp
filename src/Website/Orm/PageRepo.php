@@ -22,6 +22,10 @@ class PageRepo extends GridRepo
     /** @var QueryBuilder */
     protected $queryBuilder;
 
+    protected string $tableName = 'pages';
+
+    protected ?string $deletedAtColumn = self::COLUMN_DELETED_AT;
+
     /**
      * @param string $identifier
      *

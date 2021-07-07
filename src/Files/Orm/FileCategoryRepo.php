@@ -21,6 +21,10 @@ class FileCategoryRepo extends GridRepo
     /** @var QueryBuilder */
     protected $queryBuilder;
 
+    protected string $tableName = 'file_categories';
+
+    protected ?string $deletedAtColumn = self::COLUMN_DELETED_AT;
+
     /**
      * @param UserGroup $userGroup
      *
@@ -88,7 +92,7 @@ class FileCategoryRepo extends GridRepo
                 'fc.is_public',
                 new Column('GROUP_CONCAT(ugfc.user_group_id)', 'user_group_ids')
             )
-            ->leftJoin('user_groups_file_categories', 'ugfc.file_category_id = fc.id', 'ugfc')
+            ->leftJoin(new Table('user_groups_file_categories', 'ugfc'), 'ugfc.file_category_id = fc.id')
             ->where('fc.deleted_at IS NULL')
             ->groupBy('fc.id');
     }

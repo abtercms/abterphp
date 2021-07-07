@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace AbterPhp\Website\Http\Controllers\Api;
 
 use AbterPhp\Admin\Http\Controllers\ApiAbstract;
-use AbterPhp\Framework\Databases\Queries\FoundRows;
 use AbterPhp\Website\Service\Execute\Page as RepoService;
 use AbterPhp\Website\Service\Website\Index as IndexService;
 use Casbin\Exceptions\CasbinException;
@@ -26,18 +25,16 @@ class Page extends ApiAbstract
      *
      * @param LoggerInterface $logger
      * @param RepoService     $repoService
-     * @param FoundRows       $foundRows
      * @param string          $problemBaseUrl
      * @param IndexService    $indexService
      */
     public function __construct(
         LoggerInterface $logger,
         RepoService $repoService,
-        FoundRows $foundRows,
         string $problemBaseUrl,
         IndexService $indexService
     ) {
-        parent::__construct($logger, $repoService, $foundRows, $problemBaseUrl);
+        parent::__construct($logger, $repoService, $problemBaseUrl);
 
         $this->indexService = $indexService;
     }

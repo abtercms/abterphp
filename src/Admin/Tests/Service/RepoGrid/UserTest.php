@@ -7,7 +7,6 @@ namespace AbterPhp\Admin\Tests\Service\RepoGrid;
 use AbterPhp\Admin\Grid\Factory\User as GridFactory;
 use AbterPhp\Admin\Orm\UserRepo as Repo;
 use AbterPhp\Admin\Service\RepoGrid\User;
-use AbterPhp\Framework\Databases\Queries\FoundRows;
 use AbterPhp\Framework\Grid\IGrid;
 use Casbin\Enforcer;
 use Opulence\Http\Collection;
@@ -25,9 +24,6 @@ class UserTest extends TestCase
     /** @var Repo|MockObject */
     protected $repoMock;
 
-    /** @var FoundRows|MockObject */
-    protected $foundRowsMock;
-
     /** @var GridFactory|MockObject */
     protected $gridFactoryMock;
 
@@ -37,13 +33,11 @@ class UserTest extends TestCase
 
         $this->enforcerMock    = $this->createMock(Enforcer::class);
         $this->repoMock        = $this->createMock(Repo::class);
-        $this->foundRowsMock   = $this->createMock(FoundRows::class);
         $this->gridFactoryMock = $this->createMock(GridFactory::class);
 
         $this->sut = new User(
             $this->enforcerMock,
             $this->repoMock,
-            $this->foundRowsMock,
             $this->gridFactoryMock
         );
     }

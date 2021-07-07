@@ -21,11 +21,11 @@ class CasbinDatabaseAdapterBootstrapperTest extends TestCase
     public function setUp(): void
     {
         Environment::unsetVar('DB_DRIVER');
-        Environment::setVar('DB_HOST', 'db');
-        Environment::setVar('DB_NAME', 'test');
-        Environment::setVar('DB_PASSWORD', 'pass');
-        Environment::setVar('DB_PORT', '4321');
-        Environment::setVar('DB_USER', 'root');
+        Environment::setVar('PDO_WRITE_HOST', 'db');
+        Environment::setVar('PDO_WRITE_DATABASE', 'test');
+        Environment::setVar('PDO_WRITE_PASSWORD', 'pass');
+        Environment::setVar('PDO_WRITE_PORT', '4321');
+        Environment::forceSetVar('PDO_WRITE_USERNAME', 'nope');
 
         $this->sut = new CasbinDatabaseAdapterBootstrapper();
     }

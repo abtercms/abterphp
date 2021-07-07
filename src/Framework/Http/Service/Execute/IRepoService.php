@@ -31,13 +31,19 @@ interface IRepoService
     /**
      * @param int      $offset
      * @param int      $limit
-     * @param string[] $orders
-     * @param array    $conditions
-     * @param array    $params
+     * @param string[] $sorting
+     * @param array    $filters
      *
      * @return IStringerEntity[]
      */
-    public function retrieveList(int $offset, int $limit, array $orders, array $conditions, array $params): array;
+    public function retrieveList(int $offset, int $limit, array $sorting, array $filters): array;
+
+    /**
+     * @param array $filters
+     *
+     * @return int
+     */
+    public function retrieveCount(array $filters): int;
 
     /**
      * @param string $entityId

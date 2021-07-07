@@ -12,10 +12,14 @@ use InvalidArgumentException;
 use Opulence\Orm\IEntity;
 use QB\Generic\Expr\Expr;
 use QB\Generic\Statement\ISelect;
+use QB\MySQL\QueryBuilder\QueryBuilder;
 
 class ApiClientRepo extends GridRepo
 {
     use IdGeneratorUserTrait;
+
+    /** @var QueryBuilder */
+    protected $queryBuilder;
 
     protected string $tableName = 'api_clients';
 

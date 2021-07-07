@@ -18,6 +18,10 @@ class BlockRepo extends GridRepo
     /** @var QueryBuilder */
     protected $queryBuilder;
 
+    protected string $tableName = 'blocks';
+
+    protected ?string $deletedAtColumn = self::COLUMN_DELETED_AT;
+
     /**
      * @param string $identifier
      *

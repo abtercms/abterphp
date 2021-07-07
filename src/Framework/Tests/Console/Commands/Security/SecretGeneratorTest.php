@@ -8,6 +8,7 @@ use AbterPhp\Framework\Console\Commands\Security\SecretGenerator;
 use Opulence\Console\Responses\IResponse;
 use org\bovigo\vfs\vfsStream;
 use PHPUnit\Framework\TestCase;
+use RuntimeException;
 
 class SecretGeneratorTest extends TestCase
 {
@@ -16,7 +17,8 @@ class SecretGeneratorTest extends TestCase
     protected const CONFIG_EXTRA_KEY = 'MY_RANDOM_PASSWORD';
     protected const CONFIG_CONTENT = <<<EOF
         <?php
-        Environment::setVar("DB_PASSWORD", "mypassword");
+        Environment::setVar("PDO_READ_PASSWORD", "mypassword");
+        Environment::setVar("PDO_WRITE_PASSWORD", "mypassword");
         Environment::setVar("ENCRYPTION_KEY", "mypassword");
         Environment::setVar("CRYPTO_FRONTEND_SALT", "mypassword");
         Environment::setVar("CRYPTO_ENCRYPTION_PEPPER", "mypassword");
@@ -42,13 +44,11 @@ class SecretGeneratorTest extends TestCase
 
     public function testExecuteThrowsExceptionIfConfigIsNotFoundAndNotInDryRunMode(): void
     {
-        $this->expectException(\RuntimeException::class);
+        $this->expectException(RuntimeException::class);
 
         $this->sut->setEnvFile(null);
 
-        $responseMock = $this->getMockBuilder(IResponse::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $responseMock = $this->createStub(IResponse::class);
 
         $this->sut->execute($responseMock);
     }
@@ -59,18 +59,16 @@ class SecretGeneratorTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $responseMock->expects($this->exactly(6))->method('writeln');
+        $responseMock->expects($this->exactly(7))->method('writeln');
 
         $this->sut->execute($responseMock);
     }
 
     public function testExecuteCreatesAdditionalRandomStringsForAdditionalKeys(): void
     {
-        $responseMock = $this->getMockBuilder(IResponse::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $responseMock = $this->createMock(IResponse::class);
 
-        $responseMock->expects($this->exactly(7))->method('writeln');
+        $responseMock->expects($this->exactly(8))->method('writeln');
 
         $this->sut->addKey('foo', 32);
 
@@ -79,13 +77,11 @@ class SecretGeneratorTest extends TestCase
 
     public function testExecuteReplacesConfigValues(): void
     {
-        $responseMock = $this->getMockBuilder(IResponse::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $responseStub = $this->createStub(IResponse::class);
 
         $this->sut->addKey(self::CONFIG_EXTRA_KEY, 32);
 
-        $this->sut->execute($responseMock);
+        $this->sut->execute($responseStub);
         $content = file_get_contents($this->configUrl);
 
         $this->assertNotSame(self::CONFIG_CONTENT, $content);
@@ -94,9 +90,7 @@ class SecretGeneratorTest extends TestCase
 
     public function testExecuteCanReplaceFilesMultipleTimes(): void
     {
-        $responseMock = $this->getMockBuilder(IResponse::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $responseMock = $this->createStub(IResponse::class);
 
         $this->sut->addKey(self::CONFIG_EXTRA_KEY, 32);
 

@@ -17,14 +17,48 @@ class PageLayoutRepoTest extends RepoTestCase
     /** @var PageLayoutRepo - System Under Test */
     protected PageLayoutRepo $sut;
 
-    /** @var PageLayoutSqlDataMapper|MockObject */
-    protected $dataMapperMock;
-
     public function setUp(): void
     {
         parent::setUp();
 
-        $this->sut = new PageLayoutRepo($this->className, $this->dataMapperMock, $this->unitOfWorkMock);
+        $this->sut = new PageLayoutRepo($this->writerMock, $this->queryBuilder);
+    }
+
+    /**
+     * @return array<int,array<string,string>>
+     */
+    protected function getStubRows(): array
+    {
+        $rows   = [];
+        $rows[] = [
+            'id'         => 'foo',
+            'identifier' => 'foo-identifier',
+            'title'      => 'foo-title',
+            'body'       => 'foo-body',
+            'layout'     => 'foo-layout',
+        ];
+        $rows[] = [
+            'id'         => 'bar',
+            'identifier' => 'bar-identifier',
+            'title'      => 'bar-title',
+            'body'       => 'bar-body',
+            'layout'     => 'bar-layout',
+        ];
+
+        return $rows;
+    }
+
+    /**
+     * @param int $i
+     *
+     * @return Entity
+     */
+    protected function createEntityStub(int $i = 0): Entity
+    {
+        $rows = $this->getStubRows();
+        $row  = $rows[$i];
+
+        return new Entity($row['id'], $row['identifier'], $row['title'], $row['body'], $row['layout']);
     }
 
     /**

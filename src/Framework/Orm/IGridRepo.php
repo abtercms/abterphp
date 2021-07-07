@@ -10,14 +10,21 @@ use QB\Generic\Statement\ISelect;
 interface IGridRepo
 {
     /**
-     * @param int          $offset
-     * @param int          $limit
-     * @param array        $sorting
-     * @param array        $filters
+     * @param int   $offset
+     * @param int   $limit
+     * @param array $sorting
+     * @param array $filters
      *
      * @return IStringerEntity[]
      */
     public function getPage(int $offset, int $limit, array $sorting, array $filters): array;
+
+    /**
+     * @param array $filters
+     *
+     * @return int
+     */
+    public function getCount(array $filters): int;
 
     /**
      * @return array<string,string>

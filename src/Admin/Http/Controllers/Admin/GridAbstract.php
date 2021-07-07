@@ -6,7 +6,6 @@ namespace AbterPhp\Admin\Http\Controllers\Admin;
 
 use AbterPhp\Framework\Assets\AssetManager;
 use AbterPhp\Framework\Constant\Event;
-use AbterPhp\Framework\Databases\Queries\FoundRows;
 use AbterPhp\Framework\Domain\Entities\IStringerEntity;
 use AbterPhp\Framework\Events\GridReady;
 use AbterPhp\Framework\Grid\Factory\IBase as GridFactory;
@@ -40,8 +39,6 @@ abstract class GridAbstract extends AdminAbstract
     public const RESOURCE_TYPE    = 'grid';
 
     protected IGridRepo $gridRepo;
-
-    protected FoundRows $foundRows;
 
     protected GridFactory $gridFactory;
 
