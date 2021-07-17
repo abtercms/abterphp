@@ -32,6 +32,7 @@ class BlockRepoTest extends GridRepoTestCase
             'title'      => 'foo-title',
             'body'       => 'foo-body',
             'layout'     => 'foo-layout',
+            'layout_id'  => null,
         ];
         $rows[] = [
             'id'         => 'bar',
@@ -39,6 +40,7 @@ class BlockRepoTest extends GridRepoTestCase
             'title'      => 'bar-title',
             'body'       => 'bar-body',
             'layout'     => 'bar-layout',
+            'layout_id'  => 'bar-layout_id',
         ];
 
         return $rows;

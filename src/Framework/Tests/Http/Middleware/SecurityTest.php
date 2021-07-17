@@ -36,7 +36,7 @@ class SecurityTest extends TestCase
         /** @var Response|MockObject $requestMock */
         $responseMock = $this->createMock(Response::class);
 
-        $next = fn () => $responseMock;
+        $next = fn() => $responseMock;
 
         $this->cacheBridgeMock->expects($this->never())->method('get');
 
@@ -55,7 +55,7 @@ class SecurityTest extends TestCase
         /** @var Response|MockObject $requestMock */
         $responseMock = $this->createMock(Response::class);
 
-        $next = fn () => $responseMock;
+        $next = fn() => $responseMock;
 
         $this->cacheBridgeMock->expects($this->once())->method('get')->willReturn(true);
 
@@ -74,11 +74,11 @@ class SecurityTest extends TestCase
         /** @var Response|MockObject $requestMock */
         $responseMock = $this->createMock(Response::class);
 
-        $next = fn () => $responseMock;
+        $next = fn() => $responseMock;
 
         $sut->setVar(
             [
-                Env::DB_PASSWORD                 => 'abc',
+                Env::PDO_WRITE_PASSWORD          => 'abc',
                 Env::ENCRYPTION_KEY              => 'bcd',
                 Env::CRYPTO_FRONTEND_SALT        => 'cde',
                 Env::CRYPTO_ENCRYPTION_PEPPER    => 'def',
@@ -109,11 +109,11 @@ class SecurityTest extends TestCase
         /** @var Response|MockObject $requestMock */
         $responseMock = $this->createMock(Response::class);
 
-        $next = fn () => $responseMock;
+        $next = fn() => $responseMock;
 
         $sut->setVar(
             [
-                Env::DB_PASSWORD                 => 'abc',
+                Env::PDO_WRITE_PASSWORD          => 'abc',
                 Env::ENCRYPTION_KEY              => 'bcd',
                 Env::CRYPTO_FRONTEND_SALT        => 'cde',
                 Env::CRYPTO_ENCRYPTION_PEPPER    => 'def',
@@ -139,7 +139,7 @@ class SecurityTest extends TestCase
         return [
             'test-password'                    => [
                 [
-                    Env::DB_PASSWORD                 => Security::TEST_DB_PASSWORD,
+                    Env::PDO_WRITE_PASSWORD          => Security::TEST_PDO_WRITE_PASSWORD,
                     Env::ENCRYPTION_KEY              => 'bcd',
                     Env::CRYPTO_FRONTEND_SALT        => 'cde',
                     Env::CRYPTO_ENCRYPTION_PEPPER    => 'def',
@@ -154,7 +154,7 @@ class SecurityTest extends TestCase
             ],
             'test-encryption-key'              => [
                 [
-                    Env::DB_PASSWORD                 => 'abc',
+                    Env::PDO_WRITE_PASSWORD          => 'abc',
                     Env::ENCRYPTION_KEY              => Security::TEST_ENCRYPTION_KEY,
                     Env::CRYPTO_FRONTEND_SALT        => 'cde',
                     Env::CRYPTO_ENCRYPTION_PEPPER    => 'def',
@@ -169,7 +169,7 @@ class SecurityTest extends TestCase
             ],
             'test-frontend-salt'               => [
                 [
-                    Env::DB_PASSWORD                 => 'abc',
+                    Env::PDO_WRITE_PASSWORD          => 'abc',
                     Env::ENCRYPTION_KEY              => 'bcd',
                     Env::CRYPTO_FRONTEND_SALT        => Security::TEST_CRYPTO_FRONTEND_SALT,
                     Env::CRYPTO_ENCRYPTION_PEPPER    => 'def',
@@ -184,7 +184,7 @@ class SecurityTest extends TestCase
             ],
             'test-encryption-pepper'           => [
                 [
-                    Env::DB_PASSWORD                 => 'abc',
+                    Env::PDO_WRITE_PASSWORD          => 'abc',
                     Env::ENCRYPTION_KEY              => 'bcd',
                     Env::CRYPTO_FRONTEND_SALT        => 'cde',
                     Env::CRYPTO_ENCRYPTION_PEPPER    => Security::TEST_CRYPTO_ENCRYPTION_PEPPER,
@@ -199,7 +199,7 @@ class SecurityTest extends TestCase
             ],
             'test-oauth2-private-key-path'     => [
                 [
-                    Env::DB_PASSWORD                 => 'abc',
+                    Env::PDO_WRITE_PASSWORD          => 'abc',
                     Env::ENCRYPTION_KEY              => 'bcd',
                     Env::CRYPTO_FRONTEND_SALT        => 'cde',
                     Env::CRYPTO_ENCRYPTION_PEPPER    => 'def',
@@ -214,7 +214,7 @@ class SecurityTest extends TestCase
             ],
             'test-oauth2-private-key-password' => [
                 [
-                    Env::DB_PASSWORD                 => 'abc',
+                    Env::PDO_WRITE_PASSWORD          => 'abc',
                     Env::ENCRYPTION_KEY              => 'bcd',
                     Env::CRYPTO_FRONTEND_SALT        => 'cde',
                     Env::CRYPTO_ENCRYPTION_PEPPER    => 'def',
@@ -229,7 +229,7 @@ class SecurityTest extends TestCase
             ],
             'test-oauth2-public-key-path'      => [
                 [
-                    Env::DB_PASSWORD                 => 'abc',
+                    Env::PDO_WRITE_PASSWORD          => 'abc',
                     Env::ENCRYPTION_KEY              => 'bcd',
                     Env::CRYPTO_FRONTEND_SALT        => 'cde',
                     Env::CRYPTO_ENCRYPTION_PEPPER    => 'def',
@@ -244,7 +244,7 @@ class SecurityTest extends TestCase
             ],
             'test-oauth2-encryption-key'       => [
                 [
-                    Env::DB_PASSWORD                 => 'abc',
+                    Env::PDO_WRITE_PASSWORD          => 'abc',
                     Env::ENCRYPTION_KEY              => 'bcd',
                     Env::CRYPTO_FRONTEND_SALT        => 'cde',
                     Env::CRYPTO_ENCRYPTION_PEPPER    => 'def',
@@ -259,7 +259,7 @@ class SecurityTest extends TestCase
             ],
             'display_errors-on'                => [
                 [
-                    Env::DB_PASSWORD                 => 'abc',
+                    Env::PDO_WRITE_PASSWORD          => 'abc',
                     Env::ENCRYPTION_KEY              => 'bcd',
                     Env::CRYPTO_FRONTEND_SALT        => 'cde',
                     Env::CRYPTO_ENCRYPTION_PEPPER    => 'def',
@@ -293,7 +293,7 @@ class SecurityTest extends TestCase
         /** @var Response|MockObject $requestMock */
         $responseMock = $this->createMock(Response::class);
 
-        $next = fn () => $responseMock;
+        $next = fn() => $responseMock;
 
         $sut->setVar($environmentData);
 

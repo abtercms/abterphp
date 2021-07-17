@@ -230,9 +230,11 @@ abstract class Repository implements IRepository
      */
     protected function getBaseQuery(): ISelect
     {
+        $columns = $this->getColumns() ?? ['*'];
+
         return $this->queryBuilder->select()
             ->from($this->tableName)
-            ->columns(...$this->getColumns())
+            ->columns(...$columns)
             ->limit($this->limit);
     }
 

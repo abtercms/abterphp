@@ -43,20 +43,24 @@ class UserRepoTest extends GridRepoTestCase
     {
         $rows   = [];
         $rows[] = [
-            'id'                  => 'foo',
-            'username'            => 'foo-username',
-            'email'               => 'foo-email',
-            'password'            => 'foo-password',
-            'can_login'           => '1',
-            'is_gravatar_allowed' => '1',
+            'id'                       => 'foo',
+            'username'                 => 'foo-username',
+            'email'                    => 'foo-email',
+            'password'                 => 'foo-password',
+            'can_login'                => '1',
+            'is_gravatar_allowed'      => '1',
+            'user_language_id'         => 'foo-user_language_id',
+            'user_language_identifier' => 'foo-user_language_identifier',
         ];
         $rows[] = [
-            'id'                  => 'bar',
-            'username'            => 'bar-username',
-            'email'               => 'bar-email',
-            'password'            => 'bar-password',
-            'can_login'           => '0',
-            'is_gravatar_allowed' => '0',
+            'id'                       => 'bar',
+            'username'                 => 'bar-username',
+            'email'                    => 'bar-email',
+            'password'                 => 'bar-password',
+            'can_login'                => '0',
+            'is_gravatar_allowed'      => '0',
+            'user_language_id'         => 'bar-user_language_id',
+            'user_language_identifier' => 'bar-user_language_identifier',
         ];
 
         return $rows;

@@ -36,7 +36,7 @@ class SecurityTest extends TestCase
 
     public function testHandleRunsChecksIfNoEnvironmentNameIsSet()
     {
-        Environment::setVar(Env::ENV_NAME, Environment::PRODUCTION);
+        Environment::forceSetVar(Env::ENV_NAME, Environment::PRODUCTION);
 
         $this->cacheBridgeMock->expects($this->once())->method('has')->willReturn(true);
 
@@ -54,7 +54,7 @@ class SecurityTest extends TestCase
 
     public function testHandleSkipsChecksIfNotInProduction()
     {
-        Environment::setVar(Env::ENV_NAME, Environment::STAGING);
+        Environment::forceSetVar(Env::ENV_NAME, Environment::STAGING);
 
         $this->cacheBridgeMock->expects($this->never())->method('has');
 
@@ -63,7 +63,6 @@ class SecurityTest extends TestCase
         ];
         $requestStub  = new Request([], [], [], [], [], $env, null);
         $responseStub = new Response();
-
 
         $next = function () use ($responseStub) {
             return $responseStub;
@@ -76,7 +75,7 @@ class SecurityTest extends TestCase
 
     public function testHandleRunsChecksIfInProduction()
     {
-        Environment::setVar(Env::ENV_NAME, Environment::PRODUCTION);
+        Environment::forceSetVar(Env::ENV_NAME, Environment::PRODUCTION);
 
         $this->cacheBridgeMock->expects($this->once())->method('has')->willReturn(true);
 
@@ -122,7 +121,7 @@ class SecurityTest extends TestCase
         string $apiBasePath,
         string $oauth2PrivateKeyPassword
     ) {
-        Environment::setVar(Env::ENV_NAME, Environment::PRODUCTION);
+        Environment::forceSetVar(Env::ENV_NAME, Environment::PRODUCTION);
 
         $this->expectException(SecurityException::class);
 

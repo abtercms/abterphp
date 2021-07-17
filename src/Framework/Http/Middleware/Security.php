@@ -17,7 +17,7 @@ class Security implements IMiddleware
 {
     protected const KEY = 'abterphp:security';
 
-    public const TEST_DB_PASSWORD                 = '28T3pqyvKG3tEgsjE8Rj';
+    public const TEST_PDO_WRITE_PASSWORD          = '28T3pqyvKG3tEgsjE8Rj';
     public const TEST_ENCRYPTION_KEY              = 'b8fbb40c129ad0e426e19b7d28f42e517ce639282e55ba7a98bd2b698fda7daa';
     public const TEST_CRYPTO_FRONTEND_SALT        = 'R6n9gNH9ND6USc6D';
     public const TEST_CRYPTO_ENCRYPTION_PEPPER    = 'h9fyyWr36vBnky9G';
@@ -130,7 +130,7 @@ class Security implements IMiddleware
 
     private function checkGeneralSecrets(): void
     {
-        if ($this->getVar(Env::DB_PASSWORD) === static::TEST_DB_PASSWORD) {
+        if ($this->getVar(Env::PDO_WRITE_PASSWORD) === static::TEST_PDO_WRITE_PASSWORD) {
             throw new SecurityException('Invalid DB_PASSWORD environment variable.');
         }
 

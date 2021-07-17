@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AbterPhp\Framework\Database\Migrations;
+namespace AbterPhp\Framework\Database\Migration;
 
 use AbterPhp\Framework\Database\PDO\Writer;
 use DateTime;

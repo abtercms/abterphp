@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace AbterPhp\Framework\Tests\Databases\Migrations;
+namespace AbterPhp\Framework\Tests\Database\Migration;
 
-use AbterPhp\Framework\Databases\Migrations\BaseMigration;
-use AbterPhp\Framework\Databases\Migrations\Exception;
+use AbterPhp\Framework\Database\Migration\BaseMigration;
 use AbterPhp\Framework\Filesystem\FileFinder;
 use DateTime;
+use Exception;
 use Opulence\Databases\Adapters\Pdo\Connection;
 use Opulence\Databases\Adapters\Pdo\Statement;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
-class BaseMigrationsTest extends TestCase
+class BaseMigrationTest extends TestCase
 {
     /** @var BaseMigration - System Under Test */
     protected BaseMigration $sut;

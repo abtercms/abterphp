@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace AbterPhp\Framework\Bootstrappers\Database;
 
-use AbterPhp\Framework\Database\Migrations\PdoMigrationRepository;
-use AbterPhp\Framework\Database\Migrations\Migrator;
+use AbterPhp\Framework\Database\Migration\PdoMigrationRepository;
+use AbterPhp\Framework\Database\Migration\Migrator;
 use AbterPhp\Framework\Database\PDO\Writer;
 use Opulence\Databases\Migrations\IExecutedMigrationRepository;
 use Opulence\Databases\Migrations\IMigrator;

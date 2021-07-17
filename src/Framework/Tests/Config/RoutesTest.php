@@ -20,10 +20,17 @@ class RoutesTest extends TestCase
     {
         $this->sut = new Routes();
 
-        Environment::setVar(Env::MEDIA_BASE_URL, self::MEDIA_BASE_URL);
+        Environment::forceSetVar(Env::MEDIA_BASE_URL, self::MEDIA_BASE_URL);
         Environment::unsetVar(Env::CACHE_BASE_PATH);
 
         parent::setUp();
+    }
+
+    public function tearDown(): void
+    {
+        parent::tearDown();
+
+        Environment::unsetVar(Env::MEDIA_BASE_URL);
     }
 
     public function testGetMediaUrlPreset(): void
@@ -63,7 +70,7 @@ class RoutesTest extends TestCase
     {
         $cacheBasePath = '';
 
-        Environment::setVar(Env::CACHE_BASE_PATH, $cacheBasePath);
+        Environment::forceSetVar(Env::CACHE_BASE_PATH, $cacheBasePath);
 
         $actualResult = $this->sut->getCacheUrl();
 
@@ -75,7 +82,7 @@ class RoutesTest extends TestCase
         $cacheBasePath = 'foo';
         $expectedBasePath = self::MEDIA_BASE_URL . '/foo';
 
-        Environment::setVar(Env::CACHE_BASE_PATH, $cacheBasePath);
+        Environment::forceSetVar(Env::CACHE_BASE_PATH, $cacheBasePath);
 
         $actualResult = $this->sut->getCacheUrl();
 
@@ -97,7 +104,7 @@ class RoutesTest extends TestCase
     {
         $cacheBasePath = '';
 
-        Environment::setVar(Env::CACHE_BASE_PATH, $cacheBasePath);
+        Environment::forceSetVar(Env::CACHE_BASE_PATH, $cacheBasePath);
 
         $actualResult = $this->sut->getAssetsPath();
 
@@ -109,7 +116,7 @@ class RoutesTest extends TestCase
         $cacheBasePath = 'foo';
         $expectedBasePath = 'foo/:path';
 
-        Environment::setVar(Env::CACHE_BASE_PATH, $cacheBasePath);
+        Environment::forceSetVar(Env::CACHE_BASE_PATH, $cacheBasePath);
 
         $actualResult = $this->sut->getAssetsPath();
 

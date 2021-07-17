@@ -30,15 +30,19 @@ class PageRepoTest extends GridRepoTestCase
             'id'         => 'foo',
             'identifier' => 'foo-identifier',
             'title'      => 'foo-title',
+            'classes'    => 'foo-classes',
+            'lede'       => 'foo-lede',
             'body'       => 'foo-body',
-            'layout'     => 'foo-layout',
+            'is_draft'   => '1',
         ];
         $rows[] = [
             'id'         => 'bar',
             'identifier' => 'bar-identifier',
             'title'      => 'bar-title',
+            'classes'    => 'bar-classes',
+            'lede'       => 'bar-lede',
             'body'       => 'bar-body',
-            'layout'     => 'bar-layout',
+            'is_draft'   => '0',
         ];
 
         return $rows;
@@ -54,7 +58,8 @@ class PageRepoTest extends GridRepoTestCase
         $rows = $this->getStubRows();
         $row  = $rows[$i];
 
-        return new Entity($row['id'], $row['identifier'], $row['title'], $row['body'], $row['layout']);
+        return new Entity($row['id'], $row['identifier'], $row['title'], $row['classes'], $row['lede'], $row['body'],
+            (bool)$row['is_draft']);
     }
 
     public function testGetByIdentifier()

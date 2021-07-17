@@ -37,7 +37,7 @@ return [
     ],
     Module::MIGRATION_PATHS => [
         1000 => [
-            realpath(__DIR__ . '/Databases/Migrations'),
+            realpath(__DIR__ . '/Database/Migration'),
         ],
     ],
 ];

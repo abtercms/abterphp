@@ -100,23 +100,4 @@ abstract class RepoTestCase extends TestCase
 
         $this->sut->delete($entityStub0);
     }
-
-    public function testGetPage()
-    {
-        $rows = $this->getStubRows();
-
-        $this->writerMock
-            ->expects($this->once())
-            ->method('fetchAll')
-            ->willReturnCallback(function ($a) use ($rows) {
-                $this->assertStringContainsString('SELECT', (string)$a);
-                return $rows;
-            });
-
-        $actualResult = $this->sut->getPage(0, 10, [], []);
-
-        $this->assertCount(2, $actualResult);
-        $this->assertSame('foo', $actualResult[0]->getId());
-        $this->assertSame('bar', $actualResult[1]->getId());
-    }
 }

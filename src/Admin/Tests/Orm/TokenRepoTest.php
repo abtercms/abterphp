@@ -7,6 +7,7 @@ namespace AbterPhp\Admin\Tests\Orm;
 use AbterPhp\Admin\Domain\Entities\Token as Entity;
 use AbterPhp\Admin\Orm\TokenRepo;
 use AbterPhp\Admin\Tests\TestCase\Orm\RepoTestCase;
+use DateTimeImmutable;
 use Opulence\Orm\IEntity;
 
 class TokenRepoTest extends RepoTestCase
@@ -80,11 +81,17 @@ class TokenRepoTest extends RepoTestCase
         $rows = $this->getStubRows();
         $row  = $rows[$i];
 
+        $expiresAt = new DateTimeImmutable($row['expires_at']);
+        $revokedAt = null;
+        if (null !== $row['revoked_at']) {
+            $revokedAt = new DateTimeImmutable($row['revoked_at']);
+        }
+
         return new Entity(
             $row['id'],
             $row['api_client_id'],
-            $row['expires_at'],
-            $row['revoked_at']
+            $expiresAt,
+            $revokedAt
         );
     }
 }

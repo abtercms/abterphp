@@ -27,18 +27,28 @@ class ContentListRepoTest extends GridRepoTestCase
     {
         $rows   = [];
         $rows[] = [
-            'id'         => 'foo',
-            'identifier' => 'foo-identifier',
-            'title'      => 'foo-title',
-            'body'       => 'foo-body',
-            'layout'     => 'foo-layout',
+            'id'               => 'foo',
+            'name'             => 'foo-name',
+            'identifier'       => 'foo-identifier',
+            'classes'          => 'foo-classes',
+            'protected'        => 'foo-protected',
+            'with_links'       => 'foo-with_links',
+            'with_label_links' => 'foo-with_label_links',
+            'with_html'        => 'foo-with_html',
+            'with_images'      => 'foo-with_images',
+            'with_classes'     => 'foo-with_classes',
         ];
         $rows[] = [
-            'id'         => 'bar',
-            'identifier' => 'bar-identifier',
-            'title'      => 'bar-title',
-            'body'       => 'bar-body',
-            'layout'     => 'bar-layout',
+            'id'               => 'bar',
+            'name'             => 'bar-name',
+            'identifier'       => 'bar-identifier',
+            'classes'          => 'bar-classes',
+            'protected'        => 'bar-protected',
+            'with_links'       => 'bar-with_links',
+            'with_label_links' => 'bar-with_label_links',
+            'with_html'        => 'bar-with_html',
+            'with_images'      => 'bar-with_images',
+            'with_classes'     => 'bar-with_classes',
         ];
 
         return $rows;
@@ -54,7 +64,9 @@ class ContentListRepoTest extends GridRepoTestCase
         $rows = $this->getStubRows();
         $row  = $rows[$i];
 
-        return new Entity($row['id'], $row['identifier'], $row['title'], $row['body'], $row['layout']);
+        return new Entity($row['id'], $row['name'], $row['identifier'], $row['classes'], (bool)$row['protected'],
+            (bool)$row['with_links'], (bool)$row['with_label_links'], (bool)$row['with_html'],
+            (bool)$row['with_images'], (bool)$row['with_classes']);
     }
 
     public function testGetIdentifier()

@@ -5,12 +5,8 @@ declare(strict_types=1);
 namespace AbterPhp\Website\Tests\Orm;
 
 use AbterPhp\Admin\Tests\TestCase\Orm\GridRepoTestCase;
-use AbterPhp\Admin\Tests\TestCase\Orm\RepoTestCase;
 use AbterPhp\Website\Domain\Entities\ContentListItem as Entity;
 use AbterPhp\Website\Orm\ContentListItemRepo as ItemRepo;
-use Opulence\Orm\DataMappers\IDataMapper;
-use Opulence\Orm\IEntityRegistry;
-use PHPUnit\Framework\MockObject\MockObject;
 
 class ContentListItemRepoTest extends GridRepoTestCase
 {
@@ -31,18 +27,28 @@ class ContentListItemRepoTest extends GridRepoTestCase
     {
         $rows   = [];
         $rows[] = [
-            'id'         => 'foo',
-            'identifier' => 'foo-identifier',
-            'title'      => 'foo-title',
-            'body'       => 'foo-body',
-            'layout'     => 'foo-layout',
+            'id'           => 'foo',
+            'list_id'      => 'foo-list_id',
+            'label'        => 'foo-label',
+            'label_href'   => 'foo-label_href',
+            'content'      => 'foo-content',
+            'content_href' => 'foo-content_href',
+            'img_src'      => 'foo-img_src',
+            'img_alt'      => 'foo-img_alt',
+            'img_href'     => 'foo-img_href',
+            'classes'      => 'foo-classes',
         ];
         $rows[] = [
-            'id'         => 'bar',
-            'identifier' => 'bar-identifier',
-            'title'      => 'bar-title',
-            'body'       => 'bar-body',
-            'layout'     => 'bar-layout',
+            'id'           => 'bar',
+            'list_id'      => 'bar-list_id',
+            'label'        => 'bar-label',
+            'label_href'   => 'bar-label_href',
+            'content'      => 'bar-content',
+            'content_href' => 'bar-content_href',
+            'img_src'      => 'bar-img_src',
+            'img_alt'      => 'bar-img_alt',
+            'img_href'     => 'bar-img_href',
+            'classes'      => 'bar-classes',
         ];
 
         return $rows;
@@ -58,7 +64,8 @@ class ContentListItemRepoTest extends GridRepoTestCase
         $rows = $this->getStubRows();
         $row  = $rows[$i];
 
-        return new Entity($row['id'], $row['identifier'], $row['title'], $row['body'], $row['layout']);
+        return new Entity($row['id'], $row['list_id'], $row['label'], $row['label_href'], $row['content'],
+            $row['content_href'], $row['img_src'], $row['img_alt'], $row['img_href'], $row['classes']);
     }
 
     public function testGetByListId()

@@ -5,13 +5,8 @@ declare(strict_types=1);
 namespace AbterPhp\Website\Tests\Orm;
 
 use AbterPhp\Admin\Tests\TestCase\Orm\GridRepoTestCase;
-use AbterPhp\Admin\Tests\TestCase\Orm\RepoTestCase;
 use AbterPhp\Website\Domain\Entities\PageCategory as Entity;
-use AbterPhp\Website\Orm\DataMappers\PageCategorySqlDataMapper;
 use AbterPhp\Website\Orm\PageCategoryRepo;
-use Opulence\Orm\DataMappers\IDataMapper;
-use Opulence\Orm\IEntityRegistry;
-use PHPUnit\Framework\MockObject\MockObject;
 
 class PageCategoryRepoTest extends GridRepoTestCase
 {
@@ -34,16 +29,12 @@ class PageCategoryRepoTest extends GridRepoTestCase
         $rows[] = [
             'id'         => 'foo',
             'identifier' => 'foo-identifier',
-            'title'      => 'foo-title',
-            'body'       => 'foo-body',
-            'layout'     => 'foo-layout',
+            'name'       => 'foo-name',
         ];
         $rows[] = [
             'id'         => 'bar',
             'identifier' => 'bar-identifier',
-            'title'      => 'bar-title',
-            'body'       => 'bar-body',
-            'layout'     => 'bar-layout',
+            'name'       => 'bar-name',
         ];
 
         return $rows;
@@ -59,7 +50,7 @@ class PageCategoryRepoTest extends GridRepoTestCase
         $rows = $this->getStubRows();
         $row  = $rows[$i];
 
-        return new Entity($row['id'], $row['identifier'], $row['title'], $row['body'], $row['layout']);
+        return new Entity($row['id'], $row['name'], $row['identifier']);
     }
 
     public function testGetByIdentifier()

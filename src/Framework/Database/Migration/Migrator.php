@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AbterPhp\Framework\Database\Migrations;
+namespace AbterPhp\Framework\Database\Migration;
 
 use AbterPhp\Framework\Database\PDO\Writer;
 use Exception;
@@ -11,12 +11,13 @@ use Opulence\Databases\Migrations\IMigration;
 use Opulence\Databases\Migrations\IMigrator;
 use Opulence\Ioc\IContainer;
 use Opulence\Ioc\IocException;
+use QB\Generic\Statement\Command;
 
 class Migrator implements IMigrator
 {
-    protected array       $allMigrationClasses;
+    protected array $allMigrationClasses;
     protected Writer $writer;
-    protected IContainer  $container;
+    protected IContainer $container;
     protected IExecutedMigrationRepository $executedMigrations;
 
     /**
@@ -36,7 +37,7 @@ class Migrator implements IMigrator
         $this->allMigrationClasses = $allMigrationClasses;
         $this->writer              = $writer;
         $this->container           = $container;
-        $this->executedMigrations           = $executedMigrations;
+        $this->executedMigrations  = $executedMigrations;
     }
 
     /**
@@ -49,7 +50,7 @@ class Migrator implements IMigrator
     {
         // These classes are returned in chronologically descending order
         $migrationClasses = $this->executedMigrations->getAll();
-        $migrations = $this->resolveManyMigrations($migrationClasses);
+        $migrations       = $this->resolveManyMigrations($migrationClasses);
 
         $this->executeRollBacks($migrations);
 
@@ -64,7 +65,7 @@ class Migrator implements IMigrator
     {
         // These classes are returned in chronologically descending order
         $migrationClasses = $this->executedMigrations->getLast($number);
-        $migrations = $this->resolveManyMigrations($migrationClasses);
+        $migrations       = $this->resolveManyMigrations($migrationClasses);
 
         $this->executeRollBacks($migrations);
 
@@ -76,24 +77,22 @@ class Migrator implements IMigrator
      *
      * @param IMigration[] $migrations The migrations to execute the down method on
      */
-    private function executeRollBacks(array $migrations) : void
+    private function executeRollBacks(array $migrations): void
     {
         $executedMigrations = $this->executedMigrations;
 
-        $this->writer->withRead(function() use ($migrations, $executedMigrations) {
-            try {
-                foreach ($migrations as $migration) {
-                    $migration->down();
+        try {
+            $this->writer->execute(new Command('TRANSACTION'));
+            foreach ($migrations as $migration) {
+                $migration->down();
 
-                    $executedMigrations->delete(get_class($migration));
-                }
-            } catch (\Exception $e) {
-                // returning false will trigger a rollback
-                return false;
+                $executedMigrations->delete(get_class($migration));
             }
-
-            return true;
-        });
+            $this->writer->execute(new Command('COMMIT'));
+        } catch (Exception $e) {
+            // returning false will trigger a rollback
+            $this->writer->execute(new Command('ROLLBACK'));
+        }
     }
 
     /**
@@ -106,26 +105,20 @@ class Migrator implements IMigrator
         $runMigrationClasses = $runMigrationClasses !== false ? $runMigrationClasses : [];
         // We want to reset the array keys, which is why we grab the values
         $migrationClassesToRun = array_values(array_diff($this->allMigrationClasses, $runMigrationClasses));
-        $migrations = $this->resolveManyMigrations($migrationClassesToRun);
+        $migrations            = $this->resolveManyMigrations($migrationClassesToRun);
 
-        $this->writer->withRead(function() use ($migrations) {
-            try {
-                foreach ($migrations as $migration) {
-                    try {
-                        $migration->up();
-                    } catch (Exception $e) {
-                        return false;
-                    }
+        try {
+            $this->writer->execute(new Command('TRANSACTION'));
+            foreach ($migrations as $migration) {
+                $migration->up();
 
-                    $this->executedMigrations->add(get_class($migration));
-                }
-            } catch (Exception $e) {
-                // returning false will trigger a rollback
-                return false;
+                $this->executedMigrations->add(get_class($migration));
             }
-
-            return true;
-        });
+            $this->writer->execute(new Command('COMMIT'));
+        } catch (Exception $e) {
+            // returning false will trigger a rollback
+            $this->writer->execute(new Command('ROLLBACK'));
+        }
 
         return $migrationClassesToRun;
     }
@@ -138,7 +131,7 @@ class Migrator implements IMigrator
      * @return IMigration[] The list of resolved migrations
      * @throws IocException
      */
-    private function resolveManyMigrations(array $migrationClasses) : array
+    private function resolveManyMigrations(array $migrationClasses): array
     {
         $migrations = [];
 

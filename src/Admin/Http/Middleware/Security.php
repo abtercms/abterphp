@@ -85,10 +85,7 @@ class Security implements IMiddleware
     {
         $env = $request->getEnv();
 
-        if (empty($env[Env::OAUTH2_PRIVATE_KEY_PASSWORD])) {
-            throw new SecurityException('Invalid OAUTH_PRIVATE_KEY_PASSWORD environment variable.');
-        }
-        if ($env[Env::OAUTH2_PRIVATE_KEY_PASSWORD] === static::TEST_OAUTH2_PRIVATE_KEY_PASSWORD) {
+        if (empty($env[Env::OAUTH2_PRIVATE_KEY_PASSWORD]) || $env[Env::OAUTH2_PRIVATE_KEY_PASSWORD] === static::TEST_OAUTH2_PRIVATE_KEY_PASSWORD) {
             throw new SecurityException('Invalid OAUTH_PRIVATE_KEY_PASSWORD environment variable.');
         }
     }

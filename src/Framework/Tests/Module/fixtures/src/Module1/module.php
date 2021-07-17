@@ -16,7 +16,7 @@ return [
         'Authorization\Bootstrappers\CacheManagerBootstrapper',
         'Cache\Bootstrappers\CacheBootstrapper',
         'Crypto\Bootstrappers\CryptoBootstrapper',
-        'Databases\Bootstrappers\SqlBootstrapper',
+        'Database\Bootstrappers\SqlBootstrapper',
         'Email\Bootstrappers\TransportBootstrapper',
         'Events\Bootstrappers\EventDispatcherBootstrapper',
         'Filesystem\Bootstrappers\FilesystemBootstrapper',
@@ -30,8 +30,8 @@ return [
     Module::CLI_BOOTSTRAPPERS  => [
         'Console\Bootstrappers\Commands\Cache\FlushCacheBootstrapper',
         'Console\Bootstrappers\Commands\Security\SecretGeneratorBootstrapper',
-        'Databases\Bootstrappers\QueryFileLoaderBootstrapper',
-        'Databases\Bootstrappers\MigrationsBootstrapper',
+        'Database\Bootstrappers\QueryFileLoaderBootstrapper',
+        'Database\Bootstrappers\MigrationsBootstrapper',
     ],
     Module::HTTP_BOOTSTRAPPERS => [
         'Authorization\Bootstrappers\EnforcerBootstrapper',
@@ -64,7 +64,7 @@ return [
     ],
     Module::MIGRATION_PATHS    => [
         1000 => [
-            realpath(__DIR__ . '/Databases/Migrations'),
+            realpath(__DIR__ . '/Database/Migration'),
         ],
     ],
 ];

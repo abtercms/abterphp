@@ -58,7 +58,7 @@ class ManagerTest extends TestCase
                             'Template\Bootstrappers\TemplateEngineBootstrapper',
                         ],
                         Module::CLI_BOOTSTRAPPERS  => [
-                            'Databases\Bootstrappers\MigrationsBootstrapper',
+                            'Database\Bootstrappers\MigrationsBootstrapper',
                         ],
                         Module::HTTP_BOOTSTRAPPERS => [
                             'Navigation\Bootstrappers\PrimaryBootstrapper',
@@ -81,7 +81,7 @@ class ManagerTest extends TestCase
                             'Template\Bootstrappers\TemplateEngineBootstrapper',
                         ],
                         Module::CLI_BOOTSTRAPPERS  => [
-                            'Databases\Bootstrappers\MigrationsBootstrapper',
+                            'Database\Bootstrappers\MigrationsBootstrapper',
                         ],
                         Module::HTTP_BOOTSTRAPPERS => [
                             'Navigation\Bootstrappers\PrimaryBootstrapper',
@@ -148,7 +148,7 @@ class ManagerTest extends TestCase
                             'Template\Bootstrappers\TemplateEngineBootstrapper',
                         ],
                         Module::CLI_BOOTSTRAPPERS  => [
-                            'Databases\Bootstrappers\MigrationsBootstrapper',
+                            'Database\Bootstrappers\MigrationsBootstrapper',
                         ],
                         Module::HTTP_BOOTSTRAPPERS => [
                             'Navigation\Bootstrappers\PrimaryBootstrapper',
@@ -159,7 +159,7 @@ class ManagerTest extends TestCase
                 [
                     'Assets\Bootstrappers\AssetManagerBootstrapper',
                     'Template\Bootstrappers\TemplateEngineBootstrapper',
-                    'Databases\Bootstrappers\MigrationsBootstrapper',
+                    'Database\Bootstrappers\MigrationsBootstrapper',
                 ],
             ],
             'two-modules' => [
@@ -170,7 +170,7 @@ class ManagerTest extends TestCase
                             'Template\Bootstrappers\TemplateEngineBootstrapper',
                         ],
                         Module::CLI_BOOTSTRAPPERS  => [
-                            'Databases\Bootstrappers\MigrationsBootstrapper',
+                            'Database\Bootstrappers\MigrationsBootstrapper',
                         ],
                         Module::HTTP_BOOTSTRAPPERS => [
                             'Navigation\Bootstrappers\PrimaryBootstrapper',
@@ -195,7 +195,7 @@ class ManagerTest extends TestCase
                 [
                     'Assets\Bootstrappers\AssetManagerBootstrapper',
                     'Template\Bootstrappers\TemplateEngineBootstrapper',
-                    'Databases\Bootstrappers\MigrationsBootstrapper',
+                    'Database\Bootstrappers\MigrationsBootstrapper',
                     'Bootstrappers\Orm\OrmBootstrapper',
                     'Bootstrappers\Validation\ValidatorBootstrapper',
                     'Bootstrappers\Console\Commands\CommandsBootstrapper',
