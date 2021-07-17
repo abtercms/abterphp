@@ -167,10 +167,13 @@ class FileRepo extends GridRepo
                 'files.description',
                 'files.uploaded_at',
                 new Column('file_categories.name', 'file_category_name'),
-                new Column('file_categories.identifier', 'file_category_identifier'))
+                new Column('file_categories.identifier', 'file_category_identifier')
+            )
             ->from('files')
-            ->innerJoin('file_categories',
-                'file_categories.id = files.file_category_id AND file_categories.deleted_at IS NULL')
+            ->innerJoin(
+                'file_categories',
+                'file_categories.id = files.file_category_id AND file_categories.deleted_at IS NULL'
+            )
             ->where('files.deleted_at IS NULL')
             ->groupBy('files.id');
     }

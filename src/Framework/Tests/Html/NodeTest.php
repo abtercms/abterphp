@@ -14,7 +14,6 @@ use PHPUnit\Framework\TestCase;
 
 class NodeTest extends TestCase
 {
-
     /** @var Node - System Under Test */
     protected Node $sut;
 
@@ -166,8 +165,8 @@ class NodeTest extends TestCase
      */
     public function isMatchProvider(): array
     {
-        $f1 = fn(INode $node) => $node->hasIntent('foo');
-        $f2 = fn() => false;
+        $f1 = fn (INode $node) => $node->hasIntent('foo');
+        $f2 = fn () => false;
 
         return [
             'empty'          => [null, null, [], true],
@@ -228,8 +227,8 @@ class NodeTest extends TestCase
      */
     public function findTraversesNodesProvider(): array
     {
-        $f1 = fn(INode $node) => $node->hasIntent('foo');
-        $f2 = fn() => false;
+        $f1 = fn (INode $node) => $node->hasIntent('foo');
+        $f2 = fn () => false;
 
         return [
             'foo'            => [null, null, ['foo'], true],
@@ -271,8 +270,8 @@ class NodeTest extends TestCase
      */
     public function findAllProvider(): array
     {
-        $f1 = fn(INode $node) => $node->hasIntent('foo');
-        $f2 = fn() => false;
+        $f1 = fn (INode $node) => $node->hasIntent('foo');
+        $f2 = fn () => false;
 
         return [
             'empty'          => [null, null, [], 4],

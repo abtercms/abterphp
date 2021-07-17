@@ -23,7 +23,7 @@ class ActionTest extends TestCase
     {
         $this->expectException(\InvalidArgumentException::class);
 
-        new Action(null, [], [], ['foo' => fn() => true]);
+        new Action(null, [], [], ['foo' => fn () => true]);
     }
 
     /**
@@ -35,11 +35,11 @@ class ActionTest extends TestCase
         $str        = Attributes::toString($attributes);
 
         $callbacks = [
-            StubAttributeFactory::ATTRIBUTE_FOO => fn() => [
+            StubAttributeFactory::ATTRIBUTE_FOO => fn () => [
                 StubAttributeFactory::VALUE_FOO,
                 StubAttributeFactory::VALUE_BAZ,
             ],
-            StubAttributeFactory::ATTRIBUTE_BAR => fn() => StubAttributeFactory::VALUE_BAR_BAZ,
+            StubAttributeFactory::ATTRIBUTE_BAR => fn () => StubAttributeFactory::VALUE_BAR_BAZ,
         ];
 
         return [
@@ -92,7 +92,7 @@ class ActionTest extends TestCase
             StubAttributeFactory::ATTRIBUTE_FOO => '',
         ];
         $attributeCallbacks = [
-            StubAttributeFactory::ATTRIBUTE_FOO => fn($value, IEntity $entity) => [$entity->getId()],
+            StubAttributeFactory::ATTRIBUTE_FOO => fn ($value, IEntity $entity) => [$entity->getId()],
         ];
 
         $sut = $this->createAction($content, $attributes, $attributeCallbacks, null, null);
@@ -152,7 +152,7 @@ class ActionTest extends TestCase
     {
         $this->expectException(LogicException::class);
 
-        $sut = new Action(null, [], ['foo' => new Attribute('foo')], ['foo' => fn() => true]);
+        $sut = new Action(null, [], ['foo' => new Attribute('foo')], ['foo' => fn () => true]);
 
         $sut->removeAttribute('foo');
     }

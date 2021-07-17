@@ -36,7 +36,7 @@ class SecurityTest extends TestCase
         /** @var Response|MockObject $requestMock */
         $responseMock = $this->createMock(Response::class);
 
-        $next = fn() => $responseMock;
+        $next = fn () => $responseMock;
 
         $this->cacheBridgeMock->expects($this->never())->method('get');
 
@@ -55,7 +55,7 @@ class SecurityTest extends TestCase
         /** @var Response|MockObject $requestMock */
         $responseMock = $this->createMock(Response::class);
 
-        $next = fn() => $responseMock;
+        $next = fn () => $responseMock;
 
         $this->cacheBridgeMock->expects($this->once())->method('get')->willReturn(true);
 
@@ -74,7 +74,7 @@ class SecurityTest extends TestCase
         /** @var Response|MockObject $requestMock */
         $responseMock = $this->createMock(Response::class);
 
-        $next = fn() => $responseMock;
+        $next = fn () => $responseMock;
 
         $sut->setVar(
             [
@@ -109,7 +109,7 @@ class SecurityTest extends TestCase
         /** @var Response|MockObject $requestMock */
         $responseMock = $this->createMock(Response::class);
 
-        $next = fn() => $responseMock;
+        $next = fn () => $responseMock;
 
         $sut->setVar(
             [
@@ -293,7 +293,7 @@ class SecurityTest extends TestCase
         /** @var Response|MockObject $requestMock */
         $responseMock = $this->createMock(Response::class);
 
-        $next = fn() => $responseMock;
+        $next = fn () => $responseMock;
 
         $sut->setVar($environmentData);
 

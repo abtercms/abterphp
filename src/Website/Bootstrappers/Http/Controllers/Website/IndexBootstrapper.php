@@ -17,7 +17,6 @@ use Psr\Log\LoggerInterface;
 
 class IndexBootstrapper extends Bootstrapper
 {
-
     /**
      * Registers any bindings to the IoC container
      *

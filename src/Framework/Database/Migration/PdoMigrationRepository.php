@@ -91,7 +91,7 @@ class PdoMigrationRepository implements IExecutedMigrationRepository
      *
      * @return string[] The list of migration class names
      */
-    public function getAll() : array
+    public function getAll(): array
     {
         $this->createMigrationsTable();
 
@@ -128,8 +128,7 @@ class PdoMigrationRepository implements IExecutedMigrationRepository
         $sql = match ($this->writer->getDialect()) {
             Writer::DIALECT_MYSQL => 'CREATE TABLE IF NOT EXISTS ' .
                 $this->tableName .
-                ' (id int not null auto_increment primary key,' .
-                ' migration varchar(255), dateran timestamp NOT NULL);',
+                ' (id int not null auto_increment primary key, migration varchar(255), dateran timestamp NOT NULL);',
             Writer::DIALECT_PGSQL => 'CREATE TABLE IF NOT EXISTS ' .
                 $this->tableName .
                 ' (id serial primary key, migration text, dateran timestamp with time zone NOT NULL);',

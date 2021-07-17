@@ -64,9 +64,18 @@ class ContentListRepoTest extends GridRepoTestCase
         $rows = $this->getStubRows();
         $row  = $rows[$i];
 
-        return new Entity($row['id'], $row['name'], $row['identifier'], $row['classes'], (bool)$row['protected'],
-            (bool)$row['with_links'], (bool)$row['with_label_links'], (bool)$row['with_html'],
-            (bool)$row['with_images'], (bool)$row['with_classes']);
+        return new Entity(
+            $row['id'],
+            $row['name'],
+            $row['identifier'],
+            $row['classes'],
+            (bool)$row['protected'],
+            (bool)$row['with_links'],
+            (bool)$row['with_label_links'],
+            (bool)$row['with_html'],
+            (bool)$row['with_images'],
+            (bool)$row['with_classes']
+        );
     }
 
     public function testGetIdentifier()

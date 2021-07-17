@@ -347,8 +347,10 @@ class PageRepo extends GridRepo
                 new Column('layouts.js_files', 'layout_js_files'),
             )
             ->from('pages')
-            ->leftJoin(new Table('page_layouts', 'layouts'),
-                'layouts.id = pages.layout_id AND layouts.deleted_at IS NULL')
+            ->leftJoin(
+                new Table('page_layouts', 'layouts'),
+                'layouts.id = pages.layout_id AND layouts.deleted_at IS NULL'
+            )
             ->where('pages.deleted_at IS NULL');
     }
 }
