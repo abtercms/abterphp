@@ -20,6 +20,9 @@ update:
 	XDEBUG_MODE=debug XDEBUG_SESSION=1 PHP_IDE_CONFIG="serverName=abtercms.test" ./abterphp migrations:up
 	XDEBUG_MODE=off ./abterphp migrations:up
 
+fix:
+	XDEBUG_MODE=off ./vendor/bin/php-cs-fixer fix src
+
 unit:
 	XDEBUG_MODE=off ./vendor/bin/phpunit -v
 
@@ -33,4 +36,4 @@ pull:
 	git pull
 	git submodule update --recursive --remote
 
-.PHONY: build install setup update unit coverage flush pull
+.PHONY: build install setup update fix unit coverage flush pull
