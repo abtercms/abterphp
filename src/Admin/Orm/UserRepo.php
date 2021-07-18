@@ -29,6 +29,8 @@ class UserRepo extends GridRepo
     protected $queryBuilder;
 
     /**
+     * @suppress PhanParamSignatureMismatch
+     *
      * @param Entity $entity
      */
     public function add(IStringerEntity $entity)
@@ -39,6 +41,8 @@ class UserRepo extends GridRepo
     }
 
     /**
+     * @suppress PhanParamSignatureMismatch
+     *
      * @param Entity $entity
      */
     public function update(IStringerEntity $entity)
@@ -49,6 +53,8 @@ class UserRepo extends GridRepo
     }
 
     /**
+     * @suppress PhanParamSignatureMismatch
+     *
      * @param Entity $entity
      */
     public function delete(IStringerEntity $entity)

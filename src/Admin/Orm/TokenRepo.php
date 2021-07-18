@@ -18,6 +18,8 @@ class TokenRepo extends Repository
     protected ?string $deletedAtColumn = self::COLUMN_DELETED_AT;
 
     /**
+     * @suppress PhanParamSignatureMismatch
+     *
      * @param Entity $entity
      */
     public function add(IStringerEntity $entity)
@@ -28,6 +30,8 @@ class TokenRepo extends Repository
     }
 
     /**
+     * @suppress PhanParamSignatureMismatch
+     *
      * @param Entity $entity
      */
     public function update(IStringerEntity $entity)
@@ -38,6 +42,8 @@ class TokenRepo extends Repository
     }
 
     /**
+     * @suppress PhanParamSignatureMismatch
+     *
      * @param Entity $entity
      */
     public function delete(IStringerEntity $entity)

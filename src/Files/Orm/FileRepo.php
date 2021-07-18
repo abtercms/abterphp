@@ -28,6 +28,8 @@ class FileRepo extends GridRepo
     protected ?string $deletedAtColumn = self::COLUMN_DELETED_AT;
 
     /**
+     * @suppress PhanParamSignatureMismatch
+     *
      * @param Entity $entity
      */
     public function add(IStringerEntity $entity)
@@ -38,6 +40,8 @@ class FileRepo extends GridRepo
     }
 
     /**
+     * @suppress PhanParamSignatureMismatch
+     *
      * @param Entity $entity
      */
     public function update(IStringerEntity $entity)
@@ -48,6 +52,8 @@ class FileRepo extends GridRepo
     }
 
     /**
+     * @suppress PhanParamSignatureMismatch
+     *
      * @param Entity $entity
      */
     public function delete(IStringerEntity $entity)
@@ -80,11 +86,7 @@ class FileRepo extends GridRepo
      */
     public function getByFilesystemName(string $filesystemName): ?Entity
     {
-        $entity = $this->getOne(
-            [
-                'filesystem_name' => $filesystemName,
-            ]
-        );
+        $entity = $this->getOne(['filesystem_name' => $filesystemName]);
 
         assert($entity === null || $entity instanceof Entity);
 

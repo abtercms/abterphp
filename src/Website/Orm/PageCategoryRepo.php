@@ -33,7 +33,11 @@ class PageCategoryRepo extends GridRepo
      */
     public function getByIdentifier(string $identifier): ?Entity
     {
-        return $this->getOne(['identifier' => $identifier]);
+        $entity = $this->getOne(['identifier' => $identifier]);
+
+        assert($entity === null || $entity instanceof Entity);
+
+        return $entity;
     }
 
     /**

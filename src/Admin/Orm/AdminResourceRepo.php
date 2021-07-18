@@ -21,6 +21,8 @@ class AdminResourceRepo extends Repository
     protected ?string $deletedAtColumn = self::COLUMN_DELETED_AT;
 
     /**
+     * @suppress PhanParamSignatureMismatch
+     *
      * @param Entity $entity
      */
     public function add(IStringerEntity $entity)
@@ -31,6 +33,8 @@ class AdminResourceRepo extends Repository
     }
 
     /**
+     * @suppress PhanParamSignatureMismatch
+     *
      * @param Entity $entity
      */
     public function update(IStringerEntity $entity)
@@ -41,6 +45,8 @@ class AdminResourceRepo extends Repository
     }
 
     /**
+     * @suppress PhanParamSignatureMismatch
+     *
      * @param Entity $entity
      */
     public function delete(IStringerEntity $entity)
@@ -73,7 +79,10 @@ class AdminResourceRepo extends Repository
     {
         $select = $this->queryBuilder->select()
             ->from($this->tableName)
-            ->innerJoin('user_groups_admin_resources', 'user_groups_admin_resources.admin_resource_id = admin_resources.id')
+            ->innerJoin(
+                'user_groups_admin_resources',
+                'user_groups_admin_resources.admin_resource_id = admin_resources.id'
+            )
             ->innerJoin('user_groups', 'user_groups.id = user_groups_admin_resources.user_group_id')
             ->innerJoin('users_user_groups', 'users_user_groups.user_group_id = user_groups.id')
             ->where(new Expr('users_user_groups.user_id = ?', [$userId]))

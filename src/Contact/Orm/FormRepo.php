@@ -26,7 +26,11 @@ class FormRepo extends GridRepo
      */
     public function getByIdentifier(string $identifier): ?Entity
     {
-        return $this->getOne(['cf.identifier' => $identifier]);
+        $entity = $this->getOne(['cf.identifier' => $identifier]);
+
+        assert($entity === null || $entity instanceof Entity);
+
+        return $entity;
     }
 
     /**

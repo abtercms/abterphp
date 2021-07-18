@@ -29,7 +29,11 @@ class BlockRepo extends GridRepo
      */
     public function getByIdentifier(string $identifier): ?Entity
     {
-        return $this->getOne(['blocks.identifier' => $identifier]);
+        $entity = $this->getOne(['blocks.identifier' => $identifier]);
+
+        assert($entity === null || $entity instanceof Entity);
+
+        return $entity;
     }
 
     /**

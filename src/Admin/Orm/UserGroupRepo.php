@@ -25,6 +25,8 @@ class UserGroupRepo extends GridRepo
     protected $queryBuilder;
 
     /**
+     * @suppress PhanParamSignatureMismatch
+     *
      * @param Entity $entity
      */
     public function add(IStringerEntity $entity)
@@ -35,6 +37,8 @@ class UserGroupRepo extends GridRepo
     }
 
     /**
+     * @suppress PhanParamSignatureMismatch
+     *
      * @param Entity $entity
      */
     public function update(IStringerEntity $entity)
@@ -45,6 +49,8 @@ class UserGroupRepo extends GridRepo
     }
 
     /**
+     * @suppress PhanParamSignatureMismatch
+     *
      * @param Entity $entity
      */
     public function delete(IStringerEntity $entity)
