@@ -102,7 +102,7 @@ class FileTest extends TestCase
         $this->slugifyMock->expects($this->any())->method('slugify')->willReturnArgument(0);
         $this->uploaderMock->expects($this->any())->method('getErrors')->willReturn([]);
 
-        /** @var IStringerEntity|Entity $actualResult */
+        /** @var Entity $actualResult */
         $actualResult = $this->sut->create($postData, []);
 
         $this->assertInstanceOf(Entity::class, $actualResult);
@@ -136,7 +136,7 @@ class FileTest extends TestCase
         $this->uploaderMock->expects($this->any())->method('getErrors')->willReturn([]);
         $this->fileCategoryRepo->expects($this->any())->method('getById')->willReturn($fileCategory);
 
-        /** @var IStringerEntity|Entity $actualResult */
+        /** @var Entity $actualResult */
         $actualResult = $this->sut->create($postData, []);
 
         $this->assertInstanceOf(Entity::class, $actualResult);
@@ -170,7 +170,7 @@ class FileTest extends TestCase
         $this->uploaderMock->expects($this->any())->method('getErrors')->willReturn(['foo' => ['bar']]);
         $this->fileCategoryRepo->expects($this->any())->method('getById')->willReturn($fileCategory);
 
-        /** @var IStringerEntity|Entity $actualResult */
+        /** @var Entity $actualResult */
         $actualResult = $this->sut->create($postData, []);
 
         $this->assertInstanceOf(Entity::class, $actualResult);
@@ -216,7 +216,7 @@ class FileTest extends TestCase
     {
         $this->expectException(\InvalidArgumentException::class);
 
-        /** @var IStringerEntity|MockObject $entityStub */
+        /** @var Entity|MockObject $entityStub */
         $entityStub = $this->createMock(IStringerEntity::class);
 
         $this->sut->update($entityStub, [], []);
@@ -265,6 +265,7 @@ class FileTest extends TestCase
         $this->uploaderMock->expects($this->atLeastOnce())->method('delete');
         $this->uploaderMock->expects($this->atLeastOnce())->method('persist')->wilLReturn($paths);
 
+        /** @var Entity|MockObject $actualResult */
         $actualResult = $this->sut->update($entity, $postData, $fileData);
 
         $this->assertTrue($actualResult);
@@ -281,6 +282,7 @@ class FileTest extends TestCase
         $this->eventDispatcherMock->expects($this->atLeastOnce())->method('dispatch');
         $this->unitOfWorkMock->expects($this->once())->method('commit');
 
+        /** @var Entity|MockObject $actualResult */
         $actualResult = $this->sut->delete($entity);
 
         $this->assertTrue($actualResult);
@@ -293,6 +295,7 @@ class FileTest extends TestCase
 
         $this->gridRepoMock->expects($this->once())->method('getById')->willReturn($entity);
 
+        /** @var Entity|MockObject $actualResult */
         $actualResult = $this->sut->retrieveEntity($id);
 
         $this->assertSame($entity, $actualResult);
@@ -300,11 +303,10 @@ class FileTest extends TestCase
 
     public function testRetrieveList()
     {
-        $offset     = 0;
-        $limit      = 2;
-        $orders     = [];
-        $conditions = [];
-        $params     = [];
+        $offset  = 0;
+        $limit   = 2;
+        $sorting = [];
+        $filters = [];
 
         $id0            = 'foo';
         $entity0        = $this->sut->createEntity($id0);
@@ -314,7 +316,8 @@ class FileTest extends TestCase
 
         $this->gridRepoMock->expects($this->once())->method('getPage')->willReturn($expectedResult);
 
-        $actualResult = $this->sut->retrieveList($offset, $limit, $orders, $conditions, $params);
+        /** @var Entity|MockObject $actualResult */
+        $actualResult = $this->sut->retrieveList($offset, $limit, $sorting, $filters);
 
         $this->assertSame($expectedResult, $actualResult);
     }

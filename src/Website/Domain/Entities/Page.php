@@ -223,7 +223,7 @@ class Page implements IStringerEntity
     }
 
     /**
-     * @param string $isDraft
+     * @param bool $isDraft
      *
      * @return $this
      */

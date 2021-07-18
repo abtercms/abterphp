@@ -7,10 +7,10 @@ namespace AbterPhp\Files\Orm;
 use AbterPhp\Admin\Domain\Entities\User;
 use AbterPhp\Files\Domain\Entities\File as Entity;
 use AbterPhp\Files\Domain\Entities\FileCategory;
+use AbterPhp\Framework\Domain\Entities\IStringerEntity;
 use AbterPhp\Framework\Orm\GridRepo;
 use DateTime;
 use Exception;
-use Opulence\Orm\IEntity;
 use QB\Generic\Clause\Column;
 use QB\Generic\Clause\Table;
 use QB\Generic\Expr\Expr;
@@ -30,7 +30,7 @@ class FileRepo extends GridRepo
     /**
      * @param Entity $entity
      */
-    public function add(IEntity $entity)
+    public function add(IStringerEntity $entity)
     {
         assert($entity instanceof Entity);
 
@@ -40,7 +40,7 @@ class FileRepo extends GridRepo
     /**
      * @param Entity $entity
      */
-    public function update(IEntity $entity)
+    public function update(IStringerEntity $entity)
     {
         assert($entity instanceof Entity);
 
@@ -50,7 +50,7 @@ class FileRepo extends GridRepo
     /**
      * @param Entity $entity
      */
-    public function delete(IEntity $entity)
+    public function delete(IStringerEntity $entity)
     {
         assert($entity instanceof Entity);
 
@@ -214,16 +214,5 @@ class FileRepo extends GridRepo
         return [
             'files.public_name' => ISelect::DIRECTION_ASC,
         ];
-    }
-
-    /**
-     * @param IEntity $entity
-     */
-    protected function assert(IEntity $entity)
-    {
-        assert(
-            $entity instanceof Entity,
-            sprintf('entity of type %s expected, got %s', Entity::class, gettype($entity))
-        );
     }
 }

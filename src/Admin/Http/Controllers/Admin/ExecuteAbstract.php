@@ -13,7 +13,6 @@ use AbterPhp\Framework\Session\FlashService;
 use Exception;
 use Opulence\Http\Responses\RedirectResponse;
 use Opulence\Http\Responses\Response;
-use Opulence\Orm\OrmException;
 use Opulence\Routing\Urls\URLException;
 use Opulence\Routing\Urls\UrlGenerator;
 use Opulence\Sessions\ISession;
@@ -157,6 +156,9 @@ abstract class ExecuteAbstract extends AdminAbstract
         $entity = $this->repoService->retrieveEntity($entityId);
 
         try {
+            if (empty($entity)) {
+                throw new Exception();
+            }
             $this->repoService->delete($entity);
             $this->logger->info(sprintf(static::LOG_MSG_DELETE_SUCCESS, static::ENTITY_SINGULAR, $entityId));
             $this->flashService->mergeSuccessMessages([$this->getMessage(static::DELETE_SUCCESS)]);

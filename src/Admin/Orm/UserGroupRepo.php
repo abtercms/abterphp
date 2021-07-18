@@ -6,10 +6,10 @@ namespace AbterPhp\Admin\Orm;
 
 use AbterPhp\Admin\Domain\Entities\AdminResource;
 use AbterPhp\Admin\Domain\Entities\UserGroup as Entity;
+use AbterPhp\Framework\Domain\Entities\IStringerEntity;
 use AbterPhp\Framework\Orm\GridRepo;
 use AbterPhp\Framework\Orm\IdGeneratorUserTrait;
 use InvalidArgumentException;
-use Opulence\Orm\IEntity;
 use QB\Generic\Expr\Expr;
 use QB\MySQL\QueryBuilder\QueryBuilder;
 
@@ -25,9 +25,9 @@ class UserGroupRepo extends GridRepo
     protected $queryBuilder;
 
     /**
-     * @param IEntity $entity
+     * @param Entity $entity
      */
-    public function add(IEntity $entity)
+    public function add(IStringerEntity $entity)
     {
         assert($entity instanceof Entity, new InvalidArgumentException());
 
@@ -37,7 +37,7 @@ class UserGroupRepo extends GridRepo
     /**
      * @param Entity $entity
      */
-    public function update(IEntity $entity)
+    public function update(IStringerEntity $entity)
     {
         assert($entity instanceof Entity, new InvalidArgumentException());
 
@@ -47,7 +47,7 @@ class UserGroupRepo extends GridRepo
     /**
      * @param Entity $entity
      */
-    public function delete(IEntity $entity)
+    public function delete(IStringerEntity $entity)
     {
         assert($entity instanceof Entity, new InvalidArgumentException());
 

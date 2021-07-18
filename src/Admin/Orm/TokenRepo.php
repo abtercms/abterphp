@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace AbterPhp\Admin\Orm;
 
 use AbterPhp\Admin\Domain\Entities\Token as Entity;
+use AbterPhp\Framework\Domain\Entities\IStringerEntity;
 use AbterPhp\Framework\Orm\Repository;
 use DateTimeImmutable;
 use Exception;
 use InvalidArgumentException;
-use Opulence\Orm\IEntity;
 
 class TokenRepo extends Repository
 {
@@ -18,9 +18,9 @@ class TokenRepo extends Repository
     protected ?string $deletedAtColumn = self::COLUMN_DELETED_AT;
 
     /**
-     * @param IEntity $entity
+     * @param Entity $entity
      */
-    public function add(IEntity $entity)
+    public function add(IStringerEntity $entity)
     {
         assert($entity instanceof Entity, new InvalidArgumentException());
 
@@ -30,7 +30,7 @@ class TokenRepo extends Repository
     /**
      * @param Entity $entity
      */
-    public function update(IEntity $entity)
+    public function update(IStringerEntity $entity)
     {
         assert($entity instanceof Entity, new InvalidArgumentException());
 
@@ -40,7 +40,7 @@ class TokenRepo extends Repository
     /**
      * @param Entity $entity
      */
-    public function delete(IEntity $entity)
+    public function delete(IStringerEntity $entity)
     {
         assert($entity instanceof Entity, new InvalidArgumentException());
 

@@ -8,9 +8,7 @@ use AbterPhp\Framework\Database\PDO\Writer;
 use AbterPhp\Framework\Domain\Entities\IStringerEntity;
 use QB\Generic\Expr\Expr;
 use QB\Generic\QueryBuilder\IQueryBuilder;
-use QB\Generic\Statement\IDelete;
 use QB\Generic\Statement\ISelect;
-use QB\Generic\Statement\IUpdate;
 use QB\Generic\Statement\IWhereStatement;
 
 abstract class Repository implements IRepository

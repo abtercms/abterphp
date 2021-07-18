@@ -188,6 +188,8 @@ class File extends RepoServiceAbstract
         /** @var FileCategory $fileCategory */
         $fileCategory = $this->fileCategoryRepo->getById($categoryId);
 
+        assert($fileCategory === null || $fileCategory instanceof FileCategory);
+
         $entity
             ->setDescription($description)
             ->setCategory($fileCategory);

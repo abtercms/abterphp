@@ -12,7 +12,6 @@ use AbterPhp\Framework\Domain\Entities\IStringerEntity;
 use AbterPhp\Framework\Orm\GridRepo;
 use DateTime;
 use Exception;
-use Opulence\Orm\IEntity;
 use QB\Generic\Clause\Column;
 use QB\Generic\Expr\Expr;
 use QB\Generic\Statement\ISelect;

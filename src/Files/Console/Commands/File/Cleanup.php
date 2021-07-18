@@ -122,6 +122,8 @@ class Cleanup extends Command
 
         $paths = [];
         foreach ($entities as $entity) {
+            assert($entity instanceof Entity);
+
             $paths[$entity->getId()] = $this->uploader->getPath(
                 Uploader::DEFAULT_KEY,
                 $entity->getFilesystemName()

@@ -20,7 +20,9 @@ abstract class ApiAbstract extends Controller
     public const ENTITY_SINGULAR = '';
     public const ENTITY_PLURAL   = '';
 
-    public const LOG_MSG_GET_FAILURE    = 'Retrieving %1$s with id "%2$s" failed.';
+    public const FAILED_TO_FIND_ENTITY = 'Failed to find entity';
+
+    public const LOG_MSG_GET_FAILURE = 'Retrieving %1$s with id "%2$s" failed.';
 
     protected const LOG_MSG_CREATE_FAILURE = 'Creating %1$s failed.';
     protected const LOG_MSG_UPDATE_FAILURE = 'Updating %1$s with id "%2$s" failed.';
@@ -142,6 +144,10 @@ abstract class ApiAbstract extends Controller
 
             $fileData = $this->getFileData($data);
             $entity   = $this->repoService->retrieveEntity($entityId);
+            if (empty($entity)) {
+                throw new Exception(static::FAILED_TO_FIND_ENTITY);
+            }
+
             $this->repoService->update($entity, $data, $fileData);
         } catch (Exception $e) {
             if ($this->isEntityNotFound($e)) {
@@ -193,7 +199,7 @@ abstract class ApiAbstract extends Controller
             return false;
         }
 
-        return $e->getMessage() === 'Failed to find entity';
+        return $e->getMessage() === static::FAILED_TO_FIND_ENTITY;
     }
 
     /**
