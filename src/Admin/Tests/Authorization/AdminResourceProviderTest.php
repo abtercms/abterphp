@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace AbterPhp\Admin\Tests\Authorization;
 
 use AbterPhp\Admin\Authorization\AdminResourceProvider;
-use AbterPhp\Admin\Databases\Queries\AdminResourceAuthLoader;
+use AbterPhp\Admin\Database\Query\AdminResourceAuthLoader;
 use Casbin\Exceptions\CasbinException;
 use Casbin\Model\Model;
 use PHPUnit\Framework\MockObject\MockObject;

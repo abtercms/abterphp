@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace AbterPhp\Website\Databases\Queries;
+namespace AbterPhp\Files\Database\Query;
 
-use AbterPhp\Admin\Databases\Queries\IAuthLoader;
+use AbterPhp\Admin\Database\Query\IAuthLoader;
 use AbterPhp\Admin\Exception\Database;
 use Opulence\Databases\ConnectionPools\ConnectionPool;
 use Opulence\QueryBuilders\MySql\QueryBuilder;
 
 /** @phan-file-suppress PhanTypeMismatchArgument */
 
-class PageCategoryAuthLoader implements IAuthLoader
+class FileCategoryAuthLoader implements IAuthLoader
 {
     /** @var ConnectionPool */
     protected $connectionPool;
@@ -32,10 +32,10 @@ class PageCategoryAuthLoader implements IAuthLoader
     public function loadAll(): array
     {
         $query = (new QueryBuilder())
-            ->select('ug.identifier AS v0', 'pc.identifier AS v1')
-            ->from('user_groups_page_categories', 'ugpc')
-            ->innerJoin('page_categories', 'pc', 'ugpc.page_category_id = pc.id AND pc.deleted_at IS NULL')
-            ->innerJoin('user_groups', 'ug', 'ugpc.user_group_id = ug.id AND ug.deleted_at IS NULL')
+            ->select('ug.identifier AS v0', 'fc.identifier AS v1')
+            ->from('user_groups_file_categories', 'ugfc')
+            ->innerJoin('file_categories', 'fc', 'ugfc.file_category_id = fc.id AND fc.deleted_at IS NULL')
+            ->innerJoin('user_groups', 'ug', 'ugfc.user_group_id = ug.id AND ug.deleted_at IS NULL')
         ;
 
         $connection = $this->connectionPool->getReadConnection();

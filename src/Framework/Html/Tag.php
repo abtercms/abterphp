@@ -116,7 +116,7 @@ class Tag extends Node implements ITag
      *
      * @return $this
      */
-    public function addAttribute(string $key, string ...$values): self
+    public function addAttribute(string $key, ...$values): self
     {
         $this->attributes = Attributes::addItem($this->attributes, $key, ...$values);
 

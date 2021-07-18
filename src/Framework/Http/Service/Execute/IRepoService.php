@@ -24,9 +24,9 @@ interface IRepoService
     /**
      * @param string $entityId
      *
-     * @return IStringerEntity
+     * @return IStringerEntity|null
      */
-    public function retrieveEntity(string $entityId): IStringerEntity;
+    public function retrieveEntity(string $entityId): ?IStringerEntity;
 
     /**
      * @param int      $offset

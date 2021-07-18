@@ -66,7 +66,7 @@ class PageCategory implements IStringerEntity
      *
      * @return $this
      */
-    public function setName(string $name): PageCategory
+    public function setName(string $name): static
     {
         $this->name = $name;
 
@@ -86,7 +86,7 @@ class PageCategory implements IStringerEntity
      *
      * @return $this
      */
-    public function setIdentifier(string $identifier): PageCategory
+    public function setIdentifier(string $identifier): static
     {
         $this->identifier = $identifier;
 
@@ -106,7 +106,7 @@ class PageCategory implements IStringerEntity
      *
      * @return $this
      */
-    public function setUserGroups(array $userGroups): PageCategory
+    public function setUserGroups(array $userGroups): static
     {
         $this->userGroups = $userGroups;
 

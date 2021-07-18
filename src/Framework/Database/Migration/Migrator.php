@@ -102,7 +102,7 @@ class Migrator implements IMigrator
     public function runMigrations(): array
     {
         $runMigrationClasses = $this->executedMigrations->getAll();
-        $runMigrationClasses = $runMigrationClasses !== false ? $runMigrationClasses : [];
+        $runMigrationClasses ??= [];
         // We want to reset the array keys, which is why we grab the values
         $migrationClassesToRun = array_values(array_diff($this->allMigrationClasses, $runMigrationClasses));
         $migrations            = $this->resolveManyMigrations($migrationClassesToRun);

@@ -13,6 +13,7 @@ use AbterPhp\Files\Validation\Factory\File as ValidatorFactory;
 use AbterPhp\Framework\Domain\Entities\IStringerEntity;
 use AbterPhp\Framework\Filesystem\Uploader;
 use Cocur\Slugify\Slugify;
+use InvalidArgumentException;
 use League\Flysystem\FilesystemException;
 use Opulence\Events\Dispatchers\IEventDispatcher;
 use Opulence\Http\Requests\UploadedFile;
@@ -91,7 +92,7 @@ class File extends RepoServiceAbstract
      */
     public function update(IStringerEntity $entity, array $postData, array $fileData): bool
     {
-        assert($entity instanceof Entity, new \InvalidArgumentException());
+        assert($entity instanceof Entity, new InvalidArgumentException());
 
         $this->fillEntity($entity, $postData, $fileData);
 
@@ -113,7 +114,7 @@ class File extends RepoServiceAbstract
      */
     public function delete(IStringerEntity $entity): bool
     {
-        assert($entity instanceof Entity, new \InvalidArgumentException());
+        assert($entity instanceof Entity, new InvalidArgumentException());
 
         $this->deleteFile($entity);
 
@@ -131,7 +132,7 @@ class File extends RepoServiceAbstract
      */
     public function deleteFile(IStringerEntity $entity)
     {
-        assert($entity instanceof Entity, new \InvalidArgumentException());
+        assert($entity instanceof Entity, new InvalidArgumentException());
 
         $this->uploader->delete($entity->getOldFilesystemName());
     }
@@ -144,7 +145,7 @@ class File extends RepoServiceAbstract
      */
     public function uploadFile(IStringerEntity $entity, array $fileData)
     {
-        assert($entity instanceof Entity, new \InvalidArgumentException());
+        assert($entity instanceof Entity, new InvalidArgumentException());
 
         $paths = $this->uploader->persist($fileData);
 
@@ -179,7 +180,7 @@ class File extends RepoServiceAbstract
      */
     protected function fillEntity(IStringerEntity $entity, array $postData, array $fileData): IStringerEntity
     {
-        assert($entity instanceof Entity, new \InvalidArgumentException());
+        assert($entity instanceof Entity, new InvalidArgumentException());
 
         $categoryId  = $postData['category_id'];
         $description = $postData['description'];

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace AbterPhp\Website\Tests\Template\Loader;
 
 use AbterPhp\Framework\Template\ParsedTemplate;
-use AbterPhp\Website\Databases\Queries\BlockCache;
+use AbterPhp\Website\Database\Query\BlockCache;
 use AbterPhp\Website\Domain\Entities\Block as BlockEntity;
 use AbterPhp\Website\Orm\BlockRepo;
 use AbterPhp\Website\Template\Loader\Block;

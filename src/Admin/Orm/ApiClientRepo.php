@@ -6,10 +6,10 @@ namespace AbterPhp\Admin\Orm;
 
 use AbterPhp\Admin\Domain\Entities\AdminResource;
 use AbterPhp\Admin\Domain\Entities\ApiClient as Entity;
+use AbterPhp\Framework\Domain\Entities\IStringerEntity;
 use AbterPhp\Framework\Orm\GridRepo;
 use AbterPhp\Framework\Orm\IdGeneratorUserTrait;
 use InvalidArgumentException;
-use Opulence\Orm\IEntity;
 use QB\Generic\Expr\Expr;
 use QB\Generic\Statement\ISelect;
 use QB\MySQL\QueryBuilder\QueryBuilder;
@@ -26,9 +26,9 @@ class ApiClientRepo extends GridRepo
     protected ?string $deletedAtColumn = self::COLUMN_DELETED_AT;
 
     /**
-     * @param IEntity $entity
+     * @param Entity $entity
      */
-    public function add(IEntity $entity)
+    public function add(IStringerEntity $entity)
     {
         assert($entity instanceof Entity, new InvalidArgumentException());
 
@@ -38,7 +38,7 @@ class ApiClientRepo extends GridRepo
     /**
      * @param Entity $entity
      */
-    public function delete(IEntity $entity)
+    public function delete(IStringerEntity $entity)
     {
         assert($entity instanceof Entity, new InvalidArgumentException());
 
@@ -48,7 +48,7 @@ class ApiClientRepo extends GridRepo
     /**
      * @param Entity $entity
      */
-    public function update(IEntity $entity)
+    public function update(IStringerEntity $entity)
     {
         assert($entity instanceof Entity, new InvalidArgumentException());
 

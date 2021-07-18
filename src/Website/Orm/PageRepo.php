@@ -9,7 +9,6 @@ use AbterPhp\Website\Domain\Entities\Page as Entity;
 use AbterPhp\Website\Domain\Entities\Page\Assets as PageAssets;
 use AbterPhp\Website\Domain\Entities\PageCategory;
 use AbterPhp\Website\Domain\Entities\PageLayout\Assets as LayoutAssets;
-use Opulence\Orm\IEntity;
 use QB\Generic\Clause\Column;
 use QB\Generic\Clause\Table;
 use QB\Generic\Expr\Expr;
@@ -92,7 +91,7 @@ class PageRepo extends GridRepo
     }
 
 
-    public function createEntity(array $row): IEntity
+    public function createEntity(array $row): Entity
     {
         $meta     = $this->loadMeta($row);
         $assets   = $this->loadAssets($row);

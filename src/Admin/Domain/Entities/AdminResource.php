@@ -53,7 +53,7 @@ class AdminResource implements IStringerEntity
      *
      * @return $this
      */
-    public function setIdentifier(string $identifier): AdminResource
+    public function setIdentifier(string $identifier): static
     {
         $this->identifier = $identifier;
 

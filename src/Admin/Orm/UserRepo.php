@@ -65,7 +65,11 @@ class UserRepo extends GridRepo
      */
     public function getByClientId(string $clientId): ?Entity
     {
-        return parent::getOne(['client_id' => $clientId]);
+        $entity = parent::getOne(['client_id' => $clientId]);
+
+        assert($entity === null || $entity instanceof Entity);
+
+        return $entity;
     }
 
     /**
@@ -75,7 +79,11 @@ class UserRepo extends GridRepo
      */
     public function getByUsername(string $username): ?Entity
     {
-        return parent::getOne(['username' => $username]);
+        $entity = parent::getOne(['username' => $username]);
+
+        assert($entity === null || $entity instanceof Entity);
+
+        return $entity;
     }
 
     /**
@@ -85,7 +93,11 @@ class UserRepo extends GridRepo
      */
     public function getByEmail(string $email): ?Entity
     {
-        return parent::getOne(['email' => $email]);
+        $entity = parent::getOne(['email' => $email]);
+
+        assert($entity === null || $entity instanceof Entity);
+
+        return $entity;
     }
 
     /**
@@ -141,7 +153,7 @@ class UserRepo extends GridRepo
      */
     protected function createUserGroups(array $row): array
     {
-        if (empty($data['user_group_ids'])) {
+        if (empty($row['user_group_ids'])) {
             return [];
         }
 
@@ -186,6 +198,9 @@ class UserRepo extends GridRepo
             ->where('deleted_at IS NOT NULL');
     }
 
+    /**
+     * @return array<string,string>
+     */
     public function getDefaultSorting(): array
     {
         return [

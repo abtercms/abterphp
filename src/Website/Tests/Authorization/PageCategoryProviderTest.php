@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace AbterPhp\Website\Tests\Authorization;
 
 use AbterPhp\Website\Authorization\PageCategoryProvider;
-use AbterPhp\Website\Databases\Queries\PageCategoryAuthLoader as AuthLoader;
+use AbterPhp\Website\Database\Query\PageCategoryAuthLoader as AuthLoader;
 use Casbin\Exceptions\CasbinException;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;

@@ -65,7 +65,7 @@ class LoginAttempt implements IStringerEntity
      *
      * @return $this
      */
-    public function setIpHash(string $ipHash): LoginAttempt
+    public function setIpHash(string $ipHash): static
     {
         $this->ipHash = $ipHash;
 
@@ -83,7 +83,7 @@ class LoginAttempt implements IStringerEntity
     /**
      * @param string $username
      */
-    public function setUsername(string $username): LoginAttempt
+    public function setUsername(string $username): static
     {
         $this->username = $username;
 
@@ -101,7 +101,7 @@ class LoginAttempt implements IStringerEntity
     /**
      * @param string|null $ipAddress
      */
-    public function setIpAddress(?string $ipAddress): LoginAttempt
+    public function setIpAddress(?string $ipAddress): static
     {
         $this->ipAddress = $ipAddress;
 

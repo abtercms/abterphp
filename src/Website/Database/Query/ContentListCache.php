@@ -2,16 +2,15 @@
 
 declare(strict_types=1);
 
-namespace AbterPhp\Files\Databases\Queries;
+namespace AbterPhp\Website\Database\Query;
 
-use AbterPhp\Admin\Databases\Queries\IAuthLoader;
 use AbterPhp\Admin\Exception\Database;
 use Opulence\Databases\ConnectionPools\ConnectionPool;
+use Opulence\QueryBuilders\Conditions\ConditionFactory;
 use Opulence\QueryBuilders\MySql\QueryBuilder;
 
 /** @phan-file-suppress PhanTypeMismatchArgument */
-
-class FileCategoryAuthLoader implements IAuthLoader
+class ContentListCache
 {
     /** @var ConnectionPool */
     protected $connectionPool;
@@ -27,15 +26,22 @@ class FileCategoryAuthLoader implements IAuthLoader
     }
 
     /**
-     * @return array
+     * @param string[] $identifiers
+     * @param string   $cacheTime
+     *
+     * @return bool
+     * @throws \Opulence\QueryBuilders\InvalidQueryException
      */
-    public function loadAll(): array
+    public function hasAnyChangedSince(array $identifiers, string $cacheTime): bool
     {
-        $query = (new QueryBuilder())
-            ->select('ug.identifier AS v0', 'fc.identifier AS v1')
-            ->from('user_groups_file_categories', 'ugfc')
-            ->innerJoin('file_categories', 'fc', 'ugfc.file_category_id = fc.id AND fc.deleted_at IS NULL')
-            ->innerJoin('user_groups', 'ug', 'ugfc.user_group_id = ug.id AND ug.deleted_at IS NULL')
+        $conditions = new ConditionFactory();
+        $query      = (new QueryBuilder())
+            ->select('COUNT(*) AS count')
+            ->from('lists')
+            ->where('lists.deleted_at IS NULL')
+            ->andWhere($conditions->in('lists.identifier', $identifiers))
+            ->andWhere('lists.updated_at > ?')
+            ->addUnnamedPlaceholderValue($cacheTime, \PDO::PARAM_STR)
         ;
 
         $connection = $this->connectionPool->getReadConnection();
@@ -45,6 +51,6 @@ class FileCategoryAuthLoader implements IAuthLoader
             throw new Database($statement->errorInfo());
         }
 
-        return $statement->fetchAll(\PDO::FETCH_ASSOC);
+        return $statement->fetchColumn() > 0;
     }
 }

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace AbterPhp\Framework\Orm;
 
-use Opulence\Orm\IEntity;
+use AbterPhp\Framework\Domain\Entities\IStringerEntity;
 use QB\Generic\Expr\Expr;
 use QB\Generic\IQueryPart;
 use QB\Generic\Statement\ISelect;
@@ -17,7 +17,7 @@ abstract class GridRepo extends Repository implements IGridRepo
      * @param string[] $sorting
      * @param array    $filters
      *
-     * @return IEntity[]
+     * @return IStringerEntity[]
      */
     public function getPage(int $offset, int $limit, array $sorting, array $filters): array
     {

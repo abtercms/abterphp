@@ -61,7 +61,7 @@ return [
     ],
     Module::MIGRATION_PATHS     => [
         Priorities::NORMAL => [
-            realpath(__DIR__ . '/Databases/Migrations'),
+            realpath(__DIR__ . '/Database/Migration'),
         ],
     ],
     Module::RESOURCE_PATH       => realpath(__DIR__ . '/resources'),

@@ -79,7 +79,7 @@ class Message implements IStringerEntity
      *
      * @return $this
      */
-    public function setForm(Form $form): Message
+    public function setForm(Form $form): static
     {
         $this->form = $form;
 
@@ -99,7 +99,7 @@ class Message implements IStringerEntity
      *
      * @return $this
      */
-    public function setSubject(string $subject): Message
+    public function setSubject(string $subject): static
     {
         $this->subject = $subject;
 
@@ -119,7 +119,7 @@ class Message implements IStringerEntity
      *
      * @return $this
      */
-    public function setBody(string $body): Message
+    public function setBody(string $body): static
     {
         $this->body = $body;
 
@@ -139,7 +139,7 @@ class Message implements IStringerEntity
      *
      * @return $this
      */
-    public function setFromName(string $fromName): Message
+    public function setFromName(string $fromName): static
     {
         $this->fromName = $fromName;
 
@@ -159,7 +159,7 @@ class Message implements IStringerEntity
      *
      * @return $this
      */
-    public function setFromEmail(string $fromEmail): Message
+    public function setFromEmail(string $fromEmail): static
     {
         $this->fromEmail = $fromEmail;
 

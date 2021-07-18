@@ -187,10 +187,10 @@ abstract class RepoServiceAbstract implements IRepoService
     /**
      * @param string $entityId
      *
-     * @return IStringerEntity
+     * @return IStringerEntity|null
      * @throws OrmException
      */
-    public function retrieveEntity(string $entityId): IStringerEntity
+    public function retrieveEntity(string $entityId): ?IStringerEntity
     {
         /** @var IStringerEntity $entity */
         return $this->repo->getById($entityId);
@@ -201,7 +201,6 @@ abstract class RepoServiceAbstract implements IRepoService
      * @param int      $limit
      * @param string[] $sorting
      * @param array    $filters
-     * @param array    $params
      *
      * @return IStringerEntity[]
      */

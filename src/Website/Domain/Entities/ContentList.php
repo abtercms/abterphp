@@ -115,7 +115,7 @@ class ContentList implements IStringerEntity
      *
      * @return $this
      */
-    public function setIdentifier(string $identifier): self
+    public function setIdentifier(string $identifier): static
     {
         $this->identifier = $identifier;
 
@@ -135,7 +135,7 @@ class ContentList implements IStringerEntity
      *
      * @return $this
      */
-    public function setClasses(string $classes): self
+    public function setClasses(string $classes): static
     {
         $this->classes = $classes;
 
@@ -155,7 +155,7 @@ class ContentList implements IStringerEntity
      *
      * @return $this
      */
-    public function setName(string $name): self
+    public function setName(string $name): static
     {
         $this->name = $name;
 
@@ -175,7 +175,7 @@ class ContentList implements IStringerEntity
      *
      * @return $this
      */
-    public function setProtected(bool $protected): self
+    public function setProtected(bool $protected): static
     {
         $this->protected = $protected;
 
@@ -195,7 +195,7 @@ class ContentList implements IStringerEntity
      *
      * @return $this
      */
-    public function setWithLinks(bool $withLinks): self
+    public function setWithLinks(bool $withLinks): static
     {
         $this->withLinks = $withLinks;
 
@@ -215,7 +215,7 @@ class ContentList implements IStringerEntity
      *
      * @return $this
      */
-    public function setWithLabelLinks(bool $withLabelLinks): self
+    public function setWithLabelLinks(bool $withLabelLinks): static
     {
         $this->withLabelLinks = $withLabelLinks;
 
@@ -235,7 +235,7 @@ class ContentList implements IStringerEntity
      *
      * @return $this
      */
-    public function setWithHtml(bool $withHtml): self
+    public function setWithHtml(bool $withHtml): static
     {
         $this->withHtml = $withHtml;
 
@@ -255,7 +255,7 @@ class ContentList implements IStringerEntity
      *
      * @return $this
      */
-    public function setWithImages(bool $withImages): self
+    public function setWithImages(bool $withImages): static
     {
         $this->withImages = $withImages;
 
@@ -275,7 +275,7 @@ class ContentList implements IStringerEntity
      *
      * @return $this
      */
-    public function setWithClasses(bool $withClasses): self
+    public function setWithClasses(bool $withClasses): static
     {
         $this->withClasses = $withClasses;
 
@@ -295,7 +295,7 @@ class ContentList implements IStringerEntity
      *
      * @return $this
      */
-    public function setItems(?array $items = null): self
+    public function setItems(?array $items = null): static
     {
         $this->items = $items;
 
@@ -307,7 +307,7 @@ class ContentList implements IStringerEntity
      *
      * @return ContentList
      */
-    public function addItem(Item $item): self
+    public function addItem(Item $item): static
     {
         $this->items[] = $item;
 

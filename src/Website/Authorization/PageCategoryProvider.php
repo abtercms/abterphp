@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace AbterPhp\Website\Authorization;
 
 use AbterPhp\Admin\Authorization\PolicyProviderTrait;
-use AbterPhp\Admin\Databases\Queries\IAuthLoader;
+use AbterPhp\Admin\Database\Query\IAuthLoader;
 use Casbin\Exceptions\CasbinException;
 use Casbin\Model\Model;
 use Casbin\Persist\Adapter as CasbinAdapter;

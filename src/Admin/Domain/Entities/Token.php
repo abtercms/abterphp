@@ -70,7 +70,7 @@ class Token implements IStringerEntity
     /**
      * @param string $apiClientId
      */
-    public function setApiClientId(string $apiClientId): Token
+    public function setApiClientId(string $apiClientId): static
     {
         $this->apiClientId = $apiClientId;
 
@@ -88,7 +88,7 @@ class Token implements IStringerEntity
     /**
      * @param DateTimeImmutable $expiresAt
      */
-    public function setExpiresAt(DateTimeImmutable $expiresAt): Token
+    public function setExpiresAt(DateTimeImmutable $expiresAt): static
     {
         $this->expiresAt = $expiresAt;
 
@@ -106,7 +106,7 @@ class Token implements IStringerEntity
     /**
      * @param DateTimeImmutable|null $revokedAt
      */
-    public function setRevokedAt(?DateTimeImmutable $revokedAt): Token
+    public function setRevokedAt(?DateTimeImmutable $revokedAt): static
     {
         $this->revokedAt = $revokedAt;
 

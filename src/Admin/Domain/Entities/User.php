@@ -87,7 +87,7 @@ class User implements IStringerEntity
      *
      * @return $this
      */
-    public function setUsername(string $username): User
+    public function setUsername(string $username): static
     {
         $this->username = $username;
 
@@ -107,7 +107,7 @@ class User implements IStringerEntity
      *
      * @return $this
      */
-    public function setEmail(string $email): User
+    public function setEmail(string $email): static
     {
         $this->email = $email;
 
@@ -127,7 +127,7 @@ class User implements IStringerEntity
      *
      * @return $this
      */
-    public function setPassword(string $password): User
+    public function setPassword(string $password): static
     {
         $this->password = $password;
 
@@ -147,7 +147,7 @@ class User implements IStringerEntity
      *
      * @return $this
      */
-    public function setCanLogin(bool $canLogin): User
+    public function setCanLogin(bool $canLogin): static
     {
         $this->canLogin = $canLogin;
 
@@ -167,7 +167,7 @@ class User implements IStringerEntity
      *
      * @return $this
      */
-    public function setIsGravatarAllowed(bool $isGravatarAllowed): User
+    public function setIsGravatarAllowed(bool $isGravatarAllowed): static
     {
         $this->isGravatarAllowed = $isGravatarAllowed;
 
@@ -187,7 +187,7 @@ class User implements IStringerEntity
      *
      * @return $this
      */
-    public function setUserLanguage(UserLanguage $userLanguage): User
+    public function setUserLanguage(UserLanguage $userLanguage): static
     {
         $this->userLanguage = $userLanguage;
 
@@ -207,7 +207,7 @@ class User implements IStringerEntity
      *
      * @return $this
      */
-    public function setUserGroups(array $userGroups): User
+    public function setUserGroups(array $userGroups): static
     {
         foreach ($userGroups as $userGroup) {
             assert($userGroup instanceof UserGroup, new \InvalidArgumentException());

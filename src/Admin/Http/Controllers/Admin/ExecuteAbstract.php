@@ -10,6 +10,7 @@ use AbterPhp\Framework\Form\Extra\DefaultButtons;
 use AbterPhp\Framework\Http\Service\Execute\IRepoService;
 use AbterPhp\Framework\I18n\ITranslator;
 use AbterPhp\Framework\Session\FlashService;
+use Exception;
 use Opulence\Http\Responses\RedirectResponse;
 use Opulence\Http\Responses\Response;
 use Opulence\Orm\OrmException;
@@ -92,7 +93,7 @@ abstract class ExecuteAbstract extends AdminAbstract
 
             $this->logger->info(sprintf(static::LOG_MSG_CREATE_SUCCESS, static::ENTITY_SINGULAR));
             $this->flashService->mergeSuccessMessages([$this->getMessage(static::CREATE_SUCCESS)]);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->flashService->mergeErrorMessages([$this->getMessage(static::CREATE_FAILURE)]);
             $this->logger->info(
                 sprintf(static::LOG_MSG_CREATE_FAILURE, static::ENTITY_SINGULAR),
@@ -118,9 +119,8 @@ abstract class ExecuteAbstract extends AdminAbstract
 
         $errors = $this->repoService->validateForm(array_merge($postData, $fileData), IRepoService::UPDATE);
 
-        try {
-            $entity = $this->repoService->retrieveEntity($entityId);
-        } catch (OrmException $e) {
+        $entity = $this->repoService->retrieveEntity($entityId);
+        if (empty($entity)) {
             return $this->redirectToNext();
         }
 
@@ -135,7 +135,7 @@ abstract class ExecuteAbstract extends AdminAbstract
             $this->repoService->update($entity, $postData, $fileData);
             $this->logger->info(sprintf(static::LOG_MSG_UPDATE_SUCCESS, static::ENTITY_SINGULAR, $entityId));
             $this->flashService->mergeSuccessMessages([$this->getMessage(static::UPDATE_SUCCESS)]);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->logger->error(
                 sprintf(static::LOG_MSG_UPDATE_FAILURE, static::ENTITY_SINGULAR, $entityId),
                 $this->getExceptionContext($e)
@@ -160,7 +160,7 @@ abstract class ExecuteAbstract extends AdminAbstract
             $this->repoService->delete($entity);
             $this->logger->info(sprintf(static::LOG_MSG_DELETE_SUCCESS, static::ENTITY_SINGULAR, $entityId));
             $this->flashService->mergeSuccessMessages([$this->getMessage(static::DELETE_SUCCESS)]);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->logger->error(
                 sprintf(static::LOG_MSG_DELETE_FAILURE, static::ENTITY_SINGULAR, $entityId),
                 [static::LOG_CONTEXT_EXCEPTION => $e->getMessage()]

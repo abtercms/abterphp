@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace AbterPhp\Files\Tests\Authorization;
 
 use AbterPhp\Files\Authorization\FileCategoryProvider;
-use AbterPhp\Files\Databases\Queries\FileCategoryAuthLoader as AuthLoader;
+use AbterPhp\Files\Database\Query\FileCategoryAuthLoader as AuthLoader;
 use Casbin\Model\Model;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;

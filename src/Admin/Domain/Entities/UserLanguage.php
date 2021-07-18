@@ -57,7 +57,7 @@ class UserLanguage implements IStringerEntity
      *
      * @return $this
      */
-    public function setIdentifier(string $identifier): UserLanguage
+    public function setIdentifier(string $identifier): static
     {
         $this->identifier = $identifier;
 
@@ -77,7 +77,7 @@ class UserLanguage implements IStringerEntity
      *
      * @return $this
      */
-    public function setName(string $name): UserLanguage
+    public function setName(string $name): static
     {
         $this->name = $name;
 

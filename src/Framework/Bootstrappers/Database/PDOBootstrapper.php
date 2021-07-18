@@ -12,7 +12,6 @@ use Opulence\Ioc\Bootstrappers\Bootstrapper;
 use Opulence\Ioc\Bootstrappers\ILazyBootstrapper;
 use Opulence\Ioc\IContainer;
 use PDO;
-use QB\Extra\PDOWrapper;
 
 class PDOBootstrapper extends Bootstrapper implements ILazyBootstrapper
 {

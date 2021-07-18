@@ -8,7 +8,7 @@ use AbterPhp\Framework\Template\IData;
 use AbterPhp\Framework\Template\ILoader;
 use AbterPhp\Framework\Template\Data;
 use AbterPhp\Framework\Template\ParsedTemplate;
-use AbterPhp\Website\Databases\Queries\BlockCache;
+use AbterPhp\Website\Database\Query\BlockCache;
 use AbterPhp\Website\Orm\BlockRepo;
 
 class Block implements ILoader

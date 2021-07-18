@@ -6,7 +6,6 @@ namespace AbterPhp\Website\Orm;
 
 use AbterPhp\Framework\Orm\GridRepo;
 use AbterPhp\Website\Domain\Entities\ContentList as Entity;
-use Opulence\Orm\IEntity;
 use QB\Generic\Statement\ISelect;
 use QB\MySQL\QueryBuilder\QueryBuilder;
 
@@ -54,9 +53,9 @@ class ContentListRepo extends GridRepo
     /**
      * @param array $row
      *
-     * @return IEntity
+     * @return Entity
      */
-    public function createEntity(array $row): IEntity
+    public function createEntity(array $row): Entity
     {
         return new Entity(
             $row['id'],

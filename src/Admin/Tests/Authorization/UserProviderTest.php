@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace AbterPhp\Admin\Tests\Authorization;
 
 use AbterPhp\Admin\Authorization\UserProvider;
-use AbterPhp\Admin\Databases\Queries\UserAuthLoader;
+use AbterPhp\Admin\Database\Query\UserAuthLoader;
 use Casbin\Exceptions\CasbinException;
 use Casbin\Model\Model;
 use PHPUnit\Framework\MockObject\MockObject;

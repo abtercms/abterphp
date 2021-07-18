@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace AbterPhp\Admin\Orm;
 
 use AbterPhp\Admin\Domain\Entities\LoginAttempt as Entity;
+use AbterPhp\Framework\Domain\Entities\IStringerEntity;
 use AbterPhp\Framework\Orm\Repository;
 use InvalidArgumentException;
-use Opulence\Orm\IEntity;
 
 class LoginAttemptRepo extends Repository
 {
@@ -16,9 +16,9 @@ class LoginAttemptRepo extends Repository
     protected ?string $deletedAtColumn = self::COLUMN_DELETED_AT;
 
     /**
-     * @param IEntity $entity
+     * @param Entity $entity
      */
-    public function add(IEntity $entity)
+    public function add(IStringerEntity $entity)
     {
         assert($entity instanceof Entity, new InvalidArgumentException());
 
@@ -28,7 +28,7 @@ class LoginAttemptRepo extends Repository
     /**
      * @param Entity $entity
      */
-    public function update(IEntity $entity)
+    public function update(IStringerEntity $entity)
     {
         assert($entity instanceof Entity, new InvalidArgumentException());
 
@@ -38,7 +38,7 @@ class LoginAttemptRepo extends Repository
     /**
      * @param Entity $entity
      */
-    public function delete(IEntity $entity)
+    public function delete(IStringerEntity $entity)
     {
         assert($entity instanceof Entity, new InvalidArgumentException());
 
@@ -52,7 +52,11 @@ class LoginAttemptRepo extends Repository
      */
     public function getByIdentifier(string $identifier): ?Entity
     {
-        return $this->getOne(['identifier' => $identifier]);
+        $entity = $this->getOne(['identifier' => $identifier]);
+
+        assert($entity === null || $entity instanceof Entity);
+
+        return $entity;
     }
 
     /**

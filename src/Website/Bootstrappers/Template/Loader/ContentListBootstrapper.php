@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace AbterPhp\Website\Bootstrappers\Template\Loader;
 
-use AbterPhp\Website\Databases\Queries\ContentListCache as Cache;
+use AbterPhp\Website\Database\Query\ContentListCache as Cache;
 use AbterPhp\Website\Orm\ContentListItemRepo as ItemRepo;
 use AbterPhp\Website\Orm\ContentListRepo as Repo;
 use AbterPhp\Website\Template\Builder\ContentList\DefinitionList as DefinitionListBuilder;

@@ -54,7 +54,11 @@ class TokenRepo extends Repository
      */
     public function getByClientId(string $clientId): ?Entity
     {
-        return $this->getOne(['api_client_id' => $clientId]);
+        $entity = $this->getOne(['api_client_id' => $clientId]);
+
+        assert($entity === null || $entity instanceof Entity);
+
+        return $entity;
     }
 
     /**

@@ -57,7 +57,11 @@ class UserLanguageRepo extends GridRepo
      */
     public function getByIdentifier(string $identifier): ?Entity
     {
-        return parent::getOne(['identifier' => $identifier]);
+        $entity = parent::getOne(['identifier' => $identifier]);
+
+        assert($entity === null || $entity instanceof Entity);
+
+        return $entity;
     }
 
     /**

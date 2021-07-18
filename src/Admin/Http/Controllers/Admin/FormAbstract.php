@@ -16,7 +16,6 @@ use Casbin\Exceptions\CasbinException;
 use Opulence\Events\Dispatchers\IEventDispatcher;
 use Opulence\Http\Requests\RequestMethods;
 use Opulence\Http\Responses\Response;
-use Opulence\Orm\OrmException;
 use Opulence\Routing\Urls\URLException;
 use Opulence\Routing\Urls\UrlGenerator;
 use Opulence\Sessions\ISession;
@@ -147,17 +146,15 @@ abstract class FormAbstract extends AdminAbstract
     {
         $flashService = $this->flashService;
 
-        try {
-            /** @var IStringerEntity $entity */
-            $entity = $this->repo->getById($entityId);
-        } catch (OrmException $e) {
+        /** @var IStringerEntity $entity */
+        $entity = $this->repo->getById($entityId);
+        if (!$entity) {
             $errorMessage = $this->getMessage(static::ENTITY_LOAD_FAILURE);
 
             $flashService->mergeErrorMessages([$errorMessage]);
 
             $this->logger->info(
                 sprintf(static::LOG_MSG_LOAD_FAILURE, static::ENTITY_SINGULAR),
-                $this->getExceptionContext($e)
             );
 
             return $this->createEntity('');

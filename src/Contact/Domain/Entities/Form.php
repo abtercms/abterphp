@@ -99,7 +99,7 @@ class Form implements IStringerEntity
      *
      * @return $this
      */
-    public function setName(string $name): Form
+    public function setName(string $name): static
     {
         $this->name = $name;
 
@@ -111,7 +111,7 @@ class Form implements IStringerEntity
      *
      * @return $this
      */
-    public function setIdentifier(string $identifier): Form
+    public function setIdentifier(string $identifier): static
     {
         $this->identifier = $identifier;
 
@@ -131,7 +131,7 @@ class Form implements IStringerEntity
      *
      * @return $this
      */
-    public function setToName(string $toName): Form
+    public function setToName(string $toName): static
     {
         $this->toName = $toName;
 
@@ -151,7 +151,7 @@ class Form implements IStringerEntity
      *
      * @return $this
      */
-    public function setToEmail(string $toEmail): Form
+    public function setToEmail(string $toEmail): static
     {
         $this->toEmail = $toEmail;
 
@@ -171,7 +171,7 @@ class Form implements IStringerEntity
      *
      * @return $this
      */
-    public function setSuccessUrl(string $successUrl): Form
+    public function setSuccessUrl(string $successUrl): static
     {
         $this->successUrl = $successUrl;
 
@@ -191,7 +191,7 @@ class Form implements IStringerEntity
      *
      * @return $this
      */
-    public function setFailureUrl(string $failureUrl): Form
+    public function setFailureUrl(string $failureUrl): static
     {
         $this->failureUrl = $failureUrl;
 
@@ -211,7 +211,7 @@ class Form implements IStringerEntity
      *
      * @return $this
      */
-    public function setMaxBodyLength(int $maxBodyLength): Form
+    public function setMaxBodyLength(int $maxBodyLength): static
     {
         $this->maxBodyLength = $maxBodyLength;
 

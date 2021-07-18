@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace AbterPhp\Admin\Domain\Entities;
 
 use AbterPhp\Framework\Domain\Entities\IStringerEntity;
+use InvalidArgumentException;
 
 class UserGroup implements IStringerEntity
 {
@@ -67,7 +68,7 @@ class UserGroup implements IStringerEntity
      *
      * @return $this
      */
-    public function setIdentifier(string $identifier): UserGroup
+    public function setIdentifier(string $identifier): static
     {
         $this->identifier = $identifier;
 
@@ -87,7 +88,7 @@ class UserGroup implements IStringerEntity
      *
      * @return $this
      */
-    public function setName(string $name): UserGroup
+    public function setName(string $name): static
     {
         $this->name = $name;
 
@@ -107,10 +108,10 @@ class UserGroup implements IStringerEntity
      *
      * @return $this
      */
-    public function setAdminResources(array $adminResources): UserGroup
+    public function setAdminResources(array $adminResources): static
     {
         foreach ($adminResources as $adminResource) {
-            assert($adminResource instanceof AdminResource, new \InvalidArgumentException());
+            assert($adminResource instanceof AdminResource, new InvalidArgumentException());
         }
 
         $this->adminResources = $adminResources;

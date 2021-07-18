@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace AbterPhp\Admin\Authorization;
 
-use AbterPhp\Admin\Databases\Queries\AdminResourceAuthLoader as AuthLoader;
+use AbterPhp\Admin\Database\Query\AdminResourceAuthLoader as AuthLoader;
 use Casbin\Exceptions\CasbinException;
 use Casbin\Model\Model;
 use Casbin\Persist\Adapter as CasbinAdapter;

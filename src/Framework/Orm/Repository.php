@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace AbterPhp\Framework\Orm;
 
 use AbterPhp\Framework\Database\PDO\Writer;
-use Opulence\Orm\IEntity;
+use AbterPhp\Framework\Domain\Entities\IStringerEntity;
 use QB\Generic\Expr\Expr;
 use QB\Generic\QueryBuilder\IQueryBuilder;
 use QB\Generic\Statement\IDelete;
@@ -65,9 +65,9 @@ abstract class Repository implements IRepository
     }
 
     /**
-     * @param IEntity $entity
+     * @param IStringerEntity $entity
      */
-    public function add(IEntity $entity)
+    public function add(IStringerEntity $entity)
     {
         $data   = $this->getData($entity);
         $keys   = array_keys($data);
@@ -83,9 +83,9 @@ abstract class Repository implements IRepository
     }
 
     /**
-     * @param IEntity $entity
+     * @param IStringerEntity $entity
      */
-    public function update(IEntity $entity)
+    public function update(IStringerEntity $entity)
     {
         $update = $this->queryBuilder
             ->update($this->tableName)
@@ -97,9 +97,9 @@ abstract class Repository implements IRepository
     }
 
     /**
-     * @param IEntity $entity
+     * @param IStringerEntity $entity
      */
-    public function delete(IEntity $entity)
+    public function delete(IStringerEntity $entity)
     {
         if ($this->deletedAtColumn === null) {
             $delete = $this->queryBuilder->delete()
@@ -115,7 +115,7 @@ abstract class Repository implements IRepository
     }
 
     /**
-     * @return IEntity[]
+     * @return IStringerEntity[]
      */
     public function getAll(): array
     {
@@ -131,9 +131,9 @@ abstract class Repository implements IRepository
      *
      * @param int|string $id The Id of the entity we're searching for
      *
-     * @return IEntity|null The entity with the input Id
+     * @return IStringerEntity|null The entity with the input Id
      */
-    public function getById($id): ?IEntity
+    public function getById($id): ?IStringerEntity
     {
         return $this->getOne([$this->idColumn => $id]);
     }
@@ -141,9 +141,9 @@ abstract class Repository implements IRepository
     /**
      * @param array $where
      *
-     * @return IEntity|null
+     * @return IStringerEntity|null
      */
-    protected function getOne(array $where): ?IEntity
+    protected function getOne(array $where): ?IStringerEntity
     {
         $select = $this->getBaseQuery();
         foreach ($where as $k => $v) {
@@ -169,11 +169,11 @@ abstract class Repository implements IRepository
 
     /**
      * @param IWhereStatement $select
-     * @param IEntity         $entity
+     * @param IStringerEntity $entity
      *
      * @return IWhereStatement $select
      */
-    protected function addWhereByEntity(IWhereStatement $select, IEntity $entity): ISelect|IUpdate|IDelete
+    protected function addWhereByEntity(IWhereStatement $select, IStringerEntity $entity): IWhereStatement
     {
         $select = $select->where(new Expr($this->idColumn . ' = ?', [$entity->getId()]));
 
@@ -185,13 +185,13 @@ abstract class Repository implements IRepository
     }
 
     /**
-     * @param IEntity $entity
+     * @param IStringerEntity $entity
      *
      * @return array
      */
-    protected function getData(IEntity $entity): array
+    protected function getData(IStringerEntity $entity): array
     {
-        return $entity->toData();
+        return $entity->toData() ?? [];
     }
 
     /**
@@ -213,7 +213,7 @@ abstract class Repository implements IRepository
     /**
      * @param array<string,mixed> $rows
      *
-     * @return IEntity[]
+     * @return IStringerEntity[]
      */
     public function createCollection(array $rows): array
     {
@@ -241,7 +241,7 @@ abstract class Repository implements IRepository
     /**
      * @param array $row
      *
-     * @return IEntity
+     * @return IStringerEntity
      */
-    abstract public function createEntity(array $row): IEntity;
+    abstract public function createEntity(array $row): IStringerEntity;
 }

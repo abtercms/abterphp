@@ -134,7 +134,7 @@ class FileCategory extends Base
      */
     protected function addUserGroups(Entity $entity): FileCategory
     {
-        $allUserGroups = $this->userGroupRepo->getAll();
+        $allUserGroups = $this->userGroupRepo->getAll() ?? [];
         $userGroupIds  = $this->getUserGroupIds($entity);
 
         $options = $this->createUserGroupOptions($allUserGroups, $userGroupIds);

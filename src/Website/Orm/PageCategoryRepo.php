@@ -8,7 +8,6 @@ use AbterPhp\Admin\Domain\Entities\UserGroup;
 use AbterPhp\Framework\Orm\GridRepo;
 use AbterPhp\Framework\Orm\IdGeneratorUserTrait;
 use AbterPhp\Website\Domain\Entities\PageCategory as Entity;
-use Opulence\Orm\IEntity;
 use QB\Generic\Clause\Table;
 use QB\Generic\Statement\ISelect;
 use QB\MySQL\QueryBuilder\QueryBuilder;
@@ -47,7 +46,7 @@ class PageCategoryRepo extends GridRepo
         ];
     }
 
-    public function createEntity(array $row): IEntity
+    public function createEntity(array $row): Entity
     {
         $userGroups = $this->loadUserGroups($row);
 

@@ -8,7 +8,7 @@ use AbterPhp\Framework\Exception\Config;
 use AbterPhp\Framework\Template\IBuilder;
 use AbterPhp\Framework\Template\IData;
 use AbterPhp\Framework\Template\ParsedTemplate;
-use AbterPhp\Website\Databases\Queries\ContentListCache as Cache;
+use AbterPhp\Website\Database\Query\ContentListCache as Cache;
 use AbterPhp\Website\Domain\Entities\ContentList as Entity;
 use AbterPhp\Website\Domain\Entities\ContentListItem as Item;
 use AbterPhp\Website\Orm\ContentListItemRepo as ItemRepo;

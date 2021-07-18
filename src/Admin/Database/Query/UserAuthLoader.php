@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AbterPhp\Admin\Databases\Queries;
+namespace AbterPhp\Admin\Database\Query;
 
 use AbterPhp\Admin\Exception\Database;
 use Opulence\Databases\ConnectionPools\ConnectionPool;

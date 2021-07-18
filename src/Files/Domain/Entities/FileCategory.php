@@ -69,7 +69,7 @@ class FileCategory implements IStringerEntity
      *
      * @return $this
      */
-    public function setIdentifier(string $identifier): FileCategory
+    public function setIdentifier(string $identifier): static
     {
         $this->identifier = $identifier;
 
@@ -90,7 +90,7 @@ class FileCategory implements IStringerEntity
      *
      * @return $this
      */
-    public function setName(string $name): FileCategory
+    public function setName(string $name): static
     {
         $this->name = $name;
 
@@ -110,7 +110,7 @@ class FileCategory implements IStringerEntity
      *
      * @return $this
      */
-    public function setIsPublic(bool $isPublic): FileCategory
+    public function setIsPublic(bool $isPublic): static
     {
         $this->isPublic = $isPublic;
 
@@ -130,7 +130,7 @@ class FileCategory implements IStringerEntity
      *
      * @return $this
      */
-    public function setUserGroups(array $userGroups): FileCategory
+    public function setUserGroups(array $userGroups): static
     {
         $this->userGroups = $userGroups;
 

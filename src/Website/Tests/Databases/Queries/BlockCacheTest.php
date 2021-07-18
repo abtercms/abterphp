@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace AbterPhp\Website\Tests\Databases\Queries;
+namespace AbterPhp\Website\Tests\Database\Query;
 
 use AbterPhp\Admin\Exception\Database;
 use AbterPhp\Framework\Tests\TestCase\Database\QueryTestCase;
 use AbterPhp\Framework\Tests\TestDouble\Database\MockStatementFactory;
-use AbterPhp\Website\Databases\Queries\BlockCache;
+use AbterPhp\Website\Database\Query\BlockCache;
 
 class BlockCacheTest extends QueryTestCase
 {

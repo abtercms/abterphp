@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace AbterPhp\Admin\Console\Commands\ApiClient;
 
 use AbterPhp\Admin\Orm\ApiClientRepo;
+use AbterPhp\Admin\Domain\Entities\ApiClient as Entity;
 use AbterPhp\Framework\Authorization\CacheManager;
 use AbterPhp\Framework\Crypto\Crypto;
 use AbterPhp\Framework\Database\PDO\UnitOfWork;
@@ -117,6 +118,8 @@ class RegenerateSecret extends Command
             $rawSecret        = $this->passwordGenerator->generatePassword();
             $preparedPassword = $this->crypto->prepareSecret($rawSecret);
             $packedPassword   = $this->crypto->hashCrypt($preparedPassword);
+
+            assert($apiClient instanceof Entity);
 
             $apiClient->setSecret($packedPassword);
         } catch (\Exception $e) {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AbterPhp\Website\Databases\Queries;
+namespace AbterPhp\Website\Database\Query;
 
 use AbterPhp\Admin\Exception\Database;
 use Opulence\Databases\ConnectionPools\ConnectionPool;
@@ -10,13 +10,14 @@ use Opulence\QueryBuilders\Conditions\ConditionFactory;
 use Opulence\QueryBuilders\MySql\QueryBuilder;
 
 /** @phan-file-suppress PhanTypeMismatchArgument */
-class ContentListCache
+
+class PageCategoryCache
 {
     /** @var ConnectionPool */
     protected $connectionPool;
 
     /**
-     * BlockCache constructor.
+     * PageCategoryCache constructor.
      *
      * @param ConnectionPool $connectionPool
      */
@@ -37,10 +38,11 @@ class ContentListCache
         $conditions = new ConditionFactory();
         $query      = (new QueryBuilder())
             ->select('COUNT(*) AS count')
-            ->from('lists')
-            ->where('lists.deleted_at IS NULL')
-            ->andWhere($conditions->in('lists.identifier', $identifiers))
-            ->andWhere('lists.updated_at > ?')
+            ->from('pages')
+            ->leftJoin('page_categories', 'page_categories', 'page_categories.id = pages.category_id')
+            ->where('pages.deleted_at IS NULL')
+            ->andWhere($conditions->in('page_categories.identifier', $identifiers))
+            ->andWhere('pages.updated_at > ?')
             ->addUnnamedPlaceholderValue($cacheTime, \PDO::PARAM_STR)
         ;
 

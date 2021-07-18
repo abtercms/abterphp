@@ -114,7 +114,7 @@ class ContentListItem implements IStringerEntity
      *
      * @return $this
      */
-    public function setListId(string $listId): self
+    public function setListId(string $listId): static
     {
         $this->listId = $listId;
 
@@ -134,7 +134,7 @@ class ContentListItem implements IStringerEntity
      *
      * @return $this
      */
-    public function setLabel(string $label): self
+    public function setLabel(string $label): static
     {
         $this->label = $label;
 
@@ -154,7 +154,7 @@ class ContentListItem implements IStringerEntity
      *
      * @return $this
      */
-    public function setLabelHref(string $labelHref): self
+    public function setLabelHref(string $labelHref): static
     {
         $this->labelHref = $labelHref;
 
@@ -174,7 +174,7 @@ class ContentListItem implements IStringerEntity
      *
      * @return $this
      */
-    public function setContent(string $content): self
+    public function setContent(string $content): static
     {
         $this->content = $content;
 
@@ -194,7 +194,7 @@ class ContentListItem implements IStringerEntity
      *
      * @return $this
      */
-    public function setContentHref(string $contentHref): self
+    public function setContentHref(string $contentHref): static
     {
         $this->contentHref = $contentHref;
 
@@ -214,7 +214,7 @@ class ContentListItem implements IStringerEntity
      *
      * @return $this
      */
-    public function setImgSrc(string $imgSrc): self
+    public function setImgSrc(string $imgSrc): static
     {
         $this->imgSrc = $imgSrc;
 
@@ -234,7 +234,7 @@ class ContentListItem implements IStringerEntity
      *
      * @return $this
      */
-    public function setImgAlt(string $imgAlt): self
+    public function setImgAlt(string $imgAlt): static
     {
         $this->imgAlt = $imgAlt;
 
@@ -254,7 +254,7 @@ class ContentListItem implements IStringerEntity
      *
      * @return $this
      */
-    public function setImgHref(string $imgHref): self
+    public function setImgHref(string $imgHref): static
     {
         $this->imgHref = $imgHref;
 
@@ -274,7 +274,7 @@ class ContentListItem implements IStringerEntity
      *
      * @return $this
      */
-    public function setClasses(string $classes): self
+    public function setClasses(string $classes): static
     {
         $this->classes = $classes;
 
@@ -292,7 +292,7 @@ class ContentListItem implements IStringerEntity
     /**
      * @param bool $deleted
      */
-    public function setDeleted(bool $deleted): self
+    public function setDeleted(bool $deleted): static
     {
         $this->deleted = $deleted;
 

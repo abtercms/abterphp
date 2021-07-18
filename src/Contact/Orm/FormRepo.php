@@ -6,7 +6,6 @@ namespace AbterPhp\Contact\Orm;
 
 use AbterPhp\Contact\Domain\Entities\Form as Entity;
 use AbterPhp\Framework\Orm\GridRepo;
-use Opulence\Orm\IEntity;
 use QB\Generic\Statement\ISelect;
 use QB\MySQL\QueryBuilder\QueryBuilder;
 use QB\MySQL\Statement\Select;
@@ -43,9 +42,9 @@ class FormRepo extends GridRepo
     /**
      * @param array $row
      *
-     * @return IEntity
+     * @return Entity
      */
-    public function createEntity(array $row): IEntity
+    public function createEntity(array $row): Entity
     {
         return new Entity(
             $row['id'],

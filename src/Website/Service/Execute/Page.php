@@ -17,6 +17,7 @@ use AbterPhp\Website\Orm\PageRepo as GridRepo;
 use AbterPhp\Website\Validation\Factory\Page as ValidatorFactory;
 use Casbin\Enforcer;
 use Cocur\Slugify\Slugify;
+use InvalidArgumentException;
 use Opulence\Events\Dispatchers\IEventDispatcher;
 use Opulence\Http\Requests\UploadedFile;
 use Opulence\Orm\IUnitOfWork;
@@ -84,7 +85,7 @@ class Page extends RepoServiceAbstract
      */
     protected function fillEntity(IStringerEntity $entity, array $postData, array $fileData): IStringerEntity
     {
-        assert($entity instanceof Entity, new \InvalidArgumentException());
+        assert($entity instanceof Entity, new InvalidArgumentException());
 
         $postData = $this->protectPostData($entity, $postData);
 
@@ -223,6 +224,8 @@ class Page extends RepoServiceAbstract
     public function retrieveEntityWithLayout(string $entityId): IStringerEntity
     {
         $entity = $this->repo->getById($entityId);
+
+        assert($entity instanceof Entity);
 
         $entity = $this->repo->getWithLayout($entity->getIdentifier());
 

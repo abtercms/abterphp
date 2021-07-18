@@ -5,16 +5,16 @@ declare(strict_types=1);
 namespace AbterPhp\Admin\Bootstrappers\Filesystem;
 
 use AbterPhp\Framework\Constant\Env;
+use AbterPhp\Framework\Database\PDO\Writer;
+use AbterPhp\Framework\Environments\Environment;
 use AbterPhp\Framework\Filesystem\FileFinder;
 use AbterPhp\Framework\Filesystem\IFileFinder;
 use League\Flysystem\Local\LocalFilesystemAdapter;
 use League\Flysystem\Filesystem;
-use Opulence\Databases\Adapters\Pdo\MySql\Driver as MySqlDriver;
-use Opulence\Databases\Adapters\Pdo\PostgreSql\Driver as PostgreSqlDriver;
-use Opulence\Environments\Environment;
 use Opulence\Ioc\Bootstrappers\Bootstrapper;
 use Opulence\Ioc\Bootstrappers\ILazyBootstrapper;
 use Opulence\Ioc\IContainer;
+use RuntimeException;
 
 class FileFinderBootstrapper extends Bootstrapper implements ILazyBootstrapper
 {
@@ -102,17 +102,17 @@ class FileFinderBootstrapper extends Bootstrapper implements ILazyBootstrapper
             return $this->dbDriverName;
         }
 
-        $driverClass = Environment::getVar(Env::DB_DRIVER) ?: PostgreSqlDriver::class;
+        $driverClass = Environment::mustGetVar(Env::PDO_WRITE_TYPE);
 
         switch ($driverClass) {
-            case MySqlDriver::class:
+            case Writer::DIALECT_MYSQL:
                 $dbDriverName = 'mysql';
                 break;
-            case PostgreSqlDriver::class:
+            case Writer::DIALECT_PGSQL:
                 $dbDriverName = 'pgsql';
                 break;
             default:
-                throw new \RuntimeException(
+                throw new RuntimeException(
                     "Invalid database driver type specified in environment var \"DB_DRIVER\": $driverClass"
                 );
         }

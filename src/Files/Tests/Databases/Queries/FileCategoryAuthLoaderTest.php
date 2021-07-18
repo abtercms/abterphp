@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace AbterPhp\Files\Tests\Databases\Queries;
+namespace AbterPhp\Files\Tests\Database\Query;
 
 use AbterPhp\Admin\Exception\Database;
-use AbterPhp\Files\Databases\Queries\FileCategoryAuthLoader;
+use AbterPhp\Files\Database\Query\FileCategoryAuthLoader;
 use AbterPhp\Framework\Tests\TestCase\Database\QueryTestCase;
 use AbterPhp\Framework\Tests\TestDouble\Database\MockStatementFactory;
 

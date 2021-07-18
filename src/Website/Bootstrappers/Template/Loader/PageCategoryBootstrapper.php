@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace AbterPhp\Website\Bootstrappers\Template\Loader;
 
-use AbterPhp\Website\Databases\Queries\PageCategoryCache as Cache;
+use AbterPhp\Website\Database\Query\PageCategoryCache as Cache;
 use AbterPhp\Website\Orm\PageRepo as Repo;
 use AbterPhp\Website\Template\Builder\PageCategory\Detailed as DetailedBuilder;
 use AbterPhp\Website\Template\Builder\PageCategory\Simple as SimpleBuilder;

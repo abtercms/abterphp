@@ -97,9 +97,9 @@ class File implements IStringerEntity
     /**
      * @param string $filesystemName
      *
-     * @return File
+     * @return $this
      */
-    public function setFilesystemName(string $filesystemName): File
+    public function setFilesystemName(string $filesystemName): static
     {
         $this->filesystemName = $filesystemName;
 
@@ -133,9 +133,9 @@ class File implements IStringerEntity
     /**
      * @param string $publicName
      *
-     * @return File
+     * @return $this
      */
-    public function setPublicName(string $publicName): File
+    public function setPublicName(string $publicName): static
     {
         $this->publicName = $publicName;
 
@@ -153,9 +153,9 @@ class File implements IStringerEntity
     /**
      * @param string $mime
      *
-     * @return File
+     * @return $this
      */
-    public function setMime(string $mime): File
+    public function setMime(string $mime): static
     {
         $this->mime = $mime;
 
@@ -173,7 +173,7 @@ class File implements IStringerEntity
     /**
      * @param string $description
      *
-     * @return File
+     * @return $this
      */
     public function setDescription(string $description): File
     {
@@ -193,9 +193,9 @@ class File implements IStringerEntity
     /**
      * @param FileCategory|null $category
      *
-     * @return File
+     * @return $this
      */
-    public function setCategory(?FileCategory $category): File
+    public function setCategory(?FileCategory $category): static
     {
         $this->category = $category;
 
@@ -213,9 +213,9 @@ class File implements IStringerEntity
     /**
      * @param DateTime $uploadedAt
      *
-     * @return File
+     * @return $this
      */
-    public function setUploadedAt(DateTime $uploadedAt): File
+    public function setUploadedAt(DateTime $uploadedAt): static
     {
         $this->uploadedAt = $uploadedAt;
 
@@ -235,7 +235,7 @@ class File implements IStringerEntity
      *
      * @return $this
      */
-    public function setWritable(bool $writable): File
+    public function setWritable(bool $writable): static
     {
         $this->writable = $writable;
 
@@ -260,10 +260,14 @@ class File implements IStringerEntity
 
     /**
      * @param string|null $content
+     *
+     * @return $this
      */
-    public function setContent(?string $content): void
+    public function setContent(?string $content): static
     {
         $this->content = $content;
+
+        return $this;
     }
 
     /**

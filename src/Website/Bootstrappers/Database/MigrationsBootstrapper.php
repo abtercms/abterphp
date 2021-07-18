@@ -7,7 +7,7 @@ namespace AbterPhp\Website\Bootstrappers\Database;
 use AbterPhp\Admin\Bootstrappers\Database\MigrationsBootstrapper as AdminBootstrapper;
 use AbterPhp\Admin\Bootstrappers\Filesystem\FileFinderBootstrapper;
 use AbterPhp\Framework\Filesystem\IFileFinder; // @phan-suppress-current-line PhanUnreferencedUseNormal
-use AbterPhp\Website\Databases\Migrations\Init;
+use AbterPhp\Website\Database\Migration\Init;
 use Opulence\Databases\IConnection;
 use Opulence\Ioc\IContainer;
 

@@ -65,7 +65,7 @@ class BlockLayout implements IStringerEntity
      *
      * @return $this
      */
-    public function setName(string $name): BlockLayout
+    public function setName(string $name): static
     {
         $this->name = $name;
 
@@ -85,7 +85,7 @@ class BlockLayout implements IStringerEntity
      *
      * @return $this
      */
-    public function setIdentifier(string $identifier): BlockLayout
+    public function setIdentifier(string $identifier): static
     {
         $this->identifier = $identifier;
 
@@ -105,7 +105,7 @@ class BlockLayout implements IStringerEntity
      *
      * @return $this
      */
-    public function setBody(string $body): BlockLayout
+    public function setBody(string $body): static
     {
         $this->body = $body;
 

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AbterPhp\Website\Databases\Queries;
+namespace AbterPhp\Admin\Database\Query;
 
 use AbterPhp\Admin\Exception\Database;
 use Opulence\Databases\ConnectionPools\ConnectionPool;
@@ -11,13 +11,12 @@ use Opulence\QueryBuilders\MySql\QueryBuilder;
 
 /** @phan-file-suppress PhanTypeMismatchArgument */
 
-class PageCategoryCache
+class BlockCache
 {
-    /** @var ConnectionPool */
-    protected $connectionPool;
+    protected ConnectionPool $connectionPool;
 
     /**
-     * PageCategoryCache constructor.
+     * BlockCache constructor.
      *
      * @param ConnectionPool $connectionPool
      */
@@ -38,13 +37,13 @@ class PageCategoryCache
         $conditions = new ConditionFactory();
         $query      = (new QueryBuilder())
             ->select('COUNT(*) AS count')
-            ->from('pages')
-            ->leftJoin('page_categories', 'page_categories', 'page_categories.id = pages.category_id')
-            ->where('pages.deleted_at IS NULL')
-            ->andWhere($conditions->in('page_categories.identifier', $identifiers))
-            ->andWhere('pages.updated_at > ?')
+            ->from('blocks')
+            ->leftJoin('block_layouts', 'layouts', 'layouts.id = blocks.layout_id')
+            ->where('blocks.deleted_at IS NULL')
+            ->andWhere($conditions->in('blocks.identifier', $identifiers))
+            ->andWhere('blocks.updated_at > ? OR layouts.updated_at > ?')
             ->addUnnamedPlaceholderValue($cacheTime, \PDO::PARAM_STR)
-        ;
+            ->addUnnamedPlaceholderValue($cacheTime, \PDO::PARAM_STR);
 
         $connection = $this->connectionPool->getReadConnection();
         $statement  = $connection->prepare($query->getSql());
@@ -53,6 +52,6 @@ class PageCategoryCache
             throw new Database($statement->errorInfo());
         }
 
-        return $statement->fetchColumn() > 0;
+        return (int)$statement->fetchColumn() > 0;
     }
 }

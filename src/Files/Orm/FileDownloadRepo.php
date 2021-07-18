@@ -8,6 +8,7 @@ use AbterPhp\Admin\Domain\Entities\User;
 use AbterPhp\Admin\Domain\Entities\UserLanguage;
 use AbterPhp\Files\Domain\Entities\File;
 use AbterPhp\Files\Domain\Entities\FileDownload as Entity;
+use AbterPhp\Framework\Domain\Entities\IStringerEntity;
 use AbterPhp\Framework\Orm\GridRepo;
 use DateTime;
 use Exception;
@@ -30,9 +31,9 @@ class FileDownloadRepo extends GridRepo
     /**
      * @param Entity $entity
      */
-    public function add(IEntity $entity)
+    public function add(IStringerEntity $entity)
     {
-        assert($entity);
+        assert($entity instanceof Entity);
 
         parent::add($entity);
     }
@@ -40,9 +41,9 @@ class FileDownloadRepo extends GridRepo
     /**
      * @param Entity $entity
      */
-    public function update(IEntity $entity)
+    public function update(IStringerEntity $entity)
     {
-        assert($entity);
+        assert($entity instanceof Entity);
 
         parent::update($entity);
     }
@@ -50,9 +51,9 @@ class FileDownloadRepo extends GridRepo
     /**
      * @param Entity $entity
      */
-    public function delete(IEntity $entity)
+    public function delete(IStringerEntity $entity)
     {
-        assert($entity);
+        assert($entity instanceof Entity);
 
         parent::delete($entity);
     }
@@ -142,16 +143,5 @@ class FileDownloadRepo extends GridRepo
         return [
             'downloaded_at' => ISelect::DIRECTION_DESC,
         ];
-    }
-
-    /**
-     * @param IEntity $entity
-     */
-    protected function assert(IEntity $entity)
-    {
-        assert(
-            $entity instanceof Entity,
-            sprintf('entity of type %s expected, got %s', Entity::class, gettype($entity))
-        );
     }
 }

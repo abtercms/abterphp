@@ -10,7 +10,7 @@ use AbterPhp\Framework\Html\Helper\Attributes;
 use AbterPhp\Framework\Template\IBuilder;
 use AbterPhp\Framework\Template\IData;
 use AbterPhp\Framework\Template\ParsedTemplate;
-use AbterPhp\Website\Databases\Queries\PageCategoryCache;
+use AbterPhp\Website\Database\Query\PageCategoryCache;
 use AbterPhp\Website\Domain\Entities\Page;
 use AbterPhp\Website\Domain\Entities\PageCategory as PageCategoryEntity;
 use AbterPhp\Website\Orm\PageRepo;

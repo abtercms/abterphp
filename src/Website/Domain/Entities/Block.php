@@ -81,7 +81,7 @@ class Block implements IStringerEntity
      *
      * @return $this
      */
-    public function setIdentifier(string $identifier): Block
+    public function setIdentifier(string $identifier): static
     {
         $this->identifier = $identifier;
 
@@ -101,7 +101,7 @@ class Block implements IStringerEntity
      *
      * @return $this
      */
-    public function setTitle(string $title): Block
+    public function setTitle(string $title): static
     {
         $this->title = $title;
 
@@ -121,7 +121,7 @@ class Block implements IStringerEntity
      *
      * @return $this
      */
-    public function setBody(string $body): Block
+    public function setBody(string $body): static
     {
         $this->body = $body;
 
@@ -141,7 +141,7 @@ class Block implements IStringerEntity
      *
      * @return $this
      */
-    public function setLayout(string $layout): Block
+    public function setLayout(string $layout): static
     {
         $this->layout = $layout;
 
@@ -161,7 +161,7 @@ class Block implements IStringerEntity
      *
      * @return $this
      */
-    public function setLayoutId(?string $layoutId): Block
+    public function setLayoutId(?string $layoutId): static
     {
         $this->layoutId = $layoutId;
 

@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 namespace AbterPhp\Admin\Console\Commands\UserGroup;
 
-use AbterPhp\Admin\Domain\Entities\UserGroup; // @phan-suppress-current-line PhanUnreferencedUseNormal
+use AbterPhp\Admin\Domain\Entities\UserGroup as Entity;
 use AbterPhp\Admin\Orm\UserGroupRepo;
 use Opulence\Console\Commands\Command;
 use Opulence\Console\Responses\IResponse;
 
-// @phan-suppress-current-line PhanUnreferencedUseNormal
 class ListCommand extends Command
 {
     protected const COMMAND_NAME        = 'usergroup:list';
@@ -42,10 +41,11 @@ class ListCommand extends Command
      */
     protected function doExecute(IResponse $response)
     {
-        /** @var UserGroup[] $userGroups */
+        /** @var Entity[] $userGroups */
         $userGroups = $this->userGroupRepo->getAll();
 
         foreach ($userGroups as $userGroup) {
+            assert($userGroup instanceof Entity);
             $response->writeln($userGroup->getIdentifier());
         }
     }

@@ -82,7 +82,7 @@ class PageLayout implements IStringerEntity
      *
      * @return $this
      */
-    public function setName(string $name): PageLayout
+    public function setName(string $name): static
     {
         $this->name = $name;
 
@@ -102,7 +102,7 @@ class PageLayout implements IStringerEntity
      *
      * @return $this
      */
-    public function setIdentifier(string $identifier): PageLayout
+    public function setIdentifier(string $identifier): static
     {
         $this->identifier = $identifier;
 
@@ -122,7 +122,7 @@ class PageLayout implements IStringerEntity
      *
      * @return $this
      */
-    public function setClasses(string $classes): PageLayout
+    public function setClasses(string $classes): static
     {
         $this->classes = $classes;
 
@@ -142,7 +142,7 @@ class PageLayout implements IStringerEntity
      *
      * @return $this
      */
-    public function setBody(string $body): PageLayout
+    public function setBody(string $body): static
     {
         $this->body = $body;
 
@@ -162,7 +162,7 @@ class PageLayout implements IStringerEntity
      *
      * @return $this
      */
-    public function setAssets(?Assets $assets): PageLayout
+    public function setAssets(?Assets $assets): static
     {
         $this->assets = $assets;
 

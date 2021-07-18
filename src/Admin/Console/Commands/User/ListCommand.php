@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace AbterPhp\Admin\Console\Commands\User;
 
-use AbterPhp\Admin\Domain\Entities\User; // @phan-suppress-current-line PhanUnreferencedUseNormal
+use AbterPhp\Admin\Domain\Entities\User as Entity; // @phan-suppress-current-line PhanUnreferencedUseNormal
 use AbterPhp\Admin\Orm\UserRepo;
 use Opulence\Console\Commands\Command;
 use Opulence\Console\Responses\Formatters\PaddingFormatter;
@@ -45,8 +45,10 @@ class ListCommand extends Command
     {
         $header = ['Id', 'Username', 'Email', 'Language', 'Groups'];
         $rows   = [];
-        /** @var User $user */
+        /** @var Entity $user */
         foreach ($this->userRepo->getAll() as $user) {
+            assert($user instanceof Entity);
+
             $userGroups = [];
             foreach ($user->getUserGroups() as $ug) {
                 $userGroups[] = $ug->getName();

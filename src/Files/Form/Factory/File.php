@@ -99,7 +99,7 @@ class File extends Base
      */
     protected function addFileCategory(Entity $entity): File
     {
-        $allFileCategories = $this->fileCategoryRepo->getAll();
+        $allFileCategories = $this->fileCategoryRepo->getAll() ?? [];
         $fileCategoryId    = $entity->getCategory()->getId();
 
         $options = $this->createFileCategoryOptions($allFileCategories, $fileCategoryId);

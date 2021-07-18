@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace AbterPhp\Admin\Tests\Databases\Queries;
+namespace AbterPhp\Admin\Tests\Database\Query;
 
-use AbterPhp\Admin\Databases\Queries\AdminResourceAuthLoader;
+use AbterPhp\Admin\Database\Query\AdminResourceAuthLoader;
 use AbterPhp\Admin\Exception\Database;
 use AbterPhp\Framework\Tests\TestCase\Database\QueryTestCase;
 use AbterPhp\Framework\Tests\TestDouble\Database\MockStatementFactory;

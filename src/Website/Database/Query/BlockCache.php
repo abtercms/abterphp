@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AbterPhp\Admin\Databases\Queries;
+namespace AbterPhp\Website\Database\Query;
 
 use AbterPhp\Admin\Exception\Database;
 use Opulence\Databases\ConnectionPools\ConnectionPool;
@@ -10,10 +10,10 @@ use Opulence\QueryBuilders\Conditions\ConditionFactory;
 use Opulence\QueryBuilders\MySql\QueryBuilder;
 
 /** @phan-file-suppress PhanTypeMismatchArgument */
-
 class BlockCache
 {
-    protected ConnectionPool $connectionPool;
+    /** @var ConnectionPool */
+    protected $connectionPool;
 
     /**
      * BlockCache constructor.
@@ -38,12 +38,13 @@ class BlockCache
         $query      = (new QueryBuilder())
             ->select('COUNT(*) AS count')
             ->from('blocks')
-            ->leftJoin('block_layouts', 'layouts', 'layouts.id = blocks.layout_id')
+            ->leftJoin('block_layouts', 'block_layouts', 'block_layouts.id = blocks.layout_id')
             ->where('blocks.deleted_at IS NULL')
             ->andWhere($conditions->in('blocks.identifier', $identifiers))
-            ->andWhere('blocks.updated_at > ? OR layouts.updated_at > ?')
+            ->andWhere('blocks.updated_at > ? OR block_layouts.updated_at > ?')
             ->addUnnamedPlaceholderValue($cacheTime, \PDO::PARAM_STR)
-            ->addUnnamedPlaceholderValue($cacheTime, \PDO::PARAM_STR);
+            ->addUnnamedPlaceholderValue($cacheTime, \PDO::PARAM_STR)
+        ;
 
         $connection = $this->connectionPool->getReadConnection();
         $statement  = $connection->prepare($query->getSql());
@@ -52,6 +53,6 @@ class BlockCache
             throw new Database($statement->errorInfo());
         }
 
-        return (int)$statement->fetchColumn() > 0;
+        return $statement->fetchColumn() > 0;
     }
 }

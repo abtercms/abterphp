@@ -32,7 +32,7 @@ class FileRepo extends GridRepo
      */
     public function add(IEntity $entity)
     {
-        assert($entity);
+        assert($entity instanceof Entity);
 
         parent::add($entity);
     }
@@ -42,7 +42,7 @@ class FileRepo extends GridRepo
      */
     public function update(IEntity $entity)
     {
-        assert($entity);
+        assert($entity instanceof Entity);
 
         parent::update($entity);
     }
@@ -52,7 +52,7 @@ class FileRepo extends GridRepo
      */
     public function delete(IEntity $entity)
     {
-        assert($entity);
+        assert($entity instanceof Entity);
 
         parent::delete($entity);
     }
@@ -80,11 +80,15 @@ class FileRepo extends GridRepo
      */
     public function getByFilesystemName(string $filesystemName): ?Entity
     {
-        return $this->getOne(
+        $entity = $this->getOne(
             [
                 'filesystem_name' => $filesystemName,
             ]
         );
+
+        assert($entity === null || $entity instanceof Entity);
+
+        return $entity;
     }
 
     /**
@@ -94,12 +98,16 @@ class FileRepo extends GridRepo
      */
     public function getPublicByFilesystemName(string $filesystemName): ?Entity
     {
-        return $this->getOne(
+        $entity = $this->getOne(
             [
                 'files.filesystem_name' => $filesystemName,
                 'file_categories.is_public' => '1'
             ]
         );
+
+        assert($entity === null || $entity instanceof Entity);
+
+        return $entity;
     }
 
     /**

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace AbterPhp\Files\Bootstrappers\Database;
 
 use AbterPhp\Admin\Bootstrappers\Filesystem\FileFinderBootstrapper;
-use AbterPhp\Files\Databases\Migrations\Init;
+use AbterPhp\Files\Database\Migration\Init;
 use AbterPhp\Framework\Filesystem\IFileFinder; // @phan-suppress-current-line PhanUnreferencedUseNormal
 use Opulence\Databases\IConnection; // @phan-suppress-current-line PhanUnreferencedUseNormal
 use Opulence\Ioc\Bootstrappers\Bootstrapper;

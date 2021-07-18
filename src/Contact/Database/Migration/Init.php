@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace AbterPhp\Contact\Databases\Migrations;
+namespace AbterPhp\Contact\Database\Migration;
 
-use AbterPhp\Framework\Databases\Migrations\BaseMigration;
+use AbterPhp\Framework\Database\Migration\BaseMigration;
 use DateTime;
 
 class Init extends BaseMigration

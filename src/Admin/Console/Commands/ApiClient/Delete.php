@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace AbterPhp\Admin\Console\Commands\ApiClient;
 
+use AbterPhp\Admin\Domain\Entities\ApiClient as Entity;
 use AbterPhp\Admin\Orm\ApiClientRepo;
 use AbterPhp\Framework\Authorization\CacheManager;
 use AbterPhp\Framework\Database\PDO\UnitOfWork;
@@ -14,7 +15,6 @@ use Opulence\Console\Requests\Option;
 use Opulence\Console\Requests\OptionTypes;
 use Opulence\Console\Responses\IResponse;
 use Opulence\Console\StatusCodes;
-use Opulence\Orm\IUnitOfWork;
 
 class Delete extends Command
 {
@@ -90,6 +90,7 @@ class Delete extends Command
             return StatusCodes::ERROR;
         }
 
+        assert($entity instanceof Entity);
         $this->apiClientRepo->delete($entity);
 
         if ($dryRun) {

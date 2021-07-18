@@ -7,7 +7,7 @@ namespace AbterPhp\Framework\Orm;
 use AbterPhp\Framework\Domain\Entities\IStringerEntity;
 use QB\Generic\Statement\ISelect;
 
-interface IGridRepo
+interface IGridRepo extends IRepository
 {
     /**
      * @param int   $offset

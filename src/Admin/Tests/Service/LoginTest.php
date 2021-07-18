@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace AbterPhp\Admin\Tests\Service;
 
-use AbterPhp\Admin\Databases\Queries\LoginThrottle;
+use AbterPhp\Admin\Database\Query\LoginThrottle;
 use AbterPhp\Admin\Domain\Entities\User;
 use AbterPhp\Admin\Domain\Entities\UserLanguage;
 use AbterPhp\Admin\Exception\Database;

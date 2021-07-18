@@ -71,7 +71,7 @@ class ApiClient implements IStringerEntity
      *
      * @return $this
      */
-    public function setUserId(string $userId): ApiClient
+    public function setUserId(string $userId): static
     {
         $this->userId = $userId;
 
@@ -91,7 +91,7 @@ class ApiClient implements IStringerEntity
      *
      * @return $this
      */
-    public function setDescription(string $description): ApiClient
+    public function setDescription(string $description): static
     {
         $this->description = $description;
 
@@ -111,7 +111,7 @@ class ApiClient implements IStringerEntity
      *
      * @return $this
      */
-    public function setSecret(string $secret): ApiClient
+    public function setSecret(string $secret): static
     {
         $this->secret = $secret;
 
@@ -131,7 +131,7 @@ class ApiClient implements IStringerEntity
      *
      * @return $this
      */
-    public function setAdminResources(array $adminResources): ApiClient
+    public function setAdminResources(array $adminResources): static
     {
         $this->adminResources = $adminResources;
 

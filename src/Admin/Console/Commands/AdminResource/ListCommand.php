@@ -43,10 +43,10 @@ class ListCommand extends Command
      */
     protected function doExecute(IResponse $response)
     {
-        /** @var AdminResource[] $adminResources */
         $adminResources = $this->adminResourceRepo->getAll();
 
         foreach ($adminResources as $adminResource) {
+            assert($adminResource instanceof AdminResource);
             $response->writeln($adminResource->getIdentifier());
         }
     }

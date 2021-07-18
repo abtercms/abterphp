@@ -12,6 +12,9 @@ use AbterPhp\Files\Orm\FileRepo;
 class OrmBootstrapper extends AbterAdminOrmBootstrapper
 {
     /** @var string[] */
+    protected array $baseBindings = [];
+
+    /** @var string[] */
     protected array $repoMappers = [
         FileDownloadRepo::class,
         FileCategoryRepo::class,

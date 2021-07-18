@@ -127,7 +127,7 @@ class Page implements IStringerEntity
      *
      * @return $this
      */
-    public function setIdentifier(string $identifier): Page
+    public function setIdentifier(string $identifier): static
     {
         $this->identifier = $identifier;
 
@@ -147,7 +147,7 @@ class Page implements IStringerEntity
      *
      * @return $this
      */
-    public function setTitle(string $title): Page
+    public function setTitle(string $title): static
     {
         $this->title = $title;
 
@@ -167,7 +167,7 @@ class Page implements IStringerEntity
      *
      * @return $this
      */
-    public function setClasses(string $classes): Page
+    public function setClasses(string $classes): static
     {
         $this->classes = $classes;
 
@@ -187,7 +187,7 @@ class Page implements IStringerEntity
      *
      * @return $this
      */
-    public function setLede(string $lede): Page
+    public function setLede(string $lede): static
     {
         $this->lede = $lede;
 
@@ -207,7 +207,7 @@ class Page implements IStringerEntity
      *
      * @return $this
      */
-    public function setBody(string $body): Page
+    public function setBody(string $body): static
     {
         $this->body = $body;
 
@@ -227,7 +227,7 @@ class Page implements IStringerEntity
      *
      * @return $this
      */
-    public function setIsDraft(bool $isDraft): Page
+    public function setIsDraft(bool $isDraft): static
     {
         $this->markedAsDraft = $isDraft;
 
@@ -255,7 +255,7 @@ class Page implements IStringerEntity
      *
      * @return $this
      */
-    public function setRenderedBody(?string $renderedBody): Page
+    public function setRenderedBody(?string $renderedBody): static
     {
         $this->renderedBody = $renderedBody;
 
@@ -275,7 +275,7 @@ class Page implements IStringerEntity
      *
      * @return $this
      */
-    public function setCategory(?PageCategory $category): Page
+    public function setCategory(?PageCategory $category): static
     {
         $this->category = $category;
 
@@ -295,7 +295,7 @@ class Page implements IStringerEntity
      *
      * @return $this
      */
-    public function setLayout(string $layout): Page
+    public function setLayout(string $layout): static
     {
         $this->layout = $layout;
 
@@ -315,7 +315,7 @@ class Page implements IStringerEntity
      *
      * @return $this
      */
-    public function setLayoutId(?string $layoutId): Page
+    public function setLayoutId(?string $layoutId): static
     {
         if ($layoutId === '') {
             $layoutId = null;
@@ -339,7 +339,7 @@ class Page implements IStringerEntity
      *
      * @return $this
      */
-    public function setMeta(Meta $meta): Page
+    public function setMeta(Meta $meta): static
     {
         $this->meta = $meta;
 
@@ -359,7 +359,7 @@ class Page implements IStringerEntity
      *
      * @return $this
      */
-    public function setAssets(?Assets $assets): Page
+    public function setAssets(?Assets $assets): static
     {
         $this->assets = $assets;
 

@@ -64,8 +64,8 @@ class PdoMigrationRepository implements IExecutedMigrationRepository
         ];
 
         $query = $this->queryBuilder->insert()
-            ->setInto($this->tableName)
-            ->addValues($values);
+            ->into($this->tableName)
+            ->values($values);
 
         $this->writer->execute($query);
     }

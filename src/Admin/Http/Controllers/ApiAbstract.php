@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace AbterPhp\Admin\Http\Controllers;
 
 use AbterPhp\Framework\Http\Service\Execute\IRepoService;
+use Exception;
 use Opulence\Http\Responses\Response;
 use Opulence\Orm\OrmException;
 use Opulence\Routing\Controller;
@@ -59,7 +60,10 @@ abstract class ApiAbstract extends Controller
     {
         try {
             $entity = $this->repoService->retrieveEntity($entityId);
-        } catch (\Exception $e) {
+            if (empty($entity)) {
+                throw new Exception();
+            }
+        } catch (Exception $e) {
             $msg = sprintf(static::LOG_MSG_GET_FAILURE, static::ENTITY_SINGULAR, $entityId);
 
             return $this->handleException($msg, $e);
@@ -80,7 +84,7 @@ abstract class ApiAbstract extends Controller
 
         try {
             $entities = $this->repoService->retrieveList($offset, $limit, [], []);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $msg = sprintf(static::LOG_MSG_LIST_FAILURE, static::ENTITY_PLURAL);
 
             return $this->handleException($msg, $e);
@@ -109,7 +113,7 @@ abstract class ApiAbstract extends Controller
 
             $fileData = $this->getFileData($data);
             $entity   = $this->repoService->create($data, $fileData);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $msg = sprintf(static::LOG_MSG_CREATE_FAILURE, static::ENTITY_SINGULAR);
 
             return $this->handleException($msg, $e);
@@ -139,7 +143,7 @@ abstract class ApiAbstract extends Controller
             $fileData = $this->getFileData($data);
             $entity   = $this->repoService->retrieveEntity($entityId);
             $this->repoService->update($entity, $data, $fileData);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             if ($this->isEntityNotFound($e)) {
                 return $this->handleNotFound();
             }
@@ -161,8 +165,11 @@ abstract class ApiAbstract extends Controller
     {
         try {
             $entity = $this->repoService->retrieveEntity($entityId);
+            if (empty($entity)) {
+                throw new Exception();
+            }
             $this->repoService->delete($entity);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             if ($this->isEntityNotFound($e)) {
                 return $this->handleNotFound();
             }
@@ -176,11 +183,11 @@ abstract class ApiAbstract extends Controller
     }
 
     /**
-     * @param \Exception $e
+     * @param Exception $e
      *
      * @return bool
      */
-    protected function isEntityNotFound(\Exception $e): bool
+    protected function isEntityNotFound(Exception $e): bool
     {
         if (!($e instanceof OrmException)) {
             return false;
