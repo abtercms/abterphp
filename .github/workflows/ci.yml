@@ -10,7 +10,7 @@ jobs:
     strategy:
       matrix:
         operating-system: [ ubuntu-latest, macos-latest ]
-        php-versions: [ '8.0', '7.4' ]
+        php-versions: [ '8.0' ]
     # Name the Job
     name: Lint code base
     # Set the type of machine to run on
