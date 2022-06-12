@@ -66,6 +66,20 @@ documentation might assume that all developers use `mkcert` for development.
 
 The rest of the installation documentation will assume that `.` is the root directory of the project.
 
+#### Pre-requisite: Fetch submodules
+
+To make sure you can use docker as your development platform, you should make sure to have all the configs associated.
+
+```bash
+git submodule update --init --recursive
+```
+
+Later, to update the submodules, use the following git command:
+
+```bash
+git submodule update --remote
+```
+
 #### Pre-requisite: Add abtercms.test as localhost in `/etc/hosts` on Linux and OSX or `???` on Windows.
 
 ```bash
@@ -88,7 +102,6 @@ mv abtercms.test+1* ./docker/nginx/certs/
 ```bash
 chmod -R 0777 ./tmp ./public/tmp
 chmod +x apex
-
 ```
 
 #### Spin up the containers
@@ -103,8 +116,7 @@ docker-compose up -d
 To install dependencies, we recommend running `make` from inside the PHP container:
 
 ```bash
-docker-compose exec php sh
-> make
+docker-compose exec cli make
 ```
 
 #### Ensure your settings are sane
